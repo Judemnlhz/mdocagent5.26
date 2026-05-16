@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 115 elements starting with...",
+      [
+        "www.pewresearch.org        FOR RELEASE NOVEMBER 21, 2016        FOR MEDIA OR OTHER INQUIRIES:  Carroll Doherty, Director of Political Research  Jocelyn Kiley, Associate Director, Research  Bridget Johnson, Communications Associate  202.419.4372  www.pewresearch.org    RECOMMENDED CITATION: Pew Research Center, November, 2016, \u201cLow Marks for Major Players in 2016 Election \u2014 Including the  Winner\u201d  NUMBERS, FACTS AND TRENDS SHAPING THE WORLD",
+        "PEW RESEARCH CENTER  www.pewresearch.org  About Pew Research Center  Pew Research Center is a nonpartisan fact tank that informs the public about the issues, attitudes  and trends shaping America and the world. It does not take policy positions. It conducts public  opinion polling, demographic research, content analysis and other data-driven social science  research. The Center studies U.S. politics and policy; journalism and media; internet, science and  technology; religion and public life; Hispanic trends; global attitudes and trends; and U.S. social  and demographic trends. All of the Center\u2019s reports are available at www.pewresearch.org. Pew  Research Center is a subsidiary of The Pew Charitable Trusts, its primary funder.  \u00a9 Pew Research Center 2017",
+        "PEW RESEARCH CENTER  www.pewresearch.org  38  30  33  53  46  40  44  43  49  64  57  52  55  75  57  30  1988 1992 1996 2000 2004 2008 2012 2016 Winning   candidate  Losing   candidate  1992  Bush  Clinton  1996  Dole  Clinton  2000*  Bush  Gore  2004  Bush  Kerry  2008  McCain  Obama  2016  Trump  Clinton  1988  Bush  Dukakis  2012  Romney  Obama  For most voters, the 2016 presidential campaign was one to forget. Post-election evaluations of the  way that the winning candidate, the parties, the press and the pollsters conducted themselves  during the campaign are all far more negative than after any election dating back to 1988."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-11-21-16-Updated-Post-Election-Release.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":1024,
+  "num_embeddings":16011,
+  "avg_doclen":139.2260869565,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-11-21-16-Updated-Post-Election-Release.pdf"
+    }
+  }
+}

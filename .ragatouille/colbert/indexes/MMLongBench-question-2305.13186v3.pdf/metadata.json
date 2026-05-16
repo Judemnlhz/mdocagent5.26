@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 126 elements starting with...",
+      [
+        "SCITAB: A Challenging Benchmark for Compositional Reasoning and Claim Verification on Scientific Tables Xinyuan Lu\u22171,2 Liangming Pan\u22173 Qian Liu4 Preslav Nakov5 Min-Yen Kan2 1ISEP Program, NUS Graduate School 2 National University of Singapore 3University of California, Santa Barbara 4Sea AI Lab 5MBZUAI luxinyuan@u.nus.edu liangmingpan@ucsb.edu liuqian@sea.com preslav.nakov@mbzuai.ac.ae kanmy@comp.nus.edu.sg Abstract Current scientific fact-checking benchmarks ex- hibit several shortcomings, such as biases aris- ing from crowd-sourced claims and an over- reliance on text-based evidence. We present SCITAB, a challenging evaluation dataset con- sisting of 1.2K expert-verified scientific claims that 1) originate from authentic scientific publi- cations and 2) require compositional reason- ing for verification. The claims are paired with evidence-containing scientific tables an- notated with labels.",
+        "The claims are paired with evidence-containing scientific tables an- notated with labels. Through extensive evalu- ations, we demonstrate that SCITAB poses a significant challenge to state-of-the-art models, including table-based pretraining models and large language models. All models except GPT- 4 achieved performance barely above random guessing. Popular prompting techniques, such as Chain-of-Thought, do not achieve much performance gains on SCITAB. Our analy- sis uncovers several unique challenges posed by SCITAB, including table grounding, claim ambiguity, and compositional reasoning. Our codes and data are publicly available at https: //github.com/XinyuanLu00/SciTab. 1 Introduction Scientific fact-checking is a crucial process that in- volves validating the accuracy of scientific claims by cross-referencing them with established scien- tific literature, research, or data (Guo et al., 2022). This process is crucial for preserving the integrity of scientific information, preventing the spread of misinformation, and fostering public trust in re- search findings.",
+        "This process is crucial for preserving the integrity of scientific information, preventing the spread of misinformation, and fostering public trust in re- search findings. However, the sheer volume of scientific data and claims can be overwhelming for manual fact-checking, making automated scientific fact-checking an imperative research area of NLP. Scientific fact-checking has advanced signifi- cantly with benchmarks including Sci-Fact (Wad- den et al., 2020), Sci-Fact Open (Wadden et al., 2022), and COVID-Fact (Saakyan et al., 2021). \u2217Equal Contribution. However, these datasets still exhibit several limi- tations. First, the claims are crowd-sourced rather than collected from real scientific papers. This leads to problems such as bias in human annotation, a lack of diversity, and shallow claims that do not reflect the complexity of scientific reasoning. For example, most claims in Sci-Fact can be validated by a single sentence in a paper\u2019s abstract, which oversimplifies the scientific discourse. Second, the claims in the existing benchmarks are solely vali- dated against text-based evidence, primarily paper abstracts."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-2305.13186v3.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":20334,
+  "avg_doclen":161.380952381,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-2305.13186v3.pdf"
+    }
+  }
+}

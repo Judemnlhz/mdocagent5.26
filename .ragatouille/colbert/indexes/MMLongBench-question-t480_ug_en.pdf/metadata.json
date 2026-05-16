@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 384 elements starting with...",
+      [
+        "T480 User Guide",
+        "Note: Before using this information and the product it supports, ensure that you read and understand the  following:  \u2022 Safety and Warranty Guide \u2022 Setup Guide \u2022 \u201cImportant safety information\u201d on page v Lenovo\u00ae makes constant improvement on the documentation of your computer, including this User Guide.  To get all the latest documents, go to: https://support.lenovo.com Second Edition (February 2018) \u00a9 Copyright Lenovo 2018.  LIMITED AND RESTRICTED RIGHTS NOTICE: If data or software is delivered pursuant to a General Services  Administration \u201cGSA\u201d contract, use, reproduction, or disclosure is subject to restrictions set forth in Contract No. GS-  35F-05925.",
+        "Contents Important safety information . . . . . . v Read this first. . . . . . . . . . . . . . . . . v Important information about using your computer . . v Conditions that require immediate action . . . . . . vii Service and upgrades . . . . . . . . . . . . viii Power adapters . . . . . . . . . . . . . . . . ix Extension cords and related devices. . . . . . . . ix Plugs and outlets . . . . . . . . . . . . . . . x Power supply statement . . . . . . . . . . . . x External devices . . . . . . . . . ."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-t480_ug_en.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":58419,
+  "avg_doclen":152.1328125,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-t480_ug_en.pdf"
+    }
+  }
+}

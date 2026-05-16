@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 395 elements starting with...",
+      [
+        "MMMU: A Massive Multi-discipline Multimodal Understanding and Reasoning Benchmark for Expert AGI 1Xiang Yue*\u2020, 2Yuansheng Ni*, 3Kai Zhang*, 4Tianyu Zheng*, 3Ruoqi Liu, 2Ge Zhang, 3Samuel Stevens, 2Dongfu Jiang, 2Weiming Ren, 4Yuxuan Sun, 2Cong Wei, 3Botao Yu, 5Ruibin Yuan, 2Renliang Sun, 7Ming Yin, 3Boyuan Zheng, 4Zhenzhu Yang, 6Yibo Liu, 4Wenhao Huang, 3Huan Sun*, 3Yu Su*\u2020, 2Wenhu Chen*\u2020 1IN.AI Research, 2University of Waterloo, 3The Ohio State University, 4Independent, 5Carnegie Mellon University, 6University of Victoria, 7Princeton University https://mmmu-benchmark.github.io/ Heterogeneous Image Types Interleaved Text and Images Comprehensive Disciplines \u2026 Diagrams, Tables, Plots and Charts, Photographs, Chemical Structures, Paintings,",
+        "6University of Victoria, 7Princeton University https://mmmu-benchmark.github.io/ Heterogeneous Image Types Interleaved Text and Images Comprehensive Disciplines \u2026 Diagrams, Tables, Plots and Charts, Photographs, Chemical Structures, Paintings, Medical Images, Sheet Music, Geometric, Pathology images, Microscopic Images, Comics, \u2026 Engineering (26%) Science (23%) Art & Design  (11%) Business (14%) Humanities  & Social Sci. (9%) Medicine (17%) Question: You are shown subtraction <image 1>, T2 weighted <image 2> and T1 weighted axial <image 3> from a screening breast MRI. What is the etiology of the finding in the left breast? <image 1> <image 2> <image 3>  Expert-level Visual Perception Domain Expertise,  World, Linguistic,  Visual Knowledge,\u2026 Expert-level Skills Test Logical, Spatial Commonsense,  Mathematical,\u2026 Knowledge Reasoning Perception Figure 1. Overview of the MMMU dataset.",
+        "<image 1> <image 2> <image 3>  Expert-level Visual Perception Domain Expertise,  World, Linguistic,  Visual Knowledge,\u2026 Expert-level Skills Test Logical, Spatial Commonsense,  Mathematical,\u2026 Knowledge Reasoning Perception Figure 1. Overview of the MMMU dataset. MMMU presents four challenges: 1) comprehensiveness: 11.5K college-level problems across six broad disciplines and 30 college subjects; 2) highly heterogeneous image types; 3) interleaved text and images; 4) expert-level perception and reasoning rooted in deep subject knowledge. Abstract We introduce MMMU: a new benchmark designed to eval- uate multimodal models on massive multi-discipline tasks demanding college-level subject knowledge and deliberate reasoning. MMMU includes 11.5K meticulously collected multimodal questions from college exams, quizzes, and text- books, covering six core disciplines: Art & Design, Busi- ness, Science, Health & Medicine, Humanities & Social Science, and Tech & Engineering."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-2311.16502v3.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":59102,
+  "avg_doclen":149.6253164557,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-2311.16502v3.pdf"
+    }
+  }
+}

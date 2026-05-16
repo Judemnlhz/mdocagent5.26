@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 751 elements starting with...",
+      [
+        "low   UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549   FORM 10-K   \u2612   ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended December 31, 2018   Commission file number 1-3285   3M COMPANY State of Incorporation: Delaware   I.R.S. Employer Identification No. 41-0417775 Principal executive offices: 3M Center, St. Paul, Minnesota 55144 Telephone number: (651) 733-1110   SECURITIES REGISTERED PURSUANT TO SECTION 12(b) OF THE ACT: Title of each class   Name of each exchange on which registered Common Stock, Par Value $.01 Per Share   1.500% Notes due 2026 Floating Rate Notes due 2020 0.375% Notes due 2022 0.950% Notes due 2023 1.750% Notes due 2030 1.500% Notes due 2031   New York Stock Exchange, Inc. Chicago Stock Exchange, Inc.",
+        "Chicago Stock Exchange, Inc. New York Stock Exchange, Inc. New York Stock Exchange, Inc. New York Stock Exchange, Inc. New York Stock Exchange, Inc. New York Stock Exchange, Inc. New York Stock Exchange, Inc.   Note: The common stock of the Registrant is also traded on the SWX Swiss Exchange. Securities registered pursuant to section 12(g) of the Act: None   Indicate by check mark if the Registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act.  Yes  \u2612    No  \u2610   Indicate by check mark if the Registrant is not required to file reports pursuant to Section 13 or Section 15(d) of the Act.  Yes  \u2610    No  \u2612   Indicate by check mark whether the Registrant (1) has filed all reports required to be filed by Section 13 or 15(d) of the Securities Exchange Act of 1934 during the preceding 12 months (or for such shorter period that the Registrant was required to file such reports), and (2) has been subject to such filing requirements for the past 90 days.",
+        "Yes  \u2612    No  \u2610   Indicate by check mark whether the registrant has submitted electronically every Interactive Data File required to be submitted pursuant to Rule 405 of Regulation S- T during the preceding 12 months (or for such shorter period that the registrant was required to submit such files).  Yes  \u2612    No  \u2610   Indicate by check mark if disclosure of delinquent filers pursuant to Item 405 of Regulation S-K is not contained herein, and will not be contained, to the best of Registrant\u2019s knowledge, in definitive proxy or information statements incorporated by reference in Part III of this Form 10-K or any amendment to this Form 10-K.  \u2612   Indicate by check mark whether the Registrant is a large accelerated filer, an accelerated filer, a non-accelerated filer, smaller reporting company, or an emerging growth company. See the definitions of \u201clarge accelerated filer,\u201d \u201caccelerated filer,\u201d \u201csmaller reporting company,\u201d and \u201cemerging growth company\u201d in Rule 12b-2 of the Exchange Act."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-3M_2018_10K.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":4096,
+  "num_embeddings":123803,
+  "avg_doclen":164.8508655126,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-3M_2018_10K.pdf"
+    }
+  }
+}

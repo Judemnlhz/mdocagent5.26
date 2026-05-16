@@ -1,0 +1,293 @@
+/home/lhz/MDocAgent/retrieval/text_retrieval.py:4: UserWarning: 
+********************************************************************************
+RAGatouille WARNING: Future Release Notice
+--------------------------------------------
+RAGatouille version 0.0.10 will be migrating to a PyLate backend 
+instead of the current Stanford ColBERT backend.
+PyLate is a fully mature, feature-equivalent backend, that greatly facilitates compatibility.
+However, please pin version <0.0.10 if you require the Stanford ColBERT backend.
+********************************************************************************
+  from ragatouille import RAGPretrainedModel
+[2026-05-15 07:53:21,955][faiss._loader][INFO] - Loading faiss with AVX512 support.
+[2026-05-15 07:53:21,955][faiss._loader][INFO] - Could not load library with AVX512 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx512'")
+[2026-05-15 07:53:21,955][faiss._loader][INFO] - Loading faiss with AVX2 support.
+[2026-05-15 07:53:21,955][faiss._loader][INFO] - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-05-15 07:53:21,955][faiss._loader][INFO] - Loading faiss.
+[2026-05-15 07:53:21,987][faiss._loader][INFO] - Successfully loaded faiss.
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/utils/amp.py:12: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler()
+Use original sample path!
+Use original sample path!
+  0%|          | 0/1073 [00:00<?, ?it/s]---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:53:26] #> Note: Output directory .ragatouille/colbert/indexes/MMLongBench-question-PH_2016.06.08_Economy-Final.pdf already exists
+
+
+[May 15, 07:53:26] #> Will delete 1 files already at .ragatouille/colbert/indexes/MMLongBench-question-PH_2016.06.08_Economy-Final.pdf in 20 seconds...
+[May 15, 07:53:50] [0] 		 #> Encoding 57 passages..
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/utils/amp.py:15: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  return torch.cuda.amp.autocast() if self.activated else NullContextManager()
+[May 15, 07:53:51] [0] 		 avg_doclen_est = 140.19297790527344 	 len(local_sample) = 57
+[May 15, 07:53:51] [0] 		 Creating 1,024 partitions.
+[May 15, 07:53:51] [0] 		 *Estimated* 7,990 embeddings.
+[May 15, 07:53:51] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-PH_2016.06.08_Economy-Final.pdf/plan.json ..
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/collection_indexer.py:256: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  sub_sample = torch.load(sub_sample_path)
+Warning: number of training points (7592) is less than the minimum recommended (10240)
+used 14 iterations (0.1165s) to cluster 7592 items into 1024 clusters
+[May 15, 07:53:51] Loading decompress_residuals_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
+Using /root/.cache/torch_extensions/py312_cu121 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /root/.cache/torch_extensions/py312_cu121/decompress_residuals_cpp/build.ninja...
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module decompress_residuals_cpp...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[1/3] /opt/conda/envs/mdocagent/bin/x86_64-conda-linux-gnu-c++ -MMD -MF decompress_residuals.o.d -DTORCH_EXTENSION_NAME=decompress_residuals_cpp -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/TH -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/THC -isystem /opt/conda/envs/mdocagent/include -isystem /opt/conda/envs/mdocagent/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 -fPIC -std=c++17 -c /opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/decompress_residuals.cpp -o decompress_residuals.o 
+[2/3] /opt/conda/envs/mdocagent/bin/nvcc --generate-dependencies-with-compile --dependency-output decompress_residuals.cuda.o.d -ccbin /opt/conda/envs/mdocagent/bin/x86_64-conda-linux-gnu-cc -DTORCH_EXTENSION_NAME=decompress_residuals_cpp -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/TH -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/THC -isystem /opt/conda/envs/mdocagent/include -isystem /opt/conda/envs/mdocagent/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_70,code=compute_70 -gencode=arch=compute_70,code=sm_70 --compiler-options '-fPIC' -std=c++17 -c /opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/decompress_residuals.cu -o decompress_residuals.cuda.o 
+nvcc warning : incompatible redefinition for option 'compiler-bindir', the last value of this option was used
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/decompress_residuals.cu: In function 'at::Tensor decompress_residuals_cuda(at::Tensor, at::Tensor, at::Tensor, at::Tensor, at::Tensor, at::Tensor, int, int)':
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/decompress_residuals.cu:61:126: warning: 'T* at::Tensor::data() const [with T = unsigned char]' is deprecated: Tensor.data<T>() is deprecated. Please use Tensor.data_ptr<T>() instead. [-Wdeprecated-declarations]
+   61 |     decompress_residuals_kernel<<<blocks, threads>>>(
+      |                                                                                                                              ^ 
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/ATen/core/TensorBody.h:247:1: note: declared here
+  247 |   T * data() const {
+      | ^ ~~
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/decompress_residuals.cu:61:592: warning: 'T* at::Tensor::data() const [with T = c10::Half]' is deprecated: Tensor.data<T>() is deprecated. Please use Tensor.data_ptr<T>() instead. [-Wdeprecated-declarations]
+   61 |     decompress_residuals_kernel<<<blocks, threads>>>(
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^ 
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/ATen/core/TensorBody.h:247:1: note: declared here
+  247 |   T * data() const {
+      | ^ ~~
+[3/3] /opt/conda/envs/mdocagent/bin/x86_64-conda-linux-gnu-c++ decompress_residuals.o decompress_residuals.cuda.o -shared -L/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/opt/conda/envs/mdocagent/lib -lcudart -o decompress_residuals_cpp.so
+Loading extension module decompress_residuals_cpp...
+[May 15, 07:56:14] Loading packbits_cpp extension (set COLBERT_LOAD_TORCH_EXTENSION_VERBOSE=True for more info)...
+Using /root/.cache/torch_extensions/py312_cu121 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /root/.cache/torch_extensions/py312_cu121/packbits_cpp/build.ninja...
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/utils/cpp_extension.py:1965: UserWarning: TORCH_CUDA_ARCH_LIST is not set, all archs for visible cards are included for compilation. 
+If this is not desired, please set os.environ['TORCH_CUDA_ARCH_LIST'].
+  warnings.warn(
+Building extension module packbits_cpp...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[1/2] /opt/conda/envs/mdocagent/bin/nvcc --generate-dependencies-with-compile --dependency-output packbits.cuda.o.d -ccbin /opt/conda/envs/mdocagent/bin/x86_64-conda-linux-gnu-cc -DTORCH_EXTENSION_NAME=packbits_cpp -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/torch/csrc/api/include -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/TH -isystem /opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/THC -isystem /opt/conda/envs/mdocagent/include -isystem /opt/conda/envs/mdocagent/include/python3.12 -D_GLIBCXX_USE_CXX11_ABI=0 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_70,code=compute_70 -gencode=arch=compute_70,code=sm_70 --compiler-options '-fPIC' -std=c++17 -c /opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/packbits.cu -o packbits.cuda.o 
+nvcc warning : incompatible redefinition for option 'compiler-bindir', the last value of this option was used
+nvcc warning : Support for offline compilation for architectures prior to '<compute/sm/lto>_75' will be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning).
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/packbits.cu: In function 'at::Tensor packbits_cuda(at::Tensor)':
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/packbits.cu:50:107: warning: 'T* at::Tensor::data() const [with T = unsigned char]' is deprecated: Tensor.data<T>() is deprecated. Please use Tensor.data_ptr<T>() instead. [-Wdeprecated-declarations]
+   50 |     packbits_kernel<<<blocks, threads>>>(
+      |                                                                                                           ^ 
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/ATen/core/TensorBody.h:247:1: note: declared here
+  247 |   T * data() const {
+      | ^ ~~
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/packbits.cu:50:149: warning: 'T* at::Tensor::data() const [with T = unsigned char]' is deprecated: Tensor.data<T>() is deprecated. Please use Tensor.data_ptr<T>() instead. [-Wdeprecated-declarations]
+   50 |     packbits_kernel<<<blocks, threads>>>(
+      |                                                                                                                                                     ^ 
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/include/ATen/core/TensorBody.h:247:1: note: declared here
+  247 |   T * data() const {
+      | ^ ~~
+[2/2] /opt/conda/envs/mdocagent/bin/x86_64-conda-linux-gnu-c++ packbits.o packbits.cuda.o -shared -L/opt/conda/envs/mdocagent/lib/python3.12/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/opt/conda/envs/mdocagent/lib -lcudart -o packbits_cpp.so
+Loading extension module packbits_cpp...
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/residual.py:141: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  centroids = torch.load(centroids_path, map_location='cpu')
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/residual.py:142: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  avg_residual = torch.load(avgresidual_path, map_location='cpu')
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/residual.py:143: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  bucket_cutoffs, bucket_weights = torch.load(buckets_path, map_location='cpu')
+[0.023, 0.028, 0.027, 0.025, 0.029, 0.029, 0.028, 0.027, 0.024, 0.028, 0.027, 0.026, 0.029, 0.031, 0.027, 0.03, 0.025, 0.026, 0.03, 0.031, 0.028, 0.029, 0.029, 0.027, 0.026, 0.029, 0.03, 0.028, 0.03, 0.03, 0.025, 0.032, 0.029, 0.026, 0.026, 0.023, 0.029, 0.028, 0.028, 0.031, 0.031, 0.025, 0.026, 0.028, 0.03, 0.03, 0.028, 0.028, 0.027, 0.026, 0.025, 0.028, 0.028, 0.027, 0.028, 0.027, 0.029, 0.029, 0.033, 0.028, 0.026, 0.028, 0.03, 0.026, 0.029, 0.028, 0.026, 0.028, 0.025, 0.025, 0.025, 0.026, 0.027, 0.028, 0.028, 0.028, 0.029, 0.026, 0.032, 0.031, 0.031, 0.024, 0.028, 0.028, 0.029, 0.025, 0.03, 0.026, 0.027, 0.029, 0.026, 0.028, 0.025, 0.027, 0.029, 0.026, 0.03, 0.028, 0.027, 0.032, 0.029, 0.027, 0.027, 0.027, 0.027, 0.034, 0.025, 0.024, 0.027, 0.026, 0.029, 0.027, 0.029, 0.025, 0.03, 0.031, 0.028, 0.026, 0.025, 0.026, 0.024, 0.027, 0.028, 0.028, 0.024, 0.024, 0.026, 0.03]
+
+0it [00:00, ?it/s][A[May 15, 07:58:31] [0] 		 #> Encoding 57 passages..
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/utils/amp.py:15: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  return torch.cuda.amp.autocast() if self.activated else NullContextManager()
+
+1it [00:00,  7.45it/s][A1it [00:00,  7.42it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/codecs/residual_embeddings.py:86: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  return torch.load(codes_path, map_location='cpu')
+100%|██████████| 1/1 [00:00<00:00, 942.75it/s]
+[May 15, 07:58:31] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:31] #> Building the emb2pid mapping..
+[May 15, 07:58:31] len(emb2pid) = 7991
+
+  0%|          | 0/1024 [00:00<?, ?it/s][A100%|██████████| 1024/1024 [00:00<00:00, 40924.72it/s]
+[May 15, 07:58:31] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-PH_2016.06.08_Economy-Final.pdf/ivf.pid.pt
+  0%|          | 1/1073 [05:06<91:13:16, 306.34s/it]Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-PH_2016.06.08_Economy-Final.pdf) to MMLongBench-question-Independents-Report.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:32] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-Independents-Report.pdf 
+
+
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/utils/amp.py:12: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  self.scaler = torch.cuda.amp.GradScaler()
+[May 15, 07:58:36] [0] 		 #> Encoding 36 passages..
+[May 15, 07:58:36] [0] 		 avg_doclen_est = 132.80555725097656 	 len(local_sample) = 36
+[May 15, 07:58:36] [0] 		 Creating 1,024 partitions.
+[May 15, 07:58:36] [0] 		 *Estimated* 4,781 embeddings.
+[May 15, 07:58:36] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-Independents-Report.pdf/plan.json ..
+/opt/conda/envs/mdocagent/lib/python3.12/site-packages/colbert/indexing/collection_indexer.py:256: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  sub_sample = torch.load(sub_sample_path)
+Warning: number of training points (4542) is less than the minimum recommended (10240)
+used 7 iterations (0.0075s) to cluster 4542 items into 1024 clusters
+[0.022, 0.028, 0.024, 0.026, 0.027, 0.026, 0.025, 0.025, 0.022, 0.029, 0.022, 0.027, 0.024, 0.027, 0.024, 0.024, 0.021, 0.025, 0.024, 0.028, 0.025, 0.024, 0.026, 0.022, 0.023, 0.026, 0.029, 0.023, 0.025, 0.026, 0.023, 0.026, 0.026, 0.023, 0.025, 0.026, 0.027, 0.025, 0.025, 0.027, 0.027, 0.024, 0.026, 0.024, 0.023, 0.026, 0.027, 0.028, 0.027, 0.027, 0.024, 0.024, 0.023, 0.024, 0.026, 0.024, 0.026, 0.024, 0.031, 0.023, 0.025, 0.026, 0.025, 0.027, 0.027, 0.023, 0.028, 0.028, 0.022, 0.024, 0.023, 0.024, 0.026, 0.024, 0.026, 0.027, 0.028, 0.026, 0.027, 0.024, 0.032, 0.026, 0.024, 0.023, 0.022, 0.023, 0.023, 0.025, 0.024, 0.026, 0.023, 0.022, 0.024, 0.025, 0.027, 0.027, 0.027, 0.024, 0.026, 0.023, 0.025, 0.027, 0.024, 0.026, 0.022, 0.029, 0.022, 0.024, 0.025, 0.025, 0.026, 0.024, 0.031, 0.023, 0.026, 0.026, 0.026, 0.027, 0.024, 0.026, 0.022, 0.024, 0.026, 0.028, 0.026, 0.022, 0.026, 0.025]
+
+0it [00:00, ?it/s][A[May 15, 07:58:36] [0] 		 #> Encoding 36 passages..
+1it [00:00, 15.49it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A100%|██████████| 1/1 [00:00<00:00, 1830.77it/s]
+[May 15, 07:58:36] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:36] #> Building the emb2pid mapping..
+[May 15, 07:58:36] len(emb2pid) = 4781
+
+  0%|          | 0/1024 [00:00<?, ?it/s][A100%|██████████| 1024/1024 [00:00<00:00, 45610.60it/s]
+[May 15, 07:58:36] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-Independents-Report.pdf/ivf.pid.pt
+  1%|          | 8/1073 [05:10<8:24:47, 28.44s/it]  Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-Independents-Report.pdf) to MMLongBench-question-0e94b4197b10096b1f4c699701570fbf.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:36] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-0e94b4197b10096b1f4c699701570fbf.pdf 
+
+
+[May 15, 07:58:40] [0] 		 #> Encoding 15 passages..
+[May 15, 07:58:40] [0] 		 avg_doclen_est = 27.733333587646484 	 len(local_sample) = 15
+[May 15, 07:58:40] [0] 		 Creating 256 partitions.
+[May 15, 07:58:40] [0] 		 *Estimated* 416 embeddings.
+[May 15, 07:58:40] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-0e94b4197b10096b1f4c699701570fbf.pdf/plan.json ..
+Warning: number of training points (396) is less than the minimum recommended (2560)
+used 6 iterations (0.005s) to cluster 396 items into 256 clusters
+[0.042, 0.052, 0.049, 0.032, 0.033, 0.037, 0.04, 0.041, 0.028, 0.04, 0.04, 0.031, 0.03, 0.05, 0.027, 0.026, 0.031, 0.032, 0.032, 0.036, 0.028, 0.031, 0.031, 0.029, 0.028, 0.037, 0.051, 0.03, 0.029, 0.04, 0.03, 0.039, 0.036, 0.027, 0.052, 0.029, 0.03, 0.021, 0.038, 0.026, 0.036, 0.037, 0.046, 0.044, 0.044, 0.04, 0.046, 0.034, 0.02, 0.03, 0.032, 0.03, 0.031, 0.026, 0.028, 0.029, 0.025, 0.027, 0.03, 0.032, 0.036, 0.036, 0.034, 0.047, 0.038, 0.043, 0.029, 0.03, 0.031, 0.03, 0.036, 0.034, 0.041, 0.034, 0.031, 0.031, 0.043, 0.036, 0.033, 0.04, 0.027, 0.024, 0.033, 0.036, 0.028, 0.037, 0.042, 0.043, 0.04, 0.028, 0.038, 0.041, 0.034, 0.04, 0.026, 0.034, 0.033, 0.048, 0.031, 0.03, 0.047, 0.025, 0.031, 0.027, 0.031, 0.037, 0.034, 0.032, 0.053, 0.039, 0.044, 0.031, 0.038, 0.029, 0.028, 0.025, 0.032, 0.043, 0.032, 0.031, 0.033, 0.035, 0.04, 0.03, 0.031, 0.027, 0.04, 0.028]
+
+0it [00:00, ?it/s][A[May 15, 07:58:40] [0] 		 #> Encoding 15 passages..
+1it [00:00, 31.88it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A100%|██████████| 1/1 [00:00<00:00, 1982.19it/s]
+[May 15, 07:58:40] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:40] #> Building the emb2pid mapping..
+[May 15, 07:58:40] len(emb2pid) = 416
+
+  0%|          | 0/256 [00:00<?, ?it/s][A100%|██████████| 256/256 [00:00<00:00, 44548.06it/s]
+[May 15, 07:58:40] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-0e94b4197b10096b1f4c699701570fbf.pdf/ivf.pid.pt
+  1%|▏         | 14/1073 [05:15<4:04:24, 13.85s/it]Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-0e94b4197b10096b1f4c699701570fbf.pdf) to MMLongBench-question-fdac8d1e9ef56519371df7e6532df27d.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:41] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-fdac8d1e9ef56519371df7e6532df27d.pdf 
+
+
+[May 15, 07:58:45] [0] 		 #> Encoding 59 passages..
+[May 15, 07:58:45] [0] 		 avg_doclen_est = 158.8474578857422 	 len(local_sample) = 59
+[May 15, 07:58:45] [0] 		 Creating 1,024 partitions.
+[May 15, 07:58:45] [0] 		 *Estimated* 9,372 embeddings.
+[May 15, 07:58:45] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-fdac8d1e9ef56519371df7e6532df27d.pdf/plan.json ..
+Warning: number of training points (8904) is less than the minimum recommended (10240)
+used 13 iterations (0.0194s) to cluster 8904 items into 1024 clusters
+[0.03, 0.033, 0.035, 0.032, 0.031, 0.034, 0.031, 0.031, 0.029, 0.034, 0.031, 0.03, 0.036, 0.03, 0.029, 0.034, 0.03, 0.032, 0.029, 0.035, 0.028, 0.032, 0.032, 0.03, 0.031, 0.033, 0.033, 0.033, 0.032, 0.034, 0.03, 0.034, 0.034, 0.028, 0.029, 0.029, 0.033, 0.031, 0.03, 0.038, 0.031, 0.031, 0.03, 0.032, 0.031, 0.028, 0.032, 0.033, 0.034, 0.029, 0.028, 0.034, 0.033, 0.03, 0.031, 0.033, 0.037, 0.032, 0.036, 0.029, 0.03, 0.034, 0.029, 0.033, 0.032, 0.033, 0.031, 0.035, 0.029, 0.031, 0.035, 0.032, 0.032, 0.03, 0.033, 0.034, 0.035, 0.033, 0.032, 0.034, 0.031, 0.033, 0.033, 0.032, 0.034, 0.031, 0.033, 0.037, 0.029, 0.03, 0.033, 0.038, 0.034, 0.033, 0.03, 0.035, 0.037, 0.031, 0.032, 0.034, 0.031, 0.039, 0.031, 0.031, 0.035, 0.029, 0.031, 0.029, 0.031, 0.029, 0.034, 0.032, 0.035, 0.029, 0.031, 0.029, 0.033, 0.029, 0.033, 0.033, 0.032, 0.035, 0.033, 0.034, 0.031, 0.038, 0.032, 0.028]
+
+0it [00:00, ?it/s][A[May 15, 07:58:45] [0] 		 #> Encoding 59 passages..
+1it [00:00, 11.44it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A100%|██████████| 1/1 [00:00<00:00, 1775.74it/s]
+[May 15, 07:58:45] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:45] #> Building the emb2pid mapping..
+[May 15, 07:58:45] len(emb2pid) = 9372
+
+  0%|          | 0/1024 [00:00<?, ?it/s][A100%|██████████| 1024/1024 [00:00<00:00, 44664.34it/s]
+[May 15, 07:58:45] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-fdac8d1e9ef56519371df7e6532df27d.pdf/ivf.pid.pt
+  2%|▏         | 21/1073 [05:20<2:14:53,  7.69s/it]Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-fdac8d1e9ef56519371df7e6532df27d.pdf) to MMLongBench-question-52b3137455e7ca4df65021a200aef724.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:46] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-52b3137455e7ca4df65021a200aef724.pdf 
+
+
+[May 15, 07:58:50] [0] 		 #> Encoding 112 passages..
+[May 15, 07:58:50] [0] 		 avg_doclen_est = 24.79464340209961 	 len(local_sample) = 112
+[May 15, 07:58:50] [0] 		 Creating 512 partitions.
+[May 15, 07:58:50] [0] 		 *Estimated* 2,777 embeddings.
+[May 15, 07:58:50] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-52b3137455e7ca4df65021a200aef724.pdf/plan.json ..
+Warning: number of training points (2639) is less than the minimum recommended (5120)
+used 11 iterations (0.0072s) to cluster 2639 items into 512 clusters
+[0.032, 0.036, 0.037, 0.032, 0.033, 0.035, 0.034, 0.036, 0.036, 0.038, 0.029, 0.032, 0.026, 0.036, 0.038, 0.039, 0.033, 0.033, 0.031, 0.039, 0.035, 0.031, 0.035, 0.037, 0.031, 0.036, 0.037, 0.029, 0.032, 0.039, 0.03, 0.032, 0.032, 0.034, 0.031, 0.03, 0.034, 0.035, 0.033, 0.038, 0.031, 0.032, 0.034, 0.027, 0.035, 0.029, 0.029, 0.045, 0.041, 0.031, 0.029, 0.037, 0.03, 0.033, 0.031, 0.035, 0.027, 0.033, 0.036, 0.033, 0.036, 0.032, 0.033, 0.032, 0.033, 0.033, 0.038, 0.036, 0.031, 0.032, 0.037, 0.032, 0.031, 0.034, 0.028, 0.035, 0.032, 0.033, 0.032, 0.032, 0.034, 0.038, 0.035, 0.035, 0.031, 0.032, 0.028, 0.034, 0.034, 0.035, 0.031, 0.037, 0.032, 0.04, 0.03, 0.031, 0.038, 0.031, 0.034, 0.034, 0.035, 0.037, 0.033, 0.029, 0.033, 0.033, 0.038, 0.037, 0.032, 0.032, 0.038, 0.033, 0.039, 0.032, 0.038, 0.027, 0.036, 0.035, 0.032, 0.036, 0.032, 0.028, 0.03, 0.035, 0.043, 0.03, 0.036, 0.034]
+
+0it [00:00, ?it/s][A[May 15, 07:58:50] [0] 		 #> Encoding 112 passages..
+1it [00:00, 13.45it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A100%|██████████| 1/1 [00:00<00:00, 1885.08it/s]
+[May 15, 07:58:50] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:50] #> Building the emb2pid mapping..
+[May 15, 07:58:50] len(emb2pid) = 2777
+
+  0%|          | 0/512 [00:00<?, ?it/s][A100%|██████████| 512/512 [00:00<00:00, 45333.30it/s]
+[May 15, 07:58:50] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-52b3137455e7ca4df65021a200aef724.pdf/ivf.pid.pt
+  3%|▎         | 28/1073 [05:25<1:25:13,  4.89s/it]Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-52b3137455e7ca4df65021a200aef724.pdf) to MMLongBench-question-earlybird-110722143746-phpapp02_95.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:50] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-earlybird-110722143746-phpapp02_95.pdf 
+
+
+[May 15, 07:58:54] [0] 		 #> Encoding 41 passages..
+[May 15, 07:58:54] [0] 		 avg_doclen_est = 3.0 	 len(local_sample) = 41
+[May 15, 07:58:54] [0] 		 Creating 128 partitions.
+[May 15, 07:58:54] [0] 		 *Estimated* 123 embeddings.
+[May 15, 07:58:54] [0] 		 #> Saving the indexing plan to .ragatouille/colbert/indexes/MMLongBench-question-earlybird-110722143746-phpapp02_95.pdf/plan.json ..
+Warning: number of training points (117) is less than the minimum recommended (1280)
+used 2 iterations (0.0021s) to cluster 117 items into 128 clusters
+[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+0it [00:00, ?it/s][A[May 15, 07:58:54] [0] 		 #> Encoding 41 passages..
+1it [00:00, 31.64it/s]
+
+  0%|          | 0/1 [00:00<?, ?it/s][A100%|██████████| 1/1 [00:00<00:00, 2169.84it/s]
+[May 15, 07:58:54] #> Optimizing IVF to store map from centroids to list of pids..
+[May 15, 07:58:54] #> Building the emb2pid mapping..
+[May 15, 07:58:54] len(emb2pid) = 123
+
+  0%|          | 0/128 [00:00<?, ?it/s][A100%|██████████| 128/128 [00:00<00:00, 122016.12it/s]
+[May 15, 07:58:54] #> Saved optimized IVF to .ragatouille/colbert/indexes/MMLongBench-question-earlybird-110722143746-phpapp02_95.pdf/ivf.pid.pt
+  3%|▎         | 34/1073 [05:29<1:01:05,  3.53s/it]Done indexing!
+New index_name received! Updating current index_name (MMLongBench-question-earlybird-110722143746-phpapp02_95.pdf) to MMLongBench-question-ddoseattle-150627210357-lva1-app6891_95.pdf
+---- WARNING! You are using PLAID with an experimental replacement for FAISS for greater compatibility ----
+This is a behaviour change from RAGatouille 0.8.0 onwards.
+This works fine for most users and smallish datasets, but can be considerably slower than FAISS and could cause worse results in some situations.
+If you're confident with FAISS working on your machine, pass use_faiss=True to revert to the FAISS-using behaviour.
+--------------------
+
+
+[May 15, 07:58:55] #> Creating directory .ragatouille/colbert/indexes/MMLongBench-question-ddoseattle-150627210357-lva1-app6891_95.pdf 
+
+

@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 264 elements starting with...",
+      [
+        "Table of Contents UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549\u00a0 FORM 10-K \u2612 ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 For the fiscal year ended August\u00a029, 2021 or \u2610 TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 Commission file number 0-20355 Costco Wholesale Corporation (Exact name of registrant as specified in its charter) Washington \u00a0 91-1223280 (State or other jurisdiction of incorporation or organization) \u00a0 (I.R.S. Employer Identification No.)",
+        "Employer Identification No.) 999 Lake Drive, Issaquah, WA 98027 (Address of principal executive offices) (Zip Code) Registrant\u2019s telephone number, including area code: (425)\u00a0313-8100 Securities registered pursuant to Section\u00a012(b) of the Act: Title of each class Trading Symbol \u00a0 Name of each exchange on which registered Common Stock, $.01 Par Value COST The NASDAQ Global Select Market Securities registered pursuant to Section\u00a012(g) of the Act: None\u00a0 Indicate by check mark if the registrant is a well-known seasoned issuer, as defined in Rule 405 of the Securities Act. Yes\u00a0\u2612\u00a0\u00a0\u00a0No\u00a0\u2610 Indicate by check mark if the registrant is not required to file reports pursuant to Section\u00a013 or Section\u00a015(d) of the Act.",
+        "Yes\u00a0\u2612\u00a0\u00a0\u00a0No\u00a0\u2610 Indicate by check mark if the registrant is not required to file reports pursuant to Section\u00a013 or Section\u00a015(d) of the Act. Yes\u00a0\u2610\u00a0\u00a0\u00a0No\u00a0\u2612\u00a0 Indicate by check mark whether the registrant (1)\u00a0has filed all reports required to be filed by Section\u00a013 or 15(d)\u00a0of the Securities Exchange Act of 1934 during the preceding 12 months (or for such shorter period that the registrant was required to file such reports), and (2)\u00a0has been subject to such filing requirements for the past 90 days. Yes\u00a0\u2612\u00a0\u00a0\u00a0No\u00a0\u2610 Indicate by check mark whether the registrant has submitted electronically every Interactive Data File required to be submitted pursuant to Rule 405 of Regulation S-T (\u00a7\u00a0232.405 of this chapter) during the preceding 12 months (or for such shorter period that the registrant was required to submit such files)."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-COSTCO_2021_10K.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":45264,
+  "avg_doclen":171.4545454545,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-COSTCO_2021_10K.pdf"
+    }
+  }
+}

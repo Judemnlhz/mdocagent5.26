@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 166 elements starting with...",
+      [
+        "Large Language Model Is Not a Good Few-shot Information Extractor, but a Good Reranker for Hard Samples! Yubo Ma1, Yixin Cao2, YongChing Hong1, Aixin Sun1 1 S-Lab, Nanyang Technological University 2 Singapore Management University yubo001@e.ntu.edu.sg Abstract Large Language Models (LLMs) have made remarkable strides in various tasks. Whether LLMs are competitive few-shot solvers for in- formation extraction (IE) tasks, however, re- mains an open problem. In this work, we aim to provide a thorough answer to this ques- tion. Through extensive experiments on nine datasets across four IE tasks, we demonstrate that current advanced LLMs consistently ex- hibit inferior performance, higher latency, and increased budget requirements compared to fine-tuned SLMs under most settings. There- fore, we conclude that LLMs are not effec- tive few-shot information extractors in gen- eral 1. Nonetheless, we illustrate that with appropriate prompting strategies, LLMs can effectively complement SLMs and tackle chal- lenging samples that SLMs struggle with.",
+        "Nonetheless, we illustrate that with appropriate prompting strategies, LLMs can effectively complement SLMs and tackle chal- lenging samples that SLMs struggle with. And moreover, we propose an adaptive filter-then- rerank paradigm to combine the strengths of LLMs and SLMs. In this paradigm, SLMs serve as filters and LLMs serve as rerankers. By prompting LLMs to rerank a small portion of difficult samples identified by SLMs, our pre- liminary system consistently achieves promis- ing improvements (2.4% F1-gain on average) on various IE tasks, with an acceptable time and cost investment. Our code is available at https://github.com/mayubo2333/LLM-IE. 1 Introduction Large Language Models (LLMs, Brown et al. 2020; Chowdhery et al. 2022; Touvron et al.",
+        "Our code is available at https://github.com/mayubo2333/LLM-IE. 1 Introduction Large Language Models (LLMs, Brown et al. 2020; Chowdhery et al. 2022; Touvron et al. 2023) have shown remarkable abilities on various NLP applica- tions such as factual question answering (Yu et al., 2023; Sun et al., 2023), arithmetic reasoning (Chen et al., 2022a; Qian et al., 2023) and logical rea- soning (Jung et al., 2022; Pan et al., 2023). Given the reasoning, memorization, instruction-following and few-shot adaption capabilities emerging from 1A more precise assertion is that current LLMs, with vanilla prompting setting and without IE-specific fine-tuning, are not good few-shot information extractors in general. LLMs, it prompts a compelling question: Can LLMs be used to boost performance in few-shot information extraction (IE) tasks?"
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-2303.08559v2.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":27763,
+  "avg_doclen":167.2469879518,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-2303.08559v2.pdf"
+    }
+  }
+}

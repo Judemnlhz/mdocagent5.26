@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 143 elements starting with...",
+      [
+        "Page\u00a01 Not\u00a0Reported\u00a0in\u00a0A.3d,\u00a02012\u00a0WL\u00a03860732\u00a0(Del.Super.)\u00a0 (Cite\u00a0as:\u00a02012\u00a0WL\u00a03860732\u00a0(Del.Super.))\u00a0 \u00a9\u00a02013\u00a0Thomson\u00a0Reuters.\u00a0No\u00a0Claim\u00a0to\u00a0Orig.\u00a0US\u00a0Gov.\u00a0Works.\u00a0 \u00a0 \u00a0 Only\u00a0the\u00a0Westlaw\u00a0citation\u00a0is\u00a0currently\u00a0available.\u00a0 \u00a0 UNPUBLISHED\u00a0OPINION.\u00a0CHECK\u00a0COURT\u00a0 RULES\u00a0BEFORE\u00a0CITING.\u00a0 \u00a0 Superior\u00a0Court\u00a0of\u00a0Delaware.\u00a0 Re:\u00a0Diane\u00a0HANSON\u00a0 v.\u00a0 DELAWARE\u00a0STATE\u00a0PUBLIC\u00a0INTEGRITY\u00a0 COMMISSION.\u00a0 \u00a0 C.A.\u00a0No.\u00a011A\u201306\u2013001(ESB).\u00a0 Aug.\u00a030,\u00a02012.\u00a0 \u00a0 Charles\u00a0Slanina,\u00a0Esq.,\u00a0David\u00a0L.\u00a0Finger,\u00a0Esq.",
+        "C.A.\u00a0No.\u00a011A\u201306\u2013001(ESB).\u00a0 Aug.\u00a030,\u00a02012.\u00a0 \u00a0 Charles\u00a0Slanina,\u00a0Esq.,\u00a0David\u00a0L.\u00a0Finger,\u00a0Esq.\u00a0Finger,\u00a0 Slanina\u00a0&\u00a0Liebesman,\u00a0LLC,\u00a0Hockessin,\u00a0DE.\u00a0 \u00a0 Janet\u00a0 A.\u00a0Wright,\u00a0Esq.,\u00a0Delaware\u00a0State\u00a0Public\u00a0Integ\u00ad rity\u00a0Commission,\u00a0Dover,\u00a0DE.\u00a0 \u00a0 E.\u00a0SCOTT\u00a0BRADLEY,\u00a0Judge.",
+        "Janet\u00a0 A.\u00a0Wright,\u00a0Esq.,\u00a0Delaware\u00a0State\u00a0Public\u00a0Integ\u00ad rity\u00a0Commission,\u00a0Dover,\u00a0DE.\u00a0 \u00a0 E.\u00a0SCOTT\u00a0BRADLEY,\u00a0Judge.\u00a0 *1\u00a0Dear\u00a0Counsel:\u00a0 \u00a0 This\u00a0is\u00a0my\u00a0decision\u00a0on\u00a0Diane\u00a0Hanson's\u00a0appeal\u00a0of\u00a0 the\u00a0 Delaware\u00a0 State\u00a0 Public\u00a0 Integrity\u00a0 Commission's\u00a0 (\u201cPIC\u201d)\u00a0 finding\u00a0 that\u00a0 she\u00a0 violated\u00a0 the\u00a0 State\u00a0 Employ\u00ad ees,'\u00a0 Officers'\u00a0 and\u00a0 Officials'\u00a0 Code\u00a0 of\u00a0 Conduct\u00a0 (the\u00a0 \u201cCode\u00a0 of\u00a0 Conduct\u201d)\u00a0 when,\u00a0 as\u00a0 a\u00a0 town\u00a0commissioner\u00a0 for\u00a0Dewey\u00a0Beach,\u00a0she\u00a0voted\u00a0in\u00a0favor\u00a0of\u00a0an\u00a0ordinance\u00a0 purportedly\u00a0 clarifying\u00a0 the\u00a0 height\u00a0 limit\u00a0 applicable\u00a0 to\u00a0 structures\u00a0in\u00a0the\u00a0Resort\u00a0Business\u20131\u00a0(\u201cRB\u20131\u201d)\u00a0zoning\u00a0 district\u00a0in\u00a0Dewey\u00a0Beach."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-7c3f6204b3241f142f0f8eb8e1fefe7a.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":1024,
+  "num_embeddings":14540,
+  "avg_doclen":101.6783216783,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-7c3f6204b3241f142f0f8eb8e1fefe7a.pdf"
+    }
+  }
+}

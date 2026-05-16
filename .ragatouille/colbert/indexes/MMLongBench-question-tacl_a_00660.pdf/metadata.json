@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 147 elements starting with...",
+      [
+        "Automatically Correcting Large Language Models: Surveying the Landscape of Diverse Automated Correction Strategies Liangming Pan, Michael Saxon, Wenda Xu, Deepak Nathani, Xinyi Wang, William Yang Wang University of California, Santa Barbara, USA {liangmingpan, saxon, wendaxu, dnathani, xinyi wang}@ucsb.edu william@cs.ucsb.edu Abstract While large language models (LLMs) have shown remarkable effectiveness in various NLP tasks, they are still prone to issues such as hallucination, unfaithful reasoning, and toxi- city. A promising approach to rectify these flaws is correcting LLMs with feedback, where the LLM itself is prompted or guided with feed- back to fix problems in its own output. Tech- niques leveraging automated feedback\u2014either produced by the LLM itself (self-correction) or some external system\u2014are of particular in- terest as they make LLM-based solutions more practical and deployable with minimal human intervention. This paper provides an exhaus- tive review of the recent advances in correcting LLMs with automated feedback, categorizing them into training-time, generation-time, and post-hoc approaches.",
+        "This paper provides an exhaus- tive review of the recent advances in correcting LLMs with automated feedback, categorizing them into training-time, generation-time, and post-hoc approaches. We also identify poten- tial challenges and future directions in this emerging field. 1 Introduction Recent years have seen striking empirical suc- cesses of large language models (LLMs), as they consistently obtain impressive results across a di- verse range of NLP benchmarks (Guo et al., 2023; Suzgun et al., 2023; Qin et al., 2023), while also showcasing surprising abilities of language under- standing (Wei et al., 2022a; Begus et al., 2023), generation (Pu and Demberg, 2023; Lin and Chen, 2023; Lyu et al., 2023a), and reasoning (Wei et al., 2022b; Kojima et al., 2022; Dasgupta et al., 2022). However, these models are not without their flaws.",
+        "However, these models are not without their flaws. LLMs are observed to intermittently display un- desired and inconsistent behaviors such as pro- ducing seemingly convincing but inaccurate \u2018\u2018hallucinations\u2019\u2019 (Lin et al., 2022; Zhang et al., 2023c; Min et al., 2023), conducting unfaithful reasoning (Golovneva et al., 2023; Lyu et al., 2023b; Wu et al., 2023b), generating inappropri- ate or harmful content (Gehman et al., 2020; Levy et al., 2021, 2022; Shaikh et al., 2023), and failing to trustfully follow rules and constraints (Zhuo et al., 2023; Wang et al., 2023a). Such flawed be- haviors hamper the trust in LLMs and pose hurdles to their real-world applications (OpenAI, 2023). A prevailing strategy to rectify these undesired behaviors of LLMs is learning from feedback, mirroring a typical human learning strategy where individuals actively refine their behaviors through a cycle of trial, error, and correction."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-tacl_a_00660.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":25018,
+  "avg_doclen":170.1904761905,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-tacl_a_00660.pdf"
+    }
+  }
+}

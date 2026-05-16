@@ -1,0 +1,73 @@
+{
+  "config":{
+    "query_token_id":"[unused0]",
+    "doc_token_id":"[unused1]",
+    "query_token":"[Q]",
+    "doc_token":"[D]",
+    "ncells":null,
+    "centroid_score_threshold":null,
+    "ndocs":null,
+    "load_index_with_mmap":false,
+    "index_path":null,
+    "index_bsize":32,
+    "nbits":4,
+    "kmeans_niters":20,
+    "resume":false,
+    "pool_factor":1,
+    "clustering_mode":"hierarchical",
+    "protected_tokens":0,
+    "similarity":"cosine",
+    "bsize":64,
+    "accumsteps":1,
+    "lr":0.00001,
+    "maxsteps":400000,
+    "save_every":null,
+    "warmup":20000,
+    "warmup_bert":null,
+    "relu":false,
+    "nway":64,
+    "use_ib_negatives":true,
+    "reranker":false,
+    "distillation_alpha":1.0,
+    "ignore_scores":false,
+    "model_name":null,
+    "query_maxlen":32,
+    "attend_to_mask_tokens":false,
+    "interaction":"colbert",
+    "dim":128,
+    "doc_maxlen":256,
+    "mask_punctuation":true,
+    "checkpoint":"colbert-ir/colbertv2.0",
+    "triples":"/future/u/okhattab/root/unit/experiments/2021.10/downstream.distillation.round2.2_score/round2.nway6.cosine.ib/examples.64.json",
+    "collection":[
+      "list with 144 elements starting with...",
+      [
+        "REVIEW Pathogenetics. An introductory review Mohammad Saad Zaghloul Salem 1 Faculty of Medicine, Ain-Shams University, Cairo, Egypt Received 1 July 2015; accepted 7 July 2015 Available online 27 July 2015 KEYWORDS Pathogenetics; Mutagens; Mutation; Pathogenetic mechanisms; Anti-mutation mechanisms Abstract Pathogenetics refers to studying the different aspects of initiation/development/progres sion and pathogenesis of genetic defects. It comprises the study of mutagens or factors capable of affecting the structural integrity of the genetic material leading to mutational changes that, in the majority of cases, result in harmful effects due to the resulting disturbances of functions of mutated components of the genome. The study of mutagens depicts different types of mutagenic factors, their nature, their classi\ufb01cation according to their effects on the genetic material and their different modes of action. The study of mutation involves different types of mutations classi\ufb01ed according to various parameters, e.g.",
+        "The study of mutagens depicts different types of mutagenic factors, their nature, their classi\ufb01cation according to their effects on the genetic material and their different modes of action. The study of mutation involves different types of mutations classi\ufb01ed according to various parameters, e.g. magnitude, severity, target of mutational event as well as its nature, which can be classi\ufb01ed, in turn, according to whether it is spontaneous or induced, static or dynamic, somatic or germinal mutation etc. Finally, pathogenetics comprises studying and delin- eating the different and innumerable pathophysiological alterations and pathogenetic mechanisms that are directly and indirectly involved in, and leading to, the development of genetic disorders, coupled with a parallel study of various anti-mutation mechanisms that play critical roles in minimizing the drastic effects of mutational events on the genetic material and in effective protection against the development of these diseases. \u0002 2015 Production and hosting by Elsevier B.V. on behalf of Ain Shams University. This is an open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/).",
+        "\u0002 2015 Production and hosting by Elsevier B.V. on behalf of Ain Shams University. This is an open access article under the CC BY-NC-ND license (http://creativecommons.org/licenses/by-nc-nd/4.0/). Contents 1. De\ufb01nition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 2. Pathogenesis of genetic diseases . . . . . . . . . . ."
+      ]
+    ],
+    "queries":"/future/u/okhattab/data/MSMARCO/queries.train.tsv",
+    "index_name":"MMLongBench-question-f1f5242528411b262be447e61e2eb10f.pdf",
+    "overwrite":false,
+    "root":".ragatouille/",
+    "experiment":"colbert",
+    "index_root":null,
+    "name":"2026-05/15/08.03.39",
+    "rank":0,
+    "nranks":1,
+    "amp":true,
+    "gpus":1,
+    "avoid_fork_if_possible":false
+  },
+  "num_chunks":1,
+  "num_partitions":2048,
+  "num_embeddings":23595,
+  "avg_doclen":163.8541666667,
+  "RAGatouille":{
+    "index_config":{
+      "index_type":"PLAID",
+      "index_name":"MMLongBench-question-f1f5242528411b262be447e61e2eb10f.pdf"
+    }
+  }
+}
