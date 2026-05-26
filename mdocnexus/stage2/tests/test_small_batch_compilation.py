@@ -12,6 +12,7 @@ from typing import Any, Dict, List
 
 from mdocnexus.stage2.batch_page_selector import select_pages_for_small_batch
 from mdocnexus.stage2.batch_quality_report import summarize_batch_results, write_batch_summary
+from mdocnexus.stage2.compiler_client import ArtifactCompilerClient
 from scripts.stage2_compile_small_batch import run_small_batch, validate_args
 
 
@@ -107,6 +108,7 @@ class SmallBatchCompilationTest(unittest.TestCase):
             self.assertNotIn(forbidden, keys)
         self.assertEqual(summary["num_api_calls"], 1)
         self.assertEqual(summary["discard_rate"], 0.5)
+        self.assertIn("deterministic_dedup_enabled", summary)
 
     def test_write_batch_summary_rejects_forbidden_keys(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -149,6 +151,81 @@ class SmallBatchCompilationTest(unittest.TestCase):
             self.assertNotIn(forbidden, store_text)
         self.assertEqual(result["summary"]["num_pages_attempted"], 1)
         self.assertEqual(result["summary"]["num_api_calls"], 0)
+        self.assertTrue(result["summary"]["deterministic_dedup_enabled"])
+        self.assertEqual(result["summary"]["num_deduplicated_artifacts"], 0)
+
+    def test_dedup_keeps_raw_log_original_and_store_only_valid_unique_artifacts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            extract_root = root / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0])
+            stage2_json = root / "stage2.json"
+            config_path = root / "qwen3vl.yaml"
+            output_dir = root / "outputs"
+            stage2_json.write_text(json.dumps([make_stage2_record("doc_a.pdf", "What is on page 1?")]), encoding="utf-8")
+            config_path.write_text("model: Qwen/Qwen3-VL-8B-Instruct\n", encoding="utf-8")
+
+            result = run_small_batch(
+                make_args(
+                    stage2_json=stage2_json,
+                    config=config_path,
+                    extract_root=extract_root,
+                    output_dir=output_dir,
+                    dry_run_fake_client=True,
+                    enable_real_api=False,
+                    run_real_trial=False,
+                ),
+                client=DuplicateArtifactClient(),
+            )
+            raw_entry = json.loads((output_dir / "raw_outputs" / "raw_outputs.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            discard_entries = [
+                json.loads(line)
+                for line in (output_dir / "discard" / "discard.jsonl").read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+            store = json.loads(Path(result["page_results"][0]["artifact_store_path"]).read_text(encoding="utf-8"))
+
+        self.assertEqual(len(raw_entry["raw_output"]["artifacts"]), 2)
+        self.assertEqual([entry["error_type"] for entry in discard_entries], ["duplicate_artifact_deduplicated"])
+        self.assertEqual(len(store["pages"][0]["artifacts"]), 1)
+        self.assertEqual(result["summary"]["num_raw_artifacts_before_dedup"], 2)
+        self.assertEqual(result["summary"]["num_deduplicated_artifacts"], 1)
+        self.assertEqual(result["summary"]["schema_valid_rate_before_dedup"], 0.5)
+        self.assertEqual(result["summary"]["schema_valid_rate_after_dedup"], 1.0)
+
+    def test_disable_dedup_reproduces_duplicate_artifact_validation_issue(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            extract_root = root / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0])
+            stage2_json = root / "stage2.json"
+            config_path = root / "qwen3vl.yaml"
+            output_dir = root / "outputs"
+            stage2_json.write_text(json.dumps([make_stage2_record("doc_a.pdf", "What is on page 1?")]), encoding="utf-8")
+            config_path.write_text("model: Qwen/Qwen3-VL-8B-Instruct\n", encoding="utf-8")
+
+            result = run_small_batch(
+                make_args(
+                    stage2_json=stage2_json,
+                    config=config_path,
+                    extract_root=extract_root,
+                    output_dir=output_dir,
+                    dry_run_fake_client=True,
+                    enable_real_api=False,
+                    run_real_trial=False,
+                    deterministic_dedup_enabled=False,
+                ),
+                client=DuplicateArtifactClient(),
+            )
+            discard_entries = [
+                json.loads(line)
+                for line in (output_dir / "discard" / "discard.jsonl").read_text(encoding="utf-8").splitlines()
+                if line.strip()
+            ]
+
+        self.assertFalse(result["summary"]["deterministic_dedup_enabled"])
+        self.assertEqual(result["summary"]["num_deduplicated_artifacts"], 0)
+        self.assertIn("duplicate_artifact", [entry["error_type"] for entry in discard_entries])
 
 
 def make_stage2_record(
@@ -241,6 +318,7 @@ def make_args(
     enable_real_api: bool = True,
     run_real_trial: bool = True,
     dry_run_fake_client: bool = False,
+    deterministic_dedup_enabled: bool = True,
 ) -> argparse.Namespace:
     return argparse.Namespace(
         stage2_json=str(stage2_json),
@@ -253,8 +331,38 @@ def make_args(
         enable_real_api=enable_real_api,
         run_real_trial=run_real_trial,
         dry_run_fake_client=dry_run_fake_client,
+        deterministic_dedup_enabled=deterministic_dedup_enabled,
         timeout_seconds=120,
     )
+
+
+class DuplicateArtifactClient(ArtifactCompilerClient):
+    def generate_page_artifacts(self, system_prompt: str, user_prompt: str, schema_dict: Dict[str, Any]) -> Dict[str, Any]:
+        _ = system_prompt
+        _ = schema_dict
+        prompt_payload = json.loads(user_prompt)
+        doc_id = prompt_payload["document"]["doc_id"]
+        page_index = int(prompt_payload["document"]["page_index"])
+        source_id = f"p{page_index:03d}_text_0000"
+        artifact = {
+            "doc_id": doc_id,
+            "page_index": page_index,
+            "artifact_type": "text_span",
+            "modality": "text",
+            "content": "same content",
+            "normalized_content": {"text": "same content"},
+            "source_anchors": [
+                {"source_id": source_id, "anchor_type": "text_block", "page_index": page_index, "bbox": None}
+            ],
+            "provenance": {"op": "ATOM", "sources": [source_id]},
+            "validation_status": "candidate",
+            "compiler_metadata": {},
+        }
+        first = dict(artifact)
+        first["artifact_id"] = "artifact_001"
+        second = dict(artifact)
+        second["artifact_id"] = "artifact_002"
+        return {"doc_id": doc_id, "page_index": page_index, "artifacts": [first, second]}
 
 
 def collect_keys(value: Any) -> set[str]:

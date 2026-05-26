@@ -28,6 +28,8 @@ CSV_FIELDS = [
     "selection_reason",
     "page_image_path",
     "num_raw_artifacts",
+    "num_raw_artifacts_before_dedup",
+    "num_deduplicated_artifacts",
     "num_valid_artifacts",
     "num_validation_issues",
     "artifact_store_path",
@@ -41,11 +43,18 @@ def summarize_batch_results(page_results: list[dict]) -> dict:
     num_pages_attempted = len(page_results)
     num_api_calls = sum(1 for result in page_results if result.get("api_called"))
     num_raw_artifacts = sum(int(result.get("num_raw_artifacts", 0)) for result in page_results)
+    num_raw_artifacts_before_dedup = sum(
+        int(result.get("num_raw_artifacts_before_dedup", result.get("num_raw_artifacts", 0)))
+        for result in page_results
+    )
+    num_deduplicated_artifacts = sum(int(result.get("num_deduplicated_artifacts", 0)) for result in page_results)
     num_valid_artifacts = sum(int(result.get("num_valid_artifacts", 0)) for result in page_results)
     num_validation_issues = sum(int(result.get("num_validation_issues", 0)) for result in page_results)
     num_artifact_stores_written = sum(1 for result in page_results if result.get("artifact_store_path"))
     forbidden_field_violations = sum(int(result.get("forbidden_field_violations", 0)) for result in page_results)
     denominator = max(1, num_raw_artifacts)
+    before_denominator = max(1, num_raw_artifacts_before_dedup)
+    deterministic_dedup_enabled = any(result.get("deterministic_dedup_enabled") for result in page_results)
     return {
         "stage": "stage2_small_batch_artifact_compilation",
         "provider": page_results[0].get("provider") if page_results else None,
@@ -53,13 +62,23 @@ def summarize_batch_results(page_results: list[dict]) -> dict:
         "max_pages": page_results[0].get("max_pages") if page_results else 0,
         "num_pages_attempted": num_pages_attempted,
         "num_api_calls": num_api_calls,
+        "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
+        "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
+        "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
+        "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
+        "num_deduplicated_artifacts": num_deduplicated_artifacts,
+        "deduplicated_artifact_issue_type_count": num_deduplicated_artifacts,
         "num_raw_artifacts": num_raw_artifacts,
         "num_valid_artifacts": num_valid_artifacts,
         "num_validation_issues": num_validation_issues,
         "num_artifact_stores_written": num_artifact_stores_written,
         "schema_valid_rate": num_valid_artifacts / denominator,
+        "schema_valid_rate_before_dedup": num_valid_artifacts / before_denominator,
+        "schema_valid_rate_after_dedup": num_valid_artifacts / denominator,
         "anchoring_rate": num_valid_artifacts / denominator,
         "discard_rate": max(0, num_raw_artifacts - num_valid_artifacts) / denominator,
+        "discard_rate_before_dedup": max(0, num_raw_artifacts_before_dedup - num_valid_artifacts) / before_denominator,
+        "discard_rate_after_dedup": max(0, num_raw_artifacts - num_valid_artifacts) / denominator,
         "forbidden_field_violations": forbidden_field_violations,
         "uses_answer": False,
         "uses_evidence_pages": False,

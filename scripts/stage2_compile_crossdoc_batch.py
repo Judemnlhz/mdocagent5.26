@@ -21,10 +21,12 @@ from mdocnexus.stage2.compiler_client import ArtifactCompilerClient, FakeArtifac
 from mdocnexus.stage2.crossdoc_batch_selector import select_crossdoc_pages_for_batch
 from mdocnexus.stage2.discard_log import DiscardLogEntry, write_discard_log_entry
 from mdocnexus.stage2.mdocagent_compat import build_api_run_config_from_mdocagent_yaml, read_json_or_jsonl_records
+from mdocnexus.stage2.page_modality_diagnosis import diagnose_page_modality_from_question_and_preflight
 from mdocnexus.stage2.raw_output_log import build_raw_output_log_entry, write_raw_output_log
 from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
 from mdocnexus.stage2.run_manifest import build_stage2_run_manifest, write_stage2_run_manifest
 from mdocnexus.stage2.schema_serialization import build_page_artifact_output_schema_dict
+from mdocnexus.stage2.stage2_sidecar_store import load_stage2_preflight_sidecar, resolve_stage2_preflight
 from scripts.stage2_compile_small_batch import (
     COMPILER_VERSION,
     PROMPT_VERSION,
@@ -45,15 +47,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True)
     parser.add_argument("--extract-root", required=True)
     parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--sidecar-dir", default=None)
+    parser.add_argument("--selected-pages-csv", default=None)
     parser.add_argument("--max-docs", type=int, default=5)
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
     parser.add_argument("--max-pages", type=int, default=10)
     parser.add_argument("--provider", default="siliconflow")
     parser.add_argument("--model-name", default=None)
+    parser.add_argument("--prompt-version", default=PROMPT_VERSION)
+    parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
+    parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
     parser.add_argument("--enable-real-api", action="store_true")
     parser.add_argument("--run-real-trial", action="store_true")
     parser.add_argument("--dry-run-fake-client", action="store_true")
     parser.add_argument("--timeout-seconds", type=int, default=120)
+    parser.set_defaults(deterministic_dedup_enabled=True)
     return parser.parse_args()
 
 
@@ -64,6 +72,9 @@ def validate_args(args: argparse.Namespace) -> None:
         raise RuntimeError("--max-pages-per-doc must be between 1 and 2.")
     if int(args.max_pages) < 1 or int(args.max_pages) > MAX_ALLOWED_PAGES:
         raise RuntimeError("--max-pages must be between 1 and 10.")
+    selected_pages_csv = getattr(args, "selected_pages_csv", None)
+    if selected_pages_csv and not Path(selected_pages_csv).is_file():
+        raise FileNotFoundError(f"--selected-pages-csv does not exist: {selected_pages_csv}")
     if args.dry_run_fake_client:
         return
     if not args.enable_real_api:
@@ -94,12 +105,24 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
     api_config = build_api_config(args)
     output_paths = initialize_output_paths(args.output_dir)
     records = read_json_or_jsonl_records(args.stage2_json)
-    selected_pages = select_crossdoc_pages_for_batch(
-        records,
-        max_docs=int(args.max_docs),
-        max_pages_per_doc=int(args.max_pages_per_doc),
-        max_pages=int(args.max_pages),
-    )
+    selected_pages_csv = getattr(args, "selected_pages_csv", None)
+    if selected_pages_csv:
+        selected_pages = load_selected_pages_from_quality_csv(
+            records=records,
+            selected_pages_csv=selected_pages_csv,
+            stage2_json=args.stage2_json,
+            sidecar_dir=getattr(args, "sidecar_dir", None),
+            max_docs=int(args.max_docs),
+            max_pages_per_doc=int(args.max_pages_per_doc),
+            max_pages=int(args.max_pages),
+        )
+    else:
+        selected_pages = select_crossdoc_pages_for_batch(
+            records,
+            max_docs=int(args.max_docs),
+            max_pages_per_doc=int(args.max_pages_per_doc),
+            max_pages=int(args.max_pages),
+        )
     active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
     schema_dict = build_page_artifact_output_schema_dict()
     compiler_metadata = {
@@ -128,6 +151,8 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
                     "max_pages": int(args.max_pages),
                 },
                 api_called=not args.dry_run_fake_client,
+                prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
+                deterministic_dedup_enabled=bool(getattr(args, "deterministic_dedup_enabled", True)),
             )
         )
 
@@ -143,9 +168,20 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
             "max_docs": int(args.max_docs),
             "max_pages_per_doc": int(args.max_pages_per_doc),
             "max_pages": int(args.max_pages),
+            "selected_pages_csv": str(selected_pages_csv) if selected_pages_csv else None,
+            "prompt_version": str(getattr(args, "prompt_version", PROMPT_VERSION)),
+            "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
+            "dedup_stage": "after_raw_output_log_before_validation" if getattr(args, "deterministic_dedup_enabled", True) else None,
+            "dedup_is_llm_repair": False,
+            "dedup_uses_gold": False,
+            "dedup_rule_version": "artifact_dedup_v1",
         },
         runtime_notes={
             "baseline_prediction_runtime_resume_parallel_retry_used": "not_used_by_stage2_crossdoc_compilation",
+            "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
+            "dedup_is_llm_repair": False,
+            "dedup_uses_gold": False,
+            "dedup_rule_version": "artifact_dedup_v1",
         },
     )
     write_stage2_run_manifest(manifest, output_paths["run_manifest"])
@@ -167,6 +203,136 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
     }
 
 
+def load_selected_pages_from_quality_csv(
+    records: list[dict],
+    selected_pages_csv: str | Path,
+    stage2_json: str | Path,
+    sidecar_dir: str | Path | None,
+    max_docs: int,
+    max_pages_per_doc: int,
+    max_pages: int,
+) -> list[dict]:
+    """Load the exact prior cross-doc page set without reselecting candidates."""
+
+    rows = _read_selected_page_rows(selected_pages_csv)
+    if len(rows) > int(max_pages):
+        raise RuntimeError("--selected-pages-csv contains more rows than --max-pages.")
+
+    records_by_doc: Dict[str, tuple[int, dict]] = {}
+    for record_index, record in enumerate(records):
+        doc_id = record.get("doc_id")
+        if doc_id is not None and str(doc_id) not in records_by_doc:
+            records_by_doc[str(doc_id)] = (record_index, record)
+
+    doc_counts: Counter[str] = Counter()
+    selected_pages: list[dict] = []
+    for row in rows:
+        doc_id = str(row["doc_id"])
+        page_index = int(row["page_index"])
+        if doc_id not in records_by_doc:
+            raise RuntimeError(f"Selected page doc_id not found in stage2 records: {doc_id}")
+        if len(doc_counts) >= int(max_docs) and doc_id not in doc_counts:
+            raise RuntimeError("--selected-pages-csv exceeds --max-docs.")
+        doc_counts[doc_id] += 1
+        if doc_counts[doc_id] > int(max_pages_per_doc):
+            raise RuntimeError("--selected-pages-csv exceeds --max-pages-per-doc.")
+        record_index, record = records_by_doc[doc_id]
+        stage2 = resolve_stage2_preflight_with_sidecar_dir(record, stage2_json, sidecar_dir)
+        page_source = _page_source_for_index(stage2, page_index)
+        if not page_source:
+            raise RuntimeError(f"Selected page source missing: {doc_id} page_index={page_index}")
+        if not page_source.get("has_page_image") or not page_source.get("page_image_path"):
+            raise RuntimeError(f"Selected page has no image input: {doc_id} page_index={page_index}")
+        selected_page = {
+            "record_index": int(record_index),
+            "doc_id": doc_id,
+            "question": record.get("question"),
+            "answer_format": record.get("answer_format"),
+            "page_index": page_index,
+            "page_number_one_based": page_index + 1,
+            "selection_reason": row.get("selection_reason") or "selected_pages_csv",
+            "page_image_path": page_source.get("page_image_path"),
+            "page_text_path": page_source.get("page_text_path"),
+            "layout_block_ids": list(page_source.get("layout_block_ids", [])),
+            "stage2": stage2,
+        }
+        selected_page["page_modality_diagnosis"] = diagnose_page_modality_from_question_and_preflight(
+            record={"doc_id": doc_id, "question": record.get("question")},
+            sidecar=stage2,
+            page_index=page_index,
+        )
+        selected_pages.append(selected_page)
+    return selected_pages
+
+
+def resolve_stage2_preflight_with_sidecar_dir(
+    record: dict,
+    stage2_json: str | Path,
+    sidecar_dir: str | Path | None,
+) -> dict:
+    stage2 = record.get("stage2", {})
+    if not isinstance(stage2, dict) or not stage2.get("preflight_ref"):
+        return resolve_stage2_preflight(record)
+    preflight_ref = Path(str(stage2["preflight_ref"]))
+    candidate_paths = []
+    if preflight_ref.is_absolute():
+        candidate_paths.append(preflight_ref)
+    else:
+        candidate_paths.extend([preflight_ref, Path(stage2_json).parent / preflight_ref])
+    if sidecar_dir is not None:
+        candidate_paths.extend([Path(sidecar_dir) / preflight_ref.name, Path(sidecar_dir) / preflight_ref])
+    for path in candidate_paths:
+        if path.is_file():
+            if path == preflight_ref:
+                return resolve_stage2_preflight(record)
+            sidecar = load_stage2_preflight_sidecar(path)
+            return {
+                "version": stage2.get("version", "stage2_preflight_v1"),
+                "doc_name": stage2.get("doc_name"),
+                "page_count": {
+                    "value": stage2.get("page_count"),
+                    "source": stage2.get("page_count_source"),
+                },
+                "question_constraints": sidecar.get("question_constraints", {}),
+                "retrieval_pages": sidecar.get("retrieval_pages", {}),
+                "explicit_page_validation": sidecar.get("explicit_page_validation", {}),
+                "pages_to_compile": stage2.get("pages_to_compile", []),
+                "page_sources": sidecar.get("page_sources", []),
+                "layout_blocks_by_page": sidecar.get("layout_blocks_by_page", {}),
+                "preflight": sidecar.get("preflight", {}),
+            }
+    return resolve_stage2_preflight(record)
+
+
+def _read_selected_page_rows(selected_pages_csv: str | Path) -> list[dict]:
+    rows = []
+    with Path(selected_pages_csv).open("r", encoding="utf-8", newline="") as file_obj:
+        reader = csv.DictReader(file_obj)
+        for row in reader:
+            if not row.get("doc_id") or row.get("page_index") in (None, ""):
+                continue
+            rows.append(
+                {
+                    "doc_id": str(row["doc_id"]),
+                    "page_index": int(row["page_index"]),
+                    "selection_reason": row.get("selection_reason"),
+                }
+            )
+    return rows
+
+
+def _page_source_for_index(stage2: dict, page_index: int) -> dict:
+    for source in stage2.get("page_sources", []) or []:
+        if not isinstance(source, dict):
+            continue
+        try:
+            if int(source.get("page_index")) == int(page_index):
+                return source
+        except (TypeError, ValueError):
+            continue
+    return {}
+
+
 def compile_selected_page(
     selected_page: Dict[str, Any],
     extract_root: str | Path,
@@ -178,10 +344,19 @@ def compile_selected_page(
     model_name: str | None,
     limits: Dict[str, int],
     api_called: bool,
+    prompt_version: str = PROMPT_VERSION,
+    deterministic_dedup_enabled: bool = True,
 ) -> Dict[str, Any]:
     canonical_record = build_compiler_safe_record(selected_page)
     canonical_record["compilation_plan"]["compile_scope"] = "stage2_crossdoc_controlled_single_page"
     page_input = build_page_input(selected_page, extract_root)
+    page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or (
+        diagnose_page_modality_from_question_and_preflight(
+            record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
+            sidecar=selected_page.get("stage2", {}),
+            page_index=int(selected_page["page_index"]),
+        )
+    )
     artifact_store_path = output_paths["artifact_stores"] / artifact_store_file_name(
         selected_page["doc_id"],
         int(selected_page["page_index"]),
@@ -213,7 +388,8 @@ def compile_selected_page(
             raw_output_log_path=output_paths["raw_outputs"],
             discard_log_path=output_paths["discard"],
             compiler_version=COMPILER_VERSION,
-            prompt_version=PROMPT_VERSION,
+            prompt_version=prompt_version,
+            deterministic_dedup_enabled=deterministic_dedup_enabled,
         )
         write_page_artifact_store(
             canonical_record=canonical_record,
@@ -225,16 +401,29 @@ def compile_selected_page(
         store = json.loads(artifact_store_path.read_text(encoding="utf-8"))
         forbidden_violations = count_forbidden_fields(store)
         num_raw_artifacts = int(compile_result["compilation_statistics"]["num_raw_artifacts"])
+        num_raw_artifacts_before_dedup = int(
+            compile_result["compilation_statistics"].get("num_raw_artifacts_before_dedup", num_raw_artifacts)
+        )
+        num_deduplicated_artifacts = int(compile_result["compilation_statistics"].get("num_deduplicated_artifacts", 0))
         num_valid_artifacts = int(compile_result["compilation_statistics"]["num_valid_artifacts"])
         num_validation_issues = int(compile_result["compilation_statistics"]["num_validation_issues"])
         return {
             **base_result,
             "num_raw_artifacts": num_raw_artifacts,
+            "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
+            "num_deduplicated_artifacts": num_deduplicated_artifacts,
             "num_valid_artifacts": num_valid_artifacts,
             "num_validation_issues": num_validation_issues,
             "passed": num_valid_artifacts > 0 and forbidden_violations == 0,
             "forbidden_field_violations": forbidden_violations,
             "provider_error_type": None,
+            "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
+            "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
+            "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
+            "schema_valid_rate_before_dedup": compile_result["compilation_statistics"].get("schema_valid_rate_before_dedup"),
+            "schema_valid_rate_after_dedup": compile_result["compilation_statistics"].get("schema_valid_rate_after_dedup"),
+            "discard_rate_before_dedup": compile_result["compilation_statistics"].get("discard_rate_before_dedup"),
+            "discard_rate_after_dedup": compile_result["compilation_statistics"].get("discard_rate_after_dedup"),
         }
     except Exception as exc:
         write_raw_output_log(
@@ -245,7 +434,7 @@ def compile_selected_page(
                 provider=provider,
                 model_name=model_name,
                 compiler_version=COMPILER_VERSION,
-                prompt_version=PROMPT_VERSION,
+                prompt_version=prompt_version,
                 raw_output={"artifacts": []},
                 stage="stage2_compiler_provider_error",
                 provider_error_type=type(exc).__name__,
@@ -270,11 +459,16 @@ def compile_selected_page(
         return {
             **base_result,
             "num_raw_artifacts": 0,
+            "num_raw_artifacts_before_dedup": 0,
+            "num_deduplicated_artifacts": 0,
             "num_valid_artifacts": 0,
             "num_validation_issues": 1,
             "passed": False,
             "forbidden_field_violations": 0,
             "provider_error_type": type(exc).__name__,
+            "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
+            "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
+            "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
         }
 
 
@@ -326,9 +520,15 @@ def summarize_crossdoc_results(
     records: list[dict],
 ) -> dict:
     num_raw_artifacts = sum(int(result.get("num_raw_artifacts", 0)) for result in page_results)
+    num_raw_artifacts_before_dedup = sum(
+        int(result.get("num_raw_artifacts_before_dedup", result.get("num_raw_artifacts", 0)))
+        for result in page_results
+    )
+    num_deduplicated_artifacts = sum(int(result.get("num_deduplicated_artifacts", 0)) for result in page_results)
     num_valid_artifacts = sum(int(result.get("num_valid_artifacts", 0)) for result in page_results)
     num_validation_issues = sum(int(result.get("num_validation_issues", 0)) for result in page_results)
     denominator = max(1, num_raw_artifacts)
+    before_denominator = max(1, num_raw_artifacts_before_dedup)
     artifact_counts = count_artifacts_by_field(page_results, "artifact_type")
     modality_counts = count_artifacts_by_field(page_results, "modality")
     artifact_store_paths = [result["artifact_store_path"] for result in page_results if result.get("artifact_store_path")]
@@ -337,6 +537,8 @@ def summarize_crossdoc_results(
         "provider": args.provider,
         "model_name": model_name,
         "stage2_json": str(args.stage2_json),
+        "selected_pages_csv": str(getattr(args, "selected_pages_csv", None)) if getattr(args, "selected_pages_csv", None) else None,
+        "prompt_version": str(getattr(args, "prompt_version", PROMPT_VERSION)),
         "uses_compact_stage2": any(
             isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("preflight_ref"))
             for record in records
@@ -351,12 +553,23 @@ def summarize_crossdoc_results(
         "num_documents_attempted": len({result.get("doc_id") for result in page_results}),
         "num_pages_attempted": len(page_results),
         "num_api_calls": sum(1 for result in page_results if result.get("api_called")),
+        "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
+        "dedup_stage": "after_raw_output_log_before_validation" if getattr(args, "deterministic_dedup_enabled", True) else None,
+        "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
+        "dedup_rule_version": "artifact_dedup_v1",
+        "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
+        "num_deduplicated_artifacts": num_deduplicated_artifacts,
+        "deduplicated_artifact_issue_type_count": num_deduplicated_artifacts,
         "num_raw_artifacts": num_raw_artifacts,
         "num_valid_artifacts": num_valid_artifacts,
         "num_validation_issues": num_validation_issues,
         "schema_valid_rate": num_valid_artifacts / denominator,
+        "schema_valid_rate_before_dedup": num_valid_artifacts / before_denominator,
+        "schema_valid_rate_after_dedup": num_valid_artifacts / denominator,
         "anchoring_rate": num_valid_artifacts / denominator,
         "discard_rate": max(0, num_raw_artifacts - num_valid_artifacts) / denominator,
+        "discard_rate_before_dedup": max(0, num_raw_artifacts_before_dedup - num_valid_artifacts) / before_denominator,
+        "discard_rate_after_dedup": max(0, num_raw_artifacts - num_valid_artifacts) / denominator,
         "num_artifacts_by_type": artifact_counts,
         "num_artifacts_by_modality": modality_counts,
         "artifact_store_paths": artifact_store_paths,
@@ -401,6 +614,8 @@ def write_crossdoc_quality_csv(page_results: list[dict], path: str | Path) -> No
         "selection_reason",
         "page_image_path",
         "num_raw_artifacts",
+        "num_raw_artifacts_before_dedup",
+        "num_deduplicated_artifacts",
         "num_valid_artifacts",
         "num_validation_issues",
         "artifact_store_path",

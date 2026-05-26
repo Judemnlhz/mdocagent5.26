@@ -46,10 +46,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-pages", type=int, default=5)
     parser.add_argument("--provider", default="siliconflow")
     parser.add_argument("--model-name", default=None)
+    parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
+    parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
     parser.add_argument("--enable-real-api", action="store_true")
     parser.add_argument("--run-real-trial", action="store_true")
     parser.add_argument("--dry-run-fake-client", action="store_true")
     parser.add_argument("--timeout-seconds", type=int, default=120)
+    parser.set_defaults(deterministic_dedup_enabled=True)
     return parser.parse_args()
 
 
@@ -112,6 +115,7 @@ def run_small_batch(args: argparse.Namespace, client: ArtifactCompilerClient | N
             model_name=api_config.model_name,
             max_pages=int(args.max_pages),
             api_called=not args.dry_run_fake_client,
+            deterministic_dedup_enabled=bool(getattr(args, "deterministic_dedup_enabled", True)),
         )
         page_results.append(page_result)
 
@@ -121,6 +125,9 @@ def run_small_batch(args: argparse.Namespace, client: ArtifactCompilerClient | N
             "provider": args.provider,
             "model_name": api_config.model_name,
             "max_pages": int(args.max_pages),
+            "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
+            "dedup_stage": "after_raw_output_log_before_validation" if getattr(args, "deterministic_dedup_enabled", True) else None,
+            "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
         }
     )
     write_batch_summary(summary, output_paths["batch_summary"])
@@ -143,6 +150,7 @@ def compile_selected_page(
     model_name: str | None,
     max_pages: int,
     api_called: bool,
+    deterministic_dedup_enabled: bool = True,
 ) -> Dict[str, Any]:
     canonical_record = build_compiler_safe_record(selected_page)
     page_input = build_page_input(selected_page, extract_root)
@@ -156,6 +164,7 @@ def compile_selected_page(
         discard_log_path=output_paths["discard"],
         compiler_version=COMPILER_VERSION,
         prompt_version=PROMPT_VERSION,
+        deterministic_dedup_enabled=deterministic_dedup_enabled,
     )
     artifact_store_path = output_paths["artifact_stores"] / artifact_store_file_name(
         selected_page["doc_id"],
@@ -171,6 +180,10 @@ def compile_selected_page(
     store = json.loads(artifact_store_path.read_text(encoding="utf-8"))
     forbidden_violations = count_forbidden_fields(store)
     num_raw_artifacts = int(compile_result["compilation_statistics"]["num_raw_artifacts"])
+    num_raw_artifacts_before_dedup = int(
+        compile_result["compilation_statistics"].get("num_raw_artifacts_before_dedup", num_raw_artifacts)
+    )
+    num_deduplicated_artifacts = int(compile_result["compilation_statistics"].get("num_deduplicated_artifacts", 0))
     num_valid_artifacts = int(compile_result["compilation_statistics"]["num_valid_artifacts"])
     num_validation_issues = int(compile_result["compilation_statistics"]["num_validation_issues"])
     return {
@@ -180,6 +193,8 @@ def compile_selected_page(
         "selection_reason": selected_page["selection_reason"],
         "page_image_path": selected_page["page_image_path"],
         "num_raw_artifacts": num_raw_artifacts,
+        "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
+        "num_deduplicated_artifacts": num_deduplicated_artifacts,
         "num_valid_artifacts": num_valid_artifacts,
         "num_validation_issues": num_validation_issues,
         "artifact_store_path": str(artifact_store_path),
@@ -191,6 +206,13 @@ def compile_selected_page(
         "model_name": model_name,
         "max_pages": int(max_pages),
         "forbidden_field_violations": forbidden_violations,
+        "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
+        "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
+        "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
+        "schema_valid_rate_before_dedup": compile_result["compilation_statistics"].get("schema_valid_rate_before_dedup"),
+        "schema_valid_rate_after_dedup": compile_result["compilation_statistics"].get("schema_valid_rate_after_dedup"),
+        "discard_rate_before_dedup": compile_result["compilation_statistics"].get("discard_rate_before_dedup"),
+        "discard_rate_after_dedup": compile_result["compilation_statistics"].get("discard_rate_after_dedup"),
     }
 
 

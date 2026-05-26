@@ -43,6 +43,7 @@ def build_artifact_compiler_user_prompt(
     page_index = int(page_input["page_index"])
     is_explicit_page = _is_explicit_page_constraint(question_constraints, page_index)
     page_requirement = _build_page_requirement(page_input, is_explicit_page)
+    page_modality_diagnosis = page_input.get("page_modality_diagnosis", {})
 
     prompt_payload = {
         "task": "Convert this single page into candidate evidence artifacts.",
@@ -62,10 +63,20 @@ def build_artifact_compiler_user_prompt(
             "compilation_reasons": compilation_plan.get("compilation_reasons", []),
         },
         "page_requirement": page_requirement,
+        "page_modality_diagnosis": page_modality_diagnosis,
         "allowed_artifact_types": get_allowed_artifact_types(),
         "required_json_schema": schema_dict,
         "layout_blocks": page_input.get("layout_blocks", []),
         "page_text": page_input.get("page_text"),
+        "artifact_coverage_instruction": [
+            "If page_modality_diagnosis.requires_visual_reasoning is true and a full_page_image block exists, produce at least one visual_observation candidate artifact anchored to the full_page_image block.",
+            "If page_modality_diagnosis.mentions_chart is true, produce figure and numeric_fact candidate artifacts when visible in the page.",
+            "If page_modality_diagnosis.mentions_table is true, produce table and numeric_fact candidate artifacts when visible in the page.",
+            "If numeric values are visible and relevant to the question, produce numeric_fact candidate artifacts.",
+            "Do not answer the question.",
+            "Do not infer hidden values.",
+            "If the chart/table/visual detail is not readable, add uncertain_or_unreadable instead of guessing.",
+        ],
         "rules": [
             "Return exactly one PageArtifactOutput JSON object.",
             "Use only source_id values present in layout_blocks.",

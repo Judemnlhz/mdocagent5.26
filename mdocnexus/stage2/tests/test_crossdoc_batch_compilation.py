@@ -122,10 +122,21 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
         self.assertFalse(summary["uses_binary_correctness"])
         self.assertEqual(summary["api_key_leaks"], 0)
         self.assertEqual(result["summary"]["num_api_calls"], 0)
+        self.assertTrue(summary["deterministic_dedup_enabled"])
+        self.assertEqual(summary["num_deduplicated_artifacts"], 0)
+        self.assertEqual(summary["dedup_rule_version"], "artifact_dedup_v1")
+        self.assertEqual(
+            summary["dedup_stage"],
+            "after_raw_output_log_before_validation",
+        )
         self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_predict_py"])
         self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_multi_agent_system"])
         self.assertTrue(manifest["runtime_notes"]["predict_py_modified"])
         self.assertTrue(manifest["runtime_notes"]["multi_agent_system_modified"])
+        self.assertTrue(manifest["runtime_notes"]["deterministic_dedup_enabled"])
+        self.assertFalse(manifest["runtime_notes"]["dedup_is_llm_repair"])
+        self.assertFalse(manifest["runtime_notes"]["dedup_uses_gold"])
+        self.assertEqual(manifest["runtime_notes"]["dedup_rule_version"], "artifact_dedup_v1")
 
 
 def make_stage2_record(
@@ -199,20 +210,25 @@ def make_args(
     enable_real_api: bool = True,
     run_real_trial: bool = True,
     dry_run_fake_client: bool = False,
+    deterministic_dedup_enabled: bool = True,
 ) -> argparse.Namespace:
     return argparse.Namespace(
         stage2_json=str(stage2_json),
         config=str(config),
         extract_root=str(extract_root),
         output_dir=str(output_dir),
+        sidecar_dir=None,
+        selected_pages_csv=None,
         max_docs=max_docs,
         max_pages_per_doc=max_pages_per_doc,
         max_pages=max_pages,
         provider=provider,
         model_name=model_name,
+        prompt_version="artifact_compiler_prompt_v1",
         enable_real_api=enable_real_api,
         run_real_trial=run_real_trial,
         dry_run_fake_client=dry_run_fake_client,
+        deterministic_dedup_enabled=deterministic_dedup_enabled,
         timeout_seconds=120,
     )
 
