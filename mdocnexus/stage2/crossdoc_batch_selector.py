@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Iterable, List, Mapping
 
+from .stage2_sidecar_store import resolve_stage2_preflight
+
 
 SELECTION_REASONS = (
     "valid_explicit_page_with_image",
@@ -68,7 +70,7 @@ def select_crossdoc_pages_for_batch(
 
 
 def _prioritized_page_candidates(record: Mapping[str, Any]) -> Iterable[tuple[int, str]]:
-    stage2 = record.get("stage2", {})
+    stage2 = resolve_stage2_preflight(record)
     if not isinstance(stage2, dict):
         return []
     if not stage2.get("preflight", {}).get("passed", False):
@@ -125,7 +127,7 @@ def _coerce_page_indices(values: Iterable[Any]) -> List[int]:
 
 
 def _page_sources_by_index(record: Mapping[str, Any]) -> Dict[int, Mapping[str, Any]]:
-    stage2 = record.get("stage2", {})
+    stage2 = resolve_stage2_preflight(record)
     if not isinstance(stage2, dict):
         return {}
     sources: Dict[int, Mapping[str, Any]] = {}
@@ -149,7 +151,7 @@ def _page_source_is_eligible(page_source: Mapping[str, Any] | None) -> bool:
 
 
 def _page_in_range(record: Mapping[str, Any], page_index: int) -> bool:
-    stage2 = record.get("stage2", {})
+    stage2 = resolve_stage2_preflight(record)
     page_count = stage2.get("page_count") if isinstance(stage2, dict) else None
     if isinstance(page_count, dict):
         available_indices = page_count.get("available_page_indices")
@@ -168,7 +170,7 @@ def _page_in_range(record: Mapping[str, Any], page_index: int) -> bool:
 
 
 def _is_invalid_explicit_reference(record: Mapping[str, Any], page_index: int) -> bool:
-    stage2 = record.get("stage2", {})
+    stage2 = resolve_stage2_preflight(record)
     if not isinstance(stage2, dict):
         return False
     invalid_refs = stage2.get("explicit_page_validation", {}).get("invalid_explicit_page_references", []) or []
@@ -201,5 +203,5 @@ def _build_selected_page(
         "page_image_path": page_source.get("page_image_path"),
         "page_text_path": page_source.get("page_text_path"),
         "layout_block_ids": list(page_source.get("layout_block_ids", [])),
-        "stage2": record.get("stage2", {}),
+        "stage2": resolve_stage2_preflight(record),
     }

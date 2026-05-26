@@ -20,6 +20,7 @@ from .page_range_validation import (
     infer_document_page_count,
 )
 from .retrieval_processor import deduplicate_ranked_pages, parse_sequence_field
+from .stage2_sidecar_store import resolve_stage2_preflight
 
 
 STAGE2_VERSION = "stage2_preflight_v1"
@@ -264,7 +265,7 @@ def select_trial_candidate_from_stage2_records(records: Iterable[Mapping[str, An
 
 
 def build_record_trial_candidates(record: Mapping[str, Any], record_index: int) -> List[Dict[str, Any]]:
-    stage2 = record["stage2"]
+    stage2 = resolve_stage2_preflight(record)
     page_sources_by_index = {
         int(source["page_index"]): source
         for source in stage2.get("page_sources", [])

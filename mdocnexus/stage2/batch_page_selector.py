@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Mapping
 
+from .stage2_sidecar_store import resolve_stage2_preflight
+
 
 SELECTION_REASONS = (
     "valid_explicit_page_with_image",
@@ -30,7 +32,7 @@ def select_pages_for_small_batch(stage2_records: list[dict], max_pages: int) -> 
 
 
 def select_one_page_from_record(record: Mapping[str, Any], record_index: int) -> Dict[str, Any] | None:
-    stage2 = record.get("stage2", {})
+    stage2 = resolve_stage2_preflight(record)
     if not isinstance(stage2, dict):
         return None
     if not stage2.get("preflight", {}).get("passed", False):
