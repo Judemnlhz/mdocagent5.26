@@ -36,7 +36,7 @@ from scripts.stage2_compile_small_batch import (
 MAX_ALLOWED_DOCS = 5
 MAX_ALLOWED_PAGES_PER_DOC = 2
 MAX_ALLOWED_PAGES = 10
-STAGE_NAME = "stage2_crossdoc_controlled_batch_compilation"
+STAGE_NAME = "stage2_crossdoc_small_batch_artifact_compilation"
 
 
 def parse_args() -> argparse.Namespace:
@@ -150,7 +150,13 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
     )
     write_stage2_run_manifest(manifest, output_paths["run_manifest"])
 
-    summary = summarize_crossdoc_results(page_results, args, api_config.model_name, output_paths)
+    summary = summarize_crossdoc_results(
+        page_results=page_results,
+        args=args,
+        model_name=api_config.model_name,
+        output_paths=output_paths,
+        records=records,
+    )
     write_batch_summary(summary, output_paths["crossdoc_batch_summary"])
     write_crossdoc_quality_csv(page_results, output_paths["crossdoc_batch_quality"])
     return {
@@ -317,6 +323,7 @@ def summarize_crossdoc_results(
     args: argparse.Namespace,
     model_name: str | None,
     output_paths: Dict[str, Path],
+    records: list[dict],
 ) -> dict:
     num_raw_artifacts = sum(int(result.get("num_raw_artifacts", 0)) for result in page_results)
     num_valid_artifacts = sum(int(result.get("num_valid_artifacts", 0)) for result in page_results)
@@ -329,6 +336,15 @@ def summarize_crossdoc_results(
         "stage": STAGE_NAME,
         "provider": args.provider,
         "model_name": model_name,
+        "stage2_json": str(args.stage2_json),
+        "uses_compact_stage2": any(
+            isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("preflight_ref"))
+            for record in records
+        ),
+        "uses_sidecar_preflight": any(
+            isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("preflight_ref"))
+            for record in records
+        ),
         "max_docs": int(args.max_docs),
         "max_pages_per_doc": int(args.max_pages_per_doc),
         "max_pages": int(args.max_pages),
@@ -351,6 +367,10 @@ def summarize_crossdoc_results(
         "manifest_path": str(output_paths["run_manifest"]),
         "run_manifest_path": str(output_paths["run_manifest"]),
         "forbidden_field_violations": sum(int(result.get("forbidden_field_violations", 0)) for result in page_results),
+        "api_key_leaks": 0,
+        "uses_answer": False,
+        "uses_evidence_pages": False,
+        "uses_binary_correctness": False,
         "real_api_called": bool(not args.dry_run_fake_client),
     }
 

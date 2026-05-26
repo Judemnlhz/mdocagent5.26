@@ -35,6 +35,10 @@ def select_crossdoc_pages_for_batch(
     for record_index, record in enumerate(stage2_records):
         if len(selected) >= max_pages:
             break
+        compact_stage2 = record.get("stage2", {})
+        if isinstance(compact_stage2, dict) and compact_stage2.get("preflight_ref"):
+            if compact_stage2.get("status") != "preflight_passed":
+                continue
         doc_id = record.get("doc_id")
         if not doc_id:
             continue

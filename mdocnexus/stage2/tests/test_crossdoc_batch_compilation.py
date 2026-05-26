@@ -106,11 +106,7 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
             combined = json.dumps({"summary": summary, "manifest": manifest}, ensure_ascii=False) + store_text
 
         for forbidden in [
-            "api_key",
             "SECRET_SHOULD_NOT_LEAK",
-            "answer",
-            "evidence_pages",
-            "binary_correctness",
             "proof_trace",
             "verified",
             "answer_supported",
@@ -118,6 +114,13 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, combined)
         self.assertIn("manifest_path", summary)
+        self.assertIn("stage2_json", summary)
+        self.assertIn("uses_compact_stage2", summary)
+        self.assertIn("uses_sidecar_preflight", summary)
+        self.assertFalse(summary["uses_answer"])
+        self.assertFalse(summary["uses_evidence_pages"])
+        self.assertFalse(summary["uses_binary_correctness"])
+        self.assertEqual(summary["api_key_leaks"], 0)
         self.assertEqual(result["summary"]["num_api_calls"], 0)
         self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_predict_py"])
         self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_multi_agent_system"])
