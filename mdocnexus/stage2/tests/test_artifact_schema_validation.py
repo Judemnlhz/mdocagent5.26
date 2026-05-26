@@ -1,0 +1,176 @@
+"""Tests for Step 3 schema serialization and validation skeleton."""
+
+from __future__ import annotations
+
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from typing import Any, Dict
+
+from mdocnexus.stage2.artifact_validator import validate_page_artifact_output
+from mdocnexus.stage2.discard_log import (
+    issue_to_discard_log_entry,
+    write_discard_log_entry,
+)
+from mdocnexus.stage2.schema_serialization import (
+    build_page_artifact_output_schema_dict,
+    get_allowed_validation_statuses,
+)
+from mdocnexus.stage2.validation_errors import ValidationErrorType, ValidationIssue
+
+
+class ArtifactSchemaValidationTest(unittest.TestCase):
+    def test_schema_serialization(self) -> None:
+        schema = build_page_artifact_output_schema_dict()
+        validation_statuses = get_allowed_validation_statuses()
+        artifact_type_enum = schema["properties"]["artifacts"]["items"]["properties"][
+            "artifact_type"
+        ]["enum"]
+
+        self.assertIsInstance(schema, dict)
+        self.assertFalse(schema["additionalProperties"])
+        self.assertNotIn("verified", validation_statuses)
+        self.assertNotIn("proof_trace", validation_statuses)
+        self.assertNotIn("answer_supported", validation_statuses)
+        self.assertNotIn("proof_used", validation_statuses)
+        self.assertIn("visual_observation", artifact_type_enum)
+        self.assertIn("reference_entry", artifact_type_enum)
+        self.assertIn("numeric_fact", artifact_type_enum)
+
+    def test_valid_artifact_passes(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        raw_output = {
+            "doc_id": "example.pdf",
+            "page_index": 29,
+            "artifacts": [make_artifact()],
+            "uncertain_or_unreadable": [],
+        }
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertEqual(issues, [])
+        self.assertEqual(len(valid_artifacts), 1)
+        self.assertEqual(valid_artifacts[0]["validation_status"], "anchored")
+
+    def test_missing_source_anchor_fails(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        artifact = make_artifact()
+        artifact["source_anchors"][0]["source_id"] = "not_exist"
+        raw_output = {
+            "doc_id": "example.pdf",
+            "page_index": 29,
+            "artifacts": [artifact],
+        }
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertEqual(valid_artifacts, [])
+        self.assertIn(
+            ValidationErrorType.source_anchor_not_found,
+            {issue.error_type for issue in issues},
+        )
+
+    def test_invalid_enum_fails(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        artifact = make_artifact()
+        artifact["artifact_type"] = "proof_trace"
+        raw_output = {
+            "doc_id": "example.pdf",
+            "page_index": 29,
+            "artifacts": [artifact],
+        }
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertEqual(valid_artifacts, [])
+        self.assertIn(
+            ValidationErrorType.invalid_enum_value,
+            {issue.error_type for issue in issues},
+        )
+
+    def test_duplicate_artifact_detected(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        artifact_1 = make_artifact(artifact_id="artifact_a")
+        artifact_2 = make_artifact(artifact_id="artifact_b")
+        raw_output = {
+            "doc_id": "example.pdf",
+            "page_index": 29,
+            "artifacts": [artifact_1, artifact_2],
+        }
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertIn(
+            ValidationErrorType.duplicate_artifact,
+            {issue.error_type for issue in issues},
+        )
+        self.assertEqual([artifact["artifact_id"] for artifact in valid_artifacts], ["artifact_a"])
+
+    def test_discard_log_serialization(self) -> None:
+        issue = ValidationIssue(
+            error_type=ValidationErrorType.source_anchor_not_found,
+            message="Anchor missing.",
+            doc_id="example.pdf",
+            page_index=29,
+            artifact_id="artifact_a",
+            field_path="source_anchors[0].source_id",
+            details={"source_id": "not_exist"},
+        )
+        entry = issue_to_discard_log_entry(
+            issue=issue,
+            stage="stage2_validation",
+            compiler_version="test_version",
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            log_path = Path(tmpdir) / "discard.jsonl"
+            write_discard_log_entry(log_path, entry)
+            rows = [json.loads(line) for line in log_path.read_text(encoding="utf-8").splitlines()]
+
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["error_type"], "source_anchor_not_found")
+        self.assertEqual(rows[0]["doc_id"], "example.pdf")
+        self.assertEqual(rows[0]["page_index"], 29)
+        self.assertEqual(rows[0]["artifact_id"], "artifact_a")
+        self.assertEqual(rows[0]["stage"], "stage2_validation")
+
+
+def make_full_page_image_block() -> Dict[str, Any]:
+    return {
+        "block_id": "p029_full_page_image",
+        "block_type": "full_page_image",
+        "page_index": 29,
+        "bbox": None,
+        "text": None,
+    }
+
+
+def make_artifact(artifact_id: str = "artifact_a") -> Dict[str, Any]:
+    return {
+        "artifact_id": artifact_id,
+        "doc_id": "example.pdf",
+        "page_index": 29,
+        "artifact_type": "visual_observation",
+        "modality": "image",
+        "content": "A page-level visual observation.",
+        "normalized_content": {},
+        "source_anchors": [
+            {
+                "source_id": "p029_full_page_image",
+                "anchor_type": "full_page_image",
+                "page_index": 29,
+                "bbox": None,
+            }
+        ],
+        "provenance": {
+            "op": "ATOM",
+            "sources": ["p029_full_page_image"],
+        },
+        "validation_status": "candidate",
+        "compiler_metadata": {},
+    }
+
+
+if __name__ == "__main__":
+    unittest.main()
