@@ -44,13 +44,13 @@ class ArtifactQualityAuditTest(unittest.TestCase):
         store = make_store(
             artifacts=[
                 make_artifact("a1", modality="text"),
-                make_artifact("a2", modality="visual"),
+                make_artifact("a2", modality="image"),
             ]
         )
 
         audit = audit_artifact_store(store)
 
-        self.assertEqual(audit["num_artifacts_by_modality"], {"text": 1, "visual": 1})
+        self.assertEqual(audit["num_artifacts_by_modality"], {"text": 1, "image": 1})
 
     def test_missing_source_anchor_fails_quality_gate(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -190,7 +190,7 @@ def make_artifact(
     artifact_id: str,
     page_index: int = 0,
     artifact_type: str = "visual_observation",
-    modality: str = "visual",
+    modality: str = "image",
     source_id: str | None = None,
     provenance_sources: List[str] | None = None,
 ) -> Dict[str, Any]:

@@ -1326,23 +1326,380 @@ def validate_inputs(args: argparse.Namespace) -> None:
 
 
 DEFAULT_STAGE2_INPUT = "data/MMLongBench/sample-with-retrieval-results.json"
-DEFAULT_STAGE2_INDEX = "outputs/stage2/MMLongBench/sample-with-stage2-index.json"
+DEFAULT_STAGE2_INDEX = "outputs/stage2/clean/sample-with-stage2-index.json"
 DEFAULT_EXTRACT_ROOT = "tmp/MMLongBench"
 DEFAULT_CONFIG = "config/model/qwen3vl.yaml"
-DEFAULT_CLEAN_BATCH_DIR = "outputs/stage2/artifacts_compact_routes_clean"
+DEFAULT_CLEAN_BATCH_DIR = "outputs/stage2/clean"
+
+FINAL_ARTIFACT_FIELDS = [
+    "record_index",
+    "doc_id",
+    "page_index",
+    "artifact_id",
+    "artifact_type",
+    "modality",
+    "content",
+    "normalized_content",
+    "source_anchors",
+    "provenance",
+    "validation_status",
+]
+FINAL_ARTIFACT_TYPES = {
+    "text_span",
+    "numeric_fact",
+    "table",
+    "table_cell",
+    "figure",
+    "caption",
+    "visual_observation",
+}
+FINAL_MODALITIES = {"text", "image", "table", "figure", "numeric"}
+NEGATIVE_ARTIFACT_PATTERNS = (
+    "this page has no content related to the question",
+    "no relevant information found",
+    "this page is irrelevant",
+    "no relevant content",
+    "irrelevant to the question",
+    "not related to the question",
+    "does not contain relevant information",
+)
+CLEAN_OUTPUT_FILENAMES = (
+    "artifacts.jsonl",
+    "discard.jsonl",
+    "quality_report.json",
+    "raw_outputs.jsonl",
+    "crossdoc_batch_summary.json",
+    "crossdoc_quality_audit.json",
+    "crossdoc_quality_by_page.csv",
+    "crossdoc_batch_quality.csv",
+    "sample-with-stage2-preflight.json",
+)
+
+
+def _stage2_index_path(output_dir: str | Path) -> Path:
+    return Path(output_dir) / "sample-with-stage2-index.json"
+
+
+def _final_output_paths(output_dir: str | Path, debug_raw_output: bool = False) -> Dict[str, Path | None]:
+    root = Path(output_dir)
+    paths: Dict[str, Path | None] = {
+        "root": root,
+        "artifacts": root / "artifacts.jsonl",
+        "discard": root / "discard.jsonl",
+        "quality_report": root / "quality_report.json",
+        "raw_outputs": root / "raw_outputs.jsonl" if debug_raw_output else None,
+    }
+    return paths
+
+
+def _prepare_final_output_dir(output_dir: str | Path, debug_raw_output: bool = False) -> Dict[str, Path | None]:
+    paths = _final_output_paths(output_dir, debug_raw_output=debug_raw_output)
+    root = Path(paths["root"])
+    root.mkdir(parents=True, exist_ok=True)
+    for dirname in ("artifact_stores", "raw_outputs", "reports", "preflight"):
+        target = root / dirname
+        if target.exists():
+            shutil.rmtree(target)
+    for filename in CLEAN_OUTPUT_FILENAMES:
+        target = root / filename
+        if target.exists():
+            target.unlink()
+    Path(paths["artifacts"]).write_text("", encoding="utf-8")
+    Path(paths["discard"]).write_text("", encoding="utf-8")
+    raw_path = paths.get("raw_outputs")
+    if raw_path is not None:
+        Path(raw_path).write_text("", encoding="utf-8")
+    return paths
+
+
+def _append_jsonl(path: str | Path, row: Dict[str, Any]) -> None:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("a", encoding="utf-8") as file_obj:
+        file_obj.write(json.dumps(row, ensure_ascii=False, sort_keys=True))
+        file_obj.write("\n")
+
+
+def _read_jsonl(path: str | Path) -> List[Dict[str, Any]]:
+    file_path = Path(path)
+    if not file_path.is_file():
+        return []
+    rows: List[Dict[str, Any]] = []
+    for line in file_path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            rows.append(json.loads(line))
+    return rows
+
+
+def _minimal_discard_row(
+    selected_page: Dict[str, Any],
+    reason: str,
+    artifact_id: Any = None,
+    message: str | None = None,
+) -> Dict[str, Any]:
+    row: Dict[str, Any] = {
+        "record_index": int(selected_page["record_index"]),
+        "doc_id": str(selected_page["doc_id"]),
+        "page_index": int(selected_page["page_index"]),
+        "reason": str(reason),
+    }
+    if artifact_id not in (None, ""):
+        row["artifact_id"] = str(artifact_id)
+    if message:
+        row["message"] = str(message)
+    return row
+
+
+def _is_negative_or_irrelevant_artifact(artifact: Mapping[str, Any]) -> bool:
+    content = " ".join(str(artifact.get(field, "")) for field in ("content", "normalized_content")).lower()
+    return any(pattern in content for pattern in NEGATIVE_ARTIFACT_PATTERNS)
+
+
+def _project_final_artifact(selected_page: Dict[str, Any], artifact: Dict[str, Any]) -> Dict[str, Any]:
+    projected = {field: artifact.get(field) for field in FINAL_ARTIFACT_FIELDS if field not in {"record_index"}}
+    projected["record_index"] = int(selected_page["record_index"])
+    projected["doc_id"] = str(selected_page["doc_id"])
+    projected["page_index"] = int(selected_page["page_index"])
+    return {field: projected.get(field) for field in FINAL_ARTIFACT_FIELDS}
+
+
+def _count_blocking_reasons(records: List[Dict[str, Any]]) -> Dict[str, int]:
+    counts: Counter[str] = Counter()
+    for record in records:
+        stage2 = record.get("stage2", {})
+        if not isinstance(stage2, dict):
+            continue
+        preflight = stage2.get("preflight", {})
+        if not isinstance(preflight, dict):
+            continue
+        for reason in preflight.get("blocking_reasons", []) or []:
+            counts[str(reason)] += 1
+    return dict(sorted(counts.items()))
+
+
+def _build_quality_report_from_files(
+    records: List[Dict[str, Any]],
+    selected_pages: List[Dict[str, Any]],
+    artifacts_path: str | Path,
+    discard_path: str | Path,
+) -> Dict[str, Any]:
+    artifacts = _read_jsonl(artifacts_path)
+    discarded = _read_jsonl(discard_path)
+    artifact_type_counts = Counter(str(row.get("artifact_type")) for row in artifacts if row.get("artifact_type"))
+    modality_counts = Counter(str(row.get("modality")) for row in artifacts if row.get("modality"))
+    denominator = len(artifacts) + len(discarded)
+    schema_valid_rate = (len(artifacts) / denominator) if denominator else 1.0
+    anchoring_rate = (len(artifacts) / denominator) if denominator else 1.0
+    discard_rate = (len(discarded) / denominator) if denominator else 0.0
+    return {
+        "num_records": len(records),
+        "num_documents_attempted": len({page.get("doc_id") for page in selected_pages}),
+        "num_pages_attempted": len(selected_pages),
+        "num_artifacts": len(artifacts),
+        "num_valid_artifacts": len(artifacts),
+        "num_discarded_artifacts": len(discarded),
+        "schema_valid_rate": schema_valid_rate,
+        "anchoring_rate": anchoring_rate,
+        "discard_rate": discard_rate,
+        "artifact_type_counts": dict(sorted(artifact_type_counts.items())),
+        "modality_counts": dict(sorted(modality_counts.items())),
+        "blocking_reason_counts": _count_blocking_reasons(records),
+        "storage_format": "artifacts_jsonl",
+    }
+
+
+def _write_quality_report(report: Dict[str, Any], path: str | Path) -> None:
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _build_crossdoc_compiler_metadata(args: argparse.Namespace, api_config: Any) -> Dict[str, Any]:
+    return {
+        "compiler_name": "real_api_artifact_compiler_client" if not args.dry_run_fake_client else "fake_artifact_compiler_client",
+        "provider": args.provider,
+        "model_name": api_config.model_name,
+        "temperature": api_config.temperature,
+        "max_repair_attempts": 0,
+    }
+
+
+def _compile_selected_page_to_jsonl(
+    selected_page: Dict[str, Any],
+    extract_root: str | Path,
+    output_paths: Dict[str, Path | None],
+    client: ArtifactCompilerClient,
+    schema_dict: Dict[str, Any],
+    compiler_metadata: Dict[str, Any],
+    prompt_version: str,
+    deterministic_dedup_enabled: bool,
+) -> Dict[str, Any]:
+    canonical_record = build_compiler_safe_record(selected_page)
+    canonical_record["compilation_plan"]["compile_scope"] = "stage2_clean_single_page"
+    page_input = build_page_input(selected_page, extract_root)
+    page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or diagnose_page_modality_from_question_and_preflight(
+        record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
+        page_context={
+            "question": selected_page.get("question"),
+            "page_sources": [
+                {
+                    "page_index": int(selected_page["page_index"]),
+                    "page_image_path": selected_page.get("page_image_path"),
+                    "has_page_image": bool(selected_page.get("page_image_path")),
+                }
+            ],
+        },
+        page_index=int(selected_page["page_index"]),
+    )
+    try:
+        compile_result = compile_page_with_client(
+            canonical_record=canonical_record,
+            page_input=page_input,
+            client=client,
+            schema_dict=schema_dict,
+            compiler_metadata=compiler_metadata,
+            raw_output_log_path=output_paths.get("raw_outputs"),
+            discard_log_path=None,
+            compiler_version=COMPILER_VERSION,
+            prompt_version=prompt_version,
+            deterministic_dedup_enabled=deterministic_dedup_enabled,
+        )
+    except Exception as exc:
+        _append_jsonl(
+            Path(output_paths["discard"]),
+            _minimal_discard_row(selected_page, reason="provider_error", message=f"{type(exc).__name__}: {exc}"),
+        )
+        return {
+            "record_index": selected_page["record_index"],
+            "doc_id": selected_page["doc_id"],
+            "page_index": int(selected_page["page_index"]),
+            "num_raw_artifacts": 0,
+            "num_valid_artifacts": 0,
+            "num_discarded_artifacts": 1,
+            "provider_error_type": type(exc).__name__,
+        }
+
+    discarded = 0
+    seen_discard_keys: set[tuple[Any, str, str]] = set()
+    for issue in compile_result.get("validation_issues", []):
+        reason = str(issue.get("error_type", "schema_invalid"))
+        artifact_id = issue.get("artifact_id")
+        message = str(issue.get("message", ""))
+        key = (artifact_id, reason, message)
+        if key in seen_discard_keys:
+            continue
+        seen_discard_keys.add(key)
+        _append_jsonl(Path(output_paths["discard"]), _minimal_discard_row(selected_page, reason, artifact_id, message))
+        discarded += 1
+
+    written = 0
+    for artifact in compile_result.get("valid_artifacts", []):
+        if artifact.get("artifact_type") not in FINAL_ARTIFACT_TYPES or artifact.get("modality") not in FINAL_MODALITIES:
+            _append_jsonl(
+                Path(output_paths["discard"]),
+                _minimal_discard_row(
+                    selected_page,
+                    reason="unsupported_artifact_type_or_modality",
+                    artifact_id=artifact.get("artifact_id"),
+                ),
+            )
+            discarded += 1
+            continue
+        if _is_negative_or_irrelevant_artifact(artifact):
+            _append_jsonl(
+                Path(output_paths["discard"]),
+                _minimal_discard_row(
+                    selected_page,
+                    reason="negative_or_irrelevant_artifact",
+                    artifact_id=artifact.get("artifact_id"),
+                ),
+            )
+            discarded += 1
+            continue
+        _append_jsonl(Path(output_paths["artifacts"]), _project_final_artifact(selected_page, artifact))
+        written += 1
+
+    stats = compile_result.get("compilation_statistics", {})
+    return {
+        "record_index": selected_page["record_index"],
+        "doc_id": selected_page["doc_id"],
+        "page_index": int(selected_page["page_index"]),
+        "num_raw_artifacts": int(stats.get("num_raw_artifacts", 0)),
+        "num_valid_artifacts": written,
+        "num_discarded_artifacts": discarded,
+        "provider_error_type": None,
+    }
+
+
+def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient | None = None) -> Dict[str, Any]:
+    validate_crossdoc_args(args)
+    debug_raw_output = bool(getattr(args, "debug_raw_output", False))
+    output_paths = _prepare_final_output_dir(args.output_dir, debug_raw_output=debug_raw_output)
+    api_config = build_crossdoc_api_config(args)
+    records = read_json_or_jsonl_records(args.stage2_json)
+    selected_pages_csv = getattr(args, "selected_pages_csv", None)
+    if selected_pages_csv:
+        selected_pages = load_selected_pages_from_quality_csv(
+            records=records,
+            selected_pages_csv=selected_pages_csv,
+            extract_root=args.extract_root,
+            max_docs=int(args.max_docs),
+            max_pages_per_doc=int(args.max_pages_per_doc),
+            max_pages=int(args.max_pages),
+        )
+    else:
+        selected_pages = select_crossdoc_pages_for_batch(
+            records,
+            max_docs=int(args.max_docs),
+            max_pages_per_doc=int(args.max_pages_per_doc),
+            max_pages=int(args.max_pages),
+            extract_root=args.extract_root,
+        )
+    active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
+    schema_dict = build_page_artifact_output_schema_dict()
+    compiler_metadata = _build_crossdoc_compiler_metadata(args, api_config)
+
+    page_results: List[Dict[str, Any]] = []
+    for selected_page in selected_pages:
+        page_results.append(
+            _compile_selected_page_to_jsonl(
+                selected_page=selected_page,
+                extract_root=args.extract_root,
+                output_paths=output_paths,
+                client=active_client,
+                schema_dict=schema_dict,
+                compiler_metadata=compiler_metadata,
+                prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
+                deterministic_dedup_enabled=bool(getattr(args, "deterministic_dedup_enabled", True)),
+            )
+        )
+
+    report = _build_quality_report_from_files(
+        records=records,
+        selected_pages=selected_pages,
+        artifacts_path=Path(output_paths["artifacts"]),
+        discard_path=Path(output_paths["discard"]),
+    )
+    _write_quality_report(report, Path(output_paths["quality_report"]))
+    return {
+        "summary": report,
+        "page_results": page_results,
+        "paths": {key: str(value) for key, value in output_paths.items() if value is not None},
+    }
 
 
 def run_index_command(args: argparse.Namespace) -> Dict[str, Any]:
+    output = Path(args.output) if getattr(args, "output", None) else _stage2_index_path(args.output_dir)
     records = augment_retrieval_results_file(
         input_path=args.input,
-        output_path=args.output,
+        output_path=output,
         extract_root=args.extract_root,
         config_path=args.config,
         max_records=args.max_records,
     )
     return {
         "command": "index",
-        "output": str(args.output),
+        "output": str(output),
         "num_records": len(records),
         "schema": "compact_page_routes",
         "will_call_api": False,
@@ -1351,7 +1708,7 @@ def run_index_command(args: argparse.Namespace) -> Dict[str, Any]:
 
 
 def run_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
-    args.stage2_json = args.stage2_json or DEFAULT_STAGE2_INDEX
+    args.stage2_json = args.stage2_json or str(_stage2_index_path(args.output_dir))
     args.config = args.config or DEFAULT_CONFIG
     args.extract_root = args.extract_root or DEFAULT_EXTRACT_ROOT
     args.output_dir = args.output_dir or DEFAULT_CLEAN_BATCH_DIR
@@ -1359,26 +1716,31 @@ def run_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
 
 
 def run_audit_command(args: argparse.Namespace) -> Dict[str, Any]:
-    batch_dir = Path(args.batch_dir)
-    output_json = Path(args.output_json) if args.output_json else batch_dir / "reports" / "crossdoc_quality_audit.json"
-    output_csv = Path(args.output_csv) if args.output_csv else batch_dir / "reports" / "crossdoc_quality_by_page.csv"
-    audit_args = argparse.Namespace(
-        batch_dir=str(batch_dir),
-        stage2_json=args.stage2_json,
-        output_json=str(output_json),
-        output_csv=str(output_csv),
-    )
-    validate_inputs(audit_args)
-    report = audit_crossdoc_batch_with_options(batch_dir=batch_dir, stage2_json=args.stage2_json)
-    write_audit_json(report, output_json)
-    write_page_quality_csv(report, output_csv)
-    public_report = {key: value for key, value in report.items() if not key.startswith("_")}
-    public_report["output_json"] = str(output_json)
-    public_report["output_csv"] = str(output_csv)
-    return public_report
+    output_dir = Path(args.output_dir)
+    stage2_json = Path(args.stage2_json) if args.stage2_json else output_dir / "sample-with-stage2-index.json"
+    records = read_json_or_jsonl_records(stage2_json) if stage2_json.is_file() else []
+    artifacts_path = Path(args.artifacts_jsonl) if args.artifacts_jsonl else output_dir / "artifacts.jsonl"
+    discard_path = Path(args.discard_jsonl) if args.discard_jsonl else output_dir / "discard.jsonl"
+    report_path = output_dir / "quality_report.json"
+    existing_report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.is_file() else {}
+    selected_refs = {
+        (row.get("record_index"), row.get("doc_id"), row.get("page_index"))
+        for row in _read_jsonl(artifacts_path) + _read_jsonl(discard_path)
+    }
+    selected_pages = [
+        {"record_index": ref[0], "doc_id": ref[1], "page_index": ref[2]}
+        for ref in sorted(selected_refs, key=lambda item: (str(item[1]), int(item[2] or 0), int(item[0] or 0)))
+    ]
+    report = _build_quality_report_from_files(records, selected_pages, artifacts_path, discard_path)
+    for field_name in ("num_documents_attempted", "num_pages_attempted"):
+        if field_name in existing_report:
+            report[field_name] = existing_report[field_name]
+    _write_quality_report(report, report_path)
+    return report
 
 
 def run_clean_command(args: argparse.Namespace) -> Dict[str, Any]:
+    output_dir = Path(getattr(args, "output_dir", DEFAULT_CLEAN_BATCH_DIR))
     targets = [
         Path("outputs/stage2/MMLongBench/preflight"),
         Path("outputs/stage2/MMLongBench/sample-with-stage2-preflight.json"),
@@ -1388,12 +1750,17 @@ def run_clean_command(args: argparse.Namespace) -> Dict[str, Any]:
         Path("outputs/stage2/artifacts_real_crossdoc_batch"),
         Path("outputs/stage2/artifacts_real_crossdoc_batch_refined"),
         Path("outputs/stage2/artifacts_real_crossdoc_batch_refined_replay_dedup"),
+        Path("outputs/stage2/artifacts_compact_routes_clean"),
+        output_dir,
     ]
-    if args.include_clean_artifacts:
-        targets.append(Path(DEFAULT_CLEAN_BATCH_DIR))
     deleted = []
     missing = []
+    seen: set[Path] = set()
     for target in targets:
+        target = Path(target)
+        if target in seen:
+            continue
+        seen.add(target)
         if not target.exists():
             missing.append(str(target))
             continue
@@ -1405,48 +1772,104 @@ def run_clean_command(args: argparse.Namespace) -> Dict[str, Any]:
     return {"command": "clean", "deleted": deleted, "missing": missing}
 
 
+def run_all_command(args: argparse.Namespace) -> Dict[str, Any]:
+    clean_result = run_clean_command(argparse.Namespace(output_dir=args.output_dir))
+    index_path = _stage2_index_path(args.output_dir)
+    index_result = run_index_command(
+        argparse.Namespace(
+            input=args.input,
+            output=str(index_path),
+            output_dir=args.output_dir,
+            extract_root=args.extract_root,
+            config=args.config,
+            max_records=getattr(args, "max_records", None),
+        )
+    )
+    compile_result = run_compile_command(
+        argparse.Namespace(
+            stage2_json=str(index_path),
+            config=args.config,
+            extract_root=args.extract_root,
+            output_dir=args.output_dir,
+            selected_pages_csv=getattr(args, "selected_pages_csv", None),
+            max_docs=int(args.max_docs),
+            max_pages_per_doc=int(args.max_pages_per_doc),
+            max_pages=int(args.max_pages),
+            provider=args.provider,
+            model_name=args.model_name,
+            prompt_version=args.prompt_version,
+            enable_real_api=bool(args.enable_real_api),
+            run_real_trial=bool(args.run_real_trial),
+            dry_run_fake_client=bool(args.dry_run_fake_client),
+            deterministic_dedup_enabled=bool(args.deterministic_dedup_enabled),
+            timeout_seconds=int(args.timeout_seconds),
+            debug_raw_output=bool(args.debug_raw_output),
+        )
+    )
+    return {
+        "command": "all",
+        "clean": clean_result,
+        "index": index_result,
+        "compile": compile_result["summary"],
+        "paths": compile_result["paths"],
+    }
+
+
+def _add_compile_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--config", default=DEFAULT_CONFIG)
+    parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
+    parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
+    parser.add_argument("--selected-pages-csv", default=None)
+    parser.add_argument("--max-documents", "--max-docs", dest="max_docs", type=int, default=5)
+    parser.add_argument("--max-pages-per-doc", type=int, default=2)
+    parser.add_argument("--max-pages", type=int, default=10)
+    parser.add_argument("--provider", default="siliconflow")
+    parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
+    parser.add_argument("--prompt-version", default=PROMPT_VERSION)
+    parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
+    parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
+    parser.add_argument("--enable-real-api", action="store_true")
+    parser.add_argument("--run-real-trial", action="store_true")
+    parser.add_argument("--dry-run-fake-client", action="store_true")
+    parser.add_argument("--timeout-seconds", type=int, default=120)
+    parser.add_argument("--debug-raw-output", action="store_true")
+    parser.set_defaults(deterministic_dedup_enabled=True)
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Unified Stage 2 compact page-route entrypoint.")
+    parser = argparse.ArgumentParser(description="Unified Stage 2 clean storage entrypoint.")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    clean_parser = subparsers.add_parser("clean", help="Delete old Stage 2 temporary outputs.")
+    clean_parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
+    clean_parser.set_defaults(func=run_clean_command)
 
     index_parser = subparsers.add_parser("index", help="Build compact Stage 2 page-route index.")
     index_parser.add_argument("--input", default=DEFAULT_STAGE2_INPUT)
-    index_parser.add_argument("--output", default=DEFAULT_STAGE2_INDEX)
+    index_parser.add_argument("--output", default=None)
+    index_parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
     index_parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
     index_parser.add_argument("--config", default=None)
     index_parser.add_argument("--max-records", type=int, default=None)
     index_parser.set_defaults(func=run_index_command)
 
-    compile_parser = subparsers.add_parser("compile", help="Run guarded compact-route cross-document compilation.")
-    compile_parser.add_argument("--stage2-json", default=DEFAULT_STAGE2_INDEX)
-    compile_parser.add_argument("--config", default=DEFAULT_CONFIG)
-    compile_parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
-    compile_parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
-    compile_parser.add_argument("--selected-pages-csv", default=None)
-    compile_parser.add_argument("--max-docs", type=int, default=5)
-    compile_parser.add_argument("--max-pages-per-doc", type=int, default=2)
-    compile_parser.add_argument("--max-pages", type=int, default=10)
-    compile_parser.add_argument("--provider", default="siliconflow")
-    compile_parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
-    compile_parser.add_argument("--prompt-version", default=PROMPT_VERSION)
-    compile_parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
-    compile_parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
-    compile_parser.add_argument("--enable-real-api", action="store_true")
-    compile_parser.add_argument("--run-real-trial", action="store_true")
-    compile_parser.add_argument("--dry-run-fake-client", action="store_true")
-    compile_parser.add_argument("--timeout-seconds", type=int, default=120)
-    compile_parser.set_defaults(deterministic_dedup_enabled=True, func=run_compile_command)
+    compile_parser = subparsers.add_parser("compile", help="Compile clean artifacts.jsonl storage.")
+    compile_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
+    _add_compile_options(compile_parser)
+    compile_parser.set_defaults(func=run_compile_command)
 
-    audit_parser = subparsers.add_parser("audit", help="Audit compact-route batch outputs offline.")
-    audit_parser.add_argument("--batch-dir", default=DEFAULT_CLEAN_BATCH_DIR)
-    audit_parser.add_argument("--stage2-json", default=DEFAULT_STAGE2_INDEX)
-    audit_parser.add_argument("--output-json", default=None)
-    audit_parser.add_argument("--output-csv", default=None)
+    audit_parser = subparsers.add_parser("audit", help="Audit clean artifacts.jsonl storage.")
+    audit_parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
+    audit_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
+    audit_parser.add_argument("--artifacts-jsonl", default=None)
+    audit_parser.add_argument("--discard-jsonl", default=None)
     audit_parser.set_defaults(func=run_audit_command)
 
-    clean_parser = subparsers.add_parser("clean", help="Delete old Stage 2 temporary outputs.")
-    clean_parser.add_argument("--include-clean-artifacts", action="store_true")
-    clean_parser.set_defaults(func=run_clean_command)
+    all_parser = subparsers.add_parser("all", help="Clean old outputs, build index, compile, and write quality_report.json.")
+    all_parser.add_argument("--input", default=DEFAULT_STAGE2_INPUT)
+    all_parser.add_argument("--max-records", type=int, default=None)
+    _add_compile_options(all_parser)
+    all_parser.set_defaults(func=run_all_command)
     return parser
 
 
@@ -1455,6 +1878,7 @@ def main(argv: list[str] | None = None) -> None:
     args = parser.parse_args(argv)
     result = args.func(args)
     print(json.dumps(result, ensure_ascii=False, indent=2))
+
 
 if __name__ == "__main__":
     main()

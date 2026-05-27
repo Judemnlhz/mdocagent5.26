@@ -123,10 +123,10 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
                 )
             )
 
-            summary = json.loads((output_dir / "reports" / "crossdoc_batch_summary.json").read_text(encoding="utf-8"))
-            manifest = json.loads((output_dir / "reports" / "run_manifest.json").read_text(encoding="utf-8"))
-            store_text = "\n".join(path.read_text(encoding="utf-8") for path in (output_dir / "artifact_stores").glob("*.json"))
-            combined = json.dumps({"summary": summary, "manifest": manifest}, ensure_ascii=False) + store_text
+            summary = json.loads((output_dir / "quality_report.json").read_text(encoding="utf-8"))
+            artifacts_text = (output_dir / "artifacts.jsonl").read_text(encoding="utf-8")
+            discard_text = (output_dir / "discard.jsonl").read_text(encoding="utf-8")
+            combined = json.dumps(summary, ensure_ascii=False) + artifacts_text + discard_text
 
         for forbidden in [
             "SECRET_SHOULD_NOT_LEAK",
@@ -136,30 +136,34 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
             "proof_used",
         ]:
             self.assertNotIn(forbidden, combined)
-        self.assertIn("manifest_path", summary)
-        self.assertIn("stage2_json", summary)
-        self.assertIn("uses_compact_stage2", summary)
-        self.assertIn("uses_sidecar_preflight", summary)
-        self.assertFalse(summary["uses_answer"])
-        self.assertFalse(summary["uses_evidence_pages"])
-        self.assertFalse(summary["uses_binary_correctness"])
-        self.assertEqual(summary["api_key_leaks"], 0)
-        self.assertEqual(result["summary"]["num_api_calls"], 0)
-        self.assertTrue(summary["deterministic_dedup_enabled"])
-        self.assertEqual(summary["num_deduplicated_artifacts"], 0)
-        self.assertEqual(summary["dedup_rule_version"], "artifact_dedup_v1")
+        self.assertEqual(summary["storage_format"], "artifacts_jsonl")
+        self.assertEqual(result["summary"]["num_pages_attempted"], 2)
+        self.assertEqual(result["summary"]["num_documents_attempted"], 1)
+        self.assertFalse((output_dir / "artifact_stores").exists())
+        self.assertFalse((output_dir / "raw_outputs").exists())
+        self.assertFalse((output_dir / "reports" / "run_manifest.json").exists())
+        artifact_rows = [json.loads(line) for line in artifacts_text.splitlines() if line.strip()]
+        self.assertTrue(artifact_rows)
         self.assertEqual(
-            summary["dedup_stage"],
-            "after_raw_output_log_before_validation",
+            set(artifact_rows[0]),
+            {
+                "record_index",
+                "doc_id",
+                "page_index",
+                "artifact_id",
+                "artifact_type",
+                "modality",
+                "content",
+                "normalized_content",
+                "source_anchors",
+                "provenance",
+                "validation_status",
+            },
         )
-        self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_predict_py"])
-        self.assertFalse(manifest["runtime_notes"]["stage2_depends_on_multi_agent_system"])
-        self.assertTrue(manifest["runtime_notes"]["predict_py_modified"])
-        self.assertTrue(manifest["runtime_notes"]["multi_agent_system_modified"])
-        self.assertTrue(manifest["runtime_notes"]["deterministic_dedup_enabled"])
-        self.assertFalse(manifest["runtime_notes"]["dedup_is_llm_repair"])
-        self.assertFalse(manifest["runtime_notes"]["dedup_uses_gold"])
-        self.assertEqual(manifest["runtime_notes"]["dedup_rule_version"], "artifact_dedup_v1")
+        self.assertNotIn("compiler_metadata", combined)
+        self.assertNotIn("page_text_path", combined)
+        self.assertNotIn("page_image_path", combined)
+        self.assertNotIn("layout_blocks", combined)
 
 
 def make_stage2_record(

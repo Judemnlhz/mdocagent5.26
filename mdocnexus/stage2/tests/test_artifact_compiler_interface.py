@@ -166,7 +166,7 @@ class InvalidAnchorClient(ArtifactCompilerClient):
                     "doc_id": "example.pdf",
                     "page_index": 29,
                     "artifact_type": "visual_observation",
-                    "modality": "visual",
+                    "modality": "image",
                     "content": "Invalid anchor test artifact.",
                     "normalized_content": {"presence": "undetermined"},
                     "source_anchors": [

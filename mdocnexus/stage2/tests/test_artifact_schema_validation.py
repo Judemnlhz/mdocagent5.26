@@ -35,8 +35,20 @@ class ArtifactSchemaValidationTest(unittest.TestCase):
         self.assertNotIn("answer_supported", validation_statuses)
         self.assertNotIn("proof_used", validation_statuses)
         self.assertIn("visual_observation", artifact_type_enum)
-        self.assertIn("reference_entry", artifact_type_enum)
         self.assertIn("numeric_fact", artifact_type_enum)
+        for removed_type in [
+            "page_summary",
+            "document_identity",
+            "reference_section",
+            "reference_entry",
+            "organization_mention",
+            "claim_candidate",
+            "handwriting_observation",
+            "color_observation",
+        ]:
+            self.assertNotIn(removed_type, artifact_type_enum)
+        modality_enum = schema["properties"]["artifacts"]["items"]["properties"]["modality"]["enum"]
+        self.assertEqual(modality_enum, ["text", "image", "table", "figure", "numeric"])
 
     def test_valid_artifact_passes(self) -> None:
         layout_blocks = [make_full_page_image_block()]

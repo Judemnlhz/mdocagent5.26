@@ -15,31 +15,21 @@ from typing import Any, Dict, List, Literal, Optional
 
 
 class ArtifactType(str, Enum):
-    page_summary = "page_summary"
     text_span = "text_span"
     numeric_fact = "numeric_fact"
     table = "table"
     table_cell = "table_cell"
     figure = "figure"
     caption = "caption"
-    claim_candidate = "claim_candidate"
-    document_identity = "document_identity"
-    reference_section = "reference_section"
-    reference_entry = "reference_entry"
-    organization_mention = "organization_mention"
     visual_observation = "visual_observation"
-    handwriting_observation = "handwriting_observation"
-    color_observation = "color_observation"
 
 
 class Modality(str, Enum):
     text = "text"
-    visual = "visual"
     image = "image"
     table = "table"
     figure = "figure"
-    multimodal = "multimodal"
-    metadata = "metadata"
+    numeric = "numeric"
 
 
 class ProvenanceOp(str, Enum):

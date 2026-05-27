@@ -218,7 +218,7 @@ class FakeRealApiArtifactCompilerClient(ArtifactCompilerClient):
                     "doc_id": prompt_payload["document"]["doc_id"],
                     "page_index": page_index,
                     "artifact_type": "visual_observation",
-                    "modality": "visual",
+                    "modality": "image",
                     "content": "Fake real API visual observation.",
                     "normalized_content": {"presence": "undetermined"},
                     "source_anchors": [
@@ -248,7 +248,7 @@ def make_bad_output() -> Dict[str, Any]:
                 "doc_id": "example.pdf",
                 "page_index": 29,
                 "artifact_type": "visual_observation",
-                "modality": "visual",
+                "modality": "image",
                 "content": "Invalid anchor artifact.",
                 "normalized_content": {"presence": "undetermined"},
                 "source_anchors": [

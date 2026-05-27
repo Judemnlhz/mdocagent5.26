@@ -236,7 +236,7 @@ def make_provider_output(user_prompt: str, source_id: str) -> Dict[str, Any]:
                 "doc_id": doc_id,
                 "page_index": page_index,
                 "artifact_type": "visual_observation",
-                "modality": "visual",
+                "modality": "image",
                 "content": "Provider visual observation candidate.",
                 "normalized_content": {"presence": "undetermined"},
                 "source_anchors": [

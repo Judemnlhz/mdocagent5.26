@@ -313,7 +313,7 @@ def _build_visual_observation(
         "doc_id": doc_id,
         "page_index": page_index,
         "artifact_type": "visual_observation",
-        "modality": "visual",
+        "modality": "image",
         "content": "Mock visual observation anchored to the full page image.",
         "normalized_content": {
             "observation_scope": "full_page",
@@ -507,7 +507,7 @@ def build_artifact_compiler_user_prompt(
         "layout_blocks": page_input.get("layout_blocks", []),
         "page_text": page_input.get("page_text"),
         "artifact_coverage_instruction": [
-            "If page_modality_diagnosis.requires_visual_reasoning is true and a full_page_image block exists, produce at least one visual_observation candidate artifact anchored to the full_page_image block.",
+            "Produce artifacts only for positive evidence that is directly relevant to the question; do not emit artifacts that merely say the page is irrelevant or has no relevant content.",
             "If page_modality_diagnosis.mentions_chart is true, produce figure and numeric_fact candidate artifacts when visible in the page.",
             "If page_modality_diagnosis.mentions_table is true, produce table and numeric_fact candidate artifacts when visible in the page.",
             "If numeric values are visible and relevant to the question, produce numeric_fact candidate artifacts.",
@@ -523,7 +523,7 @@ def build_artifact_compiler_user_prompt(
             "Do not include gold answers, baseline outputs, or source records.",
             "Do not create supports or contradicts edges.",
             "Do not create proof_trace, verified, answer_supported, or proof_used fields.",
-            "For visual questions, output candidate visual_observation artifacts only when anchored; set presence to undetermined unless explicitly visible.",
+            "For visual questions, output visual_observation artifacts only for visible, question-relevant evidence anchored to the page image.",
             "Return JSON only.",
         ],
     }
@@ -556,7 +556,7 @@ def _build_page_requirement(page_input: Dict[str, Any], is_explicit_page: bool) 
     return {
         "explicit_page_constraint": True,
         "minimum_candidate_artifact": minimum_candidate_artifact,
-        "instruction": "If the required block type exists, include at least one page-level visual_observation or text_span candidate anchored to the page.",
+        "instruction": "Only include question-relevant positive evidence artifacts anchored to the page.",
     }
 
 # ---- from real_api_client.py ----
