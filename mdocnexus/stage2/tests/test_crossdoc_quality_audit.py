@@ -17,7 +17,6 @@ class CrossDocQualityAuditTest(unittest.TestCase):
         self.root = Path(self.tmpdir.name)
         self.batch_dir = self.root / "outputs" / "stage2" / "artifacts_real_crossdoc_batch"
         self.stage2_json = self.root / "outputs" / "stage2" / "MMLongBench" / "sample-with-stage2-index.json"
-        self.sidecar_dir = self.stage2_json.parent / "preflight"
         self.store_dir = self.batch_dir / "artifact_stores"
         self.discard_path = self.batch_dir / "discard" / "discard.jsonl"
         self.raw_path = self.batch_dir / "raw_outputs" / "raw_outputs.jsonl"
@@ -25,7 +24,6 @@ class CrossDocQualityAuditTest(unittest.TestCase):
         build_valid_text_only_fixture(
             batch_dir=self.batch_dir,
             stage2_json=self.stage2_json,
-            sidecar_dir=self.sidecar_dir,
         )
 
     def tearDown(self) -> None:
@@ -116,7 +114,7 @@ class CrossDocQualityAuditTest(unittest.TestCase):
         self.assertNotIn("PAGE_POISON", serialized)
         self.assertNotIn("BINARY_POISON", serialized)
 
-    def test_loads_compact_index_and_sidecars_for_image_input(self) -> None:
+    def test_loads_compact_page_routes_for_image_input(self) -> None:
         report = self.audit()
 
         self.assertEqual(report["modality_coverage"]["num_pages_with_image_input"], 10)
@@ -132,20 +130,18 @@ class CrossDocQualityAuditTest(unittest.TestCase):
         self.assertIn("artifact_modalities_text_only", report["stage2_readiness_gate"]["warnings"])
 
 
-def build_valid_text_only_fixture(batch_dir: Path, stage2_json: Path, sidecar_dir: Path) -> None:
+def build_valid_text_only_fixture(batch_dir: Path, stage2_json: Path) -> None:
     store_dir = batch_dir / "artifact_stores"
     raw_dir = batch_dir / "raw_outputs"
     discard_dir = batch_dir / "discard"
     reports_dir = batch_dir / "reports"
-    for path in (store_dir, raw_dir, discard_dir, reports_dir, sidecar_dir):
+    for path in (store_dir, raw_dir, discard_dir, reports_dir):
         path.mkdir(parents=True, exist_ok=True)
 
     records = []
     quality_rows = []
     for doc_number in range(5):
         doc_id = f"doc_{doc_number}.pdf"
-        pages = []
-        sources = []
         for page_index in range(2):
             block_id = f"p{page_index:03d}_text_0000"
             artifact = {
@@ -166,17 +162,6 @@ def build_valid_text_only_fixture(batch_dir: Path, stage2_json: Path, sidecar_di
                 json.dumps(store),
                 encoding="utf-8",
             )
-            pages.append({"page_index": page_index, "rank": page_index + 1, "score": 0.9})
-            sources.append(
-                {
-                    "page_index": page_index,
-                    "page_text_path": f"/tmp/{doc_id}_{page_index}.txt",
-                    "page_image_path": f"/tmp/{doc_id}_{page_index}.png",
-                    "has_page_text": True,
-                    "has_page_image": True,
-                    "layout_block_ids": [block_id, f"p{page_index:03d}_full_page_image"],
-                }
-            )
             quality_rows.append(
                 {
                     "doc_id": doc_id,
@@ -185,21 +170,6 @@ def build_valid_text_only_fixture(batch_dir: Path, stage2_json: Path, sidecar_di
                     "page_image_path": f"/tmp/{doc_id}_{page_index}.png",
                 }
             )
-        sidecar_path = sidecar_dir / f"doc_{doc_number}.json"
-        sidecar = {
-            "doc_id": doc_id,
-            "retrieval_pages": {
-                "image_top_10_question_unique": pages,
-                "retrieval_candidate_pages": [0, 1],
-            },
-            "explicit_page_validation": {
-                "valid_explicit_page_indices": [],
-                "invalid_explicit_page_references": [],
-            },
-            "page_sources": sources,
-            "preflight": {"passed": True, "blocking_reasons": []},
-        }
-        sidecar_path.write_text(json.dumps(sidecar), encoding="utf-8")
         records.append(
             {
                 "doc_id": doc_id,
@@ -208,12 +178,11 @@ def build_valid_text_only_fixture(batch_dir: Path, stage2_json: Path, sidecar_di
                 "evidence_pages": "PAGE_POISON",
                 "binary_correctness": "BINARY_POISON",
                 "stage2": {
-                    "version": "stage2_preflight_v1",
-                    "status": "preflight_passed",
-                    "doc_name": f"doc_{doc_number}",
-                    "page_count": 2,
-                    "pages_to_compile": [0, 1],
-                    "preflight_ref": str(sidecar_path),
+                    "preflight": {"passed": True, "blocking_reasons": []},
+                    "candidate_page_routes": [
+                        {"page_index": 0, "routes": ["text", "image"]},
+                        {"page_index": 1, "routes": ["text", "image"]},
+                    ],
                 },
             }
         )

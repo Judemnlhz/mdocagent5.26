@@ -76,12 +76,11 @@ def audit_crossdoc_batch(batch_dir: str | Path, stage2_json: str | Path | None =
 def audit_crossdoc_batch_with_options(
     batch_dir: str | Path,
     stage2_json: str | Path | None = None,
-    sidecar_dir: str | Path | None = None,
 ) -> dict:
     batch_path = Path(batch_dir)
     reports_dir = batch_path / "reports"
     context = _load_context(batch_path, reports_dir)
-    stage2_context = _load_stage2_context(stage2_json, sidecar_dir)
+    stage2_context = _load_stage2_context(stage2_json)
     page_infos = _build_page_infos(context, stage2_context)
 
     artifact_counter = Counter()
@@ -105,8 +104,6 @@ def audit_crossdoc_batch_with_options(
         report_value = context.get(report_name)
         if report_value is not None:
             files_for_secret_scan.append(report_value)
-    files_for_secret_scan.extend(stage2_context["sidecars"])
-
     for value in files_for_secret_scan:
         forbidden_field_violations += _count_keys(value, FORBIDDEN_FIELD_NAMES)
         api_key_leaks += _count_api_key_leaks(value)
@@ -350,13 +347,11 @@ def _read_csv_if_exists(path: Path) -> list[dict]:
         return list(csv.DictReader(file_obj))
 
 
-def _load_stage2_context(stage2_json: str | Path | None, sidecar_dir: str | Path | None) -> dict:
+def _load_stage2_context(stage2_json: str | Path | None) -> dict:
     if stage2_json is None:
-        return {"records": [], "sidecars": [], "page_sources": {}, "selection_candidates": Counter()}
+        return {"records": [], "page_sources": {}, "selection_candidates": Counter()}
     stage2_path = Path(stage2_json)
     records = _read_json_or_jsonl_records(stage2_path)
-    sidecar_base = Path(sidecar_dir) if sidecar_dir is not None else None
-    sidecars = []
     page_sources: dict[tuple[str, int], dict] = {}
     selection_candidates: Counter[str] = Counter()
 
@@ -365,99 +360,31 @@ def _load_stage2_context(stage2_json: str | Path | None, sidecar_dir: str | Path
         if doc_id is None:
             continue
         stage2 = record.get("stage2", {})
-        resolved = _resolve_stage2(record, stage2_path, sidecar_base)
-        if resolved.get("_sidecar"):
-            sidecars.append(resolved["_sidecar"])
-        for source in resolved.get("page_sources", []) or []:
-            if not isinstance(source, dict) or source.get("page_index") is None:
-                continue
-            try:
-                page_index = int(source["page_index"])
-            except (TypeError, ValueError):
-                continue
-            page_sources[(str(doc_id), page_index)] = dict(source)
-        for reason in _record_selection_reasons(resolved):
+        if not isinstance(stage2, dict):
+            continue
+        for reason in _record_selection_reasons(stage2):
             selection_candidates[reason] += 1
     return {
         "records": records,
-        "sidecars": sidecars,
         "page_sources": page_sources,
         "selection_candidates": selection_candidates,
     }
 
 
-def _resolve_stage2(record: Mapping[str, Any], stage2_path: Path, sidecar_base: Path | None) -> dict:
-    stage2 = record.get("stage2", {})
-    if not isinstance(stage2, dict):
-        return {}
-    preflight_ref = stage2.get("preflight_ref")
-    if not preflight_ref:
-        return dict(stage2)
-    sidecar_path = _resolve_sidecar_path(str(preflight_ref), stage2_path, sidecar_base)
-    sidecar = _read_json_if_exists(sidecar_path) if sidecar_path else None
-    if not isinstance(sidecar, dict):
-        return dict(stage2)
-    return {
-        "version": stage2.get("version"),
-        "doc_name": stage2.get("doc_name"),
-        "page_count": {
-            "value": stage2.get("page_count"),
-            "source": stage2.get("page_count_source"),
-        },
-        "question_constraints": sidecar.get("question_constraints", {}),
-        "retrieval_pages": sidecar.get("retrieval_pages", {}),
-        "explicit_page_validation": sidecar.get("explicit_page_validation", {}),
-        "pages_to_compile": stage2.get("pages_to_compile", []),
-        "page_sources": sidecar.get("page_sources", []),
-        "layout_blocks_by_page": sidecar.get("layout_blocks_by_page", {}),
-        "preflight": sidecar.get("preflight", {}),
-        "_sidecar": sidecar,
-    }
-
-
-def _resolve_sidecar_path(preflight_ref: str, stage2_path: Path, sidecar_base: Path | None) -> Path | None:
-    ref_path = Path(preflight_ref)
-    candidates = []
-    if ref_path.is_absolute():
-        candidates.append(ref_path)
-    else:
-        candidates.extend([ref_path, stage2_path.parent / ref_path])
-    if sidecar_base is not None:
-        candidates.extend([sidecar_base / ref_path.name, sidecar_base / ref_path])
-    for candidate in candidates:
-        if candidate.is_file():
-            return candidate
-    return candidates[0] if candidates else None
-
-
 def _record_selection_reasons(stage2: Mapping[str, Any]) -> list[str]:
     reasons = []
-    page_sources = {
-        int(source["page_index"]): source
-        for source in stage2.get("page_sources", []) or []
-        if isinstance(source, dict) and source.get("page_index") is not None
-    }
-    valid_explicit = _coerce_ints(
-        stage2.get("explicit_page_validation", {}).get("valid_explicit_page_indices", [])
-    )
-    image_top = _coerce_ints(
-        item.get("page_index")
-        for item in stage2.get("retrieval_pages", {}).get("image_top_10_question_unique", []) or []
-        if isinstance(item, dict)
-    )
-    retrieval_union = _coerce_ints(stage2.get("retrieval_pages", {}).get("retrieval_candidate_pages", []) or [])
-    for page_index in valid_explicit:
-        if _source_has_image(page_sources.get(page_index)):
-            reasons.append("valid_explicit_page_with_image")
-            break
-    for page_index in image_top:
-        if _source_has_image(page_sources.get(page_index)):
-            reasons.append("image_top_10_first_available")
-            break
-    for page_index in retrieval_union:
-        if _source_has_image(page_sources.get(page_index)):
-            reasons.append("retrieval_union_first_available")
-            break
+    route_pages = []
+    image_pages = []
+    for route in stage2.get("candidate_page_routes", []) or []:
+        if not isinstance(route, dict) or route.get("page_index") is None:
+            continue
+        route_pages.append(int(route["page_index"]))
+        if "image" in (route.get("routes") or []):
+            image_pages.append(int(route["page_index"]))
+    if image_pages:
+        reasons.append("image_top_10_first_available")
+    if route_pages:
+        reasons.append("retrieval_union_first_available")
     return reasons
 
 
@@ -567,10 +494,6 @@ def _coerce_page_index(value: Any) -> int | None:
         return int(value)
     except (TypeError, ValueError):
         return None
-
-
-def _source_has_image(source: Mapping[str, Any] | None) -> bool:
-    return bool(source and source.get("has_page_image") and source.get("page_image_path"))
 
 
 def _page_ref(doc_id: str, page_index: int) -> str:

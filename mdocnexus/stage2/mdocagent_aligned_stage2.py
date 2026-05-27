@@ -14,7 +14,6 @@ from .mdocagent_compat import (
 )
 from .page_loader import find_existing_file
 from .page_range_validation import (
-    OUT_OF_RANGE_ERROR,
     validate_explicit_page_references_against_page_count,
     infer_document_page_count,
 )
@@ -87,17 +86,6 @@ def build_stage2_preflight(record: Mapping[str, Any], extract_root: str | Path) 
     """Build the compact Stage 2 page-route index for one retrieval result record."""
 
     doc_id = str(record["doc_id"])
-    question = str(record["question"])
-    question_constraints = parse_question_constraints(question)
-    page_count_info = infer_document_page_count(
-        doc_id=doc_id,
-        pdf_root=None,
-        extract_root=extract_root,
-    )
-    explicit_validation = validate_explicit_page_references_against_page_count(
-        {"question_constraints": question_constraints},
-        page_count_info,
-    )
     candidate_page_routes = build_candidate_page_routes(record)
     candidate_page_sources = [
         build_page_source(
@@ -107,11 +95,9 @@ def build_stage2_preflight(record: Mapping[str, Any], extract_root: str | Path) 
         )
         for route in candidate_page_routes
     ]
-    candidate_page_indices = [int(route["page_index"]) for route in candidate_page_routes]
     blocking_reasons = build_preflight_blocking_reasons(
-        invalid_explicit_page_references=explicit_validation["invalid_explicit_page_references"],
+        candidate_page_routes=candidate_page_routes,
         candidate_page_sources=candidate_page_sources,
-        candidate_page_indices=candidate_page_indices,
     )
 
     return {
@@ -170,20 +156,15 @@ def build_page_source(
 
 
 def build_preflight_blocking_reasons(
-    invalid_explicit_page_references: List[Dict[str, Any]],
+    candidate_page_routes: List[Dict[str, Any]],
     candidate_page_sources: List[Dict[str, Any]],
-    candidate_page_indices: List[int],
 ) -> List[str]:
-    reasons = {
-        ref.get("error_type")
-        for ref in invalid_explicit_page_references
-        if ref.get("error_type")
-    }
-    if any(not source["has_page_text"] and not source["has_page_image"] for source in candidate_page_sources):
-        reasons.add("missing_source_anchors")
-    if not candidate_page_indices:
-        reasons.add("no_pages_to_compile")
-    return sorted(str(reason) for reason in reasons if reason)
+    reasons: set[str] = set()
+    if not candidate_page_routes:
+        reasons.add("no_candidate_page_routes")
+    elif not any(source["has_page_text"] or source["has_page_image"] for source in candidate_page_sources):
+        reasons.add("missing_all_candidate_sources")
+    return sorted(reasons)
 
 
 def select_trial_candidate_from_stage2_file(

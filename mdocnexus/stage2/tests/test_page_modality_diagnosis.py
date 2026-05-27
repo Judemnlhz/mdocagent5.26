@@ -16,7 +16,7 @@ class PageModalityDiagnosisTest(unittest.TestCase):
                 "evidence_pages": "[99]",
                 "binary_correctness": True,
             },
-            sidecar=make_sidecar(has_image=True),
+            page_context=make_page_context(has_image=True),
             page_index=2,
         )
 
@@ -31,7 +31,7 @@ class PageModalityDiagnosisTest(unittest.TestCase):
     def test_table_question_recommends_table_and_numeric_fact(self) -> None:
         diagnosis = diagnose_page_modality_from_question_and_preflight(
             record={"question": "How many entries are listed in the table?"},
-            sidecar=make_sidecar(has_image=True),
+            page_context=make_page_context(has_image=True),
             page_index=2,
         )
 
@@ -42,7 +42,7 @@ class PageModalityDiagnosisTest(unittest.TestCase):
     def test_visual_recommendation_requires_image_input(self) -> None:
         diagnosis = diagnose_page_modality_from_question_and_preflight(
             record={"question": "What color is visible in the image?"},
-            sidecar=make_sidecar(has_image=False),
+            page_context=make_page_context(has_image=False),
             page_index=2,
         )
 
@@ -58,7 +58,7 @@ class PageModalityDiagnosisTest(unittest.TestCase):
                 "evidence_pages": "[1]",
                 "binary_correctness": False,
             },
-            sidecar=make_sidecar(has_image=True),
+            page_context=make_page_context(has_image=True),
             page_index=2,
         )
 
@@ -68,7 +68,7 @@ class PageModalityDiagnosisTest(unittest.TestCase):
         self.assertFalse(diagnosis["mentions_numeric_value"])
 
 
-def make_sidecar(has_image: bool) -> dict:
+def make_page_context(has_image: bool) -> dict:
     return {
         "page_sources": [
             {

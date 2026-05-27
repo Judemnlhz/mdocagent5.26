@@ -91,7 +91,7 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
         for removed in REMOVED_STAGE2_FIELDS:
             self.assertNotIn(removed, collect_keys(stage2))
 
-    def test_out_of_range_explicit_page_not_in_candidate_page_routes(self) -> None:
+    def test_out_of_range_explicit_page_does_not_block_preflight(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             extract_root = root / "tmp" / "MMLongBench"
@@ -101,8 +101,8 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
             stage2 = augment_retrieval_records([record], extract_root)[0]["stage2"]
 
         self.assertNotIn(29, [route["page_index"] for route in stage2["candidate_page_routes"]])
-        self.assertIn("explicit_page_reference_out_of_range", stage2["preflight"]["blocking_reasons"])
-        self.assertFalse(stage2["preflight"]["passed"])
+        self.assertEqual(stage2["preflight"]["blocking_reasons"], [])
+        self.assertTrue(stage2["preflight"]["passed"])
 
     def test_valid_explicit_page_does_not_expand_candidate_routes(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

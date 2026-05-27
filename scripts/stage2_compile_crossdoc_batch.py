@@ -183,6 +183,21 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
             "dedup_rule_version": "artifact_dedup_v1",
         },
     )
+    manifest.update(
+        {
+            "input_index_path": str(args.stage2_json),
+            "extract_root": str(args.extract_root),
+            "uses_compact_page_routes": True,
+            "uses_sidecar_preflight": False,
+            "uses_gold": False,
+            "stage2_depends_on_predict_py": False,
+            "stage2_depends_on_multi_agent_system": False,
+            "api_called": bool(not args.dry_run_fake_client),
+            "num_api_calls": sum(1 for result in page_results if result.get("api_called")),
+            "num_documents_attempted": len({result.get("doc_id") for result in page_results}),
+            "num_pages_attempted": len(page_results),
+        }
+    )
     write_stage2_run_manifest(manifest, output_paths["run_manifest"])
 
     summary = summarize_crossdoc_results(
@@ -256,7 +271,7 @@ def load_selected_pages_from_quality_csv(
         }
         selected_page["page_modality_diagnosis"] = diagnose_page_modality_from_question_and_preflight(
             record={"doc_id": doc_id, "question": record.get("question")},
-            sidecar={"question": record.get("question"), "page_sources": [page_source]},
+            page_context={"question": record.get("question"), "page_sources": [page_source]},
             page_index=page_index,
         )
         selected_pages.append(selected_page)
@@ -300,7 +315,7 @@ def compile_selected_page(
     page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or (
         diagnose_page_modality_from_question_and_preflight(
             record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
-            sidecar={
+            page_context={
                 "question": selected_page.get("question"),
                 "page_sources": [
                     {

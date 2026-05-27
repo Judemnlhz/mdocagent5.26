@@ -30,13 +30,13 @@ NUMERIC_PATTERNS = (
 
 def diagnose_page_modality_from_question_and_preflight(
     record: dict,
-    sidecar: dict,
+    page_context: dict,
     page_index: int,
 ) -> dict:
-    """Derive non-gold prompt guidance from question text and preflight metadata."""
+    """Derive non-gold prompt guidance from question text and runtime page metadata."""
 
-    question_text = _question_text(record, sidecar).lower()
-    page_source = _page_source(sidecar, page_index)
+    question_text = _question_text(record, page_context).lower()
+    page_source = _page_source(page_context, page_index)
     has_page_image = bool(page_source.get("has_page_image") and page_source.get("page_image_path"))
     mentions_chart = _contains_any(question_text, CHART_TERMS)
     mentions_table = _contains_any(question_text, TABLE_TERMS)
@@ -72,17 +72,17 @@ def diagnose_page_modality_from_question_and_preflight(
     }
 
 
-def _question_text(record: Mapping[str, Any], sidecar: Mapping[str, Any]) -> str:
+def _question_text(record: Mapping[str, Any], page_context: Mapping[str, Any]) -> str:
     question = record.get("question")
     if isinstance(question, dict):
         return str(question.get("text") or "")
     if question is not None:
         return str(question)
-    return str(sidecar.get("question") or "")
+    return str(page_context.get("question") or "")
 
 
-def _page_source(sidecar: Mapping[str, Any], page_index: int) -> dict:
-    for source in sidecar.get("page_sources", []) or []:
+def _page_source(page_context: Mapping[str, Any], page_index: int) -> dict:
+    for source in page_context.get("page_sources", []) or []:
         if not isinstance(source, dict):
             continue
         try:
