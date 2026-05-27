@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from mdocnexus.stage2.crossdoc_quality_audit import audit_crossdoc_batch
+from mdocnexus.stage2.reports import audit_crossdoc_batch
 
 
 class CrossDocQualityAuditTest(unittest.TestCase):

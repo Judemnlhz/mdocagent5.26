@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.mdocagent_aligned_stage2 import (
+from mdocnexus.stage2.index_builder import (
     augment_retrieval_records,
     build_single_page_trial_summary,
     select_trial_candidate_from_stage2_records,

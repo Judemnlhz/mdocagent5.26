@@ -10,12 +10,12 @@ from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.artifact_quality_audit import (
+from mdocnexus.stage2.reports import (
     audit_batch_artifact_outputs,
     write_audit_csv,
     write_audit_json,
 )
-from mdocnexus.stage2.mdocagent_compat import read_json_or_jsonl_records
+from mdocnexus.stage2.index_builder import read_json_or_jsonl_records
 
 
 def parse_args() -> argparse.Namespace:

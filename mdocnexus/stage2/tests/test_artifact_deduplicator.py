@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from mdocnexus.stage2.artifact_deduplicator import (
+from mdocnexus.stage2.artifact_pipeline import (
     build_artifact_dedup_key,
     deduplicate_page_artifacts,
     normalize_for_hash,

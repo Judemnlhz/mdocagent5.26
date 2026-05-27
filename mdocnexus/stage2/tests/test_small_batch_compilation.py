@@ -10,9 +10,9 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.batch_page_selector import select_pages_for_small_batch
-from mdocnexus.stage2.batch_quality_report import summarize_batch_results, write_batch_summary
-from mdocnexus.stage2.compiler_client import ArtifactCompilerClient
+from mdocnexus.stage2.selectors import select_pages_for_small_batch
+from mdocnexus.stage2.reports import summarize_batch_results, write_batch_summary
+from mdocnexus.stage2.provider import ArtifactCompilerClient
 from scripts.stage2_compile_small_batch import run_small_batch, validate_args
 
 

@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from mdocnexus.stage2.tests.test_artifact_deduplicator import make_artifact
-from mdocnexus.stage2.refined_error_attribution import summarize_refined_validation_failures
+from mdocnexus.stage2.reports import summarize_refined_validation_failures
 
 
 class RefinedErrorAttributionTest(unittest.TestCase):

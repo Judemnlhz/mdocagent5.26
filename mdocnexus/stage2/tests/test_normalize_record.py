@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from mdocnexus.stage2.normalize_record import normalize_record
+from mdocnexus.stage2.index_builder import normalize_record
 
 
 APPROVED_TOP_LEVEL_KEYS = {"record_id", "source_record", "canonical_record"}

@@ -11,15 +11,15 @@ from typing import Any, Dict, Optional
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.mdocagent_compat import (
+from mdocnexus.stage2.index_builder import (
     build_api_run_config_from_mdocagent_yaml,
     find_record_by_id_or_doc_question,
     read_json_or_jsonl_records,
     summarize_mdocagent_model_config,
 )
-from mdocnexus.stage2.normalize_record import normalize_record
-from mdocnexus.stage2.page_preparer import prepare_pages_for_compilation
-from mdocnexus.stage2.page_range_validation import (
+from mdocnexus.stage2.index_builder import normalize_record
+from mdocnexus.stage2.page_input import prepare_pages_for_compilation
+from mdocnexus.stage2.index_builder import (
     OUT_OF_RANGE_ERROR,
     PAGE_COUNT_UNKNOWN_ERROR,
     apply_explicit_page_range_validation_to_canonical_record,

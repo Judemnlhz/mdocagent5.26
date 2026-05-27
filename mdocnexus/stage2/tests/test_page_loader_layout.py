@@ -7,8 +7,8 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.page_loader import load_page_content
-from mdocnexus.stage2.page_preparer import prepare_pages_for_compilation
+from mdocnexus.stage2.page_input import load_page_content
+from mdocnexus.stage2.page_input import prepare_pages_for_compilation
 
 
 class PageLoaderLayoutTest(unittest.TestCase):

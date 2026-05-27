@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.artifact_quality_audit import (
+from mdocnexus.stage2.reports import (
     audit_artifact_store,
     audit_batch_artifact_outputs,
     load_batch_artifact_stores,

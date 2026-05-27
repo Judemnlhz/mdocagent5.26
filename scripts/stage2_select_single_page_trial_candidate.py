@@ -11,7 +11,7 @@ from typing import Any, Dict
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.trial_candidate_selector import select_single_page_trial_candidate
+from mdocnexus.stage2.selectors import select_single_page_trial_candidate
 
 
 def parse_args() -> argparse.Namespace:

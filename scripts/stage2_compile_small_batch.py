@@ -11,25 +11,25 @@ from typing import Any, Dict, List
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.api_config import assert_real_api_allowed
-from mdocnexus.stage2.artifact_compiler import compile_page_with_client
-from mdocnexus.stage2.artifact_store import build_document_artifact_store, write_artifact_store
-from mdocnexus.stage2.batch_page_selector import select_pages_for_small_batch
-from mdocnexus.stage2.batch_quality_report import (
+from mdocnexus.stage2.provider import assert_real_api_allowed
+from mdocnexus.stage2.artifact_pipeline import compile_page_with_client
+from mdocnexus.stage2.artifact_pipeline import build_document_artifact_store, write_artifact_store
+from mdocnexus.stage2.selectors import select_pages_for_small_batch
+from mdocnexus.stage2.reports import (
     count_forbidden_fields,
     summarize_batch_results,
     write_batch_quality_csv,
     write_batch_summary,
 )
-from mdocnexus.stage2.compiler_client import ArtifactCompilerClient, FakeArtifactCompilerClient
-from mdocnexus.stage2.layout_parser import build_basic_layout_blocks
-from mdocnexus.stage2.mdocagent_compat import (
+from mdocnexus.stage2.provider import ArtifactCompilerClient, FakeArtifactCompilerClient
+from mdocnexus.stage2.page_input import build_basic_layout_blocks
+from mdocnexus.stage2.index_builder import (
     build_api_run_config_from_mdocagent_yaml,
     read_json_or_jsonl_records,
 )
-from mdocnexus.stage2.page_loader import load_page_content
-from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
-from mdocnexus.stage2.schema_serialization import build_page_artifact_output_schema_dict
+from mdocnexus.stage2.page_input import load_page_content
+from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
+from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
 
 
 MAX_ALLOWED_PAGES = 10

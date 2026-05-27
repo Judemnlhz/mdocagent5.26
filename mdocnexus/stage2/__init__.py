@@ -1,5 +1,9 @@
-"""Stage 2 canonical record normalization utilities."""
+"""MDocNexus Stage 2 compact route pipeline."""
 
-from .normalize_record import make_record_id, normalize_record, parse_list_field
+from .index_builder import augment_retrieval_records, augment_retrieval_results_file, build_candidate_page_routes
 
-__all__ = ["make_record_id", "normalize_record", "parse_list_field"]
+__all__ = [
+    "augment_retrieval_records",
+    "augment_retrieval_results_file",
+    "build_candidate_page_routes",
+]

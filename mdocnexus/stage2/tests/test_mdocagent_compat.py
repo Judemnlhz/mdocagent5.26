@@ -8,15 +8,15 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict
 
-from mdocnexus.stage2.mdocagent_compat import (
+from mdocnexus.stage2.index_builder import (
     build_api_run_config_from_mdocagent_yaml,
     build_mdocagent_extract_paths,
     find_record_by_id_or_doc_question,
     normalize_doc_name_for_mdocagent,
     read_json_or_jsonl_records,
 )
-from mdocnexus.stage2.page_loader import load_page_content
-from mdocnexus.stage2.page_preparer import prepare_pages_for_compilation
+from mdocnexus.stage2.page_input import load_page_content
+from mdocnexus.stage2.page_input import prepare_pages_for_compilation
 from scripts.stage2_prepare_single_page_trial import build_preflight_report
 
 

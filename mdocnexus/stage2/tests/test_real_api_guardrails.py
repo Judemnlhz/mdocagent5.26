@@ -9,17 +9,17 @@ from pathlib import Path
 from typing import Any, Dict, List
 from unittest.mock import patch
 
-from mdocnexus.stage2.api_config import ApiRunConfig, assert_real_api_allowed
-from mdocnexus.stage2.artifact_compiler import compile_page_with_client
-from mdocnexus.stage2.compiler_client import ArtifactCompilerClient
-from mdocnexus.stage2.compiler_integration import run_stage2_single_page_real_api_smoke_test
-from mdocnexus.stage2.raw_output_log import (
+from mdocnexus.stage2.provider import ApiRunConfig, assert_real_api_allowed
+from mdocnexus.stage2.artifact_pipeline import compile_page_with_client
+from mdocnexus.stage2.provider import ArtifactCompilerClient
+from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_smoke_test
+from mdocnexus.stage2.logs import (
     RawCompilerOutputLogEntry,
     hash_raw_output,
     write_raw_output_log,
 )
-from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
-from mdocnexus.stage2.schema_serialization import build_page_artifact_output_schema_dict
+from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
+from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
 
 
 class RealApiGuardrailsTest(unittest.TestCase):
@@ -114,7 +114,7 @@ class RealApiGuardrailsTest(unittest.TestCase):
             )
 
             with patch(
-                "mdocnexus.stage2.compiler_integration.RealApiArtifactCompilerClient",
+                "mdocnexus.stage2.artifact_pipeline.RealApiArtifactCompilerClient",
                 FakeRealApiArtifactCompilerClient,
             ):
                 summary = run_stage2_single_page_real_api_smoke_test(
@@ -153,7 +153,7 @@ class RealApiGuardrailsTest(unittest.TestCase):
             canonical_record["source_record"] = {"answer": "SOURCE_SECRET"}
 
             with patch(
-                "mdocnexus.stage2.compiler_integration.RealApiArtifactCompilerClient",
+                "mdocnexus.stage2.artifact_pipeline.RealApiArtifactCompilerClient",
                 FakeRealApiArtifactCompilerClient,
             ):
                 run_stage2_single_page_real_api_smoke_test(

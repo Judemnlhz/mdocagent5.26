@@ -8,20 +8,20 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.artifact_compiler import compile_page_with_client
-from mdocnexus.stage2.artifact_validator import validate_page_artifact_output
-from mdocnexus.stage2.compiler_client import (
+from mdocnexus.stage2.artifact_pipeline import compile_page_with_client
+from mdocnexus.stage2.artifact_pipeline import validate_page_artifact_output
+from mdocnexus.stage2.provider import (
     ArtifactCompilerClient,
     FakeArtifactCompilerClient,
     RealArtifactCompilerClient,
 )
-from mdocnexus.stage2.compiler_integration import run_stage2_compiler_dry_run
-from mdocnexus.stage2.compiler_prompt import build_artifact_compiler_user_prompt
-from mdocnexus.stage2.schema_serialization import (
+from mdocnexus.stage2.artifact_pipeline import run_stage2_compiler_dry_run
+from mdocnexus.stage2.provider import build_artifact_compiler_user_prompt
+from mdocnexus.stage2.artifact_schema import (
     build_page_artifact_output_schema_dict,
     get_allowed_validation_statuses,
 )
-from mdocnexus.stage2.validation_errors import ValidationErrorType
+from mdocnexus.stage2.artifact_schema import ValidationErrorType
 
 
 class ArtifactCompilerInterfaceTest(unittest.TestCase):

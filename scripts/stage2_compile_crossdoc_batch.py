@@ -13,20 +13,20 @@ from typing import Any, Dict, List
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.api_config import assert_real_api_allowed
-from mdocnexus.stage2.artifact_compiler import compile_page_with_client
-from mdocnexus.stage2.artifact_store import build_document_artifact_store, write_artifact_store
-from mdocnexus.stage2.batch_quality_report import count_forbidden_fields, write_batch_summary
-from mdocnexus.stage2.compiler_client import ArtifactCompilerClient, FakeArtifactCompilerClient
-from mdocnexus.stage2.crossdoc_batch_selector import select_crossdoc_pages_for_batch
-from mdocnexus.stage2.discard_log import DiscardLogEntry, write_discard_log_entry
-from mdocnexus.stage2.mdocagent_compat import build_api_run_config_from_mdocagent_yaml, read_json_or_jsonl_records
-from mdocnexus.stage2.page_modality_diagnosis import diagnose_page_modality_from_question_and_preflight
-from mdocnexus.stage2.raw_output_log import build_raw_output_log_entry, write_raw_output_log
-from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
-from mdocnexus.stage2.run_manifest import build_stage2_run_manifest, write_stage2_run_manifest
-from mdocnexus.stage2.schema_serialization import build_page_artifact_output_schema_dict
-from mdocnexus.stage2.mdocagent_aligned_stage2 import build_page_source
+from mdocnexus.stage2.provider import assert_real_api_allowed
+from mdocnexus.stage2.artifact_pipeline import compile_page_with_client
+from mdocnexus.stage2.artifact_pipeline import build_document_artifact_store, write_artifact_store
+from mdocnexus.stage2.reports import count_forbidden_fields, write_batch_summary
+from mdocnexus.stage2.provider import ArtifactCompilerClient, FakeArtifactCompilerClient
+from mdocnexus.stage2.selectors import select_crossdoc_pages_for_batch
+from mdocnexus.stage2.logs import DiscardLogEntry, write_discard_log_entry
+from mdocnexus.stage2.index_builder import build_api_run_config_from_mdocagent_yaml, read_json_or_jsonl_records
+from mdocnexus.stage2.selectors import diagnose_page_modality_from_question_and_preflight
+from mdocnexus.stage2.logs import build_raw_output_log_entry, write_raw_output_log
+from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
+from mdocnexus.stage2.logs import build_stage2_run_manifest, write_stage2_run_manifest
+from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
+from mdocnexus.stage2.index_builder import build_page_source
 from scripts.stage2_compile_small_batch import (
     COMPILER_VERSION,
     PROMPT_VERSION,

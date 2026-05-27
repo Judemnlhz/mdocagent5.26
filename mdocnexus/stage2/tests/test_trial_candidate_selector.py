@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from typing import Any, Dict, List
-from mdocnexus.stage2.trial_candidate_selector import select_single_page_trial_candidate
+from mdocnexus.stage2.selectors import select_single_page_trial_candidate
 from scripts.run_stage2_real_single_page_trial import (
     apply_candidate_report_to_args,
     load_canonical_record_from_args,

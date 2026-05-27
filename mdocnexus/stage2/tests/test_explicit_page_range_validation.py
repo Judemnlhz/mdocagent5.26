@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.normalize_record import normalize_record
-from mdocnexus.stage2.page_range_validation import (
+from mdocnexus.stage2.index_builder import normalize_record
+from mdocnexus.stage2.index_builder import (
     OUT_OF_RANGE_ERROR,
     apply_explicit_page_range_validation_to_canonical_record,
     infer_document_page_count,

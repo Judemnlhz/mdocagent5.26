@@ -8,12 +8,12 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.artifact_store import build_document_artifact_store
-from mdocnexus.stage2.artifact_validator import validate_page_artifact_output
-from mdocnexus.stage2.integration_dry_run import run_stage2_dry_run
-from mdocnexus.stage2.mock_artifact_outputs import build_mock_page_artifact_output
-from mdocnexus.stage2.quality_report import summarize_artifact_store, write_quality_summary
-from mdocnexus.stage2.validation_errors import ValidationErrorType
+from mdocnexus.stage2.artifact_pipeline import build_document_artifact_store
+from mdocnexus.stage2.artifact_pipeline import validate_page_artifact_output
+from mdocnexus.stage2.artifact_pipeline import run_stage2_dry_run
+from mdocnexus.stage2.provider import build_mock_page_artifact_output
+from mdocnexus.stage2.reports import summarize_artifact_store, write_quality_summary
+from mdocnexus.stage2.artifact_schema import ValidationErrorType
 
 
 class ArtifactStoreDryRunTest(unittest.TestCase):

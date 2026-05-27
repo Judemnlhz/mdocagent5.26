@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 
-from mdocnexus.stage2.crossdoc_batch_selector import select_crossdoc_pages_for_batch
+from mdocnexus.stage2.selectors import select_crossdoc_pages_for_batch
 from scripts.stage2_compile_crossdoc_batch import run_crossdoc_batch, validate_args
 
 

@@ -9,7 +9,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.mdocagent_aligned_stage2 import augment_retrieval_results_file
+from mdocnexus.stage2.index_builder import augment_retrieval_results_file
 
 
 def parse_args() -> argparse.Namespace:

@@ -10,7 +10,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.crossdoc_quality_audit import (
+from mdocnexus.stage2.reports import (
     audit_crossdoc_batch_with_options,
     write_audit_json,
     write_page_quality_csv,

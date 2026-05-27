@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from mdocnexus.stage2.page_modality_diagnosis import diagnose_page_modality_from_question_and_preflight
+from mdocnexus.stage2.selectors import diagnose_page_modality_from_question_and_preflight
 
 
 class PageModalityDiagnosisTest(unittest.TestCase):

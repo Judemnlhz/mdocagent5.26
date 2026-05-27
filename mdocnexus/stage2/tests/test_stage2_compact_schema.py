@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict
 
-from mdocnexus.stage2.batch_page_selector import select_pages_for_small_batch
-from mdocnexus.stage2.mdocagent_aligned_stage2 import (
+from mdocnexus.stage2.selectors import select_pages_for_small_batch
+from mdocnexus.stage2.index_builder import (
     augment_retrieval_records,
     build_candidate_page_routes,
     select_trial_candidate_from_stage2_records,

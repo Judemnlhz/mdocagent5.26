@@ -9,7 +9,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from mdocnexus.stage2.refinement_comparison import compare_crossdoc_audits, write_refinement_comparison
+from mdocnexus.stage2.reports import compare_crossdoc_audits, write_refinement_comparison
 
 
 def parse_args() -> argparse.Namespace:

@@ -11,11 +11,11 @@ from pathlib import Path
 from typing import Any, Dict
 from unittest.mock import patch
 
-from mdocnexus.stage2.api_config import ApiRunConfig
-from mdocnexus.stage2.compiler_integration import run_stage2_single_page_real_api_smoke_test
-from mdocnexus.stage2.provider_client import CompatibleChatJsonProvider
-from mdocnexus.stage2.provider_errors import ProviderNotConfiguredError, ProviderResponseFormatError
-from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
+from mdocnexus.stage2.provider import ApiRunConfig
+from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_smoke_test
+from mdocnexus.stage2.provider import CompatibleChatJsonProvider
+from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderResponseFormatError
+from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
 from scripts.run_stage2_real_single_page_trial import validate_real_trial_args
 
 
@@ -72,7 +72,7 @@ class RealProviderAdapterTest(unittest.TestCase):
             config = make_api_config(root)
 
             with patch(
-                "mdocnexus.stage2.real_api_client.CompatibleChatJsonProvider",
+                "mdocnexus.stage2.provider.CompatibleChatJsonProvider",
                 NonJsonProvider,
             ):
                 summary = run_stage2_single_page_real_api_smoke_test(
@@ -100,7 +100,7 @@ class RealProviderAdapterTest(unittest.TestCase):
             config = make_api_config(root)
 
             with patch(
-                "mdocnexus.stage2.real_api_client.CompatibleChatJsonProvider",
+                "mdocnexus.stage2.provider.CompatibleChatJsonProvider",
                 ValidJsonProvider,
             ):
                 summary = run_stage2_single_page_real_api_smoke_test(
@@ -125,7 +125,7 @@ class RealProviderAdapterTest(unittest.TestCase):
             config = make_api_config(root)
 
             with patch(
-                "mdocnexus.stage2.real_api_client.CompatibleChatJsonProvider",
+                "mdocnexus.stage2.provider.CompatibleChatJsonProvider",
                 InvalidAnchorProvider,
             ):
                 summary = run_stage2_single_page_real_api_smoke_test(
@@ -164,7 +164,7 @@ class RealProviderAdapterTest(unittest.TestCase):
             canonical_record["source_record"] = {"answer": "SOURCE_SECRET"}
 
             with patch(
-                "mdocnexus.stage2.real_api_client.CompatibleChatJsonProvider",
+                "mdocnexus.stage2.provider.CompatibleChatJsonProvider",
                 ValidJsonProvider,
             ):
                 run_stage2_single_page_real_api_smoke_test(

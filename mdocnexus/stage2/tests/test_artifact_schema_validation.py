@@ -8,16 +8,16 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict
 
-from mdocnexus.stage2.artifact_validator import validate_page_artifact_output
-from mdocnexus.stage2.discard_log import (
+from mdocnexus.stage2.artifact_pipeline import validate_page_artifact_output
+from mdocnexus.stage2.logs import (
     issue_to_discard_log_entry,
     write_discard_log_entry,
 )
-from mdocnexus.stage2.schema_serialization import (
+from mdocnexus.stage2.artifact_schema import (
     build_page_artifact_output_schema_dict,
     get_allowed_validation_statuses,
 )
-from mdocnexus.stage2.validation_errors import ValidationErrorType, ValidationIssue
+from mdocnexus.stage2.artifact_schema import ValidationErrorType, ValidationIssue
 
 
 class ArtifactSchemaValidationTest(unittest.TestCase):
