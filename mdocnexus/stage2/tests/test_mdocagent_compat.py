@@ -17,7 +17,7 @@ from mdocnexus.stage2.index_builder import (
 )
 from mdocnexus.stage2.page_input import load_page_content
 from mdocnexus.stage2.page_input import prepare_pages_for_compilation
-from scripts.stage2_prepare_single_page_trial import build_preflight_report
+from scripts.stage2 import build_preflight_report
 
 
 class MDocAgentCompatTest(unittest.TestCase):

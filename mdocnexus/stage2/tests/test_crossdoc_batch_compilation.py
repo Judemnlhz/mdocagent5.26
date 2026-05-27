@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from mdocnexus.stage2.selectors import select_crossdoc_pages_for_batch
-from scripts.stage2_compile_crossdoc_batch import run_crossdoc_batch, validate_args
+from scripts.stage2 import run_crossdoc_batch, validate_crossdoc_args as validate_args
 
 
 class CrossDocBatchCompilationTest(unittest.TestCase):

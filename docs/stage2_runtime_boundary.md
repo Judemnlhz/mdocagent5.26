@@ -18,11 +18,10 @@ These modifications are not Stage 2 method contributions.
 The Stage 2 method implementation is isolated in:
 
 - `mdocnexus/stage2/`
-- `scripts/stage2_augment_retrieval_results.py`
-- `scripts/stage2_select_trial_candidate.py`
-- `scripts/stage2_compile_small_batch.py`
-- `scripts/stage2_audit_small_batch.py`
-- later `scripts/stage2_compile_crossdoc_batch.py`
+- `scripts/stage2.py index`
+- `scripts/stage2.py compile`
+- `scripts/stage2.py audit`
+- `scripts/stage2.py clean`
 
 Stage 2 does not require editing:
 

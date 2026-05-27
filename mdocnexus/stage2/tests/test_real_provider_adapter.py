@@ -16,7 +16,7 @@ from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_s
 from mdocnexus.stage2.provider import CompatibleChatJsonProvider
 from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderResponseFormatError
 from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
-from scripts.run_stage2_real_single_page_trial import validate_real_trial_args
+from scripts.stage2 import validate_real_trial_args
 
 
 class RealProviderAdapterTest(unittest.TestCase):

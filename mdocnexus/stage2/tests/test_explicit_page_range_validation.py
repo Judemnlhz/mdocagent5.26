@@ -14,7 +14,7 @@ from mdocnexus.stage2.index_builder import (
     apply_explicit_page_range_validation_to_canonical_record,
     infer_document_page_count,
 )
-from scripts.stage2_prepare_single_page_trial import build_preflight_report
+from scripts.stage2 import build_preflight_report
 
 
 class ExplicitPageRangeValidationTest(unittest.TestCase):

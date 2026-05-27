@@ -9,7 +9,7 @@ import unittest
 from pathlib import Path
 from typing import Any, Dict, List
 from mdocnexus.stage2.selectors import select_single_page_trial_candidate
-from scripts.run_stage2_real_single_page_trial import (
+from scripts.stage2 import (
     apply_candidate_report_to_args,
     load_canonical_record_from_args,
 )

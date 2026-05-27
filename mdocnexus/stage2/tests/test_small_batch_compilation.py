@@ -13,7 +13,7 @@ from typing import Any, Dict, List
 from mdocnexus.stage2.selectors import select_pages_for_small_batch
 from mdocnexus.stage2.reports import summarize_batch_results, write_batch_summary
 from mdocnexus.stage2.provider import ArtifactCompilerClient
-from scripts.stage2_compile_small_batch import run_small_batch, validate_args
+from scripts.stage2 import run_small_batch, validate_small_batch_args as validate_args
 
 
 class SmallBatchCompilationTest(unittest.TestCase):
