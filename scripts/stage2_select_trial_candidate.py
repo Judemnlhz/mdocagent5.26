@@ -18,6 +18,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--stage2-json", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--extract-root", default="tmp/MMLongBench")
     return parser.parse_args()
 
 
@@ -26,6 +27,7 @@ def main() -> None:
     report = select_trial_candidate_from_stage2_file(
         stage2_json=args.stage2_json,
         output_path=args.output,
+        extract_root=args.extract_root,
     )
     print(json.dumps(report, ensure_ascii=False, indent=2))
 

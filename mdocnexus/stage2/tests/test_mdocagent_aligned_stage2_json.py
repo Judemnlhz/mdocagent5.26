@@ -37,6 +37,19 @@ ORIGINAL_FIELDS = [
     "binary_correctness",
 ]
 
+REMOVED_STAGE2_FIELDS = {
+    "version",
+    "doc_name",
+    "page_count",
+    "question_constraints",
+    "retrieval_pages",
+    "explicit_page_validation",
+    "pages_to_compile",
+    "page_sources",
+    "should_call_api",
+    "should_generate_artifact",
+}
+
 
 class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
     def test_original_fields_preserved_and_only_stage2_added(self) -> None:
@@ -57,7 +70,7 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
         self.assertNotIn("source_record", augmented)
         self.assertNotIn("record_id", augmented)
 
-    def test_retrieval_unique_fields_come_from_original_top_10_fields(self) -> None:
+    def test_candidate_page_routes_come_from_original_top_10_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             extract_root = root / "tmp" / "MMLongBench"
@@ -67,20 +80,18 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
             stage2 = augment_retrieval_records([record], extract_root)[0]["stage2"]
 
         self.assertEqual(
-            [item["page_index"] for item in stage2["retrieval_pages"]["text_top_10_question_unique"]],
-            [3, 1],
+            stage2["candidate_page_routes"],
+            [
+                {"page_index": 1, "routes": ["text"]},
+                {"page_index": 2, "routes": ["image"]},
+                {"page_index": 3, "routes": ["text"]},
+            ],
         )
-        self.assertEqual(
-            [item["page_index"] for item in stage2["retrieval_pages"]["image_top_10_question_unique"]],
-            [2],
-        )
-        self.assertEqual(stage2["retrieval_pages"]["retrieval_candidate_pages"], [1, 2, 3])
-        self.assertEqual(
-            stage2["retrieval_pages"]["source_fields"]["text_top_10_question_unique"],
-            "text-top-10-question",
-        )
+        self.assertEqual(set(stage2), {"preflight", "candidate_page_routes"})
+        for removed in REMOVED_STAGE2_FIELDS:
+            self.assertNotIn(removed, collect_keys(stage2))
 
-    def test_out_of_range_explicit_page_not_in_pages_to_compile(self) -> None:
+    def test_out_of_range_explicit_page_not_in_candidate_page_routes(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             extract_root = root / "tmp" / "MMLongBench"
@@ -89,14 +100,11 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
 
             stage2 = augment_retrieval_records([record], extract_root)[0]["stage2"]
 
-        self.assertNotIn(29, stage2["pages_to_compile"])
+        self.assertNotIn(29, [route["page_index"] for route in stage2["candidate_page_routes"]])
         self.assertIn("explicit_page_reference_out_of_range", stage2["preflight"]["blocking_reasons"])
-        self.assertEqual(
-            stage2["explicit_page_validation"]["invalid_explicit_page_references"][0]["error_type"],
-            "explicit_page_reference_out_of_range",
-        )
+        self.assertFalse(stage2["preflight"]["passed"])
 
-    def test_valid_explicit_page_enters_pages_to_compile(self) -> None:
+    def test_valid_explicit_page_does_not_expand_candidate_routes(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             extract_root = root / "tmp" / "MMLongBench"
@@ -105,8 +113,8 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
 
             stage2 = augment_retrieval_records([record], extract_root)[0]["stage2"]
 
-        self.assertIn(1, stage2["pages_to_compile"])
-        self.assertEqual(stage2["explicit_page_validation"]["valid_explicit_page_indices"], [1])
+        self.assertEqual(stage2["candidate_page_routes"], [{"page_index": 0, "routes": ["text"]}])
+        self.assertTrue(stage2["preflight"]["passed"])
 
     def test_forbidden_gold_fields_do_not_enter_stage2(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -130,13 +138,13 @@ class MDocAgentAlignedStage2JsonTest(unittest.TestCase):
             extract_root = root / "tmp" / "MMLongBench"
             records = [
                 make_record(doc_id="doc_a.pdf", question="What is on page 30?", image_pages=[0]),
-                make_record(doc_id="doc_b.pdf", question="What is on page 2?", image_pages=[]),
+                make_record(doc_id="doc_b.pdf", question="What is on page 2?", image_pages=[1]),
             ]
             create_extract_pages(extract_root, "doc_a", [0])
             create_extract_pages(extract_root, "doc_b", [0, 1])
             augmented = augment_retrieval_records(records, extract_root)
 
-            report = select_trial_candidate_from_stage2_records(augmented)
+            report = select_trial_candidate_from_stage2_records(augmented, extract_root=extract_root)
 
         self.assertTrue(report["selection_passed"])
         self.assertEqual(report["selected"]["doc_id"], "doc_b.pdf")

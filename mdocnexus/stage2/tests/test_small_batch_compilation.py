@@ -18,19 +18,24 @@ from scripts.stage2_compile_small_batch import run_small_batch, validate_args
 
 class SmallBatchCompilationTest(unittest.TestCase):
     def test_selector_does_not_use_gold_fields(self) -> None:
-        records = [
-            make_stage2_record(
-                "doc_a.pdf",
-                "What is on page 30?",
-                answer="GOLD_A",
-                binary_correctness=True,
-                explicit_valid=[],
-                invalid_explicit=[29],
-            ),
-            make_stage2_record("doc_b.pdf", "What is on page 2?", answer="GOLD_B", explicit_valid=[1]),
-        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_b", [1])
+            records = [
+                make_stage2_record(
+                    "doc_a.pdf",
+                    "What is on page 30?",
+                    answer="GOLD_A",
+                    binary_correctness=True,
+                    explicit_valid=[],
+                    invalid_explicit=[29],
+                    image_pages=[],
+                    pages_to_compile=[],
+                ),
+                make_stage2_record("doc_b.pdf", "What is on page 2?", answer="GOLD_B", explicit_valid=[1]),
+            ]
 
-        selected = select_pages_for_small_batch(records, max_pages=5)
+            selected = select_pages_for_small_batch(records, max_pages=5, extract_root=extract_root)
 
         self.assertEqual(len(selected), 1)
         self.assertEqual(selected[0]["doc_id"], "doc_b.pdf")
@@ -41,36 +46,47 @@ class SmallBatchCompilationTest(unittest.TestCase):
         self.assertNotIn("evidence_pages", serialized)
 
     def test_selector_requires_image_and_layout_blocks(self) -> None:
-        records = [
-            make_stage2_record("doc_a.pdf", "q", image_pages=[0], has_image=False, layout_block_ids=["p000_full_page_image"]),
-            make_stage2_record("doc_b.pdf", "q", image_pages=[0], has_image=True, layout_block_ids=[]),
-            make_stage2_record("doc_c.pdf", "q", image_pages=[0], has_image=True, layout_block_ids=["p000_full_page_image"]),
-        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0], include_image=False)
+            create_extract_pages(extract_root, "doc_c", [0])
+            records = [
+                make_stage2_record("doc_a.pdf", "q", image_pages=[0], has_image=False),
+                make_stage2_record("doc_b.pdf", "q", image_pages=[0], has_image=True, layout_block_ids=[]),
+                make_stage2_record("doc_c.pdf", "q", image_pages=[0], has_image=True),
+            ]
 
-        selected = select_pages_for_small_batch(records, max_pages=5)
+            selected = select_pages_for_small_batch(records, max_pages=5, extract_root=extract_root)
 
         self.assertEqual([item["doc_id"] for item in selected], ["doc_c.pdf"])
 
     def test_out_of_range_explicit_page_not_selected(self) -> None:
-        records = [
-            make_stage2_record(
-                "doc_a.pdf",
-                "What is on page 30?",
-                explicit_valid=[],
-                invalid_explicit=[29],
-                pages_to_compile=[],
-                page_sources=[],
-            )
-        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0])
+            records = [
+                make_stage2_record(
+                    "doc_a.pdf",
+                    "What is on page 30?",
+                    explicit_valid=[],
+                    invalid_explicit=[29],
+                    pages_to_compile=[],
+                    page_sources=[],
+                )
+            ]
 
-        selected = select_pages_for_small_batch(records, max_pages=5)
+            selected = select_pages_for_small_batch(records, max_pages=5, extract_root=extract_root)
 
         self.assertEqual(selected, [])
 
     def test_max_pages_limit(self) -> None:
-        records = [make_stage2_record(f"doc_{index}.pdf", "q") for index in range(5)]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            records = [make_stage2_record(f"doc_{index}.pdf", "q") for index in range(5)]
+            for index in range(5):
+                create_extract_pages(extract_root, f"doc_{index}", [0])
 
-        selected = select_pages_for_small_batch(records, max_pages=2)
+            selected = select_pages_for_small_batch(records, max_pages=2, extract_root=extract_root)
 
         self.assertEqual(len(selected), 2)
         self.assertEqual([item["record_index"] for item in selected], [0, 1])
@@ -243,20 +259,18 @@ def make_stage2_record(
 ) -> Dict[str, Any]:
     explicit_valid = [0] if explicit_valid is None else explicit_valid
     invalid_explicit = [] if invalid_explicit is None else invalid_explicit
-    image_pages = [0] if image_pages is None else image_pages
+    pages_to_compile = explicit_valid if pages_to_compile is None and explicit_valid else pages_to_compile
     pages_to_compile = [0] if pages_to_compile is None else pages_to_compile
+    image_pages = pages_to_compile if image_pages is None else image_pages
     layout_block_ids = ["p000_full_page_image"] if layout_block_ids is None else layout_block_ids
-    if page_sources is None:
-        page_sources = [
-            {
-                "page_index": 0,
-                "page_text_path": f"/tmp/{doc_id}_0.txt",
-                "page_image_path": f"/tmp/{doc_id}_0.png" if has_image else None,
-                "has_page_text": True,
-                "has_page_image": has_image,
-                "layout_block_ids": layout_block_ids,
-            }
-        ]
+    route_pages = sorted({int(page_index) for page_index in pages_to_compile} | {int(page_index) for page_index in image_pages})
+    candidate_page_routes = [
+        {
+            "page_index": page_index,
+            "routes": [route for route in ("text", "image") if route == "text" or page_index in image_pages],
+        }
+        for page_index in route_pages
+    ]
     return {
         "doc_id": doc_id,
         "question": question,
@@ -266,41 +280,16 @@ def make_stage2_record(
         "answer_format": "Str",
         "stage2": {
             "preflight": {"passed": True, "blocking_reasons": []},
-            "question_constraints": {
-                "explicit_page_references": [
-                    {
-                        "surface_text": "page 1",
-                        "page_number_one_based": 1,
-                        "page_index_zero_based": page_index,
-                        "source": "question_text",
-                    }
-                    for page_index in explicit_valid + invalid_explicit
-                ]
-            },
-            "explicit_page_validation": {
-                "valid_explicit_page_indices": explicit_valid,
-                "invalid_explicit_page_references": [
-                    {"page_index_zero_based": page_index, "error_type": "explicit_page_reference_out_of_range"}
-                    for page_index in invalid_explicit
-                ],
-            },
-            "retrieval_pages": {
-                "image_top_10_question_unique": [
-                    {"page_index": page_index, "rank": rank + 1, "score": 1.0}
-                    for rank, page_index in enumerate(image_pages)
-                ],
-                "retrieval_candidate_pages": pages_to_compile,
-            },
-            "pages_to_compile": pages_to_compile,
-            "page_sources": page_sources,
+            "candidate_page_routes": candidate_page_routes,
         },
     }
 
 
-def create_extract_pages(extract_root: Path, doc_stem: str, page_indices: List[int]) -> None:
+def create_extract_pages(extract_root: Path, doc_stem: str, page_indices: List[int], include_image: bool = True) -> None:
     extract_root.mkdir(parents=True, exist_ok=True)
     for page_index in page_indices:
-        (extract_root / f"{doc_stem}_{page_index}.png").write_bytes(b"not-a-real-png")
+        if include_image:
+            (extract_root / f"{doc_stem}_{page_index}.png").write_bytes(b"not-a-real-png")
         (extract_root / f"{doc_stem}_{page_index}.txt").write_text(
             f"text for page {page_index}",
             encoding="utf-8",

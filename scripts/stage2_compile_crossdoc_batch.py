@@ -26,7 +26,7 @@ from mdocnexus.stage2.raw_output_log import build_raw_output_log_entry, write_ra
 from mdocnexus.stage2.real_api_client import RealApiArtifactCompilerClient
 from mdocnexus.stage2.run_manifest import build_stage2_run_manifest, write_stage2_run_manifest
 from mdocnexus.stage2.schema_serialization import build_page_artifact_output_schema_dict
-from mdocnexus.stage2.stage2_sidecar_store import load_stage2_preflight_sidecar, resolve_stage2_preflight
+from mdocnexus.stage2.mdocagent_aligned_stage2 import build_page_source
 from scripts.stage2_compile_small_batch import (
     COMPILER_VERSION,
     PROMPT_VERSION,
@@ -47,7 +47,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True)
     parser.add_argument("--extract-root", required=True)
     parser.add_argument("--output-dir", required=True)
-    parser.add_argument("--sidecar-dir", default=None)
     parser.add_argument("--selected-pages-csv", default=None)
     parser.add_argument("--max-docs", type=int, default=5)
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
@@ -110,8 +109,7 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
         selected_pages = load_selected_pages_from_quality_csv(
             records=records,
             selected_pages_csv=selected_pages_csv,
-            stage2_json=args.stage2_json,
-            sidecar_dir=getattr(args, "sidecar_dir", None),
+            extract_root=args.extract_root,
             max_docs=int(args.max_docs),
             max_pages_per_doc=int(args.max_pages_per_doc),
             max_pages=int(args.max_pages),
@@ -122,6 +120,7 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
             max_docs=int(args.max_docs),
             max_pages_per_doc=int(args.max_pages_per_doc),
             max_pages=int(args.max_pages),
+            extract_root=args.extract_root,
         )
     active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
     schema_dict = build_page_artifact_output_schema_dict()
@@ -206,8 +205,7 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
 def load_selected_pages_from_quality_csv(
     records: list[dict],
     selected_pages_csv: str | Path,
-    stage2_json: str | Path,
-    sidecar_dir: str | Path | None,
+    extract_root: str | Path,
     max_docs: int,
     max_pages_per_doc: int,
     max_pages: int,
@@ -237,8 +235,8 @@ def load_selected_pages_from_quality_csv(
         if doc_counts[doc_id] > int(max_pages_per_doc):
             raise RuntimeError("--selected-pages-csv exceeds --max-pages-per-doc.")
         record_index, record = records_by_doc[doc_id]
-        stage2 = resolve_stage2_preflight_with_sidecar_dir(record, stage2_json, sidecar_dir)
-        page_source = _page_source_for_index(stage2, page_index)
+        stage2 = record.get("stage2", {})
+        page_source = build_page_source(doc_id, extract_root, page_index)
         if not page_source:
             raise RuntimeError(f"Selected page source missing: {doc_id} page_index={page_index}")
         if not page_source.get("has_page_image") or not page_source.get("page_image_path"):
@@ -258,50 +256,11 @@ def load_selected_pages_from_quality_csv(
         }
         selected_page["page_modality_diagnosis"] = diagnose_page_modality_from_question_and_preflight(
             record={"doc_id": doc_id, "question": record.get("question")},
-            sidecar=stage2,
+            sidecar={"question": record.get("question"), "page_sources": [page_source]},
             page_index=page_index,
         )
         selected_pages.append(selected_page)
     return selected_pages
-
-
-def resolve_stage2_preflight_with_sidecar_dir(
-    record: dict,
-    stage2_json: str | Path,
-    sidecar_dir: str | Path | None,
-) -> dict:
-    stage2 = record.get("stage2", {})
-    if not isinstance(stage2, dict) or not stage2.get("preflight_ref"):
-        return resolve_stage2_preflight(record)
-    preflight_ref = Path(str(stage2["preflight_ref"]))
-    candidate_paths = []
-    if preflight_ref.is_absolute():
-        candidate_paths.append(preflight_ref)
-    else:
-        candidate_paths.extend([preflight_ref, Path(stage2_json).parent / preflight_ref])
-    if sidecar_dir is not None:
-        candidate_paths.extend([Path(sidecar_dir) / preflight_ref.name, Path(sidecar_dir) / preflight_ref])
-    for path in candidate_paths:
-        if path.is_file():
-            if path == preflight_ref:
-                return resolve_stage2_preflight(record)
-            sidecar = load_stage2_preflight_sidecar(path)
-            return {
-                "version": stage2.get("version", "stage2_preflight_v1"),
-                "doc_name": stage2.get("doc_name"),
-                "page_count": {
-                    "value": stage2.get("page_count"),
-                    "source": stage2.get("page_count_source"),
-                },
-                "question_constraints": sidecar.get("question_constraints", {}),
-                "retrieval_pages": sidecar.get("retrieval_pages", {}),
-                "explicit_page_validation": sidecar.get("explicit_page_validation", {}),
-                "pages_to_compile": stage2.get("pages_to_compile", []),
-                "page_sources": sidecar.get("page_sources", []),
-                "layout_blocks_by_page": sidecar.get("layout_blocks_by_page", {}),
-                "preflight": sidecar.get("preflight", {}),
-            }
-    return resolve_stage2_preflight(record)
 
 
 def _read_selected_page_rows(selected_pages_csv: str | Path) -> list[dict]:
@@ -319,18 +278,6 @@ def _read_selected_page_rows(selected_pages_csv: str | Path) -> list[dict]:
                 }
             )
     return rows
-
-
-def _page_source_for_index(stage2: dict, page_index: int) -> dict:
-    for source in stage2.get("page_sources", []) or []:
-        if not isinstance(source, dict):
-            continue
-        try:
-            if int(source.get("page_index")) == int(page_index):
-                return source
-        except (TypeError, ValueError):
-            continue
-    return {}
 
 
 def compile_selected_page(
@@ -353,7 +300,16 @@ def compile_selected_page(
     page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or (
         diagnose_page_modality_from_question_and_preflight(
             record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
-            sidecar=selected_page.get("stage2", {}),
+            sidecar={
+                "question": selected_page.get("question"),
+                "page_sources": [
+                    {
+                        "page_index": int(selected_page["page_index"]),
+                        "page_image_path": selected_page.get("page_image_path"),
+                        "has_page_image": bool(selected_page.get("page_image_path")),
+                    }
+                ],
+            },
             page_index=int(selected_page["page_index"]),
         )
     )
@@ -540,13 +496,10 @@ def summarize_crossdoc_results(
         "selected_pages_csv": str(getattr(args, "selected_pages_csv", None)) if getattr(args, "selected_pages_csv", None) else None,
         "prompt_version": str(getattr(args, "prompt_version", PROMPT_VERSION)),
         "uses_compact_stage2": any(
-            isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("preflight_ref"))
+            isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("candidate_page_routes"))
             for record in records
         ),
-        "uses_sidecar_preflight": any(
-            isinstance(record.get("stage2"), dict) and bool(record["stage2"].get("preflight_ref"))
-            for record in records
-        ),
+        "uses_sidecar_preflight": False,
         "max_docs": int(args.max_docs),
         "max_pages_per_doc": int(args.max_pages_per_doc),
         "max_pages": int(args.max_pages),

@@ -10,7 +10,6 @@ from .constraint_parser import parse_question_constraints
 from .layout_parser import build_basic_layout_blocks
 from .mdocagent_compat import (
     build_mdocagent_extract_paths,
-    normalize_doc_name_for_mdocagent,
     read_json_or_jsonl_records,
 )
 from .page_loader import find_existing_file
@@ -19,15 +18,11 @@ from .page_range_validation import (
     validate_explicit_page_references_against_page_count,
     infer_document_page_count,
 )
-from .retrieval_processor import deduplicate_ranked_pages, parse_sequence_field
-from .stage2_sidecar_store import resolve_stage2_preflight
+from .retrieval_processor import parse_sequence_field
 
 
-STAGE2_VERSION = "stage2_preflight_v1"
 TEXT_TOP_10_FIELD = "text-top-10-question"
-TEXT_TOP_10_SCORE_FIELD = "text-top-10-question_score"
 IMAGE_TOP_10_FIELD = "image-top-10-question"
-IMAGE_TOP_10_SCORE_FIELD = "image-top-10-question_score"
 FORBIDDEN_STAGE2_FIELDS = {
     "answer",
     "evidence_pages",
@@ -89,11 +84,10 @@ def augment_retrieval_records(
 
 
 def build_stage2_preflight(record: Mapping[str, Any], extract_root: str | Path) -> Dict[str, Any]:
-    """Build a Stage 2 preflight block from an original retrieval result record."""
+    """Build the compact Stage 2 page-route index for one retrieval result record."""
 
     doc_id = str(record["doc_id"])
     question = str(record["question"])
-    doc_name = normalize_doc_name_for_mdocagent(doc_id)
     question_constraints = parse_question_constraints(question)
     page_count_info = infer_document_page_count(
         doc_id=doc_id,
@@ -104,83 +98,48 @@ def build_stage2_preflight(record: Mapping[str, Any], extract_root: str | Path) 
         {"question_constraints": question_constraints},
         page_count_info,
     )
-    retrieval_pages = build_retrieval_pages(record)
-    valid_explicit_pages = [
-        int(page_index)
-        for page_index in explicit_validation["valid_explicit_page_indices"]
-    ]
-    invalid_explicit_pages = {
-        int(ref["page_index_zero_based"])
-        for ref in explicit_validation["invalid_explicit_page_references"]
-        if ref.get("page_index_zero_based") is not None
-    }
-    pages_to_compile = sorted(
-        (set(retrieval_pages["retrieval_candidate_pages"]) | set(valid_explicit_pages))
-        - invalid_explicit_pages
-    )
-    page_sources = [
+    candidate_page_routes = build_candidate_page_routes(record)
+    candidate_page_sources = [
         build_page_source(
             doc_id=doc_id,
             extract_root=extract_root,
-            page_index=page_index,
+            page_index=route["page_index"],
         )
-        for page_index in pages_to_compile
+        for route in candidate_page_routes
     ]
+    candidate_page_indices = [int(route["page_index"]) for route in candidate_page_routes]
     blocking_reasons = build_preflight_blocking_reasons(
         invalid_explicit_page_references=explicit_validation["invalid_explicit_page_references"],
-        page_sources=page_sources,
-        pages_to_compile=pages_to_compile,
+        candidate_page_sources=candidate_page_sources,
+        candidate_page_indices=candidate_page_indices,
     )
 
     return {
-        "version": STAGE2_VERSION,
-        "doc_name": doc_name,
-        "page_count": {
-            "value": page_count_info.get("page_count"),
-            "source": page_count_info.get("source"),
-            "available_page_indices": page_count_info.get("available_page_indices", []),
-            "page_index_contiguous": page_count_info.get("page_index_contiguous"),
-        },
-        "question_constraints": question_constraints,
-        "retrieval_pages": retrieval_pages,
-        "explicit_page_validation": {
-            "valid_explicit_page_indices": valid_explicit_pages,
-            "invalid_explicit_page_references": explicit_validation["invalid_explicit_page_references"],
-        },
-        "pages_to_compile": pages_to_compile,
-        "page_sources": page_sources,
         "preflight": {
             "passed": not blocking_reasons,
             "blocking_reasons": blocking_reasons,
-            "should_call_api": False,
-            "should_generate_artifact": False,
         },
+        "candidate_page_routes": candidate_page_routes,
     }
 
 
-def build_retrieval_pages(record: Mapping[str, Any]) -> Dict[str, Any]:
-    """Derive retrieval page fields from original MDocAgent top-10 fields."""
+def build_candidate_page_routes(record: Mapping[str, Any]) -> List[Dict[str, Any]]:
+    """Build compact page routes from original MDocAgent text/image top-10 fields."""
 
     text_pages_raw = parse_sequence_field(record.get(TEXT_TOP_10_FIELD, []), TEXT_TOP_10_FIELD)
-    text_scores_raw = parse_sequence_field(record.get(TEXT_TOP_10_SCORE_FIELD, []), TEXT_TOP_10_SCORE_FIELD)
     image_pages_raw = parse_sequence_field(record.get(IMAGE_TOP_10_FIELD, []), IMAGE_TOP_10_FIELD)
-    image_scores_raw = parse_sequence_field(record.get(IMAGE_TOP_10_SCORE_FIELD, []), IMAGE_TOP_10_SCORE_FIELD)
-    text_unique = deduplicate_ranked_pages(text_pages_raw, text_scores_raw)
-    image_unique = deduplicate_ranked_pages(image_pages_raw, image_scores_raw)
-    retrieval_candidate_pages = sorted(
-        {int(item["page_index"]) for item in text_unique}
-        | {int(item["page_index"]) for item in image_unique}
-    )
-    return {
-        "text_top_10_question_unique": text_unique,
-        "image_top_10_question_unique": image_unique,
-        "retrieval_candidate_pages": retrieval_candidate_pages,
-        "source_fields": {
-            "text_top_10_question_unique": TEXT_TOP_10_FIELD,
-            "image_top_10_question_unique": IMAGE_TOP_10_FIELD,
-            "retrieval_candidate_pages": [TEXT_TOP_10_FIELD, IMAGE_TOP_10_FIELD],
-        },
-    }
+    route_map: Dict[int, set[str]] = {}
+    for page_index in text_pages_raw:
+        route_map.setdefault(int(page_index), set()).add("text")
+    for page_index in image_pages_raw:
+        route_map.setdefault(int(page_index), set()).add("image")
+    return [
+        {
+            "page_index": page_index,
+            "routes": [route for route in ("text", "image") if route in routes],
+        }
+        for page_index, routes in sorted(route_map.items(), key=lambda item: item[0])
+    ]
 
 
 def build_page_source(
@@ -212,17 +171,17 @@ def build_page_source(
 
 def build_preflight_blocking_reasons(
     invalid_explicit_page_references: List[Dict[str, Any]],
-    page_sources: List[Dict[str, Any]],
-    pages_to_compile: List[int],
+    candidate_page_sources: List[Dict[str, Any]],
+    candidate_page_indices: List[int],
 ) -> List[str]:
     reasons = {
         ref.get("error_type")
         for ref in invalid_explicit_page_references
         if ref.get("error_type")
     }
-    if any(not source["has_page_text"] and not source["has_page_image"] for source in page_sources):
+    if any(not source["has_page_text"] and not source["has_page_image"] for source in candidate_page_sources):
         reasons.add("missing_source_anchors")
-    if not pages_to_compile:
+    if not candidate_page_indices:
         reasons.add("no_pages_to_compile")
     return sorted(str(reason) for reason in reasons if reason)
 
@@ -230,21 +189,25 @@ def build_preflight_blocking_reasons(
 def select_trial_candidate_from_stage2_file(
     stage2_json: str | Path,
     output_path: str | Path | None = None,
+    extract_root: str | Path = "tmp/MMLongBench",
 ) -> Dict[str, Any]:
     records = read_json_or_jsonl_records(stage2_json)
-    report = select_trial_candidate_from_stage2_records(records)
+    report = select_trial_candidate_from_stage2_records(records, extract_root=extract_root)
     if output_path is not None:
         write_json(report, output_path)
     return report
 
 
-def select_trial_candidate_from_stage2_records(records: Iterable[Mapping[str, Any]]) -> Dict[str, Any]:
+def select_trial_candidate_from_stage2_records(
+    records: Iterable[Mapping[str, Any]],
+    extract_root: str | Path = "tmp/MMLongBench",
+) -> Dict[str, Any]:
     candidates: List[Dict[str, Any]] = []
     for record_index, record in enumerate(records):
         stage2 = record.get("stage2", {})
         if not isinstance(stage2, dict):
             continue
-        candidates.extend(build_record_trial_candidates(record, record_index))
+        candidates.extend(build_record_trial_candidates(record, record_index, extract_root))
 
     selected = select_best_trial_candidate(candidates)
     return {
@@ -264,25 +227,23 @@ def select_trial_candidate_from_stage2_records(records: Iterable[Mapping[str, An
     }
 
 
-def build_record_trial_candidates(record: Mapping[str, Any], record_index: int) -> List[Dict[str, Any]]:
-    stage2 = resolve_stage2_preflight(record)
+def build_record_trial_candidates(
+    record: Mapping[str, Any],
+    record_index: int,
+    extract_root: str | Path = "tmp/MMLongBench",
+) -> List[Dict[str, Any]]:
+    stage2 = record.get("stage2", {})
+    if not isinstance(stage2, dict) or not stage2.get("preflight", {}).get("passed", False):
+        return []
+    route_pages = _candidate_route_pages(stage2)
     page_sources_by_index = {
-        int(source["page_index"]): source
-        for source in stage2.get("page_sources", [])
+        page_index: build_page_source(str(record.get("doc_id")), extract_root, page_index)
+        for page_index in route_pages
     }
-    valid_explicit_pages = [
-        int(page_index)
-        for page_index in stage2.get("explicit_page_validation", {}).get("valid_explicit_page_indices", [])
-    ]
-    image_unique_pages = [
-        int(item["page_index"])
-        for item in stage2.get("retrieval_pages", {}).get("image_top_10_question_unique", [])
-    ]
-    retrieval_candidate_pages = [
-        int(page_index)
-        for page_index in stage2.get("retrieval_pages", {}).get("retrieval_candidate_pages", [])
-    ]
-    explicit_refs = stage2.get("question_constraints", {}).get("explicit_page_references", [])
+    valid_explicit_pages = get_valid_explicit_page_indices(record, extract_root)
+    explicit_refs = parse_question_constraints(str(record.get("question", ""))).get("explicit_page_references", [])
+    image_unique_pages = _candidate_route_pages(stage2, required_route="image")
+    retrieval_candidate_pages = route_pages
 
     candidates: List[Dict[str, Any]] = []
     for order, page_index in enumerate(valid_explicit_pages):
@@ -310,6 +271,31 @@ def build_record_trial_candidates(record: Mapping[str, Any], record_index: int) 
             break
 
     return candidates
+
+
+def get_valid_explicit_page_indices(record: Mapping[str, Any], extract_root: str | Path) -> List[int]:
+    """Compute valid explicit page indices at runtime without storing them in stage2."""
+
+    doc_id = str(record.get("doc_id"))
+    question_constraints = parse_question_constraints(str(record.get("question", "")))
+    page_count_info = infer_document_page_count(doc_id=doc_id, pdf_root=None, extract_root=extract_root)
+    explicit_validation = validate_explicit_page_references_against_page_count(
+        {"question_constraints": question_constraints},
+        page_count_info,
+    )
+    return [int(page_index) for page_index in explicit_validation.get("valid_explicit_page_indices", [])]
+
+
+def _candidate_route_pages(stage2: Mapping[str, Any], required_route: str | None = None) -> List[int]:
+    pages = []
+    for item in stage2.get("candidate_page_routes", []) or []:
+        if not isinstance(item, dict) or item.get("page_index") is None:
+            continue
+        routes = item.get("routes", [])
+        if required_route is not None and required_route not in routes:
+            continue
+        pages.append(int(item["page_index"]))
+    return pages
 
 
 def build_trial_candidate(

@@ -15,9 +15,19 @@ from scripts.stage2_compile_crossdoc_batch import run_crossdoc_batch, validate_a
 
 class CrossDocBatchCompilationTest(unittest.TestCase):
     def test_selector_respects_doc_page_and_total_limits(self) -> None:
-        records = [make_stage2_record(f"doc_{doc}.pdf", pages=[0, 1, 2]) for doc in range(8)]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            records = [make_stage2_record(f"doc_{doc}.pdf", pages=[0, 1, 2]) for doc in range(8)]
+            for doc in range(8):
+                create_extract_pages(extract_root, f"doc_{doc}", [0, 1, 2])
 
-        selected = select_crossdoc_pages_for_batch(records, max_docs=5, max_pages_per_doc=2, max_pages=10)
+            selected = select_crossdoc_pages_for_batch(
+                records,
+                max_docs=5,
+                max_pages_per_doc=2,
+                max_pages=10,
+                extract_root=extract_root,
+            )
 
         doc_ids = {item["doc_id"] for item in selected}
         self.assertLessEqual(len(doc_ids), 5)
@@ -26,9 +36,12 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
             self.assertLessEqual(sum(1 for item in selected if item["doc_id"] == doc_id), 2)
 
     def test_selector_does_not_emit_gold_fields(self) -> None:
-        records = [make_stage2_record("doc_a.pdf", pages=[0], answer="SECRET", binary_correctness=True)]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0])
+            records = [make_stage2_record("doc_a.pdf", pages=[0], answer="SECRET", binary_correctness=True)]
 
-        selected = select_crossdoc_pages_for_batch(records)
+            selected = select_crossdoc_pages_for_batch(records, extract_root=extract_root)
         serialized = json.dumps(selected, ensure_ascii=False)
 
         self.assertEqual(len(selected), 1)
@@ -38,34 +51,44 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
         self.assertNotIn("binary_correctness", serialized)
 
     def test_selector_skips_out_of_range_pages(self) -> None:
-        records = [make_stage2_record("doc_a.pdf", pages=[99], page_count=2)]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0, 1])
+            records = [make_stage2_record("doc_a.pdf", pages=[99], page_count=2)]
 
-        selected = select_crossdoc_pages_for_batch(records)
+            selected = select_crossdoc_pages_for_batch(records, extract_root=extract_root)
 
         self.assertEqual(selected, [])
 
     def test_selector_supports_structured_page_count(self) -> None:
-        records = [
-            make_stage2_record(
-                "doc_a.pdf",
-                pages=[1],
-                page_count={"value": 3, "available_page_indices": [0, 1, 2]},
-            )
-        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0, 1, 2])
+            records = [
+                make_stage2_record(
+                    "doc_a.pdf",
+                    pages=[1],
+                    page_count={"value": 3, "available_page_indices": [0, 1, 2]},
+                )
+            ]
 
-        selected = select_crossdoc_pages_for_batch(records)
+            selected = select_crossdoc_pages_for_batch(records, extract_root=extract_root)
 
         self.assertEqual(len(selected), 1)
         self.assertEqual(selected[0]["page_index"], 1)
 
     def test_selector_requires_image_and_layout_blocks(self) -> None:
-        records = [
-            make_stage2_record("doc_a.pdf", pages=[0], has_image=False),
-            make_stage2_record("doc_b.pdf", pages=[0], layout_block_ids=[]),
-            make_stage2_record("doc_c.pdf", pages=[0], layout_block_ids=["p000_full_page_image"]),
-        ]
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_root = Path(tmpdir) / "tmp" / "MMLongBench"
+            create_extract_pages(extract_root, "doc_a", [0], include_image=False)
+            create_extract_pages(extract_root, "doc_c", [0])
+            records = [
+                make_stage2_record("doc_a.pdf", pages=[0], has_image=False),
+                make_stage2_record("doc_b.pdf", pages=[0], layout_block_ids=[]),
+                make_stage2_record("doc_c.pdf", pages=[0], layout_block_ids=["p000_full_page_image"]),
+            ]
 
-        selected = select_crossdoc_pages_for_batch(records)
+            selected = select_crossdoc_pages_for_batch(records, extract_root=extract_root)
 
         self.assertEqual([item["doc_id"] for item in selected], ["doc_c.pdf"])
 
@@ -149,6 +172,10 @@ def make_stage2_record(
     page_count: Any = 120,
 ) -> Dict[str, Any]:
     layout_block_ids = ["p000_full_page_image"] if layout_block_ids is None else layout_block_ids
+    candidate_page_routes = [
+        {"page_index": int(page_index), "routes": ["text", "image"]}
+        for page_index in pages
+    ]
     return {
         "doc_id": doc_id,
         "question": "What is visible?",
@@ -158,39 +185,16 @@ def make_stage2_record(
         "answer_format": "Str",
         "stage2": {
             "preflight": {"passed": True, "blocking_reasons": []},
-            "page_count": page_count,
-            "question_constraints": {"explicit_page_references": []},
-            "explicit_page_validation": {
-                "valid_explicit_page_indices": [pages[0]] if pages else [],
-                "invalid_explicit_page_references": [],
-            },
-            "retrieval_pages": {
-                "image_top_10_question_unique": [
-                    {"page_index": page_index, "rank": rank + 1, "score": 1.0}
-                    for rank, page_index in enumerate(pages)
-                ],
-                "retrieval_candidate_pages": pages,
-            },
-            "pages_to_compile": pages,
-            "page_sources": [
-                {
-                    "page_index": page_index,
-                    "page_text_path": f"/tmp/{doc_id}_{page_index}.txt",
-                    "page_image_path": f"/tmp/{doc_id}_{page_index}.png" if has_image else None,
-                    "has_page_text": True,
-                    "has_page_image": has_image,
-                    "layout_block_ids": [f"p{page_index:03d}_full_page_image"] if layout_block_ids else [],
-                }
-                for page_index in pages
-            ],
+            "candidate_page_routes": candidate_page_routes,
         },
     }
 
 
-def create_extract_pages(extract_root: Path, doc_stem: str, page_indices: List[int]) -> None:
+def create_extract_pages(extract_root: Path, doc_stem: str, page_indices: List[int], include_image: bool = True) -> None:
     extract_root.mkdir(parents=True, exist_ok=True)
     for page_index in page_indices:
-        (extract_root / f"{doc_stem}_{page_index}.png").write_bytes(b"not-a-real-png")
+        if include_image:
+            (extract_root / f"{doc_stem}_{page_index}.png").write_bytes(b"not-a-real-png")
         (extract_root / f"{doc_stem}_{page_index}.txt").write_text(
             f"text for page {page_index}",
             encoding="utf-8",

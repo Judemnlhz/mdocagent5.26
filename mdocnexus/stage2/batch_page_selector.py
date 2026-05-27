@@ -4,17 +4,21 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Mapping
 
-from .stage2_sidecar_store import resolve_stage2_preflight
+from .mdocagent_aligned_stage2 import build_page_source, get_valid_explicit_page_indices
 
 
 SELECTION_REASONS = (
     "valid_explicit_page_with_image",
     "image_top_10_first_available",
-    "pages_to_compile_first_available",
+    "retrieval_union_first_available",
 )
 
 
-def select_pages_for_small_batch(stage2_records: list[dict], max_pages: int) -> list[dict]:
+def select_pages_for_small_batch(
+    stage2_records: list[dict],
+    max_pages: int,
+    extract_root: str = "tmp/MMLongBench",
+) -> list[dict]:
     """Select up to max_pages legal page candidates without using eval fields."""
 
     max_pages = int(max_pages)
@@ -25,53 +29,43 @@ def select_pages_for_small_batch(stage2_records: list[dict], max_pages: int) -> 
     for record_index, record in enumerate(stage2_records):
         if len(selected) >= max_pages:
             break
-        candidate = select_one_page_from_record(record, record_index)
+        candidate = select_one_page_from_record(record, record_index, extract_root)
         if candidate is not None:
             selected.append(candidate)
     return selected
 
 
-def select_one_page_from_record(record: Mapping[str, Any], record_index: int) -> Dict[str, Any] | None:
-    stage2 = resolve_stage2_preflight(record)
+def select_one_page_from_record(
+    record: Mapping[str, Any],
+    record_index: int,
+    extract_root: str = "tmp/MMLongBench",
+) -> Dict[str, Any] | None:
+    stage2 = record.get("stage2", {})
     if not isinstance(stage2, dict):
         return None
     if not stage2.get("preflight", {}).get("passed", False):
         return None
 
-    invalid_explicit_refs = stage2.get("explicit_page_validation", {}).get("invalid_explicit_page_references", [])
-    if invalid_explicit_refs:
-        return None
-
-    page_sources_by_index = {
-        int(source["page_index"]): source
-        for source in stage2.get("page_sources", [])
-        if isinstance(source, dict) and source.get("page_index") is not None
-    }
+    route_pages = candidate_route_pages(stage2)
+    image_top_pages = candidate_route_pages(stage2, required_route="image")
     valid_explicit_pages = [
-        int(page_index)
-        for page_index in stage2.get("explicit_page_validation", {}).get("valid_explicit_page_indices", [])
+        page_index for page_index in get_valid_explicit_page_indices(record, extract_root) if page_index in route_pages
     ]
-    image_top_pages = [
-        int(item["page_index"])
-        for item in stage2.get("retrieval_pages", {}).get("image_top_10_question_unique", [])
-        if isinstance(item, dict) and item.get("page_index") is not None
-    ]
-    pages_to_compile = [int(page_index) for page_index in stage2.get("pages_to_compile", [])]
 
     for page_index in valid_explicit_pages:
-        source = page_sources_by_index.get(page_index)
+        source = build_page_source(str(record.get("doc_id")), extract_root, page_index)
         if page_source_is_eligible(source):
             return build_selected_page(record, record_index, page_index, source, "valid_explicit_page_with_image")
 
     for page_index in image_top_pages:
-        source = page_sources_by_index.get(page_index)
+        source = build_page_source(str(record.get("doc_id")), extract_root, page_index)
         if page_source_is_eligible(source):
             return build_selected_page(record, record_index, page_index, source, "image_top_10_first_available")
 
-    for page_index in pages_to_compile:
-        source = page_sources_by_index.get(page_index)
+    for page_index in route_pages:
+        source = build_page_source(str(record.get("doc_id")), extract_root, page_index)
         if page_source_is_eligible(source):
-            return build_selected_page(record, record_index, page_index, source, "pages_to_compile_first_available")
+            return build_selected_page(record, record_index, page_index, source, "retrieval_union_first_available")
 
     return None
 
@@ -83,6 +77,18 @@ def page_source_is_eligible(page_source: Mapping[str, Any] | None) -> bool:
         and page_source.get("page_image_path")
         and page_source.get("layout_block_ids")
     )
+
+
+def candidate_route_pages(stage2: Mapping[str, Any], required_route: str | None = None) -> List[int]:
+    pages: List[int] = []
+    for route in stage2.get("candidate_page_routes", []) or []:
+        if not isinstance(route, dict) or route.get("page_index") is None:
+            continue
+        routes = route.get("routes", [])
+        if required_route is not None and required_route not in routes:
+            continue
+        pages.append(int(route["page_index"]))
+    return pages
 
 
 def build_selected_page(

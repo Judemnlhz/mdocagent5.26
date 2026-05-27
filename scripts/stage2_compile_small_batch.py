@@ -91,7 +91,11 @@ def run_small_batch(args: argparse.Namespace, client: ArtifactCompilerClient | N
     api_config = build_api_config(args)
     output_paths = build_output_paths(args.output_dir)
     records = read_json_or_jsonl_records(args.stage2_json)
-    selected_pages = select_pages_for_small_batch(records, max_pages=args.max_pages)
+    selected_pages = select_pages_for_small_batch(
+        records,
+        max_pages=args.max_pages,
+        extract_root=args.extract_root,
+    )
     active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
     schema_dict = build_page_artifact_output_schema_dict()
     compiler_metadata = {
@@ -217,11 +221,7 @@ def compile_selected_page(
 
 
 def build_compiler_safe_record(selected_page: Dict[str, Any]) -> Dict[str, Any]:
-    stage2 = selected_page.get("stage2", {})
     page_index = int(selected_page["page_index"])
-    valid_explicit_pages = set(
-        stage2.get("explicit_page_validation", {}).get("valid_explicit_page_indices", [])
-    )
     return {
         "document": {
             "doc_id": selected_page["doc_id"],
@@ -232,16 +232,16 @@ def build_compiler_safe_record(selected_page: Dict[str, Any]) -> Dict[str, Any]:
             "text": selected_page.get("question"),
             "answer_format": selected_page.get("answer_format"),
         },
-        "question_constraints": stage2.get("question_constraints", {}),
+        "question_constraints": {},
         "candidate_pool": {
-            "explicit_constraint_pages": sorted(int(page) for page in valid_explicit_pages),
-            "retrieval_candidate_pages": stage2.get("retrieval_pages", {}).get("retrieval_candidate_pages", []),
+            "explicit_constraint_pages": [page_index] if selected_page.get("selection_reason") == "valid_explicit_page_with_image" else [],
+            "retrieval_candidate_pages": [page_index],
             "retrieval_missed_explicit_pages": [],
         },
         "compilation_plan": {
             "compile_scope": "stage2_small_batch_single_page",
             "pages_to_compile": [page_index],
-            "priority_pages": sorted(int(page) for page in valid_explicit_pages),
+            "priority_pages": [page_index] if selected_page.get("selection_reason") == "valid_explicit_page_with_image" else [],
             "compilation_reasons": [
                 {
                     "page_index": page_index,
