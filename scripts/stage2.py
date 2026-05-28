@@ -43,7 +43,7 @@ from mdocnexus.stage2.logs import (
     write_raw_output_log,
     write_stage2_run_manifest,
 )
-from mdocnexus.stage2.page_input import build_basic_layout_blocks, load_page_content, prepare_pages_for_compilation
+from mdocnexus.stage2.page_input import build_basic_layout_blocks, candidate_input_routes_for_page, load_page_content, prepare_pages_for_compilation
 from mdocnexus.stage2.provider import (
     ArtifactCompilerClient,
     FakeArtifactCompilerClient,
@@ -299,22 +299,32 @@ def build_page_input(selected_page: Dict[str, Any], extract_root: str | Path) ->
         extract_path=extract_root,
         page_index=page_index,
     )
+    input_routes = candidate_input_routes_for_page(selected_page.get("stage2", {}), page_index)
+    route_metadata_present = input_routes is not None
+    allow_text_input = not route_metadata_present or "text" in input_routes
+    allow_image_input = not route_metadata_present or "image" in input_routes
+    page_text = page_content["page_text"] if allow_text_input else None
+    page_text_path = page_content["page_text_path"] if allow_text_input else None
+    page_image_path = page_content["page_image_path"] if allow_image_input else None
     layout_blocks = build_basic_layout_blocks(
         doc_id=selected_page["doc_id"],
         page_index=page_index,
-        page_text=page_content["page_text"],
-        has_page_image=page_content["has_page_image"],
+        page_text=page_text,
+        has_page_image=page_image_path is not None,
     )
-    return {
+    page_input = {
         "doc_id": selected_page["doc_id"],
         "page_index": page_index,
-        "page_text": page_content["page_text"],
-        "page_text_path": page_content["page_text_path"],
-        "page_image_path": page_content["page_image_path"],
-        "has_page_text": page_content["has_page_text"],
-        "has_page_image": page_content["has_page_image"],
+        "page_text": page_text,
+        "page_text_path": page_text_path,
+        "page_image_path": page_image_path,
+        "has_page_text": page_text is not None,
+        "has_page_image": page_image_path is not None,
         "layout_blocks": layout_blocks,
     }
+    if route_metadata_present:
+        page_input["input_routes"] = input_routes
+    return page_input
 
 
 def write_small_page_artifact_store(
@@ -1354,15 +1364,6 @@ FINAL_ARTIFACT_TYPES = {
     "visual_observation",
 }
 FINAL_MODALITIES = {"text", "image", "table", "figure", "numeric"}
-NEGATIVE_ARTIFACT_PATTERNS = (
-    "this page has no content related to the question",
-    "no relevant information found",
-    "this page is irrelevant",
-    "no relevant content",
-    "irrelevant to the question",
-    "not related to the question",
-    "does not contain relevant information",
-)
 CLEAN_OUTPUT_FILENAMES = (
     "artifacts.jsonl",
     "discard.jsonl",
@@ -1450,9 +1451,6 @@ def _minimal_discard_row(
     return row
 
 
-def _is_negative_or_irrelevant_artifact(artifact: Mapping[str, Any]) -> bool:
-    content = " ".join(str(artifact.get(field, "")) for field in ("content", "normalized_content")).lower()
-    return any(pattern in content for pattern in NEGATIVE_ARTIFACT_PATTERNS)
 
 
 def _project_final_artifact(selected_page: Dict[str, Any], artifact: Dict[str, Any]) -> Dict[str, Any]:
@@ -1600,17 +1598,6 @@ def _compile_selected_page_to_jsonl(
                 _minimal_discard_row(
                     selected_page,
                     reason="unsupported_artifact_type_or_modality",
-                    artifact_id=artifact.get("artifact_id"),
-                ),
-            )
-            discarded += 1
-            continue
-        if _is_negative_or_irrelevant_artifact(artifact):
-            _append_jsonl(
-                Path(output_paths["discard"]),
-                _minimal_discard_row(
-                    selected_page,
-                    reason="negative_or_irrelevant_artifact",
                     artifact_id=artifact.get("artifact_id"),
                 ),
             )

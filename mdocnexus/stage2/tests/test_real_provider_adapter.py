@@ -19,7 +19,6 @@ from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderRespon
 from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
 from scripts.stage2 import validate_real_trial_args
 
-
 class RealProviderAdapterTest(unittest.TestCase):
     def test_provider_requires_explicit_run_real_trial(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -52,7 +51,6 @@ class RealProviderAdapterTest(unittest.TestCase):
         finally:
             if old_value is not None:
                 os.environ["STAGE2_TEST_MISSING_API_KEY"] = old_value
-
 
     def test_request_body_includes_base64_image_payload_when_image_path_provided(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -88,11 +86,110 @@ class RealProviderAdapterTest(unittest.TestCase):
                 "system",
                 "user",
                 {},
-                page_input={"page_image_path": str(image_path)},
+                page_input={"page_image_path": str(image_path), "input_routes": ["image"]},
             )
 
         self.assertEqual(output, {"doc_id": "example.pdf", "page_index": 0, "artifacts": []})
         self.assertEqual(provider.image_path, str(image_path))
+
+    def test_text_only_route_suppresses_image_payload_even_when_file_exists(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+            provider = CapturingImageProvider()
+            config = ApiRunConfig(enable_real_api=True, model_name="dummy-model", max_pages=1)
+            client = RealApiArtifactCompilerClient(config, provider=provider)
+
+            client.generate_page_artifacts(
+                "system",
+                "user",
+                {},
+                page_input={"page_image_path": str(image_path), "input_routes": ["text"]},
+            )
+
+        self.assertIsNone(provider.image_path)
+
+    def test_image_route_with_missing_image_does_not_fabricate_payload(self) -> None:
+        missing_image_path = Path(tempfile.gettempdir()) / "stage2_missing_payload_image.png"
+        provider = CapturingImageProvider()
+        config = ApiRunConfig(enable_real_api=True, model_name="dummy-model", max_pages=1)
+        client = RealApiArtifactCompilerClient(config, provider=provider)
+
+        client.generate_page_artifacts(
+            "system",
+            "user",
+            {},
+            page_input={"page_image_path": str(missing_image_path), "input_routes": ["image"]},
+        )
+
+        self.assertIsNone(provider.image_path)
+
+    def test_route_does_not_override_model_artifact_modality(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+            provider = FixedOutputProvider(
+                {
+                    "doc_id": "example.pdf",
+                    "page_index": 0,
+                    "artifacts": [
+                        {
+                            "artifact_id": "example_p000_text_span_0001",
+                            "doc_id": "example.pdf",
+                            "page_index": 0,
+                            "artifact_type": "text_span",
+                            "modality": "text",
+                            "content": "Model-selected text artifact.",
+                            "normalized_content": {},
+                            "source_anchors": [],
+                            "provenance": {"op": "ATOM", "sources": []},
+                            "validation_status": "candidate",
+                            "compiler_metadata": {},
+                        }
+                    ],
+                }
+            )
+            config = ApiRunConfig(enable_real_api=True, model_name="dummy-model", max_pages=1)
+            client = RealApiArtifactCompilerClient(config, provider=provider)
+
+            output = client.generate_page_artifacts(
+                "system",
+                "user",
+                {},
+                page_input={"page_image_path": str(image_path), "input_routes": ["image"]},
+            )
+
+        self.assertEqual(output["artifacts"][0]["artifact_type"], "text_span")
+        self.assertEqual(output["artifacts"][0]["modality"], "text")
+
+    def test_image_route_empty_model_output_writes_no_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            create_page_image(root, 29)
+            output_path = root / "store.json"
+            config = make_api_config(root)
+            canonical_record = make_canonical_record([29])
+            canonical_record["stage2"] = {
+                "candidate_page_routes": [{"page_index": 29, "routes": ["image"]}]
+            }
+
+            with patch(
+                "mdocnexus.stage2.provider.CompatibleChatJsonProvider",
+                EmptyJsonProvider,
+            ):
+                summary = run_stage2_single_page_real_api_smoke_test(
+                    canonical_record=canonical_record,
+                    extract_path=root,
+                    output_path=output_path,
+                    api_config=config,
+                    target_page_index=29,
+                    run_real_trial=True,
+                )
+            store = json.loads(output_path.read_text(encoding="utf-8"))
+
+        self.assertFalse(summary["quality_gate"]["single_page_smoke_test_passed"])
+        self.assertEqual(store["pages"][0]["artifacts"], [])
+        self.assertEqual(store["artifact_index"]["by_page_index"], {})
 
     def test_provider_not_implemented_fails_safely(self) -> None:
         config = ApiRunConfig(
@@ -233,7 +330,6 @@ class RealProviderAdapterTest(unittest.TestCase):
         ]:
             self.assertNotIn(forbidden, store_text)
 
-
 class NonJsonProvider:
     def __init__(self, api_config: ApiRunConfig) -> None:
         self.api_config = api_config
@@ -243,8 +339,6 @@ class NonJsonProvider:
         _ = user_prompt
         _ = schema_dict
         raise ProviderResponseFormatError("Provider response was not valid JSON.", raw_text="not json")
-
-
 
 class CapturingImageProvider:
     def __init__(self) -> None:
@@ -263,6 +357,38 @@ class CapturingImageProvider:
         self.image_path = image_path
         return {"doc_id": "example.pdf", "page_index": 0, "artifacts": []}
 
+class FixedOutputProvider:
+    def __init__(self, output: Dict[str, Any]) -> None:
+        self.output = output
+        self.image_path: str | None = None
+
+    def generate_json(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        schema_dict: Dict[str, Any],
+        image_path: str | None = None,
+    ) -> Dict[str, Any]:
+        _ = system_prompt
+        _ = user_prompt
+        _ = schema_dict
+        self.image_path = image_path
+        return self.output
+
+class EmptyJsonProvider:
+    def __init__(self, api_config: ApiRunConfig) -> None:
+        self.api_config = api_config
+
+    def generate_json(self, system_prompt: str, user_prompt: str, schema_dict: Dict[str, Any]) -> Dict[str, Any]:
+        _ = system_prompt
+        _ = schema_dict
+        prompt_payload = json.loads(user_prompt)
+        return {
+            "doc_id": prompt_payload["document"]["doc_id"],
+            "page_index": int(prompt_payload["document"]["page_index"]),
+            "artifacts": [],
+            "uncertain_or_unreadable": [],
+        }
 
 class ValidJsonProvider:
     def __init__(self, api_config: ApiRunConfig) -> None:
@@ -272,7 +398,6 @@ class ValidJsonProvider:
         _ = system_prompt
         _ = schema_dict
         return make_provider_output(user_prompt, source_id="p029_full_page_image")
-
 
 class InvalidAnchorProvider:
     def __init__(self, api_config: ApiRunConfig) -> None:

@@ -1,0 +1,34 @@
+{
+  "artifact_type_counts": {
+    "numeric_fact": 1,
+    "text_span": 2
+  },
+  "diagnosis_summary": "20 pages were compiled and only 3 pages produced final artifacts; 17 pages produced none. All 17 empty pages have num_raw_artifacts=0 and no discard rows, so the clean outputs indicate model_returned_empty rather than parser/schema rejection. 20 compiled pages had an image route and 20 had an image file path available; image input was present, but no final image artifacts were emitted. Final artifacts are {'numeric_fact': 1, 'text_span': 2} with modalities {'text': 3}; there are no table, figure, caption, or image artifacts. Artifact content is mostly question-related by lexical inspection (2/3), but at least one artifact is weak/overly generic for direct answering.",
+  "empty_page_reason_counts": {
+    "model_returned_empty": 17,
+    "no_relevant_content": 0,
+    "parser_or_schema_issue": 0,
+    "prompt_too_strict": 0,
+    "unknown": 0,
+    "visual_input_not_used": 0
+  },
+  "image_route_pages_without_image_artifacts": {
+    "count": 20,
+    "image_route_pages": 20,
+    "image_route_pages_missing_image_input": 0,
+    "image_route_pages_with_image_input": 20,
+    "reason": "image files were available for image-route pages; image artifacts did not appear because the model returned empty artifacts on most pages and text-only artifacts on the pages that produced output. Raw model outputs were not retained, so prompt_too_strict versus model conservatism cannot be separated without debug_raw_output."
+  },
+  "modality_counts": {
+    "text": 3
+  },
+  "num_pages_compiled": 20,
+  "num_pages_with_artifacts": 3,
+  "num_pages_without_artifacts": 17,
+  "recommended_next_action": "Run a very small debug_raw_output diagnosis on the same selected pages before changing schema or entering full Stage 3B. If raw outputs confirm empty artifacts on visually relevant pages, relax the compiler prompt to require concise visual_observation/table/figure/caption artifacts when the image route is selected and an image is present; keep unrelated pages returning empty artifacts.",
+  "route_counts": {
+    "image_route_pages": 10,
+    "text_image_route_pages": 10,
+    "text_route_pages": 0
+  }
+}

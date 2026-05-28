@@ -26,19 +26,6 @@ FORBIDDEN_KEYS = {
     "binary_correctness",
 }
 
-NEGATIVE_CONTENT_RE = re.compile(
-    r"\b("
-    r"no relevant content|"
-    r"not related(?: to the question)?|"
-    r"irrelevant|"
-    r"unrelated|"
-    r"cannot determine|"
-    r"not enough information|"
-    r"no content"
-    r")\b",
-    re.IGNORECASE,
-)
-
 SENTENCE_END_RE = re.compile(r"[.;!?]\s+")
 
 
@@ -59,9 +46,9 @@ def run_artifact_answer_smoke(
 
     for row in stage3a_rows:
         record_index = coerce_int(row.get("record_index"), fallback=-1)
-        retrieved_artifacts = row.get("retrieved_artifacts") or []
-        if not retrieved_artifacts:
-            continue
+        retrieved_artifacts = row.get("retrieved_artifacts")
+        if retrieved_artifacts is None:
+            retrieved_artifacts = []
         if not isinstance(retrieved_artifacts, list):
             raise ValueError(f"retrieved_artifacts is not a list for record_index={record_index}")
 
@@ -203,33 +190,11 @@ def build_artifact_only_prediction(
     if not usable_artifacts:
         return "", "insufficient_artifact"
 
-    evidence_text = "\n".join(artifact_content(artifact) for artifact in usable_artifacts)
-    if NEGATIVE_CONTENT_RE.search(evidence_text):
-        return "", "insufficient_artifact"
-
-    max_score = max(coerce_float(artifact.get("score"), fallback=0.0) for artifact in usable_artifacts)
-    if max_score <= 0.0:
-        return "", "insufficient_artifact"
-
-    question_lower = question.lower()
-    evidence_lower = evidence_text.lower()
-    if asks_for_vote_or_election_percentage(question_lower, evidence_lower):
-        return "", "insufficient_artifact"
-
     prediction = extract_direct_prediction(question=question, artifacts=usable_artifacts)
     if not prediction:
         return "", "insufficient_artifact"
     return prediction, "answered"
 
-
-def asks_for_vote_or_election_percentage(question_lower: str, evidence_lower: str) -> bool:
-    asks_percentage = "percentage" in question_lower or "percent" in question_lower
-    asks_voting = "voted" in question_lower or "vote" in question_lower or "election" in question_lower
-    if not (asks_percentage and asks_voting):
-        return False
-    has_voting_evidence = "voted" in evidence_lower or "vote" in evidence_lower or "election" in evidence_lower
-    has_percentage_evidence = "%" in evidence_lower or "percent" in evidence_lower
-    return not (has_voting_evidence and has_percentage_evidence)
 
 
 def extract_direct_prediction(question: str, artifacts: list[dict[str, Any]]) -> str:
@@ -312,12 +277,6 @@ def coerce_int(value: Any, fallback: int) -> int:
     except (TypeError, ValueError):
         return int(fallback)
 
-
-def coerce_float(value: Any, fallback: float) -> float:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return float(fallback)
 
 
 def assert_no_forbidden_keys(value: Any) -> None:

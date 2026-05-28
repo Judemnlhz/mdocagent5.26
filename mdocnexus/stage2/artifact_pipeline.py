@@ -875,11 +875,12 @@ def compile_page_with_client(
             ),
         )
 
-    num_raw_artifacts_before_dedup = _count_raw_artifacts(raw_output)
+    identity_normalized_output = _inject_runtime_artifact_identity(raw_output, page_input)
+    num_raw_artifacts_before_dedup = _count_raw_artifacts(identity_normalized_output)
     dedup_removed: List[Dict[str, Any]] = []
-    validation_input = raw_output
-    if deterministic_dedup_enabled and isinstance(raw_output, dict):
-        validation_input, dedup_removed = deduplicate_page_artifacts(raw_output)
+    validation_input = identity_normalized_output
+    if deterministic_dedup_enabled and isinstance(identity_normalized_output, dict):
+        validation_input, dedup_removed = deduplicate_page_artifacts(identity_normalized_output)
         if discard_log_path is not None:
             for removed in dedup_removed:
                 write_discard_log_entry(
@@ -942,6 +943,41 @@ def compile_page_with_client(
             "discard_rate_after_dedup": _discard_rate(_count_raw_artifacts(validation_input), len(valid_artifacts)),
         },
     }
+
+
+def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any]) -> Any:
+    """Use runtime page context as the only source of artifact identity."""
+
+    if not isinstance(raw_output, dict):
+        return raw_output
+
+    doc_id = page_input["doc_id"]
+    page_index = int(page_input["page_index"])
+    normalized_output = dict(raw_output)
+    normalized_output["doc_id"] = doc_id
+    normalized_output["page_index"] = page_index
+
+    artifacts = raw_output.get("artifacts")
+    if not isinstance(artifacts, list):
+        return normalized_output
+
+    normalized_artifacts: List[Any] = []
+    for artifact in artifacts:
+        if not isinstance(artifact, dict):
+            normalized_artifacts.append(artifact)
+            continue
+        normalized_artifact = dict(artifact)
+        normalized_artifact["doc_id"] = doc_id
+        normalized_artifact["page_index"] = page_index
+        anchors = artifact.get("source_anchors")
+        if isinstance(anchors, list):
+            normalized_artifact["source_anchors"] = [
+                {**anchor, "page_index": page_index} if isinstance(anchor, dict) else anchor
+                for anchor in anchors
+            ]
+        normalized_artifacts.append(normalized_artifact)
+    normalized_output["artifacts"] = normalized_artifacts
+    return normalized_output
 
 
 def _generate_page_artifacts_with_optional_page_input(
@@ -1069,6 +1105,12 @@ FORBIDDEN_STORE_FIELDS = (
     "gold_annotation",
     "baseline_outputs",
     "source_record",
+    "answer",
+    "prediction",
+    "final_answer",
+    "evidence_pages",
+    "evidence_sources",
+    "binary_correctness",
     "proof_trace",
     "verified",
     "answer_supported",
@@ -1168,14 +1210,10 @@ def _contains_forbidden_field(value: Any) -> bool:
         for key, child in value.items():
             if key in FORBIDDEN_STORE_FIELDS:
                 return True
-            if isinstance(child, str) and child in FORBIDDEN_STORE_FIELDS:
-                return True
             if _contains_forbidden_field(child):
                 return True
     elif isinstance(value, list):
         return any(_contains_forbidden_field(item) for item in value)
-    elif isinstance(value, str):
-        return value in FORBIDDEN_STORE_FIELDS
     return False
 
 # ---- from compiler_integration.py ----
@@ -1193,10 +1231,16 @@ from .provider import RealApiArtifactCompilerClient
 from .artifact_schema import build_page_artifact_output_schema_dict
 
 
-FORBIDDEN_OUTPUT_TERMS = (
+FORBIDDEN_OUTPUT_FIELDS = (
     "gold_annotation",
     "baseline_outputs",
     "source_record",
+    "answer",
+    "prediction",
+    "final_answer",
+    "evidence_pages",
+    "evidence_sources",
+    "binary_correctness",
     "proof_trace",
     "verified",
     "answer_supported",
@@ -1467,14 +1511,12 @@ def _write_provider_error_raw_log(
 def _contains_forbidden_output(value: Any) -> bool:
     if isinstance(value, dict):
         for key, child in value.items():
-            if key in FORBIDDEN_OUTPUT_TERMS:
+            if key in FORBIDDEN_OUTPUT_FIELDS:
                 return True
             if _contains_forbidden_output(child):
                 return True
     elif isinstance(value, list):
         return any(_contains_forbidden_output(item) for item in value)
-    elif isinstance(value, str):
-        return value in FORBIDDEN_OUTPUT_TERMS
     return False
 
 

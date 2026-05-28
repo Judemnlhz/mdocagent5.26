@@ -23,7 +23,6 @@ from mdocnexus.stage2.artifact_schema import (
 )
 from mdocnexus.stage2.artifact_schema import ValidationErrorType
 
-
 class ArtifactCompilerInterfaceTest(unittest.TestCase):
     def test_prompt_does_not_leak_gold_or_baseline(self) -> None:
         canonical_record = make_canonical_record([29])
@@ -44,6 +43,30 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertIn("What is visible on page 30?", prompt)
         self.assertIn("question_constraints", prompt)
         self.assertIn("layout_blocks", prompt)
+
+    def test_prompt_uses_generic_evidence_boundary(self) -> None:
+        prompt = build_artifact_compiler_user_prompt(
+            canonical_record=make_canonical_record([29]),
+            page_input=make_page_input(29),
+            schema_dict=build_page_artifact_output_schema_dict(),
+        )
+        prompt_payload = json.loads(prompt)
+
+        self.assertIn("Do not generate an answer to the question.", prompt_payload["rules"])
+        self.assertIn("Keep artifact.content evidence-focused and non-generative.", prompt_payload["rules"])
+        self.assertNotIn("answer-like phrases", prompt)
+
+    def test_prompt_does_not_force_visual_artifact_for_image_input(self) -> None:
+        prompt = build_artifact_compiler_user_prompt(
+            canonical_record=make_canonical_record([29]),
+            page_input={**make_page_input(29), "input_routes": ["image"]},
+            schema_dict=build_page_artifact_output_schema_dict(),
+        )
+        prompt_payload = json.loads(prompt)
+
+        self.assertIsNone(prompt_payload["page_requirement"]["minimum_candidate_artifact"])
+        self.assertIn("return artifacts=[]", prompt_payload["page_requirement"]["instruction"])
+        self.assertNotIn('"minimum_candidate_artifact": "visual_observation"', prompt)
 
     def test_fake_client_output_validates(self) -> None:
         client = FakeArtifactCompilerClient()
@@ -93,6 +116,76 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertEqual(result["valid_artifacts"], [])
         self.assertIn(
             "source_anchor_not_found",
+            {issue["error_type"] for issue in result["validation_issues"]},
+        )
+
+    def test_compile_page_injects_runtime_doc_id_and_page_index(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=WrongIdentityClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+        )
+
+        self.assertEqual(result["validation_issues"], [])
+        self.assertEqual(len(result["valid_artifacts"]), 1)
+        artifact = result["valid_artifacts"][0]
+        self.assertEqual(result["raw_output"]["doc_id"], "example.pdf")
+        self.assertEqual(result["raw_output"]["page_index"], 29)
+        self.assertEqual(artifact["doc_id"], "example.pdf")
+        self.assertEqual(artifact["page_index"], 29)
+        self.assertEqual(artifact["source_anchors"][0]["page_index"], 29)
+
+    def test_runtime_identity_injection_does_not_allow_invalid_anchor(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=WrongIdentityInvalidAnchorClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+        )
+
+        self.assertEqual(result["valid_artifacts"], [])
+        self.assertIn(
+            "source_anchor_not_found",
+            {issue["error_type"] for issue in result["validation_issues"]},
+        )
+
+    def test_runtime_identity_injection_allows_content_text(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=WrongIdentityContentClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+        )
+
+        self.assertEqual(result["validation_issues"], [])
+        self.assertEqual(len(result["valid_artifacts"]), 1)
+        self.assertEqual(result["valid_artifacts"][0]["doc_id"], "example.pdf")
+        self.assertEqual(result["valid_artifacts"][0]["page_index"], 29)
+
+    def test_runtime_identity_injection_preserves_forbidden_field_rejection(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=WrongIdentityForbiddenFieldClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+        )
+
+        self.assertEqual(result["valid_artifacts"], [])
+        self.assertIn(
+            "schema_invalid",
             {issue["error_type"] for issue in result["validation_issues"]},
         )
 
@@ -146,7 +239,6 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
             self.assertNotIn(forbidden, store_text)
             self.assertNotIn(forbidden, get_allowed_validation_statuses())
 
-
 class InvalidAnchorClient(ArtifactCompilerClient):
     def generate_page_artifacts(
         self,
@@ -187,6 +279,71 @@ class InvalidAnchorClient(ArtifactCompilerClient):
             ],
             "uncertain_or_unreadable": [],
         }
+
+
+class WrongIdentityClient(ArtifactCompilerClient):
+    content = "The page contains a full-page visual relevant to the question."
+    artifact_type = "visual_observation"
+    modality = "image"
+    source_id = "p029_full_page_image"
+
+    def generate_page_artifacts(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        schema_dict: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        _ = system_prompt
+        _ = user_prompt
+        _ = schema_dict
+        return self._build_output()
+
+    def _build_output(self) -> Dict[str, Any]:
+        return {
+            "doc_id": "wrong.pdf",
+            "page_index": 999,
+            "artifacts": [
+                {
+                    "artifact_id": "example_p029_visual_observation_0001",
+                    "doc_id": "wrong.pdf",
+                    "page_index": 999,
+                    "artifact_type": self.artifact_type,
+                    "modality": self.modality,
+                    "content": self.content,
+                    "normalized_content": {"claim": self.content},
+                    "source_anchors": [
+                        {
+                            "source_id": self.source_id,
+                            "anchor_type": "full_page_image",
+                            "page_index": 999,
+                            "bbox": None,
+                        }
+                    ],
+                    "provenance": {
+                        "op": "ATOM",
+                        "sources": [self.source_id],
+                    },
+                    "validation_status": "candidate",
+                    "compiler_metadata": {},
+                }
+            ],
+            "uncertain_or_unreadable": [],
+        }
+
+
+class WrongIdentityInvalidAnchorClient(WrongIdentityClient):
+    source_id = "not_exist"
+
+
+class WrongIdentityContentClient(WrongIdentityClient):
+    content = "A model-supplied sentence is treated as content when structure is valid."
+
+
+class WrongIdentityForbiddenFieldClient(WrongIdentityClient):
+    def _build_output(self) -> Dict[str, Any]:
+        output = super()._build_output()
+        output["artifacts"][0]["answer"] = "forbidden"
+        return output
 
 
 def make_canonical_record(pages_to_compile: List[int]) -> Dict[str, Any]:

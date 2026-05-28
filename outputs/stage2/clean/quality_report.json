@@ -1,0 +1,27 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 10,
+  "num_pages_attempted": 50,
+  "num_artifacts": 72,
+  "num_valid_artifacts": 72,
+  "num_discarded_artifacts": 0,
+  "schema_valid_rate": 1.0,
+  "anchoring_rate": 1.0,
+  "discard_rate": 0.0,
+  "artifact_type_counts": {
+    "caption": 1,
+    "figure": 11,
+    "numeric_fact": 25,
+    "table": 1,
+    "text_span": 30,
+    "visual_observation": 4
+  },
+  "modality_counts": {
+    "image": 15,
+    "numeric": 20,
+    "table": 1,
+    "text": 36
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl"
+}

@@ -1,0 +1,11 @@
+{
+  "answer_rate": 0.009319664492078284,
+  "artifact_only": true,
+  "num_answered": 10,
+  "num_cross_record_artifacts_used": 0,
+  "num_insufficient_artifact": 1063,
+  "num_records_attempted": 1073,
+  "num_retrieved_artifacts_rejected_by_scope": 0,
+  "raw_page_fallback": false,
+  "retrieval_scope": "same_record_only"
+}

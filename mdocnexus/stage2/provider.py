@@ -492,6 +492,7 @@ def build_artifact_compiler_system_prompt() -> str:
             "Do not answer the question.",
             "Do not use gold answers.",
             "Do not infer unsupported facts.",
+            "Artifact content must describe page evidence, not a generated answer.",
             "Every artifact must cite source_anchors from the provided layout_blocks.",
             "Artifact status must be candidate before validation.",
             "Do not generate supports / contradicts edges.",
@@ -543,11 +544,11 @@ def build_artifact_compiler_user_prompt(
         "layout_blocks": page_input.get("layout_blocks", []),
         "page_text": page_input.get("page_text"),
         "artifact_coverage_instruction": [
-            "Produce artifacts only for positive evidence that is directly relevant to the question; do not emit artifacts that merely say the page is irrelevant or has no relevant content.",
+            "Produce artifacts for page evidence that is directly relevant to the question.",
             "If page_modality_diagnosis.mentions_chart is true, produce figure and numeric_fact candidate artifacts when visible in the page.",
             "If page_modality_diagnosis.mentions_table is true, produce table and numeric_fact candidate artifacts when visible in the page.",
             "If numeric values are visible and relevant to the question, produce numeric_fact candidate artifacts.",
-            "Do not answer the question.",
+            "Do not answer the question or phrase artifact content as a generated answer.",
             "Do not infer hidden values.",
             "If the chart/table/visual detail is not readable, add uncertain_or_unreadable instead of guessing.",
         ],
@@ -555,7 +556,8 @@ def build_artifact_compiler_user_prompt(
             "Return exactly one PageArtifactOutput JSON object.",
             "Use only source_id values present in layout_blocks.",
             "Every artifact must have validation_status set to candidate.",
-            "Do not decide the final answer.",
+            "Do not generate an answer to the question.",
+            "Keep artifact.content evidence-focused and non-generative.",
             "Do not include gold answers, baseline outputs, or source records.",
             "Do not create supports or contradicts edges.",
             "Do not create proof_trace, verified, answer_supported, or proof_used fields.",
@@ -575,24 +577,11 @@ def _is_explicit_page_constraint(question_constraints: Dict[str, Any], page_inde
 
 
 def _build_page_requirement(page_input: Dict[str, Any], is_explicit_page: bool) -> Dict[str, Any]:
-    if not is_explicit_page:
-        return {
-            "explicit_page_constraint": False,
-            "minimum_candidate_artifact": None,
-        }
-
-    block_types = {block.get("block_type") for block in page_input.get("layout_blocks", [])}
-    if "full_page_image" in block_types:
-        minimum_candidate_artifact = "visual_observation"
-    elif "text_block" in block_types:
-        minimum_candidate_artifact = "text_span"
-    else:
-        minimum_candidate_artifact = None
-
+    _ = page_input
     return {
-        "explicit_page_constraint": True,
-        "minimum_candidate_artifact": minimum_candidate_artifact,
-        "instruction": "Only include question-relevant positive evidence artifacts anchored to the page.",
+        "explicit_page_constraint": bool(is_explicit_page),
+        "minimum_candidate_artifact": None,
+        "instruction": "Only include question-relevant positive evidence artifacts anchored to the page; return artifacts=[] when the page has no such evidence.",
     }
 
 # ---- from real_api_client.py ----
@@ -623,7 +612,7 @@ class RealApiArtifactCompilerClient(ArtifactCompilerClient):
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             schema_dict=schema_dict,
-            image_path=_page_image_path_from_input(page_input),
+            image_path=_page_image_path_allowed_by_route(page_input),
         )
 
     def _build_provider(self) -> Any:
@@ -632,13 +621,19 @@ class RealApiArtifactCompilerClient(ArtifactCompilerClient):
         raise ProviderNotConfiguredError(f"Provider {self.api_config.provider!r} is not implemented.")
 
 
-def _page_image_path_from_input(page_input: Dict[str, Any] | None) -> str | None:
+def _page_image_path_allowed_by_route(page_input: Dict[str, Any] | None) -> str | None:
     if not isinstance(page_input, dict):
+        return None
+    input_routes = page_input.get("input_routes")
+    if input_routes is not None and "image" not in {str(route) for route in input_routes}:
         return None
     page_image_path = page_input.get("page_image_path")
     if not page_image_path:
         return None
-    return str(page_image_path)
+    path = Path(page_image_path)
+    if not path.is_file():
+        return None
+    return str(path)
 
 
 def _call_provider_generate_json(

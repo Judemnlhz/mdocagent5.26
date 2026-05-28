@@ -82,6 +82,31 @@ def find_existing_file(candidate_paths: List[Path]) -> Optional[Path]:
     return None
 
 
+def candidate_input_routes_for_page(record_or_stage2: Dict[str, Any], page_index: int) -> Optional[List[str]]:
+    """Return compact input routes for a page, or None when route metadata is absent."""
+
+    stage2 = record_or_stage2.get("stage2") if isinstance(record_or_stage2, dict) else None
+    if not isinstance(stage2, dict):
+        stage2 = record_or_stage2 if isinstance(record_or_stage2, dict) else {}
+    candidate_page_routes = stage2.get("candidate_page_routes")
+    if not isinstance(candidate_page_routes, list):
+        return None
+
+    for route_entry in candidate_page_routes:
+        if not isinstance(route_entry, dict):
+            continue
+        try:
+            route_page_index = int(route_entry.get("page_index"))
+        except (TypeError, ValueError):
+            continue
+        if route_page_index != int(page_index):
+            continue
+        routes = route_entry.get("routes") or []
+        route_set = {str(route) for route in routes}
+        return [route for route in ("text", "image") if route in route_set]
+    return []
+
+
 def load_page_content(
     canonical_record: Dict[str, Any],
     extract_path: str | Path,
@@ -174,25 +199,33 @@ def prepare_pages_for_compilation(
             extract_path=extract_path,
             page_index=page_index,
         )
+        input_routes = candidate_input_routes_for_page(canonical_record, page_index)
+        route_metadata_present = input_routes is not None
+        allow_text_input = not route_metadata_present or "text" in input_routes
+        allow_image_input = not route_metadata_present or "image" in input_routes
+        routed_page_text = page_content["page_text"] if allow_text_input else None
+        routed_page_text_path = page_content["page_text_path"] if allow_text_input else None
+        routed_page_image_path = page_content["page_image_path"] if allow_image_input else None
         layout_blocks = build_basic_layout_blocks(
             doc_id=doc_id,
             page_index=page_index,
-            page_text=page_content["page_text"],
-            has_page_image=page_content["has_page_image"],
+            page_text=routed_page_text,
+            has_page_image=routed_page_image_path is not None,
         )
 
-        pages.append(
-            {
-                "doc_id": doc_id,
-                "page_index": page_index,
-                "page_text": page_content["page_text"],
-                "page_text_path": page_content["page_text_path"],
-                "page_image_path": page_content["page_image_path"],
-                "has_page_text": page_content["has_page_text"],
-                "has_page_image": page_content["has_page_image"],
-                "layout_blocks": layout_blocks,
-            }
-        )
+        page = {
+            "doc_id": doc_id,
+            "page_index": page_index,
+            "page_text": routed_page_text,
+            "page_text_path": routed_page_text_path,
+            "page_image_path": routed_page_image_path,
+            "has_page_text": routed_page_text is not None,
+            "has_page_image": routed_page_image_path is not None,
+            "layout_blocks": layout_blocks,
+        }
+        if route_metadata_present:
+            page["input_routes"] = input_routes
+        pages.append(page)
 
         if not layout_blocks:
             errors.append(

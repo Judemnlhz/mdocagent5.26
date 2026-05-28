@@ -981,6 +981,8 @@ TEXT_TOP_10_FIELD = "text-top-10-question"
 IMAGE_TOP_10_FIELD = "image-top-10-question"
 FORBIDDEN_STAGE2_FIELDS = {
     "answer",
+    "prediction",
+    "final_answer",
     "evidence_pages",
     "evidence_sources",
     "binary_correctness",

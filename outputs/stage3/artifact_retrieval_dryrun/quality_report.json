@@ -1,0 +1,25 @@
+{
+  "answer_generation": false,
+  "artifact_coverage_rate": 0.009319664492078284,
+  "artifact_hit_rate": 0.009319664492078284,
+  "avg_candidate_artifacts_per_record": 0.06710158434296365,
+  "avg_retrieved_artifacts": 0.03821062441752097,
+  "num_cross_record_artifacts_used": 0,
+  "num_records": 1073,
+  "num_records_with_artifacts": 10,
+  "num_records_without_artifacts": 1063,
+  "retrieval_scope": "same_record_only",
+  "retrieved_artifact_type_counts": {
+    "figure": 7,
+    "numeric_fact": 12,
+    "table": 1,
+    "text_span": 18,
+    "visual_observation": 3
+  },
+  "retrieved_modality_counts": {
+    "image": 10,
+    "numeric": 10,
+    "table": 1,
+    "text": 20
+  }
+}

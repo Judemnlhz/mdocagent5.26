@@ -106,6 +106,8 @@ from typing import Any, Dict, List, Mapping
 
 FORBIDDEN_FIELDS = {
     "answer",
+    "prediction",
+    "final_answer",
     "evidence_pages",
     "evidence_sources",
     "binary_correctness",
@@ -224,6 +226,8 @@ from typing import Any, Dict, Iterable, List, Mapping
 
 FORBIDDEN_FIELDS = {
     "answer",
+    "prediction",
+    "final_answer",
     "evidence_pages",
     "evidence_sources",
     "binary_correctness",
@@ -520,6 +524,8 @@ from typing import Any, Dict, Iterable, Mapping
 
 FORBIDDEN_FIELD_NAMES = {
     "answer",
+    "prediction",
+    "final_answer",
     "evidence_pages",
     "evidence_sources",
     "binary_correctness",

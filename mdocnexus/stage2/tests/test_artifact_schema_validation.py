@@ -19,7 +19,6 @@ from mdocnexus.stage2.artifact_schema import (
 )
 from mdocnexus.stage2.artifact_schema import ValidationErrorType, ValidationIssue
 
-
 class ArtifactSchemaValidationTest(unittest.TestCase):
     def test_schema_serialization(self) -> None:
         schema = build_page_artifact_output_schema_dict()
@@ -100,6 +99,60 @@ class ArtifactSchemaValidationTest(unittest.TestCase):
             ValidationErrorType.invalid_enum_value,
             {issue.error_type for issue in issues},
         )
+
+    def test_non_empty_content_is_not_phrase_filtered(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        artifact = make_artifact()
+        artifact["content"] = "A model-supplied sentence is treated as content when structure is valid."
+        raw_output = {
+            "doc_id": "example.pdf",
+            "page_index": 29,
+            "artifacts": [artifact],
+        }
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertEqual(issues, [])
+        self.assertEqual(len(valid_artifacts), 1)
+
+    def test_forbidden_artifact_fields_are_rejected(self) -> None:
+        forbidden_fields = [
+            "answer",
+            "prediction",
+            "final_answer",
+            "binary_correctness",
+            "evidence_pages",
+            "evidence_sources",
+        ]
+        layout_blocks = [make_full_page_image_block()]
+        for field_name in forbidden_fields:
+            with self.subTest(field_name=field_name):
+                artifact = make_artifact()
+                artifact[field_name] = "forbidden"
+                raw_output = {
+                    "doc_id": "example.pdf",
+                    "page_index": 29,
+                    "artifacts": [artifact],
+                }
+
+                valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+                self.assertEqual(valid_artifacts, [])
+                self.assertIn(ValidationErrorType.schema_invalid, {issue.error_type for issue in issues})
+                self.assertIn(field_name, {str(issue.details.get("unexpected_field")) for issue in issues})
+
+    def test_evidence_numeric_fact_passes(self) -> None:
+        layout_blocks = [make_full_page_image_block()]
+        artifact = make_artifact()
+        artifact["artifact_type"] = "numeric_fact"
+        artifact["modality"] = "numeric"
+        artifact["content"] = "The chart shows 8 Redacted signal labels."
+        raw_output = {"doc_id": "example.pdf", "page_index": 29, "artifacts": [artifact]}
+
+        valid_artifacts, issues = validate_page_artifact_output(raw_output, layout_blocks)
+
+        self.assertEqual(issues, [])
+        self.assertEqual(len(valid_artifacts), 1)
 
     def test_duplicate_artifact_detected(self) -> None:
         layout_blocks = [make_full_page_image_block()]

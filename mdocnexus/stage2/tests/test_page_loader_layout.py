@@ -10,7 +10,6 @@ from typing import Any, Dict, List
 from mdocnexus.stage2.page_input import load_page_content
 from mdocnexus.stage2.page_input import prepare_pages_for_compilation
 
-
 class PageLoaderLayoutTest(unittest.TestCase):
     def test_page_30_explicit_reference_generates_full_page_image_anchor(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -81,6 +80,66 @@ class PageLoaderLayoutTest(unittest.TestCase):
             self.assertEqual(block_types, {"text_block", "full_page_image"})
             self.assertIn("p004_text_0000", block_ids)
             self.assertIn("p004_full_page_image", block_ids)
+
+    def test_compact_text_only_route_suppresses_image_even_when_file_exists(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_path = Path(tmpdir)
+            texts_dir = extract_path / "texts"
+            images_dir = extract_path / "images"
+            texts_dir.mkdir()
+            images_dir.mkdir()
+            (texts_dir / "example_7.txt").write_text("Text route content.", encoding="utf-8")
+            (images_dir / "example_7.png").write_bytes(b"not-a-real-png")
+
+            canonical_record = make_canonical_record(
+                pages_to_compile=[7],
+                explicit_pages=[],
+                retrieval_pages=[7],
+            )
+            canonical_record["stage2"] = {
+                "candidate_page_routes": [{"page_index": 7, "routes": ["text"]}]
+            }
+
+            prepared = prepare_pages_for_compilation(canonical_record, extract_path)
+            page = get_page(prepared["pages"], 7)
+            block_types = {block["block_type"] for block in page["layout_blocks"]}
+
+            self.assertEqual(prepared["errors"], [])
+            self.assertEqual(page["input_routes"], ["text"])
+            self.assertTrue(page["has_page_text"])
+            self.assertFalse(page["has_page_image"])
+            self.assertIsNone(page["page_image_path"])
+            self.assertEqual(block_types, {"text_block"})
+
+    def test_compact_image_route_suppresses_text_even_when_file_exists(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            extract_path = Path(tmpdir)
+            texts_dir = extract_path / "texts"
+            images_dir = extract_path / "images"
+            texts_dir.mkdir()
+            images_dir.mkdir()
+            (texts_dir / "example_8.txt").write_text("Text should not enter image route.", encoding="utf-8")
+            (images_dir / "example_8.png").write_bytes(b"not-a-real-png")
+
+            canonical_record = make_canonical_record(
+                pages_to_compile=[8],
+                explicit_pages=[],
+                retrieval_pages=[8],
+            )
+            canonical_record["stage2"] = {
+                "candidate_page_routes": [{"page_index": 8, "routes": ["image"]}]
+            }
+
+            prepared = prepare_pages_for_compilation(canonical_record, extract_path)
+            page = get_page(prepared["pages"], 8)
+            block_types = {block["block_type"] for block in page["layout_blocks"]}
+
+            self.assertEqual(prepared["errors"], [])
+            self.assertEqual(page["input_routes"], ["image"])
+            self.assertFalse(page["has_page_text"])
+            self.assertTrue(page["has_page_image"])
+            self.assertIsNone(page["page_text_path"])
+            self.assertEqual(block_types, {"full_page_image"})
 
     def test_missing_page_records_error_without_fabricating_blocks(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
