@@ -14,6 +14,7 @@ from unittest.mock import patch
 from mdocnexus.stage2.provider import ApiRunConfig
 from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_smoke_test
 from mdocnexus.stage2.provider import CompatibleChatJsonProvider
+from mdocnexus.stage2.provider import _build_request_body
 from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderResponseFormatError
 from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
 from scripts.stage2 import validate_real_trial_args
@@ -51,6 +52,47 @@ class RealProviderAdapterTest(unittest.TestCase):
         finally:
             if old_value is not None:
                 os.environ["STAGE2_TEST_MISSING_API_KEY"] = old_value
+
+
+    def test_request_body_includes_base64_image_payload_when_image_path_provided(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+
+            request_body = _build_request_body(
+                model_name="dummy-model",
+                system_prompt="system",
+                user_prompt="user",
+                schema_dict={},
+                temperature=0.0,
+                max_tokens=None,
+                image_path=image_path,
+            )
+
+        user_content = request_body["messages"][1]["content"]
+        self.assertIsInstance(user_content, list)
+        self.assertEqual(user_content[0], {"type": "text", "text": "user"})
+        self.assertEqual(user_content[1]["type"], "image_url")
+        self.assertTrue(user_content[1]["image_url"]["url"].startswith("data:image/png;base64,"))
+        self.assertNotIn(str(image_path), json.dumps(request_body))
+
+    def test_real_api_client_passes_page_image_path_to_provider(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+            provider = CapturingImageProvider()
+            config = ApiRunConfig(enable_real_api=True, model_name="dummy-model", max_pages=1)
+            client = RealApiArtifactCompilerClient(config, provider=provider)
+
+            output = client.generate_page_artifacts(
+                "system",
+                "user",
+                {},
+                page_input={"page_image_path": str(image_path)},
+            )
+
+        self.assertEqual(output, {"doc_id": "example.pdf", "page_index": 0, "artifacts": []})
+        self.assertEqual(provider.image_path, str(image_path))
 
     def test_provider_not_implemented_fails_safely(self) -> None:
         config = ApiRunConfig(
@@ -201,6 +243,25 @@ class NonJsonProvider:
         _ = user_prompt
         _ = schema_dict
         raise ProviderResponseFormatError("Provider response was not valid JSON.", raw_text="not json")
+
+
+
+class CapturingImageProvider:
+    def __init__(self) -> None:
+        self.image_path: str | None = None
+
+    def generate_json(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        schema_dict: Dict[str, Any],
+        image_path: str | None = None,
+    ) -> Dict[str, Any]:
+        _ = system_prompt
+        _ = user_prompt
+        _ = schema_dict
+        self.image_path = image_path
+        return {"doc_id": "example.pdf", "page_index": 0, "artifacts": []}
 
 
 class ValidJsonProvider:

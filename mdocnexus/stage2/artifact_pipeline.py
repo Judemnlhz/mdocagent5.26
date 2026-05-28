@@ -648,6 +648,7 @@ def _is_non_negative_int(value: Any) -> bool:
 
 import json
 from pathlib import Path
+import inspect
 from typing import Any, Dict, List
 
 
@@ -853,10 +854,12 @@ def compile_page_with_client(
         page_input=page_input,
         schema_dict=schema_dict,
     )
-    raw_output = client.generate_page_artifacts(
+    raw_output = _generate_page_artifacts_with_optional_page_input(
+        client=client,
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         schema_dict=schema_dict,
+        page_input=page_input,
     )
     if raw_output_log_path is not None:
         write_raw_output_log(
@@ -939,6 +942,39 @@ def compile_page_with_client(
             "discard_rate_after_dedup": _discard_rate(_count_raw_artifacts(validation_input), len(valid_artifacts)),
         },
     }
+
+
+def _generate_page_artifacts_with_optional_page_input(
+    client: ArtifactCompilerClient,
+    system_prompt: str,
+    user_prompt: str,
+    schema_dict: Dict[str, Any],
+    page_input: Dict[str, Any],
+) -> Dict[str, Any]:
+    generate_page_artifacts = client.generate_page_artifacts
+    if _callable_accepts_keyword(generate_page_artifacts, "page_input"):
+        return generate_page_artifacts(
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            schema_dict=schema_dict,
+            page_input=page_input,
+        )
+    return generate_page_artifacts(
+        system_prompt=system_prompt,
+        user_prompt=user_prompt,
+        schema_dict=schema_dict,
+    )
+
+
+def _callable_accepts_keyword(callable_obj: Any, keyword: str) -> bool:
+    try:
+        parameters = inspect.signature(callable_obj).parameters.values()
+    except (TypeError, ValueError):
+        return False
+    return any(
+        parameter.kind == inspect.Parameter.VAR_KEYWORD or parameter.name == keyword
+        for parameter in parameters
+    )
 
 
 def compile_pages_with_client(

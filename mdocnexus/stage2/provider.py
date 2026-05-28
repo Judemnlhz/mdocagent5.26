@@ -73,6 +73,9 @@ class ProviderDisabledError(ProviderError):
 
 
 import json
+import base64
+import inspect
+import mimetypes
 import os
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError, URLError
@@ -96,6 +99,7 @@ class CompatibleChatJsonProvider:
         system_prompt: str,
         user_prompt: str,
         schema_dict: Dict[str, Any],
+        image_path: str | Path | None = None,
     ) -> Dict[str, Any]:
         """Request one JSON object from a configured provider without validation or repair."""
 
@@ -108,6 +112,7 @@ class CompatibleChatJsonProvider:
             schema_dict=schema_dict,
             temperature=self.api_config.temperature,
             max_tokens=self.api_config.max_tokens,
+            image_path=image_path,
         )
         request = Request(
             _resolve_chat_completions_url(self.api_config),
@@ -141,13 +146,14 @@ def _build_request_body(
     schema_dict: Dict[str, Any],
     temperature: float,
     max_tokens: Optional[int],
+    image_path: str | Path | None = None,
 ) -> Dict[str, Any]:
     _ = schema_dict
     request_body = {
         "model": model_name,
         "messages": [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": user_prompt},
+            {"role": "user", "content": _build_user_message_content(user_prompt, image_path)},
         ],
         "temperature": temperature,
         "stream": False,
@@ -161,6 +167,36 @@ def _build_request_body(
     if max_tokens is not None:
         request_body["max_tokens"] = max_tokens
     return request_body
+
+
+def _build_user_message_content(user_prompt: str, image_path: str | Path | None = None) -> Any:
+    if not image_path:
+        return user_prompt
+    return [
+        {"type": "text", "text": user_prompt},
+        {"type": "image_url", "image_url": {"url": _build_image_data_url(image_path)}},
+    ]
+
+
+def _build_image_data_url(image_path: str | Path) -> str:
+    path = Path(image_path)
+    if not path.is_file():
+        raise ProviderError(f"Image payload path does not exist: {path}")
+    mime_type = _guess_image_mime_type(path)
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def _guess_image_mime_type(path: Path) -> str:
+    guessed_type, _ = mimetypes.guess_type(str(path))
+    if guessed_type and guessed_type.startswith("image/"):
+        return guessed_type
+    suffix = path.suffix.lower()
+    if suffix in {".jpg", ".jpeg"}:
+        return "image/jpeg"
+    if suffix == ".webp":
+        return "image/webp"
+    return "image/png"
 
 
 def _read_api_key(api_config: ApiRunConfig) -> str:
@@ -578,12 +614,59 @@ class RealApiArtifactCompilerClient(ArtifactCompilerClient):
         system_prompt: str,
         user_prompt: str,
         schema_dict: Dict[str, Any],
+        page_input: Dict[str, Any] | None = None,
     ) -> Dict[str, Any]:
         assert_real_api_allowed(self.api_config)
         provider = self.provider or self._build_provider()
-        return provider.generate_json(system_prompt, user_prompt, schema_dict)
+        return _call_provider_generate_json(
+            provider=provider,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            schema_dict=schema_dict,
+            image_path=_page_image_path_from_input(page_input),
+        )
 
     def _build_provider(self) -> Any:
         if self.api_config.provider in {"siliconflow", "custom", "compatible_chat"}:
             return CompatibleChatJsonProvider(self.api_config)
         raise ProviderNotConfiguredError(f"Provider {self.api_config.provider!r} is not implemented.")
+
+
+def _page_image_path_from_input(page_input: Dict[str, Any] | None) -> str | None:
+    if not isinstance(page_input, dict):
+        return None
+    page_image_path = page_input.get("page_image_path")
+    if not page_image_path:
+        return None
+    return str(page_image_path)
+
+
+def _call_provider_generate_json(
+    provider: Any,
+    system_prompt: str,
+    user_prompt: str,
+    schema_dict: Dict[str, Any],
+    image_path: str | None,
+) -> Dict[str, Any]:
+    generate_json = provider.generate_json
+    if image_path and _callable_accepts_keyword(generate_json, "image_path"):
+        return generate_json(
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            schema_dict=schema_dict,
+            image_path=image_path,
+        )
+    return generate_json(system_prompt, user_prompt, schema_dict)
+
+
+def _callable_accepts_keyword(callable_obj: Any, keyword: str) -> bool:
+    try:
+        parameters = inspect.signature(callable_obj).parameters.values()
+    except (TypeError, ValueError):
+        return False
+    for parameter in parameters:
+        if parameter.kind == inspect.Parameter.VAR_KEYWORD:
+            return True
+        if parameter.name == keyword:
+            return True
+    return False

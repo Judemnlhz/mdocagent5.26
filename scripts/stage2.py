@@ -364,9 +364,9 @@ def small_batch_main() -> None:
     print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
 
 
-MAX_ALLOWED_DOCS = 5
-MAX_ALLOWED_PAGES_PER_DOC = 2
-MAX_ALLOWED_PAGES = 10
+MAX_ALLOWED_DOCS = 20
+MAX_ALLOWED_PAGES_PER_DOC = 5
+MAX_ALLOWED_CROSSDOC_PAGES = 50
 STAGE_NAME = "stage2_crossdoc_small_batch_artifact_compilation"
 
 
@@ -395,11 +395,11 @@ def parse_crossdoc_batch_args() -> argparse.Namespace:
 
 def validate_crossdoc_args(args: argparse.Namespace) -> None:
     if int(args.max_docs) < 1 or int(args.max_docs) > MAX_ALLOWED_DOCS:
-        raise RuntimeError("--max-docs must be between 1 and 5.")
+        raise RuntimeError("--max-docs must be between 1 and 20.")
     if int(args.max_pages_per_doc) < 1 or int(args.max_pages_per_doc) > MAX_ALLOWED_PAGES_PER_DOC:
-        raise RuntimeError("--max-pages-per-doc must be between 1 and 2.")
-    if int(args.max_pages) < 1 or int(args.max_pages) > MAX_ALLOWED_PAGES:
-        raise RuntimeError("--max-pages must be between 1 and 10.")
+        raise RuntimeError("--max-pages-per-doc must be between 1 and 5.")
+    if int(args.max_pages) < 1 or int(args.max_pages) > MAX_ALLOWED_CROSSDOC_PAGES:
+        raise RuntimeError("--max-pages must be between 1 and 50.")
     selected_pages_csv = getattr(args, "selected_pages_csv", None)
     if selected_pages_csv and not Path(selected_pages_csv).is_file():
         raise FileNotFoundError(f"--selected-pages-csv does not exist: {selected_pages_csv}")
