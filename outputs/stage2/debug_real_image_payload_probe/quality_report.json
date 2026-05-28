@@ -1,0 +1,24 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 5,
+  "num_pages_attempted": 5,
+  "num_artifacts": 9,
+  "num_valid_artifacts": 9,
+  "num_discarded_artifacts": 0,
+  "schema_valid_rate": 1.0,
+  "anchoring_rate": 1.0,
+  "discard_rate": 0.0,
+  "artifact_type_counts": {
+    "figure": 3,
+    "numeric_fact": 1,
+    "table": 1,
+    "visual_observation": 4
+  },
+  "modality_counts": {
+    "image": 7,
+    "numeric": 1,
+    "table": 1
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl"
+}

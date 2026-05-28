@@ -1,0 +1,10 @@
+{
+  "diagnosis": "The probe called the real provider on five prior raw-empty image-route pages. All five provider responses were parsed JSON objects with raw_output.artifacts=[] and raw_text=null; there were no parser failures and no schema discard rows. This confirms the empty artifact count is not caused by JSON parsing or schema validation. However, the current request builder sends only text messages and response_format metadata to the chat-completions API; it does not attach image_url/base64 image content. Therefore these image-route pages had image files available locally, but the Qwen3-VL request did not actually include visual input. The immediate fix should be to add multimodal image payload support in the provider/request path before changing the artifact schema; after that, run a small prompt probe to decide whether the compiler prompt is still too conservative.",
+  "num_model_empty_outputs": 5,
+  "num_model_nonempty_outputs": 0,
+  "num_pages_probed": 5,
+  "num_parse_failures": 0,
+  "num_schema_failures": 0,
+  "num_visual_pages_probed": 5,
+  "raw_output_empty_rate": 1.0
+}
