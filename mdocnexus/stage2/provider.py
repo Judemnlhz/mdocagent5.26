@@ -28,6 +28,7 @@ class ApiRunConfig:
     api_key_env_var: str = "SILICONFLOW_API_KEY"
     api_key: Optional[str] = field(default=None, repr=False)
     max_tokens: Optional[int] = None
+    image_payload_mode: str = "image_url"
 
 
 def assert_real_api_allowed(config: ApiRunConfig) -> None:
@@ -113,6 +114,7 @@ class CompatibleChatJsonProvider:
             temperature=self.api_config.temperature,
             max_tokens=self.api_config.max_tokens,
             image_path=image_path,
+            image_payload_mode=self.api_config.image_payload_mode,
         )
         request = Request(
             _resolve_chat_completions_url(self.api_config),
@@ -147,13 +149,14 @@ def _build_request_body(
     temperature: float,
     max_tokens: Optional[int],
     image_path: str | Path | None = None,
+    image_payload_mode: str = "image_url",
 ) -> Dict[str, Any]:
     _ = schema_dict
     request_body = {
         "model": model_name,
         "messages": [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": _build_user_message_content(user_prompt, image_path)},
+            {"role": "user", "content": _build_user_message_content(user_prompt, image_path, image_payload_mode)},
         ],
         "temperature": temperature,
         "stream": False,
@@ -169,9 +172,15 @@ def _build_request_body(
     return request_body
 
 
-def _build_user_message_content(user_prompt: str, image_path: str | Path | None = None) -> Any:
-    if not image_path:
+def _build_user_message_content(
+    user_prompt: str,
+    image_path: str | Path | None = None,
+    image_payload_mode: str = "image_url",
+) -> Any:
+    if not image_path or image_payload_mode == "none":
         return user_prompt
+    if image_payload_mode not in {"image_url", "base64"}:
+        raise ProviderError(f"Unsupported image_payload_mode: {image_payload_mode}")
     return [
         {"type": "text", "text": user_prompt},
         {"type": "image_url", "image_url": {"url": _build_image_data_url(image_path)}},
@@ -569,6 +578,62 @@ def build_artifact_compiler_user_prompt(
     return json.dumps(prompt_payload, ensure_ascii=False, indent=2)
 
 
+def build_document_generic_artifact_compiler_user_prompt(
+    canonical_record: Dict[str, Any],
+    page_input: Dict[str, Any],
+    schema_dict: Dict[str, Any],
+) -> str:
+    """Build a question-independent prompt for document-generic compilation."""
+
+    document = canonical_record["document"]
+    page_index = int(page_input["page_index"])
+    prompt_payload = {
+        "task": "Convert this single document page into candidate evidence artifacts.",
+        "document": {
+            "doc_id": document["doc_id"],
+            "page_index": page_index,
+            "page_number_one_based": page_index + 1,
+        },
+        "compilation_plan": {
+            "compile_scope": "stage2_document_generic_single_page",
+            "priority_pages": [],
+            "compilation_reasons": [
+                {
+                    "page_index": page_index,
+                    "reason_type": "document_generic_page_compilation",
+                    "reason_text": "compile available page evidence without question conditioning",
+                }
+            ],
+        },
+        "page_requirement": {
+            "explicit_page_constraint": False,
+            "minimum_candidate_artifact": None,
+            "instruction": "Include visible or readable page evidence as candidate artifacts; return artifacts=[] when no anchored evidence is available.",
+        },
+        "allowed_artifact_types": get_allowed_artifact_types(),
+        "required_json_schema": schema_dict,
+        "layout_blocks": page_input.get("layout_blocks", []),
+        "page_text": page_input.get("page_text"),
+        "artifact_coverage_instruction": [
+            "Produce document-generic evidence artifacts for visible or readable page content.",
+            "For text, tables, captions, figures, and numeric values, cite source_anchors from layout_blocks.",
+            "Do not answer any question.",
+            "Do not infer hidden values.",
+            "If content cannot be localized or read, add uncertain_or_unreadable instead of guessing.",
+        ],
+        "rules": [
+            "Return exactly one PageArtifactOutput JSON object.",
+            "Use only source_id values present in layout_blocks.",
+            "Every artifact must have validation_status set to candidate.",
+            "Do not include question text, generated answers, gold answers, baseline outputs, or source records.",
+            "Do not create supports or contradicts edges.",
+            "Do not create proof_trace, verified, answer_supported, or proof_used fields.",
+            "Return JSON only.",
+        ],
+    }
+    return json.dumps(prompt_payload, ensure_ascii=False, indent=2)
+
+
 def _is_explicit_page_constraint(question_constraints: Dict[str, Any], page_index: int) -> bool:
     for page_ref in question_constraints.get("explicit_page_references", []):
         if page_ref.get("page_index_zero_based") == page_index:
@@ -612,7 +677,7 @@ class RealApiArtifactCompilerClient(ArtifactCompilerClient):
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             schema_dict=schema_dict,
-            image_path=_page_image_path_allowed_by_route(page_input),
+            image_path=_page_image_path_allowed_by_route(page_input, self.api_config.image_payload_mode),
         )
 
     def _build_provider(self) -> Any:
@@ -621,8 +686,13 @@ class RealApiArtifactCompilerClient(ArtifactCompilerClient):
         raise ProviderNotConfiguredError(f"Provider {self.api_config.provider!r} is not implemented.")
 
 
-def _page_image_path_allowed_by_route(page_input: Dict[str, Any] | None) -> str | None:
+def _page_image_path_allowed_by_route(
+    page_input: Dict[str, Any] | None,
+    image_payload_mode: str = "image_url",
+) -> str | None:
     if not isinstance(page_input, dict):
+        return None
+    if image_payload_mode == "none":
         return None
     input_routes = page_input.get("input_routes")
     if input_routes is not None and "image" not in {str(route) for route in input_routes}:

@@ -1,113 +1,197 @@
-"""Tests for Stage 4A minimal structural evidence graph."""
+"""Tests for Stage 4B rule-only document-native graph construction."""
 
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
-from mdocnexus.stage4.evidence_graph import build_evidence_graph
+from mdocnexus.stage4.evidence_graph import (
+    FORMAL_EDGE_TYPES,
+    build_evidence_graph,
+    build_manifest,
+    load_evidence_graph,
+    run_evidence_graph_build,
+    stable_hash_json,
+)
+
+
+FORBIDDEN_FORMAL_TYPES = {
+    "same_record",
+    "same_record_debug",
+    "supports",
+    "contradicts",
+    "derived_from",
+    "semantic_relation",
+    "entails",
+    "refutes",
+    "answer_supports",
+    "proof_supports",
+}
 
 
 class EvidenceGraphTest(unittest.TestCase):
     def setUp(self) -> None:
         self.artifacts = [
-            make_artifact("a1", record_index=0, doc_id="doc.pdf", page_index=2, source_id="p002_text_0000"),
-            make_artifact("a2", record_index=0, doc_id="doc.pdf", page_index=2, source_id="p002_text_0001"),
-            make_artifact("a3", record_index=0, doc_id="doc.pdf", page_index=3, source_id="p003_image"),
-            make_artifact("b1", record_index=1, doc_id="other.pdf", page_index=0, source_id="p000_text_0000"),
+            make_artifact("a1", record_index=0, doc_id="doc.pdf", page_index=0, source_id="p000_text_0000"),
+            make_artifact("a2", record_index=0, doc_id="doc.pdf", page_index=0, source_id="p000_text_0001"),
+            make_artifact("a1_dup", record_index=0, doc_id="doc.pdf", page_index=0, source_id="p000_text_0000"),
+            make_artifact("a3", record_index=0, doc_id="doc.pdf", page_index=1, source_id="p001_text_0000"),
+            make_artifact("b1", record_index=1, doc_id="other.pdf", page_index=1, source_id="p001_text_0000"),
+            make_artifact(
+                "cell1",
+                record_index=0,
+                doc_id="doc.pdf",
+                page_index=0,
+                source_id="p000_table_0002",
+                artifact_type="table_cell",
+                normalized_content={"table_id": "t1", "row_index": 2, "column_index": 3},
+            ),
+            make_artifact(
+                "cap1",
+                record_index=0,
+                doc_id="doc.pdf",
+                page_index=0,
+                source_id="p000_caption_0003",
+                artifact_type="caption",
+                normalized_content={"figure_id": "fig1", "caption_id": "caption1"},
+            ),
         ]
-        self.retrieval_rows = [
-            {
-                "record_index": 0,
-                "doc_id": "doc.pdf",
-                "question": "What evidence is visible?",
-                "retrieved_artifacts": [
-                    {"artifact_id": "a1", "page_index": 2, "score": 1.0},
-                    {"artifact_id": "a3", "page_index": 3, "score": 0.5},
-                ],
-            },
-            {
-                "record_index": 1,
-                "doc_id": "other.pdf",
-                "question": "What other evidence is visible?",
-                "retrieved_artifacts": [{"artifact_id": "b1", "page_index": 0, "score": 1.0}],
-            },
-        ]
-        self.graph = build_evidence_graph(
-            artifacts=self.artifacts,
-            retrieval_rows=self.retrieval_rows,
-            stage2_records=[{"record_index": 0, "doc_id": "doc.pdf"}, {"record_index": 1, "doc_id": "other.pdf"}],
-        )
+        self.graph = build_evidence_graph(artifacts=self.artifacts, retrieval_rows=[], stage2_records=[])
 
-    def test_artifact_generates_artifact_node(self) -> None:
-        artifact_nodes = nodes_of_type(self.graph, "artifact")
-        self.assertEqual(len(artifact_nodes), 4)
-        self.assertTrue(any(node.get("artifact_id") == "a1" for node in artifact_nodes))
-
-    def test_question_generates_question_node(self) -> None:
-        question_nodes = nodes_of_type(self.graph, "question")
-        self.assertEqual({node["record_index"] for node in question_nodes}, {0, 1})
-
-    def test_page_generates_page_node(self) -> None:
-        page_nodes = nodes_of_type(self.graph, "page")
-        self.assertTrue(any(node.get("doc_id") == "doc.pdf" and node.get("page_index") == 2 for node in page_nodes))
-        self.assertTrue(any(node.get("doc_id") == "doc.pdf" and node.get("page_index") == 3 for node in page_nodes))
-
-    def test_source_anchors_generate_source_anchor_nodes(self) -> None:
-        anchor_nodes = nodes_of_type(self.graph, "source_anchor")
-        self.assertEqual(len(anchor_nodes), 4)
-        self.assertTrue(any("p002_text_0000" in node["node_id"] for node in anchor_nodes))
-
-    def test_artifact_to_page_edge(self) -> None:
-        self.assertTrue(has_edge(self.graph, "located_on_page"))
-        edge = first_edge(self.graph, "located_on_page")
-        self.assertEqual(edge["evidence"], {"source": "artifact_field", "field": "page_index"})
-
-    def test_artifact_to_source_anchor_edge(self) -> None:
-        self.assertTrue(has_edge(self.graph, "supported_by_anchor"))
-        edge = first_edge(self.graph, "supported_by_anchor")
-        self.assertEqual(edge["evidence"], {"source": "artifact_field", "field": "source_anchors"})
-
-    def test_source_anchor_to_page_edge(self) -> None:
-        self.assertTrue(has_edge(self.graph, "anchor_on_page"))
-        edge = first_edge(self.graph, "anchor_on_page")
-        self.assertEqual(edge["evidence"], {"source": "artifact_field", "field": "source_anchors.page_index"})
-
-    def test_same_record_and_same_page_edges(self) -> None:
-        self.assertGreaterEqual(count_edges(self.graph, "same_record"), 3)
-        self.assertGreaterEqual(count_edges(self.graph, "same_page"), 1)
-
-    def test_no_precise_nodes_without_element_locator(self) -> None:
-        node_types = {node["node_type"] for node in self.graph["nodes"]}
-        self.assertEqual(node_types, {"question", "artifact", "page", "source_anchor"})
-        self.assertEqual(self.graph["quality_report"]["num_artifacts_with_element_locator"], 0)
-        self.assertEqual(self.graph["quality_report"]["num_artifacts_without_element_locator"], 4)
-
-    def test_nodes_and_edges_do_not_contain_local_paths(self) -> None:
-        serialized = repr(self.graph["nodes"]) + repr(self.graph["edges"])
-        self.assertNotIn("/tmp/", serialized)
-        self.assertNotIn("page_image_path", serialized)
-        self.assertNotIn("page_text_path", serialized)
-
-    def test_no_semantic_edges(self) -> None:
-        forbidden = {"supports", "contradicts", "derived_from", "cites", "entails", "refutes", "semantic_relation"}
+    def test_formal_edges_use_only_allowed_rule_types(self) -> None:
         edge_types = {edge["edge_type"] for edge in self.graph["edges"]}
-        self.assertFalse(edge_types & forbidden)
+        self.assertTrue(edge_types <= FORMAL_EDGE_TYPES)
+        self.assertFalse(edge_types & FORBIDDEN_FORMAL_TYPES)
         self.assertFalse(self.graph["quality_report"]["semantic_edges_enabled"])
 
-    def test_retrieved_artifact_edge(self) -> None:
-        self.assertEqual(count_edges(self.graph, "retrieved_artifact"), 3)
+    def test_formal_edges_never_include_same_record_debug(self) -> None:
+        formal_types = {edge["edge_type"] for edge in self.graph["edges"]}
+        debug_types = {edge["edge_type"] for edge in self.graph["debug_edges"]}
+
+        self.assertNotIn("same_record", formal_types)
+        self.assertNotIn("same_record_debug", formal_types)
+        self.assertIn("same_record_debug", debug_types)
+        self.assertFalse(self.graph["quality_report"]["same_record_in_formal_edges"])
+        self.assertFalse(self.graph["quality_report"]["same_record_debug_in_formal_edges"])
+
+    def test_formal_edges_include_required_audit_fields(self) -> None:
+        required = {"edge_id", "source", "target", "edge_type", "provenance", "rule_name", "rule_version", "deterministic"}
+        for edge in self.graph["edges"]:
+            self.assertTrue(required <= set(edge))
+            self.assertTrue(edge["deterministic"])
+
+    def test_loader_reads_debug_edges_only_when_requested(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path = root / "artifacts.jsonl"
+            write_jsonl(artifacts_path, self.artifacts)
+            output_dir = root / "graph"
+
+            run_evidence_graph_build(artifacts_path, output_dir=output_dir)
+            formal_only = load_evidence_graph(output_dir)
+            with_debug = load_evidence_graph(output_dir, debug=True)
+
+        self.assertEqual(formal_only["debug_edges"], [])
+        self.assertGreater(len(with_debug["debug_edges"]), 0)
+        self.assertTrue(all(edge["edge_type"] != "same_record_debug" for edge in formal_only["edges"]))
+
+    def test_missing_metadata_does_not_guess_caption_or_table_edges(self) -> None:
+        graph = build_evidence_graph(
+            artifacts=[
+                make_artifact("figure_without_caption", artifact_type="figure"),
+                make_artifact("cell_without_table", artifact_type="table_cell", normalized_content={"row_index": 1, "column_index": 2}),
+            ],
+            retrieval_rows=[],
+            stage2_records=[],
+        )
+        edge_types = {edge["edge_type"] for edge in graph["edges"]}
+        skipped = graph["quality_report"]["skipped_rule_edges_by_reason"]
+
+        self.assertNotIn("caption_of", edge_types)
+        self.assertNotIn("figure_has_caption", edge_types)
+        self.assertNotIn("table_contains_cell", edge_types)
+        self.assertGreaterEqual(skipped.get("caption_figure_missing_explicit_pair", 0), 1)
+        self.assertGreaterEqual(skipped.get("table_contains_cell_missing_table_id", 0), 1)
+
+    def test_explicit_table_cell_locator_generates_table_edges(self) -> None:
+        self.assertTrue(has_edge(self.graph, "table_contains_cell"))
+        self.assertTrue(has_edge(self.graph, "row_contains_cell"))
+        self.assertTrue(has_edge(self.graph, "column_contains_cell"))
+
+    def test_explicit_figure_caption_locator_generates_caption_edges(self) -> None:
+        self.assertTrue(has_edge(self.graph, "caption_of"))
+        self.assertTrue(has_edge(self.graph, "figure_has_caption"))
+
+    def test_adjacent_page_edges_stay_within_same_doc(self) -> None:
+        adjacent_edges = [edge for edge in self.graph["edges"] if edge["edge_type"] == "adjacent_page"]
+        self.assertTrue(adjacent_edges)
+        for edge in adjacent_edges:
+            provenance = edge["provenance"]
+            self.assertEqual(provenance["doc_id"], "doc.pdf")
+            self.assertIn("doc.pdf", edge["source"])
+            self.assertIn("doc.pdf", edge["target"])
+            self.assertNotIn("other.pdf", edge["source"] + edge["target"])
+
+    def test_same_source_and_next_block_edges_are_structural(self) -> None:
+        self.assertTrue(has_edge(self.graph, "same_page"))
+        self.assertTrue(has_edge(self.graph, "same_doc"))
+        self.assertTrue(has_edge(self.graph, "same_source_block"))
+        self.assertTrue(has_edge(self.graph, "next_block"))
+
+    def test_edge_hash_is_stable_when_json_key_order_changes(self) -> None:
+        reordered = [dict(reversed(list(edge.items()))) for edge in self.graph["edges"]]
+        self.assertEqual(stable_hash_json(self.graph["edges"]), stable_hash_json(reordered))
+
+    def test_modifying_formal_edge_changes_edges_hash(self) -> None:
+        modified = [dict(edge) for edge in self.graph["edges"]]
+        modified[0] = dict(modified[0], rule_name="changed_rule")
+        self.assertNotEqual(stable_hash_json(self.graph["edges"]), stable_hash_json(modified))
+
+    def test_debug_edge_hash_changes_independently_from_edges_hash(self) -> None:
+        modified_debug = [dict(edge) for edge in self.graph["debug_edges"]]
+        modified_debug[0] = dict(modified_debug[0], rule_name="changed_debug_rule")
+
+        self.assertEqual(stable_hash_json(self.graph["edges"]), stable_hash_json(self.graph["edges"]))
+        self.assertNotEqual(stable_hash_json(self.graph["debug_edges"]), stable_hash_json(modified_debug))
+
+    def test_manifest_contains_stage4b_hashes_and_modes(self) -> None:
+        manifest = build_manifest(
+            self.graph["nodes"],
+            self.graph["edges"],
+            self.graph["debug_edges"],
+            quality_report=self.graph["quality_report"],
+            artifacts=self.artifacts,
+            artifacts_jsonl_path="artifacts.jsonl",
+        )
+
+        self.assertEqual(manifest["graph_mode"], "rule_only_document_native_structural")
+        self.assertEqual(len(manifest["nodes_hash"]), 64)
+        self.assertEqual(len(manifest["edges_hash"]), 64)
+        self.assertEqual(len(manifest["debug_edges_hash"]), 64)
+        self.assertEqual(len(manifest["quality_report_hash"]), 64)
+        self.assertFalse(manifest["semantic_edges_enabled"])
 
 
-def make_artifact(artifact_id: str, record_index: int, doc_id: str, page_index: int, source_id: str) -> dict:
+def make_artifact(
+    artifact_id: str,
+    record_index: int = 0,
+    doc_id: str = "doc.pdf",
+    page_index: int = 0,
+    source_id: str = "p000_text_0000",
+    artifact_type: str = "text_span",
+    normalized_content: dict | None = None,
+) -> dict:
     return {
         "record_index": record_index,
         "artifact_id": artifact_id,
         "doc_id": doc_id,
         "page_index": page_index,
-        "artifact_type": "text_span",
+        "artifact_type": artifact_type,
         "modality": "text",
         "content": "evidence content",
-        "normalized_content": {},
+        "normalized_content": normalized_content or {},
         "source_anchors": [
             {
                 "source_id": source_id,
@@ -122,23 +206,12 @@ def make_artifact(artifact_id: str, record_index: int, doc_id: str, page_index: 
     }
 
 
-def nodes_of_type(graph: dict, node_type: str) -> list[dict]:
-    return [node for node in graph["nodes"] if node.get("node_type") == node_type]
+def write_jsonl(path: Path, rows: list[dict]) -> None:
+    path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8")
 
 
 def has_edge(graph: dict, edge_type: str) -> bool:
     return any(edge.get("edge_type") == edge_type for edge in graph["edges"])
-
-
-def count_edges(graph: dict, edge_type: str) -> int:
-    return sum(1 for edge in graph["edges"] if edge.get("edge_type") == edge_type)
-
-
-def first_edge(graph: dict, edge_type: str) -> dict:
-    for edge in graph["edges"]:
-        if edge.get("edge_type") == edge_type:
-            return edge
-    raise AssertionError(f"missing edge_type={edge_type}")
 
 
 if __name__ == "__main__":

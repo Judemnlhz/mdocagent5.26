@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from mdocnexus.stage2.artifact_pipeline import compile_page_with_client
+from mdocnexus.stage2.artifact_pipeline import enrich_artifact_locators
 from mdocnexus.stage2.artifact_pipeline import validate_page_artifact_output
 from mdocnexus.stage2.provider import (
     ArtifactCompilerClient,
@@ -17,6 +18,7 @@ from mdocnexus.stage2.provider import (
 )
 from mdocnexus.stage2.artifact_pipeline import run_stage2_compiler_dry_run
 from mdocnexus.stage2.provider import build_artifact_compiler_user_prompt
+from mdocnexus.stage2.provider import build_document_generic_artifact_compiler_user_prompt
 from mdocnexus.stage2.artifact_schema import (
     build_page_artifact_output_schema_dict,
     get_allowed_validation_statuses,
@@ -68,6 +70,28 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertIn("return artifacts=[]", prompt_payload["page_requirement"]["instruction"])
         self.assertNotIn('"minimum_candidate_artifact": "visual_observation"', prompt)
 
+    def test_document_generic_prompt_excludes_question_text(self) -> None:
+        prompt = build_document_generic_artifact_compiler_user_prompt(
+            canonical_record=make_canonical_record([5]),
+            page_input=make_page_input(5),
+            schema_dict=build_page_artifact_output_schema_dict(),
+        )
+        prompt_payload = json.loads(prompt)
+
+        self.assertNotIn("What is visible on page 30?", prompt)
+        self.assertNotIn("question_constraints", prompt_payload)
+        self.assertEqual(prompt_payload["compilation_plan"]["compile_scope"], "stage2_document_generic_single_page")
+
+    def test_locator_enrichment_flags_missing_bbox_without_discarding_candidate(self) -> None:
+        page_input = make_page_input(5)
+        raw_output = WrongIdentityClient()
+        raw_output.source_id = "p005_full_page_image"
+        normalized, notes = enrich_artifact_locators(raw_output._build_output(), page_input)
+
+        self.assertEqual(normalized["artifacts"][0]["source_anchors"][0]["page_index"], 5)
+        self.assertIn("uncertain_or_unreadable", normalized)
+        self.assertEqual(notes[0]["reason"], "missing_bbox_locator")
+
     def test_fake_client_output_validates(self) -> None:
         client = FakeArtifactCompilerClient()
         page_input = make_page_input(29)
@@ -118,6 +142,38 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
             "source_anchor_not_found",
             {issue["error_type"] for issue in result["validation_issues"]},
         )
+
+    def test_compile_page_retries_then_accepts_valid_output(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=RetryThenValidClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+            max_retries=2,
+        )
+
+        self.assertEqual(result["validation_issues"], [])
+        self.assertEqual(len(result["valid_artifacts"]), 1)
+        self.assertEqual(result["compilation_statistics"]["retry_count"], 1)
+
+    def test_compile_page_final_discard_after_max_retries(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=InvalidAnchorClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+            max_retries=1,
+        )
+
+        self.assertEqual(result["valid_artifacts"], [])
+        self.assertTrue(result["compilation_statistics"]["final_discard_after_retries"])
+        self.assertEqual(result["compilation_statistics"]["retry_count"], 1)
 
     def test_compile_page_injects_runtime_doc_id_and_page_index(self) -> None:
         page_input = make_page_input(29)
@@ -344,6 +400,23 @@ class WrongIdentityForbiddenFieldClient(WrongIdentityClient):
         output = super()._build_output()
         output["artifacts"][0]["answer"] = "forbidden"
         return output
+
+
+class RetryThenValidClient(InvalidAnchorClient):
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def generate_page_artifacts(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        schema_dict: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        self.calls += 1
+        if self.calls == 1:
+            return super().generate_page_artifacts(system_prompt, user_prompt, schema_dict)
+        valid = WrongIdentityClient()
+        return valid.generate_page_artifacts(system_prompt, user_prompt, schema_dict)
 
 
 def make_canonical_record(pages_to_compile: List[int]) -> Dict[str, Any]:

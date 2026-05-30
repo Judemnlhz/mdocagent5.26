@@ -5,10 +5,13 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import csv
+from datetime import datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import sys
 from typing import Any, Dict, List, Optional
 
@@ -27,6 +30,7 @@ from mdocnexus.stage2.index_builder import (
     apply_explicit_page_range_validation_to_canonical_record,
     augment_retrieval_results_file,
     build_api_run_config_from_mdocagent_yaml,
+    build_mdocagent_extract_paths,
     build_page_source,
     find_record_by_id_or_doc_question,
     infer_document_page_count,
@@ -49,6 +53,9 @@ from mdocnexus.stage2.provider import (
     FakeArtifactCompilerClient,
     RealApiArtifactCompilerClient,
     assert_real_api_allowed,
+    build_artifact_compiler_system_prompt,
+    build_artifact_compiler_user_prompt,
+    build_document_generic_artifact_compiler_user_prompt,
 )
 from mdocnexus.stage2.reports import (
     audit_batch_artifact_outputs,
@@ -292,6 +299,47 @@ def build_compiler_safe_record(selected_page: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def build_document_generic_compiler_record(selected_page: Dict[str, Any]) -> Dict[str, Any]:
+    page_index = int(selected_page["page_index"])
+    return {
+        "document": {
+            "doc_id": selected_page["doc_id"],
+            "doc_type": None,
+            "dataset": None,
+        },
+        "question": {
+            "text": None,
+            "answer_format": None,
+        },
+        "question_constraints": {},
+        "candidate_pool": {
+            "explicit_constraint_pages": [],
+            "retrieval_candidate_pages": [page_index],
+            "retrieval_missed_explicit_pages": [],
+        },
+        "compilation_plan": {
+            "compile_scope": "stage2_document_generic_single_page",
+            "pages_to_compile": [page_index],
+            "priority_pages": [],
+            "compilation_reasons": [
+                {
+                    "page_index": page_index,
+                    "reason_type": "document_generic_page_compilation",
+                    "reason_text": "compile available page evidence without question conditioning",
+                }
+            ],
+        },
+    }
+
+
+def _strip_stage2_routes_for_document_generic(selected_page: Dict[str, Any]) -> Dict[str, Any]:
+    clean_page = dict(selected_page)
+    clean_page["question"] = None
+    clean_page["answer_format"] = None
+    clean_page["stage2"] = {}
+    return clean_page
+
+
 def build_page_input(selected_page: Dict[str, Any], extract_root: str | Path) -> Dict[str, Any]:
     page_index = int(selected_page["page_index"])
     page_content = load_page_content(
@@ -422,15 +470,17 @@ def validate_crossdoc_args(args: argparse.Namespace) -> None:
 
 
 def build_crossdoc_api_config(args: argparse.Namespace):
+    provider_name = _provider_config_name(args)
     api_config = build_api_run_config_from_mdocagent_yaml(
         args.config,
         overrides={
             "enable_real_api": bool(args.enable_real_api and not args.dry_run_fake_client),
-            "provider": args.provider,
+            "provider": provider_name,
             "model_name": args.model_name,
             "timeout_seconds": args.timeout_seconds,
         },
     )
+    api_config.image_payload_mode = _image_payload_mode(args)
     if args.dry_run_fake_client:
         api_config.enable_real_api = False
     else:
@@ -491,6 +541,8 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
                 api_called=not args.dry_run_fake_client,
                 prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
                 deterministic_dedup_enabled=bool(getattr(args, "deterministic_dedup_enabled", True)),
+                max_retries=int(getattr(args, "max_retries", 0)),
+                document_generic=bool(getattr(args, "document_generic", False)),
             )
         )
 
@@ -1340,6 +1392,8 @@ DEFAULT_STAGE2_INDEX = "outputs/stage2/clean/sample-with-stage2-index.json"
 DEFAULT_EXTRACT_ROOT = "tmp/MMLongBench"
 DEFAULT_CONFIG = "config/model/qwen3vl.yaml"
 DEFAULT_CLEAN_BATCH_DIR = "outputs/stage2/clean"
+DEFAULT_DOC_GENERIC_BATCH_DIR = "outputs/stage2_doc"
+DOC_COMPILE_DEFAULT_MAX_REAL_PAGES = 10
 
 FINAL_ARTIFACT_FIELDS = [
     "record_index",
@@ -1368,6 +1422,7 @@ CLEAN_OUTPUT_FILENAMES = (
     "artifacts.jsonl",
     "discard.jsonl",
     "quality_report.json",
+    "manifest.json",
     "raw_outputs.jsonl",
     "crossdoc_batch_summary.json",
     "crossdoc_quality_audit.json",
@@ -1388,6 +1443,7 @@ def _final_output_paths(output_dir: str | Path, debug_raw_output: bool = False) 
         "artifacts": root / "artifacts.jsonl",
         "discard": root / "discard.jsonl",
         "quality_report": root / "quality_report.json",
+        "call_log": root / "call_log.jsonl",
         "raw_outputs": root / "raw_outputs.jsonl" if debug_raw_output else None,
     }
     return paths
@@ -1407,6 +1463,7 @@ def _prepare_final_output_dir(output_dir: str | Path, debug_raw_output: bool = F
             target.unlink()
     Path(paths["artifacts"]).write_text("", encoding="utf-8")
     Path(paths["discard"]).write_text("", encoding="utf-8")
+    Path(paths["call_log"]).write_text("", encoding="utf-8")
     raw_path = paths.get("raw_outputs")
     if raw_path is not None:
         Path(raw_path).write_text("", encoding="utf-8")
@@ -1430,6 +1487,219 @@ def _read_jsonl(path: str | Path) -> List[Dict[str, Any]]:
         if line.strip():
             rows.append(json.loads(line))
     return rows
+
+
+def _stable_json_hash(value: Any) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _file_sha256(path: str | Path) -> str:
+    file_path = Path(path)
+    digest = hashlib.sha256()
+    with file_path.open("rb") as file_obj:
+        for chunk in iter(lambda: file_obj.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _optional_file_sha256(path: Any) -> str | None:
+    if not path:
+        return None
+    file_path = Path(path)
+    if not file_path.is_file():
+        return None
+    return _file_sha256(file_path)
+
+
+def _normalize_doc_compile_provider_mode(args: argparse.Namespace) -> str:
+    provider_mode = str(getattr(args, "provider", "dry_run") or "dry_run").strip().lower()
+    legacy_fake_modes = {"siliconflow", "compatible_chat", "custom", "mock"}
+    if provider_mode in legacy_fake_modes and not bool(getattr(args, "enable_real_api", False)):
+        provider_mode = "dry_run"
+    if provider_mode not in {"dry_run", "fake", "real"}:
+        raise RuntimeError("--provider for doc-compile must be one of: dry_run, fake, real.")
+    return provider_mode
+
+
+def _provider_config_name(args: argparse.Namespace) -> str:
+    provider_name = str(getattr(args, "model_provider", "") or "").strip()
+    if provider_name:
+        return provider_name
+    config_provider = str(getattr(args, "config_provider", "") or "").strip()
+    if config_provider:
+        return config_provider
+    provider_mode = str(getattr(args, "provider", "") or "").strip()
+    if provider_mode in {"dry_run", "fake", "real", ""}:
+        return "siliconflow"
+    return provider_mode
+
+
+def _image_payload_mode(args: argparse.Namespace) -> str:
+    mode = str(getattr(args, "image_payload_mode", "image_url") or "image_url").strip().lower()
+    if mode not in {"image_url", "base64", "none"}:
+        raise RuntimeError("--image-payload-mode must be one of: image_url, base64, none.")
+    return mode
+
+
+def _build_call_prompt_hash(
+    canonical_record: Dict[str, Any],
+    page_input: Dict[str, Any],
+    schema_dict: Dict[str, Any],
+    document_generic: bool,
+) -> str:
+    system_prompt = build_artifact_compiler_system_prompt()
+    if document_generic:
+        user_prompt = build_document_generic_artifact_compiler_user_prompt(
+            canonical_record=canonical_record,
+            page_input=page_input,
+            schema_dict=schema_dict,
+        )
+    else:
+        user_prompt = build_artifact_compiler_user_prompt(
+            canonical_record=canonical_record,
+            page_input=page_input,
+            schema_dict=schema_dict,
+        )
+    return _stable_json_hash(
+        {
+            "system_prompt": system_prompt,
+            "user_prompt": user_prompt,
+            "schema_version": "stage2_artifact_schema_v1",
+        }
+    )
+
+
+def _modality_route_for_page_input(page_input: Dict[str, Any]) -> str:
+    has_text = bool(page_input.get("page_text"))
+    has_image = bool(page_input.get("page_image_path"))
+    if has_text and has_image:
+        return "mixed"
+    if has_image:
+        return "image"
+    return "text"
+
+
+def _image_payload_sent(page_input: Dict[str, Any], image_payload_mode: str) -> bool:
+    if image_payload_mode == "none":
+        return False
+    image_path = page_input.get("page_image_path")
+    if not image_path:
+        return False
+    return Path(image_path).is_file()
+
+
+def _image_sha256_unavailable_reason(
+    page_input: Dict[str, Any],
+    image_payload_mode: str,
+    payload_sent: bool,
+    image_sha256: str | None,
+) -> str | None:
+    if image_sha256:
+        return None
+    if image_payload_mode == "none":
+        return "image_payload_mode_none"
+    image_path = page_input.get("page_image_path")
+    if not image_path:
+        return "no_page_image"
+    if not Path(image_path).is_file():
+        return "image_file_unavailable"
+    if not payload_sent:
+        return "image_payload_not_sent"
+    return "image_sha256_unavailable"
+
+
+def _build_call_id(doc_id: str, page_index: int, provider_mode: str, prompt_hash: str) -> str:
+    return hashlib.sha256(
+        json.dumps(
+            {
+                "doc_id": doc_id,
+                "page_index": int(page_index),
+                "provider_mode": provider_mode,
+                "prompt_hash": prompt_hash,
+            },
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()[:24]
+
+
+def _build_provider_call_log_row(
+    selected_page: Dict[str, Any],
+    canonical_record: Dict[str, Any],
+    page_input: Dict[str, Any],
+    schema_dict: Dict[str, Any],
+    page_result: Dict[str, Any],
+    image_payload_mode: str,
+    provider_mode: str,
+    model_version: str | None,
+    document_generic: bool,
+) -> Dict[str, Any]:
+    image_path = page_input.get("page_image_path")
+    payload_sent = _image_payload_sent(page_input, image_payload_mode)
+    failure_type = None
+    provider_error_type = str(page_result.get("provider_error_type") or "")
+    if provider_error_type:
+        if "ProviderResponseFormatError" in provider_error_type or "JSONDecodeError" in provider_error_type:
+            failure_type = "parse_failure"
+        else:
+            failure_type = "provider_error"
+    elif int(page_result.get("num_raw_artifacts", 0)) == 0 and int(page_result.get("num_discarded_artifacts", 0)) > 0:
+        failure_type = "parse_failure"
+    prompt_hash = _build_call_prompt_hash(canonical_record, page_input, schema_dict, document_generic)
+    image_sha256 = _optional_file_sha256(image_path) if payload_sent else None
+    doc_id = str(selected_page.get("doc_id"))
+    page_index = int(selected_page.get("page_index", 0))
+    return {
+        "call_id": _build_call_id(doc_id, page_index, str(provider_mode), prompt_hash),
+        "doc_id": doc_id,
+        "page_id": f"{doc_id}#p{page_index:03d}",
+        "page_index": page_index,
+        "modality_route": _modality_route_for_page_input(page_input),
+        "image_payload_sent": bool(payload_sent),
+        "image_payload_mode": str(image_payload_mode),
+        "image_sha256": image_sha256,
+        "image_sha256_unavailable_reason": _image_sha256_unavailable_reason(
+            page_input,
+            image_payload_mode,
+            bool(payload_sent),
+            image_sha256,
+        ),
+        "prompt_hash": prompt_hash,
+        "response_schema_version": "stage2_artifact_schema_v1",
+        "provider_mode": str(provider_mode),
+        "model_version": str(model_version or "unknown"),
+        "call_succeeded": page_result.get("provider_error_type") is None,
+        "parsed_artifact_count": int(page_result.get("num_raw_artifacts", 0)),
+        "discarded_artifact_count": int(page_result.get("num_discarded_artifacts", 0)),
+        "failure_type": failure_type,
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def _prepare_private_debug_dir(path: str | Path) -> Path:
+    debug_dir = Path(path)
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    raw_output_path = debug_dir / "raw_outputs.jsonl"
+    if raw_output_path.exists():
+        raw_output_path.unlink()
+    raw_output_path.write_text("", encoding="utf-8")
+    return debug_dir
+
+
+def _current_git_commit() -> str:
+    try:
+        completed = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except Exception:
+        return "unknown"
+    return completed.stdout.strip() or "unknown"
 
 
 def _minimal_discard_row(
@@ -1461,6 +1731,25 @@ def _project_final_artifact(selected_page: Dict[str, Any], artifact: Dict[str, A
     return {field: projected.get(field) for field in FINAL_ARTIFACT_FIELDS}
 
 
+def _has_artifact_locator(artifact: Dict[str, Any]) -> bool:
+    anchors = artifact.get("source_anchors")
+    if not isinstance(anchors, list) or not anchors:
+        return False
+    for anchor in anchors:
+        if not isinstance(anchor, dict):
+            continue
+        if anchor.get("source_id") and anchor.get("page_index") is not None:
+            return True
+    return False
+
+
+def _has_artifact_bbox_locator(artifact: Dict[str, Any]) -> bool:
+    anchors = artifact.get("source_anchors")
+    if not isinstance(anchors, list):
+        return False
+    return any(isinstance(anchor, dict) and anchor.get("bbox") not in (None, [], "") for anchor in anchors)
+
+
 def _count_blocking_reasons(records: List[Dict[str, Any]]) -> Dict[str, int]:
     counts: Counter[str] = Counter()
     for record in records:
@@ -1480,11 +1769,21 @@ def _build_quality_report_from_files(
     selected_pages: List[Dict[str, Any]],
     artifacts_path: str | Path,
     discard_path: str | Path,
+    call_log_path: str | Path | None = None,
 ) -> Dict[str, Any]:
     artifacts = _read_jsonl(artifacts_path)
     discarded = _read_jsonl(discard_path)
+    call_rows = _read_jsonl(call_log_path) if call_log_path is not None else []
     artifact_type_counts = Counter(str(row.get("artifact_type")) for row in artifacts if row.get("artifact_type"))
     modality_counts = Counter(str(row.get("modality")) for row in artifacts if row.get("modality"))
+    locator_counts = Counter(
+        "with_locator" if _has_artifact_locator(row) else "uncertain_or_unreadable"
+        for row in artifacts
+    )
+    bbox_locator_counts = Counter(
+        "with_bbox" if _has_artifact_bbox_locator(row) else "without_bbox"
+        for row in artifacts
+    )
     denominator = len(artifacts) + len(discarded)
     schema_valid_rate = (len(artifacts) / denominator) if denominator else 1.0
     anchoring_rate = (len(artifacts) / denominator) if denominator else 1.0
@@ -1501,8 +1800,32 @@ def _build_quality_report_from_files(
         "discard_rate": discard_rate,
         "artifact_type_counts": dict(sorted(artifact_type_counts.items())),
         "modality_counts": dict(sorted(modality_counts.items())),
+        "locator_status_counts": dict(sorted(locator_counts.items())),
+        "bbox_locator_counts": dict(sorted(bbox_locator_counts.items())),
         "blocking_reason_counts": _count_blocking_reasons(records),
         "storage_format": "artifacts_jsonl",
+        "pages_attempted": len(selected_pages),
+        "pages_with_image_payload": sum(1 for row in call_rows if row.get("image_payload_sent") is True),
+        "pages_without_image_payload": sum(1 for row in call_rows if row.get("image_payload_sent") is False),
+        "image_payload_rate": (
+            sum(1 for row in call_rows if row.get("image_payload_sent") is True) / len(call_rows)
+            if call_rows
+            else 0.0
+        ),
+        "visual_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "visual_observation"),
+        "figure_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "figure"),
+        "caption_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "caption"),
+        "table_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") in {"table", "table_cell"}),
+        "empty_response_count": sum(1 for row in call_rows if int(row.get("parsed_artifact_count", 0)) == 0 and row.get("call_succeeded") is True),
+        "parse_failure_count": sum(1 for row in call_rows if row.get("failure_type") == "parse_failure"),
+        "schema_failure_count": sum(1 for row in discarded if str(row.get("reason", "")).startswith("schema") or row.get("reason") == "missing_required_field"),
+        "anchor_failure_count": sum(1 for row in discarded if row.get("reason") in {"source_anchor_not_found", "missing_source_anchor", "provenance_source_not_found"}),
+        "provider_call_success_count": sum(1 for row in call_rows if row.get("call_succeeded") is True),
+        "provider_call_failed_count": sum(1 for row in call_rows if row.get("call_succeeded") is False),
+        "json_parse_success_count": sum(1 for row in call_rows if row.get("call_succeeded") is True),
+        "schema_valid_artifact_count": len(artifacts),
+        "anchored_artifact_count": sum(1 for row in artifacts if _has_artifact_locator(row)),
+        "discarded_artifact_count": len(discarded),
     }
 
 
@@ -1512,13 +1835,105 @@ def _write_quality_report(report: Dict[str, Any], path: str | Path) -> None:
     output_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _public_stage2_command_args(args: argparse.Namespace | None) -> Dict[str, Any]:
+    if args is None:
+        return {}
+    public_args: Dict[str, Any] = {
+        "provider": str(getattr(args, "provider", "")),
+        "provider_mode": str(getattr(args, "provider_mode", getattr(args, "provider", ""))),
+        "model_name_recorded": bool(getattr(args, "model_name", None)),
+        "enable_real_api": bool(getattr(args, "enable_real_api", False)),
+        "run_real_trial": bool(getattr(args, "run_real_trial", False)),
+        "max_docs": int(getattr(args, "max_docs", 0)) if getattr(args, "max_docs", None) is not None else None,
+        "max_pages_per_doc": int(getattr(args, "max_pages_per_doc", 0)) if getattr(args, "max_pages_per_doc", None) is not None else None,
+        "max_pages": int(getattr(args, "max_pages", 0)) if getattr(args, "max_pages", None) is not None else None,
+        "image_payload_mode": str(getattr(args, "image_payload_mode", "image_url")),
+        "save_private_debug": bool(getattr(args, "save_private_debug", False)),
+        "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
+        "max_retries": int(getattr(args, "max_retries", 0)) if getattr(args, "max_retries", None) is not None else None,
+    }
+    if getattr(args, "max_pages_real", None) is not None:
+        public_args["max_pages_real"] = int(getattr(args, "max_pages_real"))
+    return public_args
+
+
+def _write_stage2_jsonl_manifest(
+    *,
+    output_dir: str | Path,
+    stage2_json: str | Path,
+    prompt_version: str,
+    model_version: str | None,
+    report: Dict[str, Any],
+    document_generic: bool,
+    call_log_path: str | Path | None = None,
+    args: argparse.Namespace | None = None,
+) -> Dict[str, Any]:
+    root = Path(output_dir)
+    artifacts_path = root / "artifacts.jsonl"
+    discard_path = root / "discard.jsonl"
+    quality_report_path = root / "quality_report.json"
+    call_rows = _read_jsonl(call_log_path) if call_log_path is not None else []
+    provider_modes = sorted({str(row.get("provider_mode")) for row in call_rows if row.get("provider_mode")})
+    image_payload_modes = sorted(
+        {str(row.get("image_payload_mode")) for row in call_rows if row.get("image_payload_mode")}
+    )
+    image_sha256_values = sorted(
+        {str(row.get("image_sha256")) for row in call_rows if row.get("image_sha256")}
+    )
+    input_path = Path(stage2_json)
+    manifest = {
+        "schema_version": "stage2_artifact_schema_v1",
+        "compiler_mode": "document_generic" if document_generic else "crossdoc_clean",
+        "prompt_version": str(prompt_version),
+        "model_version": str(model_version or "unknown"),
+        "git_commit": _current_git_commit(),
+        "num_artifacts": int(report.get("num_artifacts", 0)),
+        "num_nodes": 0,
+        "num_edges": 0,
+        "edge_provenance_summary": {},
+        "document_generic": bool(document_generic),
+        "artifacts_hash": _file_sha256(artifacts_path) if artifacts_path.is_file() else "missing",
+        "discard_hash": _file_sha256(discard_path) if discard_path.is_file() else "missing",
+        "call_log_hash": _file_sha256(call_log_path) if call_log_path is not None and Path(call_log_path).is_file() else "missing",
+        "quality_report_hash": _file_sha256(quality_report_path) if quality_report_path.is_file() else "missing",
+        "provider_call_count": len(call_rows),
+        "pages_with_image_payload": sum(1 for row in call_rows if row.get("image_payload_sent") is True),
+        "pages_without_image_payload": sum(1 for row in call_rows if row.get("image_payload_sent") is False),
+        "provider_modes": provider_modes,
+        "image_payload_modes": image_payload_modes,
+        "image_sha256_values": image_sha256_values,
+        "image_sha256_summary": {
+            "count": len(image_sha256_values),
+            "values": image_sha256_values,
+        },
+        "created_by_script": "scripts/stage2.py doc-compile" if document_generic else "scripts/stage2.py compile",
+        "command_args": _public_stage2_command_args(args),
+        "forbidden_fields_checked": True,
+        "no_public_leakage_checked": True,
+        "public_raw_outputs_written": (root / "raw_outputs.jsonl").is_file(),
+        "private_debug_enabled": bool(getattr(args, "save_private_debug", False)) if args is not None else False,
+        "private_debug_dir_recorded_as_public": False,
+        "no_public_raw_response": True,
+        "no_public_base64_payload": True,
+        "no_public_local_paths": True,
+        "no_public_api_keys": True,
+    }
+    if input_path.is_file():
+        manifest["input_hash"] = _file_sha256(input_path)
+    else:
+        manifest["input_hash_unavailable_reason"] = "input_file_missing"
+    manifest_path = root / "manifest.json"
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    return manifest
+
+
 def _build_crossdoc_compiler_metadata(args: argparse.Namespace, api_config: Any) -> Dict[str, Any]:
     return {
         "compiler_name": "real_api_artifact_compiler_client" if not args.dry_run_fake_client else "fake_artifact_compiler_client",
         "provider": args.provider,
         "model_name": api_config.model_name,
         "temperature": api_config.temperature,
-        "max_repair_attempts": 0,
+        "max_repair_attempts": int(getattr(args, "max_retries", 0)),
     }
 
 
@@ -1531,24 +1946,40 @@ def _compile_selected_page_to_jsonl(
     compiler_metadata: Dict[str, Any],
     prompt_version: str,
     deterministic_dedup_enabled: bool,
+    max_retries: int = 0,
+    document_generic: bool = False,
+    raw_output_log_path: str | Path | None = None,
+    call_log_path: str | Path | None = None,
+    image_payload_mode: str = "image_url",
+    provider_mode: str = "real",
+    model_version: str | None = None,
 ) -> Dict[str, Any]:
-    canonical_record = build_compiler_safe_record(selected_page)
-    canonical_record["compilation_plan"]["compile_scope"] = "stage2_clean_single_page"
-    page_input = build_page_input(selected_page, extract_root)
-    page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or diagnose_page_modality_from_question_and_preflight(
-        record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
-        page_context={
-            "question": selected_page.get("question"),
-            "page_sources": [
-                {
-                    "page_index": int(selected_page["page_index"]),
-                    "page_image_path": selected_page.get("page_image_path"),
-                    "has_page_image": bool(selected_page.get("page_image_path")),
-                }
-            ],
-        },
-        page_index=int(selected_page["page_index"]),
+    canonical_record = (
+        build_document_generic_compiler_record(selected_page)
+        if document_generic
+        else build_compiler_safe_record(selected_page)
     )
+    canonical_record["compilation_plan"]["compile_scope"] = (
+        "stage2_document_generic_single_page" if document_generic else "stage2_clean_single_page"
+    )
+    if document_generic:
+        page_input = build_page_input(_strip_stage2_routes_for_document_generic(selected_page), extract_root)
+    else:
+        page_input = build_page_input(selected_page, extract_root)
+        page_input["page_modality_diagnosis"] = selected_page.get("page_modality_diagnosis") or diagnose_page_modality_from_question_and_preflight(
+            record={"doc_id": selected_page.get("doc_id"), "question": selected_page.get("question")},
+            page_context={
+                "question": selected_page.get("question"),
+                "page_sources": [
+                    {
+                        "page_index": int(selected_page["page_index"]),
+                        "page_image_path": selected_page.get("page_image_path"),
+                        "has_page_image": bool(selected_page.get("page_image_path")),
+                    }
+                ],
+            },
+            page_index=int(selected_page["page_index"]),
+        )
     try:
         compile_result = compile_page_with_client(
             canonical_record=canonical_record,
@@ -1556,18 +1987,20 @@ def _compile_selected_page_to_jsonl(
             client=client,
             schema_dict=schema_dict,
             compiler_metadata=compiler_metadata,
-            raw_output_log_path=output_paths.get("raw_outputs"),
+            raw_output_log_path=raw_output_log_path if raw_output_log_path is not None else output_paths.get("raw_outputs"),
             discard_log_path=None,
             compiler_version=COMPILER_VERSION,
             prompt_version=prompt_version,
             deterministic_dedup_enabled=deterministic_dedup_enabled,
+            max_retries=max_retries,
+            document_generic=document_generic,
         )
     except Exception as exc:
         _append_jsonl(
             Path(output_paths["discard"]),
-            _minimal_discard_row(selected_page, reason="provider_error", message=f"{type(exc).__name__}: {exc}"),
+            _minimal_discard_row(selected_page, reason="provider_error", message=type(exc).__name__),
         )
-        return {
+        page_result = {
             "record_index": selected_page["record_index"],
             "doc_id": selected_page["doc_id"],
             "page_index": int(selected_page["page_index"]),
@@ -1575,7 +2008,25 @@ def _compile_selected_page_to_jsonl(
             "num_valid_artifacts": 0,
             "num_discarded_artifacts": 1,
             "provider_error_type": type(exc).__name__,
+            "retry_count": 0,
+            "document_generic": bool(document_generic),
         }
+        if call_log_path is not None:
+            _append_jsonl(
+                call_log_path,
+                _build_provider_call_log_row(
+                    selected_page=selected_page,
+                    canonical_record=canonical_record,
+                    page_input=page_input,
+                    schema_dict=schema_dict,
+                    page_result=page_result,
+                    image_payload_mode=image_payload_mode,
+                    provider_mode=provider_mode,
+                    model_version=model_version,
+                    document_generic=document_generic,
+                ),
+            )
+        return page_result
 
     discarded = 0
     seen_discard_keys: set[tuple[Any, str, str]] = set()
@@ -1607,7 +2058,7 @@ def _compile_selected_page_to_jsonl(
         written += 1
 
     stats = compile_result.get("compilation_statistics", {})
-    return {
+    page_result = {
         "record_index": selected_page["record_index"],
         "doc_id": selected_page["doc_id"],
         "page_index": int(selected_page["page_index"]),
@@ -1615,7 +2066,25 @@ def _compile_selected_page_to_jsonl(
         "num_valid_artifacts": written,
         "num_discarded_artifacts": discarded,
         "provider_error_type": None,
+        "retry_count": int(compile_result.get("compilation_statistics", {}).get("retry_count", 0)),
+        "document_generic": bool(document_generic),
     }
+    if call_log_path is not None:
+        _append_jsonl(
+            call_log_path,
+            _build_provider_call_log_row(
+                selected_page=selected_page,
+                canonical_record=canonical_record,
+                page_input=page_input,
+                schema_dict=schema_dict,
+                page_result=page_result,
+                image_payload_mode=image_payload_mode,
+                provider_mode=provider_mode,
+                model_version=model_version,
+                document_generic=document_generic,
+            ),
+        )
+    return page_result
 
 
 def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient | None = None) -> Dict[str, Any]:
@@ -1666,10 +2135,22 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
         selected_pages=selected_pages,
         artifacts_path=Path(output_paths["artifacts"]),
         discard_path=Path(output_paths["discard"]),
+        call_log_path=output_paths.get("call_log"),
     )
     _write_quality_report(report, Path(output_paths["quality_report"]))
+    manifest = _write_stage2_jsonl_manifest(
+        output_dir=args.output_dir,
+        stage2_json=args.stage2_json,
+        prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
+        model_version=api_config.model_name,
+        report=report,
+        document_generic=bool(getattr(args, "document_generic", False)),
+        call_log_path=output_paths.get("call_log"),
+        args=args,
+    )
     return {
         "summary": report,
+        "manifest": manifest,
         "page_results": page_results,
         "paths": {key: str(value) for key, value in output_paths.items() if value is not None},
     }
@@ -1699,7 +2180,238 @@ def run_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.config = args.config or DEFAULT_CONFIG
     args.extract_root = args.extract_root or DEFAULT_EXTRACT_ROOT
     args.output_dir = args.output_dir or DEFAULT_CLEAN_BATCH_DIR
+    args.document_generic = bool(getattr(args, "document_generic", False))
     return run_crossdoc_batch(args)
+
+
+def _resolve_doc_compile_max_pages(args: argparse.Namespace) -> int:
+    raw_max_pages_real = getattr(args, "max_pages_real", None)
+    if raw_max_pages_real not in (None, ""):
+        raw_value = raw_max_pages_real
+    elif hasattr(args, "max_pages"):
+        raw_value = getattr(args, "max_pages")
+    else:
+        raw_value = DOC_COMPILE_DEFAULT_MAX_REAL_PAGES
+    if raw_value in (None, ""):
+        raise RuntimeError("Real provider doc-compile requires finite --max-pages or --max-pages-real.")
+    try:
+        max_pages = int(raw_value)
+    except (TypeError, ValueError) as exc:
+        raise RuntimeError("Real provider doc-compile requires finite --max-pages or --max-pages-real.") from exc
+    if max_pages < 1:
+        raise RuntimeError("--max-pages must be at least 1.")
+    return max_pages
+
+
+def _validate_doc_compile_real_args(args: argparse.Namespace) -> None:
+    if not bool(getattr(args, "enable_real_api", False)):
+        raise RuntimeError("Refusing real provider doc-compile without --enable-real-api.")
+    if not bool(getattr(args, "run_real_trial", False)):
+        raise RuntimeError("Refusing real provider doc-compile without --run-real-trial.")
+    _ = _resolve_doc_compile_max_pages(args)
+
+
+def _validate_private_debug_dir(private_debug_dir: str | Path, output_dir: str | Path) -> None:
+    debug_path = Path(private_debug_dir).resolve()
+    public_root = Path(output_dir).resolve()
+    if debug_path == public_root or public_root in debug_path.parents:
+        raise RuntimeError("--private-debug-dir must not be inside the public Stage 2 output directory.")
+
+
+def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
+    args.stage2_json = args.stage2_json or str(_stage2_index_path(args.output_dir))
+    args.config = args.config or DEFAULT_CONFIG
+    args.extract_root = args.extract_root or DEFAULT_EXTRACT_ROOT
+    args.output_dir = args.output_dir or DEFAULT_DOC_GENERIC_BATCH_DIR
+    args.max_docs = int(getattr(args, "max_docs", 5))
+    args.max_pages_per_doc = int(getattr(args, "max_pages_per_doc", 2))
+    args.max_pages = _resolve_doc_compile_max_pages(args)
+    if getattr(args, "max_pages_real", None) not in (None, ""):
+        args.max_pages_real = int(getattr(args, "max_pages_real"))
+    args.selected_pages_csv = getattr(args, "selected_pages_csv", None)
+    args.prompt_version = getattr(args, "prompt_version", PROMPT_VERSION)
+    args.debug_raw_output = bool(getattr(args, "debug_raw_output", False))
+    args.max_retries = int(getattr(args, "max_retries", 2))
+    args.image_payload_mode = _image_payload_mode(args)
+    args.save_private_debug = bool(getattr(args, "save_private_debug", False))
+    args.private_debug_dir = str(getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"))
+    args.provider_mode = _normalize_doc_compile_provider_mode(args)
+    if args.provider_mode in {"dry_run", "fake"}:
+        args.dry_run_fake_client = True
+        args.enable_real_api = False
+        args.run_real_trial = False
+    else:
+        args.dry_run_fake_client = False
+        args.enable_real_api = bool(getattr(args, "enable_real_api", False))
+        args.run_real_trial = bool(getattr(args, "run_real_trial", False))
+        _validate_doc_compile_real_args(args)
+    args.document_generic = True
+    return run_document_generic_batch(args)
+
+
+def run_document_generic_batch(args: argparse.Namespace, client: ArtifactCompilerClient | None = None) -> Dict[str, Any]:
+    validate_crossdoc_args(args)
+    output_paths = _prepare_final_output_dir(args.output_dir, debug_raw_output=False)
+    if bool(getattr(args, "save_private_debug", False)):
+        _validate_private_debug_dir(getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"), args.output_dir)
+    private_debug_dir = (
+        _prepare_private_debug_dir(getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"))
+        if bool(getattr(args, "save_private_debug", False))
+        else None
+    )
+    raw_output_log_path = private_debug_dir / "raw_outputs.jsonl" if private_debug_dir is not None else None
+    api_config = build_crossdoc_api_config(args)
+    api_config.image_payload_mode = _image_payload_mode(args)
+    records = read_json_or_jsonl_records(args.stage2_json)
+    selected_pages = select_document_generic_pages(
+        records=records,
+        extract_root=args.extract_root,
+        max_docs=int(args.max_docs),
+        max_pages_per_doc=int(args.max_pages_per_doc),
+        max_pages=int(args.max_pages),
+    )
+    active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
+    schema_dict = build_page_artifact_output_schema_dict()
+    compiler_metadata = _build_crossdoc_compiler_metadata(args, api_config)
+    page_results: List[Dict[str, Any]] = []
+    for selected_page in selected_pages:
+        page_results.append(
+            _compile_selected_page_to_jsonl(
+                selected_page=selected_page,
+                extract_root=args.extract_root,
+                output_paths=output_paths,
+                client=active_client,
+                schema_dict=schema_dict,
+                compiler_metadata=compiler_metadata,
+                prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
+                deterministic_dedup_enabled=bool(getattr(args, "deterministic_dedup_enabled", True)),
+                max_retries=int(getattr(args, "max_retries", 0)),
+                document_generic=True,
+                raw_output_log_path=raw_output_log_path,
+                call_log_path=output_paths.get("call_log"),
+                image_payload_mode=_image_payload_mode(args),
+                provider_mode=str(getattr(args, "provider_mode", "real")),
+                model_version=api_config.model_name,
+            )
+        )
+    report = _build_quality_report_from_files(
+        records=records,
+        selected_pages=selected_pages,
+        artifacts_path=Path(output_paths["artifacts"]),
+        discard_path=Path(output_paths["discard"]),
+        call_log_path=output_paths.get("call_log"),
+    )
+    report["document_generic"] = True
+    _write_quality_report(report, Path(output_paths["quality_report"]))
+    manifest = _write_stage2_jsonl_manifest(
+        output_dir=args.output_dir,
+        stage2_json=args.stage2_json,
+        prompt_version=str(getattr(args, "prompt_version", PROMPT_VERSION)),
+        model_version=api_config.model_name,
+        report=report,
+        document_generic=True,
+        call_log_path=output_paths.get("call_log"),
+        args=args,
+    )
+    return {
+        "summary": report,
+        "manifest": manifest,
+        "page_results": page_results,
+        "paths": {key: str(value) for key, value in output_paths.items() if value is not None},
+    }
+
+
+def select_document_generic_pages(
+    records: List[Dict[str, Any]],
+    extract_root: str | Path,
+    max_docs: int,
+    max_pages_per_doc: int,
+    max_pages: int,
+) -> List[Dict[str, Any]]:
+    selected: List[Dict[str, Any]] = []
+    doc_counts: Counter[str] = Counter()
+    for record_index, record in enumerate(records):
+        doc_id = record.get("doc_id")
+        if not doc_id:
+            continue
+        doc_id = str(doc_id)
+        if len(doc_counts) >= int(max_docs) and doc_id not in doc_counts:
+            continue
+        page_indices = discover_document_page_indices(doc_id, extract_root)
+        if not page_indices:
+            page_indices = document_generic_candidate_page_indices(record)
+        for page_index in page_indices:
+            if len(selected) >= int(max_pages):
+                return selected
+            if doc_counts[doc_id] >= int(max_pages_per_doc):
+                break
+            page_source = build_page_source(doc_id, extract_root, int(page_index))
+            if not page_source.get("has_page_text") and not page_source.get("has_page_image"):
+                continue
+            selected.append(
+                {
+                    "record_index": int(record_index),
+                    "doc_id": doc_id,
+                    "question": None,
+                    "answer_format": None,
+                    "page_index": int(page_index),
+                    "page_number_one_based": int(page_index) + 1,
+                    "selection_reason": "document_generic_page_available",
+                    "page_image_path": page_source.get("page_image_path"),
+                    "page_text_path": page_source.get("page_text_path"),
+                    "layout_block_ids": list(page_source.get("layout_block_ids", [])),
+                    "stage2": record.get("stage2", {}) if isinstance(record.get("stage2"), dict) else {},
+                }
+            )
+            doc_counts[doc_id] += 1
+    return selected
+
+
+def document_generic_candidate_page_indices(record: Dict[str, Any]) -> List[int]:
+    candidates: set[int] = set()
+    for field_name in ("page_indices", "pages_to_compile", "document_page_indices"):
+        values = record.get(field_name)
+        if isinstance(values, list):
+            for value in values:
+                try:
+                    candidates.add(int(value))
+                except (TypeError, ValueError):
+                    continue
+    if not candidates:
+        candidates.add(0)
+    return sorted(index for index in candidates if index >= 0)
+
+
+def discover_document_page_indices(doc_id: str, extract_root: str | Path) -> List[int]:
+    paths = build_mdocagent_extract_paths(extract_root, doc_id, 0)
+    doc_name = str(paths["doc_name"])
+    root = Path(extract_root)
+    indices: set[int] = set()
+    for suffix in ("txt", "png"):
+        for path in root.glob(f"{doc_name}_*.{suffix}"):
+            parsed = _parse_doc_page_index(path, doc_name)
+            if parsed is not None:
+                indices.add(parsed)
+        for directory_name in ("texts", "images"):
+            directory = root / directory_name
+            if not directory.is_dir():
+                continue
+            for path in directory.glob(f"{doc_name}_*.{suffix}"):
+                parsed = _parse_doc_page_index(path, doc_name)
+                if parsed is not None:
+                    indices.add(parsed)
+    return sorted(index for index in indices if index >= 0)
+
+
+def _parse_doc_page_index(path: Path, doc_name: str) -> int | None:
+    prefix = f"{doc_name}_"
+    stem = path.stem
+    if not stem.startswith(prefix):
+        return None
+    raw_index = stem[len(prefix):]
+    if not raw_index.isdigit():
+        return None
+    return int(raw_index)
 
 
 def run_audit_command(args: argparse.Namespace) -> Dict[str, Any]:
@@ -1782,6 +2494,7 @@ def run_all_command(args: argparse.Namespace) -> Dict[str, Any]:
             max_docs=int(args.max_docs),
             max_pages_per_doc=int(args.max_pages_per_doc),
             max_pages=int(args.max_pages),
+            max_pages_real=getattr(args, "max_pages_real", None),
             provider=args.provider,
             model_name=args.model_name,
             prompt_version=args.prompt_version,
@@ -1791,6 +2504,11 @@ def run_all_command(args: argparse.Namespace) -> Dict[str, Any]:
             deterministic_dedup_enabled=bool(args.deterministic_dedup_enabled),
             timeout_seconds=int(args.timeout_seconds),
             debug_raw_output=bool(args.debug_raw_output),
+            max_retries=int(getattr(args, "max_retries", 2)),
+            image_payload_mode=getattr(args, "image_payload_mode", "image_url"),
+            save_private_debug=bool(getattr(args, "save_private_debug", False)),
+            private_debug_dir=getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"),
+            document_generic=False,
         )
     )
     return {
@@ -1802,7 +2520,11 @@ def run_all_command(args: argparse.Namespace) -> Dict[str, Any]:
     }
 
 
-def _add_compile_options(parser: argparse.ArgumentParser) -> None:
+def _add_compile_options(
+    parser: argparse.ArgumentParser,
+    provider_default: str = "siliconflow",
+    provider_choices: tuple[str, ...] | None = None,
+) -> None:
     parser.add_argument("--config", default=DEFAULT_CONFIG)
     parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
     parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)
@@ -1810,9 +2532,13 @@ def _add_compile_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--max-documents", "--max-docs", dest="max_docs", type=int, default=5)
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
     parser.add_argument("--max-pages", type=int, default=10)
-    parser.add_argument("--provider", default="siliconflow")
+    parser.add_argument("--max-pages-real", type=int, default=None)
+    parser.add_argument("--provider", default=provider_default, choices=provider_choices)
     parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
     parser.add_argument("--prompt-version", default=PROMPT_VERSION)
+    parser.add_argument("--image-payload-mode", choices=("image_url", "base64", "none"), default="image_url")
+    parser.add_argument("--save-private-debug", action="store_true")
+    parser.add_argument("--private-debug-dir", default="outputs_private/stage2_debug/")
     parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
     parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
     parser.add_argument("--enable-real-api", action="store_true")
@@ -1820,6 +2546,7 @@ def _add_compile_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--dry-run-fake-client", action="store_true")
     parser.add_argument("--timeout-seconds", type=int, default=120)
     parser.add_argument("--debug-raw-output", action="store_true")
+    parser.add_argument("--max-retries", type=int, default=2)
     parser.set_defaults(deterministic_dedup_enabled=True)
 
 
@@ -1844,6 +2571,16 @@ def build_parser() -> argparse.ArgumentParser:
     compile_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
     _add_compile_options(compile_parser)
     compile_parser.set_defaults(func=run_compile_command)
+
+    doc_compile_parser = subparsers.add_parser("doc-compile", help="Compile question-independent artifacts into outputs/stage2_doc.")
+    doc_compile_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
+    _add_compile_options(
+        doc_compile_parser,
+        provider_default="dry_run",
+        provider_choices=("dry_run", "fake", "real"),
+    )
+    doc_compile_parser.set_defaults(output_dir=DEFAULT_DOC_GENERIC_BATCH_DIR)
+    doc_compile_parser.set_defaults(func=run_doc_compile_command)
 
     audit_parser = subparsers.add_parser("audit", help="Audit clean artifacts.jsonl storage.")
     audit_parser.add_argument("--output-dir", default=DEFAULT_CLEAN_BATCH_DIR)

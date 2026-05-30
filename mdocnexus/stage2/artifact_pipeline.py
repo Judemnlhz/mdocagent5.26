@@ -828,6 +828,7 @@ from typing import Any, Dict, List
 from .provider import ArtifactCompilerClient
 from .provider import (
     build_artifact_compiler_system_prompt,
+    build_document_generic_artifact_compiler_user_prompt,
     build_artifact_compiler_user_prompt,
 )
 from .logs import DiscardLogEntry, issue_to_discard_log_entry, write_discard_log_entry
@@ -845,104 +846,156 @@ def compile_page_with_client(
     compiler_version: str = "stage2_compiler_v1",
     prompt_version: str = "artifact_compiler_prompt_v1",
     deterministic_dedup_enabled: bool = True,
+    max_retries: int = 0,
+    document_generic: bool = False,
 ) -> Dict[str, Any]:
-    """Compile one page with a client, then deterministically validate output."""
+    """Compile one page with bounded retry, then deterministically validate output."""
 
     system_prompt = build_artifact_compiler_system_prompt()
-    user_prompt = build_artifact_compiler_user_prompt(
+    user_prompt = _build_user_prompt_for_compile_mode(
         canonical_record=canonical_record,
         page_input=page_input,
         schema_dict=schema_dict,
+        document_generic=document_generic,
     )
-    raw_output = _generate_page_artifacts_with_optional_page_input(
-        client=client,
-        system_prompt=system_prompt,
-        user_prompt=user_prompt,
-        schema_dict=schema_dict,
-        page_input=page_input,
-    )
-    if raw_output_log_path is not None:
-        write_raw_output_log(
-            raw_output_log_path,
-            build_raw_output_log_entry(
-                doc_id=page_input["doc_id"],
-                page_index=int(page_input["page_index"]),
-                provider=str(compiler_metadata.get("provider", compiler_metadata.get("compiler_name", "unknown"))),
-                model_name=compiler_metadata.get("model_name"),
-                compiler_version=compiler_version,
-                prompt_version=prompt_version,
-                raw_output=raw_output if isinstance(raw_output, dict) else {"raw_output": raw_output},
-            ),
-        )
+    max_retries = max(0, int(max_retries))
+    retry_logs: List[Dict[str, Any]] = []
+    final_result: Dict[str, Any] | None = None
 
-    identity_normalized_output = _inject_runtime_artifact_identity(raw_output, page_input)
-    num_raw_artifacts_before_dedup = _count_raw_artifacts(identity_normalized_output)
-    dedup_removed: List[Dict[str, Any]] = []
-    validation_input = identity_normalized_output
-    if deterministic_dedup_enabled and isinstance(identity_normalized_output, dict):
-        validation_input, dedup_removed = deduplicate_page_artifacts(identity_normalized_output)
-        if discard_log_path is not None:
-            for removed in dedup_removed:
+    for attempt_index in range(max_retries + 1):
+        raw_output = _generate_page_artifacts_with_optional_page_input(
+            client=client,
+            system_prompt=system_prompt,
+            user_prompt=user_prompt,
+            schema_dict=schema_dict,
+            page_input=page_input,
+        )
+        if raw_output_log_path is not None:
+            write_raw_output_log(
+                raw_output_log_path,
+                build_raw_output_log_entry(
+                    doc_id=page_input["doc_id"],
+                    page_index=int(page_input["page_index"]),
+                    provider=str(compiler_metadata.get("provider", compiler_metadata.get("compiler_name", "unknown"))),
+                    model_name=compiler_metadata.get("model_name"),
+                    compiler_version=compiler_version,
+                    prompt_version=prompt_version,
+                    raw_output=raw_output if isinstance(raw_output, dict) else {"raw_output": raw_output},
+                    stage="stage2_compiler" if attempt_index == 0 else "stage2_compiler_retry",
+                ),
+            )
+
+        identity_normalized_output = _inject_runtime_artifact_identity(raw_output, page_input)
+        locator_normalized_output, locator_notes = enrich_artifact_locators(identity_normalized_output, page_input)
+        num_raw_artifacts_before_dedup = _count_raw_artifacts(locator_normalized_output)
+        dedup_removed: List[Dict[str, Any]] = []
+        validation_input = locator_normalized_output
+        if deterministic_dedup_enabled and isinstance(locator_normalized_output, dict):
+            validation_input, dedup_removed = deduplicate_page_artifacts(locator_normalized_output)
+            if discard_log_path is not None and attempt_index == max_retries:
+                for removed in dedup_removed:
+                    write_discard_log_entry(
+                        discard_log_path,
+                        DiscardLogEntry(
+                            doc_id=page_input["doc_id"],
+                            page_index=int(page_input["page_index"]),
+                            artifact_id=removed.get("artifact_id"),
+                            error_type="duplicate_artifact_deduplicated",
+                            message="Duplicate artifact removed before deterministic validation.",
+                            field_path="artifacts",
+                            details={
+                                "duplicate_of": removed.get("duplicate_of"),
+                                "dedup_key": removed.get("dedup_key"),
+                                "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
+                            },
+                            stage="stage2_compiler_deterministic_dedup",
+                            compiler_version=compiler_version,
+                        ),
+                    )
+
+        valid_artifacts, validation_issues = validate_page_artifact_output(
+            raw_output=validation_input,
+            layout_blocks=page_input.get("layout_blocks", []),
+        )
+        final_result = {
+            "page_index": page_input["page_index"],
+            "raw_output": validation_input,
+            "raw_output_before_dedup": raw_output,
+            "valid_artifacts": valid_artifacts,
+            "validation_issues": [issue.to_dict() for issue in validation_issues],
+            "retry_logs": list(retry_logs),
+            "locator_notes": locator_notes,
+            "compilation_statistics": {
+                "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
+                "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
+                "dedup_rule": (
+                    "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash"
+                    if deterministic_dedup_enabled
+                    else None
+                ),
+                "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
+                "num_deduplicated_artifacts": len(dedup_removed),
+                "deduplicated_artifact_issue_type_count": len(dedup_removed),
+                "num_raw_artifacts": _count_raw_artifacts(validation_input),
+                "num_valid_artifacts": len(valid_artifacts),
+                "num_validation_issues": len(validation_issues),
+                "schema_valid_rate_before_dedup": _rate(len(valid_artifacts), num_raw_artifacts_before_dedup),
+                "schema_valid_rate_after_dedup": _rate(len(valid_artifacts), _count_raw_artifacts(validation_input)),
+                "discard_rate_before_dedup": _discard_rate(num_raw_artifacts_before_dedup, len(valid_artifacts)),
+                "discard_rate_after_dedup": _discard_rate(_count_raw_artifacts(validation_input), len(valid_artifacts)),
+                "max_retries": max_retries,
+                "retry_count": attempt_index,
+                "final_attempt_index": attempt_index,
+                "document_generic": bool(document_generic),
+            },
+        }
+        if not validation_issues:
+            return final_result
+
+        reason_counts = _count_validation_issue_types(validation_issues)
+        if attempt_index < max_retries:
+            retry_log = {
+                "doc_id": page_input["doc_id"],
+                "page_index": int(page_input["page_index"]),
+                "attempt_index": attempt_index,
+                "next_attempt_index": attempt_index + 1,
+                "reason": "schema_or_anchor_validation_failed",
+                "reason_counts": reason_counts,
+            }
+            retry_logs.append(retry_log)
+            if discard_log_path is not None:
                 write_discard_log_entry(
                     discard_log_path,
                     DiscardLogEntry(
                         doc_id=page_input["doc_id"],
                         page_index=int(page_input["page_index"]),
-                        artifact_id=removed.get("artifact_id"),
-                        error_type="duplicate_artifact_deduplicated",
-                        message="Duplicate artifact removed before deterministic validation.",
-                        field_path="artifacts",
-                        details={
-                            "duplicate_of": removed.get("duplicate_of"),
-                            "dedup_key": removed.get("dedup_key"),
-                            "dedup_rule": "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash",
-                        },
-                        stage="stage2_compiler_deterministic_dedup",
+                        artifact_id=None,
+                        error_type="retry_schema_or_anchor_failed",
+                        message="Retrying artifact extraction after deterministic validation failure.",
+                        field_path=None,
+                        details=retry_log,
+                        stage="stage2_compiler_retry",
                         compiler_version=compiler_version,
                     ),
                 )
+            continue
 
-    valid_artifacts, validation_issues = validate_page_artifact_output(
-        raw_output=validation_input,
-        layout_blocks=page_input.get("layout_blocks", []),
-    )
+    if final_result is None:
+        raise RuntimeError("Artifact compilation did not produce a final result.")
     if discard_log_path is not None:
-        for issue in validation_issues:
+        for issue in final_result["validation_issues"]:
             write_discard_log_entry(
                 discard_log_path,
                 issue_to_discard_log_entry(
-                    issue,
+                    ValidationIssue(**issue),
                     stage="stage2_compiler_validation",
                     compiler_version=compiler_version,
                 ),
             )
-
-    return {
-        "page_index": page_input["page_index"],
-        "raw_output": validation_input,
-        "raw_output_before_dedup": raw_output,
-        "valid_artifacts": valid_artifacts,
-        "validation_issues": [issue.to_dict() for issue in validation_issues],
-        "compilation_statistics": {
-            "deterministic_dedup_enabled": bool(deterministic_dedup_enabled),
-            "dedup_stage": "after_raw_output_log_before_validation" if deterministic_dedup_enabled else None,
-            "dedup_rule": (
-                "doc_id+page_index+artifact_type+modality+source_anchor_ids+content_hash"
-                if deterministic_dedup_enabled
-                else None
-            ),
-            "num_raw_artifacts_before_dedup": num_raw_artifacts_before_dedup,
-            "num_deduplicated_artifacts": len(dedup_removed),
-            "deduplicated_artifact_issue_type_count": len(dedup_removed),
-            "num_raw_artifacts": _count_raw_artifacts(validation_input),
-            "num_valid_artifacts": len(valid_artifacts),
-            "num_validation_issues": len(validation_issues),
-            "schema_valid_rate_before_dedup": _rate(len(valid_artifacts), num_raw_artifacts_before_dedup),
-            "schema_valid_rate_after_dedup": _rate(len(valid_artifacts), _count_raw_artifacts(validation_input)),
-            "discard_rate_before_dedup": _discard_rate(num_raw_artifacts_before_dedup, len(valid_artifacts)),
-            "discard_rate_after_dedup": _discard_rate(_count_raw_artifacts(validation_input), len(valid_artifacts)),
-        },
-    }
+    final_result["retry_logs"] = retry_logs
+    final_result["compilation_statistics"]["retry_count"] = len(retry_logs)
+    final_result["compilation_statistics"]["final_discard_after_retries"] = bool(final_result["validation_issues"])
+    return final_result
 
 
 def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any]) -> Any:
@@ -978,6 +1031,98 @@ def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any
         normalized_artifacts.append(normalized_artifact)
     normalized_output["artifacts"] = normalized_artifacts
     return normalized_output
+
+
+def _build_user_prompt_for_compile_mode(
+    canonical_record: Dict[str, Any],
+    page_input: Dict[str, Any],
+    schema_dict: Dict[str, Any],
+    document_generic: bool,
+) -> str:
+    if document_generic:
+        return build_document_generic_artifact_compiler_user_prompt(
+            canonical_record=canonical_record,
+            page_input=page_input,
+            schema_dict=schema_dict,
+        )
+    return build_artifact_compiler_user_prompt(
+        canonical_record=canonical_record,
+        page_input=page_input,
+        schema_dict=schema_dict,
+    )
+
+
+def enrich_artifact_locators(raw_output: Any, page_input: Dict[str, Any]) -> tuple[Any, List[Dict[str, Any]]]:
+    """Attach available page/block/bbox locators without changing the Stage 2 schema."""
+
+    if not isinstance(raw_output, dict) or not isinstance(raw_output.get("artifacts"), list):
+        return raw_output, []
+
+    block_by_id = {
+        str(block.get("block_id")): block
+        for block in page_input.get("layout_blocks", [])
+        if isinstance(block, dict) and block.get("block_id") is not None
+    }
+    normalized_output = dict(raw_output)
+    notes: List[Dict[str, Any]] = []
+    normalized_artifacts: List[Any] = []
+    for artifact in raw_output.get("artifacts", []):
+        if not isinstance(artifact, dict):
+            normalized_artifacts.append(artifact)
+            continue
+        normalized_artifact = dict(artifact)
+        anchors = artifact.get("source_anchors")
+        if not isinstance(anchors, list) or not anchors:
+            normalized_artifacts.append(normalized_artifact)
+            continue
+
+        normalized_anchors: List[Any] = []
+        has_bbox = False
+        has_block = False
+        for anchor in anchors:
+            if not isinstance(anchor, dict):
+                normalized_anchors.append(anchor)
+                continue
+            normalized_anchor = dict(anchor)
+            source_id = normalized_anchor.get("source_id")
+            block = block_by_id.get(str(source_id))
+            if block is not None:
+                has_block = True
+                normalized_anchor["page_index"] = int(block.get("page_index", page_input["page_index"]))
+                if normalized_anchor.get("bbox") in (None, [], "") and block.get("bbox") not in (None, [], ""):
+                    normalized_anchor["bbox"] = block.get("bbox")
+            if normalized_anchor.get("bbox") not in (None, [], ""):
+                has_bbox = True
+            normalized_anchors.append(normalized_anchor)
+        normalized_artifact["source_anchors"] = normalized_anchors
+        if not has_block or not has_bbox:
+            normalized_output.setdefault("uncertain_or_unreadable", [])
+            if isinstance(normalized_output["uncertain_or_unreadable"], list):
+                artifact_id = str(normalized_artifact.get("artifact_id") or "unknown_artifact")
+                reason = "missing_bbox_locator" if has_block else "missing_block_locator"
+                marker = f"{artifact_id}:{reason}"
+                if marker not in normalized_output["uncertain_or_unreadable"]:
+                    normalized_output["uncertain_or_unreadable"].append(marker)
+                notes.append(
+                    {
+                        "artifact_id": normalized_artifact.get("artifact_id"),
+                        "reason": reason,
+                        "has_page_locator": normalized_artifact.get("page_index") is not None,
+                        "has_block_locator": has_block,
+                        "has_bbox_locator": has_bbox,
+                    }
+                )
+        normalized_artifacts.append(normalized_artifact)
+    normalized_output["artifacts"] = normalized_artifacts
+    return normalized_output, notes
+
+
+def _count_validation_issue_types(validation_issues: List[ValidationIssue]) -> Dict[str, int]:
+    counts: Dict[str, int] = {}
+    for issue in validation_issues:
+        key = issue.error_type.value if isinstance(issue, ValidationIssue) else str(issue)
+        counts[key] = counts.get(key, 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def _generate_page_artifacts_with_optional_page_input(
@@ -1191,7 +1336,8 @@ def _build_artifact_store_quality_gate(
         blocking_reasons.append("missing_required_page_layout_blocks")
 
     for explicit_page in explicit_pages:
-        if int(explicit_page) == 29 and "29" not in artifact_index_by_page:
+        page_key = str(int(explicit_page))
+        if page_key not in artifact_index_by_page:
             blocking_reasons.append("missing_required_page_artifacts")
 
     if store.get("compilation_statistics", {}).get("num_artifacts", 0) == 0:

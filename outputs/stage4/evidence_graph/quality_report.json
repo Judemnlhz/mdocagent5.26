@@ -1,24 +1,26 @@
 {
+  "debug_edge_type_counts": {
+    "same_record_debug": 30
+  },
   "edge_type_counts": {
-    "anchor_on_page": 38,
-    "located_on_page": 72,
-    "retrieved_artifact": 41,
-    "same_page": 125,
-    "same_record": 328,
-    "supported_by_anchor": 72
+    "anchor_on_page": 20,
+    "located_on_page": 20,
+    "same_page": 10,
+    "supported_by_anchor": 20
   },
   "node_type_counts": {
-    "artifact": 72,
-    "page": 32,
-    "question": 10,
-    "source_anchor": 38
+    "artifact": 20,
+    "page": 10,
+    "source_anchor": 20
   },
-  "num_artifacts": 72,
-  "num_artifacts_with_element_locator": 12,
-  "num_artifacts_with_page_locator": 72,
-  "num_artifacts_with_source_anchor": 72,
-  "num_artifacts_without_element_locator": 60,
-  "num_edges": 676,
-  "num_nodes": 152,
+  "num_artifacts": 20,
+  "num_artifacts_with_element_locator": 0,
+  "num_artifacts_with_page_locator": 20,
+  "num_artifacts_with_source_anchor": 20,
+  "num_artifacts_without_element_locator": 20,
+  "num_debug_edges": 30,
+  "num_edges": 70,
+  "num_nodes": 50,
+  "same_record_edges_downgraded": true,
   "semantic_edges_enabled": false
 }
