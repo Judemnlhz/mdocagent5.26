@@ -1,0 +1,38 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/stage2_doc/artifacts.jsonl",
+    "output_dir": "outputs/stage4/evidence_graph",
+    "retrieval_jsonl": "outputs/stage3_doc_artifact_retrieval/retrieval.jsonl",
+    "stage2_json": "outputs/stage2/clean/sample-with-stage2-index.json"
+  },
+  "context_edge_types": [
+    "same_page"
+  ],
+  "created_by_script": "scripts/stage4_build_evidence_graph.py",
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
+  "debug_edges_hash": "4baf9f176da293902dd62aea1da32db3215a65647c6f1cb2fd8d8f0ae4a24f58",
+  "edges_hash": "f9621ef763d28d57a74eae48cb04a44f7633f4cb6fa406ef08e511673e785c41",
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "located_on_page",
+    "same_page",
+    "supported_by_anchor"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "located_on_page",
+    "supported_by_anchor"
+  ],
+  "git_commit": "2243c6845709329d05b8af28cd5febc01d098311",
+  "graph_mode": "rule_only_document_native_structural",
+  "input_artifacts_hash": "54a8776f505afd7a943ac12cfb1876eb7badd1a11e308e6791bab5d55b8748e0",
+  "input_artifacts_path": "outputs/stage2_doc/artifacts.jsonl",
+  "nodes_hash": "2d720f4d78e26cac32784ffb8967941e41e2312260fd9802bd92a03d8c29b595",
+  "quality_report_hash": "492a15252f47441e3fe0aeff071b613f372519bee8c9b7e1a003381cf533468b",
+  "schema_version": "stage4_evidence_graph_v2",
+  "semantic_edges_enabled": false
+}

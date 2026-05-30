@@ -20,6 +20,8 @@ class ApiRunConfig:
     provider: str = "siliconflow"
     model_name: Optional[str] = None
     max_pages: int = 1
+    max_pages_total: Optional[int] = None
+    max_pages_per_call: int = 1
     temperature: float = 0.0
     timeout_seconds: int = 120
     raw_output_dir: str | Path | None = None
@@ -36,8 +38,13 @@ def assert_real_api_allowed(config: ApiRunConfig) -> None:
 
     if not config.enable_real_api:
         raise RuntimeError("Real API usage is disabled. Set enable_real_api=True explicitly.")
-    if config.max_pages != 1:
-        raise RuntimeError("Real API usage is limited to max_pages=1 for Stage 2 smoke tests.")
+    if int(getattr(config, "max_pages_per_call", 1)) != 1:
+        raise RuntimeError("Real provider calls are limited to max_pages_per_call=1.")
+    max_pages_total = getattr(config, "max_pages_total", None)
+    if max_pages_total is None:
+        max_pages_total = getattr(config, "max_pages", None)
+    if max_pages_total is None or int(max_pages_total) < 1:
+        raise RuntimeError("Real API usage requires a finite positive max_pages_total.")
     if not config.model_name:
         raise RuntimeError("Real API usage requires a non-empty model_name.")
 
@@ -152,6 +159,7 @@ def _build_request_body(
     image_payload_mode: str = "image_url",
 ) -> Dict[str, Any]:
     _ = schema_dict
+    payload_audit = describe_image_payload(image_path=image_path, image_payload_mode=image_payload_mode)
     request_body = {
         "model": model_name,
         "messages": [
@@ -165,6 +173,9 @@ def _build_request_body(
             "stage": "stage2_artifact_compilation",
             "schema_name": "page_artifact_output",
             "schema_version": "stage2_artifact_schema_v1",
+            "image_payload_mode": image_payload_mode,
+            "actual_image_payload_kind": payload_audit["actual_image_payload_kind"],
+            "image_payload_sent": payload_audit["image_payload_sent"],
         },
     }
     if max_tokens is not None:
@@ -185,6 +196,25 @@ def _build_user_message_content(
         {"type": "text", "text": user_prompt},
         {"type": "image_url", "image_url": {"url": _build_image_data_url(image_path)}},
     ]
+
+
+def describe_image_payload(
+    image_path: str | Path | None,
+    image_payload_mode: str = "image_url",
+) -> Dict[str, Any]:
+    """Return public-safe image payload audit metadata."""
+
+    if not image_path or image_payload_mode == "none":
+        return {"image_payload_mode": image_payload_mode, "actual_image_payload_kind": "none", "image_payload_sent": False}
+    if image_payload_mode not in {"image_url", "base64"}:
+        raise ProviderError(f"Unsupported image_payload_mode: {image_payload_mode}")
+    if not Path(image_path).is_file():
+        return {"image_payload_mode": image_payload_mode, "actual_image_payload_kind": "none", "image_payload_sent": False}
+    return {
+        "image_payload_mode": image_payload_mode,
+        "actual_image_payload_kind": "base64_data_url",
+        "image_payload_sent": True,
+    }
 
 
 def _build_image_data_url(image_path: str | Path) -> str:

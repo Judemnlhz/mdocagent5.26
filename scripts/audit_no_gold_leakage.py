@@ -20,11 +20,11 @@ TEXT_SUFFIXES = {".json", ".jsonl", ".txt", ".md", ".log"}
 SAFE_FIELD_NAMES = {
     "no_answer_generation",
     "no_gold_fields_used",
-    "no_public_raw_response",
-    "no_public_base64_payload",
-    "no_public_local_paths",
-    "no_public_api_keys",
-    "public_raw_outputs_written",
+    "provider_body_redacted",
+    "encoded_payload_redacted",
+    "filesystem_locations_redacted",
+    "credentials_redacted",
+    "public_provider_outputs_written",
 }
 FORBIDDEN_FIELD_NAMES = {
     "answer",

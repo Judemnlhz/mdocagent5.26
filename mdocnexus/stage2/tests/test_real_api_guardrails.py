@@ -29,11 +29,26 @@ class RealApiGuardrailsTest(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             client.generate_page_artifacts("system", "user", {})
 
-    def test_real_api_requires_max_pages_one(self) -> None:
-        config = ApiRunConfig(enable_real_api=True, model_name="dummy", max_pages=2)
+    def test_real_api_requires_single_page_per_call(self) -> None:
+        config = ApiRunConfig(
+            enable_real_api=True,
+            model_name="dummy",
+            max_pages_total=3,
+            max_pages_per_call=2,
+        )
 
         with self.assertRaises(RuntimeError):
             assert_real_api_allowed(config)
+
+    def test_real_api_allows_finite_total_with_single_page_calls(self) -> None:
+        config = ApiRunConfig(
+            enable_real_api=True,
+            model_name="dummy",
+            max_pages_total=3,
+            max_pages_per_call=1,
+        )
+
+        assert_real_api_allowed(config)
 
     def test_real_api_requires_model_name(self) -> None:
         config = ApiRunConfig(enable_real_api=True, model_name=None, max_pages=1)

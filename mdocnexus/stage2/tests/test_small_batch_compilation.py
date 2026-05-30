@@ -359,13 +359,13 @@ class SmallBatchCompilationTest(unittest.TestCase):
         self.assertEqual(manifest["provider_modes"], ["fake"])
         self.assertEqual(manifest["pages_with_image_payload"], 1)
         self.assertEqual(manifest["image_sha256_values"], [call_log[0]["image_sha256"]])
-        self.assertFalse(manifest["public_raw_outputs_written"])
+        self.assertFalse(manifest["public_provider_outputs_written"])
         self.assertFalse(manifest["private_debug_enabled"])
         self.assertFalse(manifest["private_debug_dir_recorded_as_public"])
-        self.assertTrue(manifest["no_public_raw_response"])
-        self.assertTrue(manifest["no_public_base64_payload"])
-        self.assertTrue(manifest["no_public_local_paths"])
-        self.assertTrue(manifest["no_public_api_keys"])
+        self.assertTrue(manifest["provider_body_redacted"])
+        self.assertTrue(manifest["encoded_payload_redacted"])
+        self.assertTrue(manifest["filesystem_locations_redacted"])
+        self.assertTrue(manifest["credentials_redacted"])
         self.assertEqual([], leakage_violations)
 
     def test_doc_compile_text_route_records_no_image_payload(self) -> None:
@@ -581,7 +581,7 @@ class SmallBatchCompilationTest(unittest.TestCase):
         self.assertGreater(private_raw_size, 0)
         self.assertTrue(second_manifest["private_debug_enabled"])
         self.assertFalse(second_manifest["private_debug_dir_recorded_as_public"])
-        self.assertFalse(second_manifest["public_raw_outputs_written"])
+        self.assertFalse(second_manifest["public_provider_outputs_written"])
 
 
 def make_stage2_record(
@@ -691,11 +691,11 @@ def read_public_stage2_doc_outputs(output_dir: Path) -> str:
 
 
 SAFE_PUBLIC_LEAKAGE_DECLARATION_KEYS = {
-    "no_public_api_keys",
-    "no_public_raw_response",
-    "no_public_base64_payload",
-    "no_public_local_paths",
-    "public_raw_outputs_written",
+    "credentials_redacted",
+    "provider_body_redacted",
+    "encoded_payload_redacted",
+    "filesystem_locations_redacted",
+    "public_provider_outputs_written",
 }
 PUBLIC_FORBIDDEN_MARKERS = [
     "raw_response",

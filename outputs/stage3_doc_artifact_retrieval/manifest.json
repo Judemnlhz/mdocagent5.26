@@ -1,0 +1,21 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/stage2_doc/artifacts.jsonl",
+    "query_input": "outputs/stage3_query/public_queries.jsonl",
+    "top_k": 5
+  },
+  "created_by_script": "scripts/stage3_doc_artifact_retrieval.py",
+  "git_commit": "2243c6845709329d05b8af28cd5febc01d098311",
+  "input_artifacts_hash": "4828140bc2ee2970e2bf3eacfcb7e96b1ceea4c710408e371e51ecd0eb6fd474",
+  "input_artifacts_path": "outputs/stage2_doc/artifacts.jsonl",
+  "no_answer_generation": true,
+  "no_gold_fields_used": true,
+  "quality_report_hash": "b6da8d3b6379a4343fb74d47e7d64dc18acf248c12a27a16d641fbd7700f23f8",
+  "query_input_hash": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+  "query_input_path": "outputs/stage3_query/public_queries.jsonl",
+  "retrieval_hash": "1863dfde8dded84c200be6fb39126c7ebe440c5effb1dae768844d54a0939fcc",
+  "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
+  "schema_version": "stage3_doc_artifact_retrieval_v1",
+  "stage": "stage3_doc_artifact_retrieval",
+  "used_debug_edges": false
+}

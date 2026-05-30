@@ -1,0 +1,25 @@
+{
+  "coverage_at_k_by_page": {
+    "1": 0.0,
+    "3": 0.002174588381484933,
+    "5": 0.002174588381484933
+  },
+  "evaluation_only": true,
+  "no_gold_available_count": 226,
+  "num_queries": 1073,
+  "num_queries_with_gold": 847,
+  "recall_at_k_by_page": {
+    "1": 0.0,
+    "3": 0.0027958993476234857,
+    "5": 0.0027958993476234857
+  },
+  "retrieved_artifact_type_distribution": {
+    "text_span": 66,
+    "visual_observation": 66
+  },
+  "retrieved_modality_distribution": {
+    "image": 66,
+    "text": 66
+  },
+  "zero_hit_query_count": 1040
+}

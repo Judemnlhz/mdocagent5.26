@@ -1,0 +1,46 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 5,
+  "num_pages_attempted": 10,
+  "num_artifacts": 20,
+  "num_valid_artifacts": 20,
+  "num_discarded_artifacts": 0,
+  "schema_valid_rate": 1.0,
+  "anchoring_rate": 1.0,
+  "discard_rate": 0.0,
+  "artifact_type_counts": {
+    "text_span": 10,
+    "visual_observation": 10
+  },
+  "modality_counts": {
+    "image": 10,
+    "text": 10
+  },
+  "locator_status_counts": {
+    "with_locator": 20
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 20
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 10,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 10,
+  "figure_artifact_count": 0,
+  "caption_artifact_count": 0,
+  "table_artifact_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 10,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 10,
+  "schema_valid_artifact_count": 20,
+  "anchored_artifact_count": 20,
+  "discarded_artifact_count": 0,
+  "document_generic": true
+}

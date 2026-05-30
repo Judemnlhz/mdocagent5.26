@@ -8,10 +8,12 @@ import unittest
 from pathlib import Path
 
 from mdocnexus.stage3.doc_artifact_retrieval import (
+    DEFAULT_QUERY_INPUT,
     canonical_json_hash,
     load_artifacts_jsonl,
     run_doc_artifact_retrieval,
 )
+from scripts.make_public_query_inputs import build_public_query_rows
 
 
 class DocArtifactRetrievalTest(unittest.TestCase):
@@ -118,6 +120,44 @@ class DocArtifactRetrievalTest(unittest.TestCase):
 
         self.assertEqual(first["retrieval_hash"], second["retrieval_hash"])
         self.assertEqual(artifact_hash_len, 64)
+
+    def test_public_query_input_builder_removes_gold_fields(self) -> None:
+        rows = build_public_query_rows(
+            [
+                {
+                    "record_index": 3,
+                    "doc_id": "doc.pdf",
+                    "question": "What title?",
+                    "dataset": "MMLongBench",
+                    "answer": "SECRET",
+                    "gold_answer": "SECRET",
+                    "evidence_pages": [1],
+                    "evidence_sources": ["x"],
+                    "binary_correctness": True,
+                }
+            ]
+        )
+
+        self.assertEqual(rows, [{"record_index": 3, "doc_id": "doc.pdf", "question": "What title?", "dataset": "MMLongBench"}])
+        walk_public_value(self, rows)
+
+    def test_default_query_input_is_public_jsonl(self) -> None:
+        self.assertEqual(DEFAULT_QUERY_INPUT, "outputs/stage3_query/public_queries.jsonl")
+        self.assertNotIn("sample-with-stage2-index", DEFAULT_QUERY_INPUT)
+
+    def test_retrieval_output_has_query_hash_not_question_text(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path, query_path = write_fixture_inputs(root)
+
+            run_doc_artifact_retrieval(artifacts_path, query_path, root / "out", top_k=2)
+            row = read_jsonl(root / "out" / "retrieval.jsonl")[0]
+            quality = json.loads((root / "out" / "quality_report.json").read_text(encoding="utf-8"))
+
+        self.assertIn("query_hash", row)
+        self.assertNotIn("question", row)
+        self.assertTrue(row["no_gold_fields_used"])
+        self.assertTrue(quality["no_gold_fields_used"])
 
 
 def write_fixture_inputs(root: Path) -> tuple[Path, Path]:

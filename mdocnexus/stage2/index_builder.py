@@ -359,11 +359,11 @@ def build_api_run_config_from_mdocagent_yaml(
     config_path: str | Path,
     overrides: Optional[Dict[str, Any]] = None,
 ) -> ApiRunConfig:
-    """Map MDocAgent model yaml fields to ApiRunConfig with max_pages fixed to 1."""
+    """Map MDocAgent model yaml fields to ApiRunConfig without exposing secrets."""
 
     overrides = dict(overrides or {})
-    if "max_pages" in overrides and int(overrides["max_pages"]) != 1:
-        raise RuntimeError("Stage 2 real API trials require max_pages=1.")
+    max_pages_total = overrides.get("max_pages_total", overrides.get("max_pages", 1))
+    max_pages_per_call = overrides.get("max_pages_per_call", 1)
 
     yaml_config = load_mdocagent_model_config(config_path)
     model_name = yaml_config.get("model") or yaml_config.get("model_name") or yaml_config.get("model_id")
@@ -372,7 +372,9 @@ def build_api_run_config_from_mdocagent_yaml(
         enable_real_api=bool(overrides.get("enable_real_api", False)),
         provider=str(overrides.get("provider", "siliconflow")),
         model_name=overrides.get("model_name", model_name),
-        max_pages=1,
+        max_pages=int(max_pages_total) if max_pages_total is not None else 1,
+        max_pages_total=int(max_pages_total) if max_pages_total is not None else None,
+        max_pages_per_call=int(max_pages_per_call),
         temperature=float(overrides.get("temperature", yaml_config.get("temperature", 0.0) or 0.0)),
         timeout_seconds=int(overrides.get("timeout_seconds", 120)),
         raw_output_dir=overrides.get("raw_output_dir"),

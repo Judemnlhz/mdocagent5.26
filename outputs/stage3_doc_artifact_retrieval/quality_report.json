@@ -1,0 +1,14 @@
+{
+  "artifact_coverage_rate": 0.03075489282385834,
+  "avg_candidate_artifacts_per_query": 0.12301957129543337,
+  "avg_retrieved_artifacts_per_query": 0.12301957129543337,
+  "no_gold_fields_used": true,
+  "num_gold_field_violations": 0,
+  "num_outputs_with_answer_field": 0,
+  "num_queries": 1073,
+  "num_queries_with_doc_artifacts": 33,
+  "num_queries_without_doc_artifacts": 1040,
+  "retrieval_method": "deterministic_lexical",
+  "top_k": 5,
+  "used_debug_edges": false
+}

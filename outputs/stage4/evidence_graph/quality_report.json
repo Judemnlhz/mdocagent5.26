@@ -1,12 +1,37 @@
 {
+  "context_edge_types": [
+    "same_page"
+  ],
   "debug_edge_type_counts": {
     "same_record_debug": 30
   },
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
   "edge_type_counts": {
+    "adjacent_page": 5,
     "anchor_on_page": 20,
     "located_on_page": 20,
     "same_page": 10,
     "supported_by_anchor": 20
+  },
+  "element_locator_rate": 0.0,
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "located_on_page",
+    "same_page",
+    "supported_by_anchor"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "located_on_page",
+    "supported_by_anchor"
+  ],
+  "locator_kind_counts": {
+    "full_page_anchor": 10,
+    "source_anchor": 10
   },
   "node_type_counts": {
     "artifact": 20,
@@ -19,8 +44,20 @@
   "num_artifacts_with_source_anchor": 20,
   "num_artifacts_without_element_locator": 20,
   "num_debug_edges": 30,
-  "num_edges": 70,
+  "num_edges": 75,
+  "num_element_locatable": 0,
   "num_nodes": 50,
-  "same_record_edges_downgraded": true,
-  "semantic_edges_enabled": false
+  "num_proof_trace_eligible": 0,
+  "num_source_anchored": 20,
+  "pairwise_clique_edges_disabled": true,
+  "proof_trace_eligible_by_type": {},
+  "proof_trace_eligible_rate": 0.0,
+  "same_record_debug_in_formal_edges": false,
+  "same_record_in_formal_edges": false,
+  "semantic_edges_enabled": false,
+  "skipped_rule_edges_by_reason": {
+    "next_block_unparseable_source_block_id": 10,
+    "same_doc_pairwise_clique_disabled": 1
+  },
+  "source_anchored_rate": 1.0
 }

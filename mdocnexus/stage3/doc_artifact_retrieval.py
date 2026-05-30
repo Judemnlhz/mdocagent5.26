@@ -19,7 +19,7 @@ from typing import Any, Iterable
 
 
 DEFAULT_ARTIFACTS_JSONL = "outputs/stage2_doc/artifacts.jsonl"
-DEFAULT_QUERY_INPUT = "outputs/stage2/clean/sample-with-stage2-index.json"
+DEFAULT_QUERY_INPUT = "outputs/stage3_query/public_queries.jsonl"
 DEFAULT_OUTPUT_DIR = "outputs/stage3_doc_artifact_retrieval"
 DEFAULT_TOP_K = 5
 RETRIEVAL_METHOD = "deterministic_lexical"
@@ -321,6 +321,7 @@ def build_quality_report(result_rows: list[dict[str, Any]], top_k: int) -> dict[
         "num_outputs_with_answer_field": 0,
         "num_gold_field_violations": 0,
         "used_debug_edges": False,
+        "no_gold_fields_used": True,
     }
 
 

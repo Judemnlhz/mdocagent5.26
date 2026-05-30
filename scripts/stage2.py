@@ -56,6 +56,7 @@ from mdocnexus.stage2.provider import (
     build_artifact_compiler_system_prompt,
     build_artifact_compiler_user_prompt,
     build_document_generic_artifact_compiler_user_prompt,
+    describe_image_payload,
 )
 from mdocnexus.stage2.reports import (
     audit_batch_artifact_outputs,
@@ -90,6 +91,9 @@ def parse_small_batch_args() -> argparse.Namespace:
     parser.add_argument("--extract-root", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--max-pages", type=int, default=5)
+    parser.add_argument("--max-pages-total", type=int, default=None)
+    parser.add_argument("--max-pages-per-call", type=int, default=1)
+    parser.add_argument("--max-pages-real-cap", type=int, default=10)
     parser.add_argument("--provider", default="siliconflow")
     parser.add_argument("--model-name", default=None)
     parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
@@ -113,6 +117,22 @@ def validate_small_batch_args(args: argparse.Namespace) -> None:
         raise RuntimeError("Refusing real provider batch without --enable-real-api.")
     if not args.run_real_trial:
         raise RuntimeError("Refusing real provider batch without --run-real-trial.")
+    validate_real_page_limits(args)
+
+
+def validate_real_page_limits(args: argparse.Namespace) -> None:
+    max_pages_total = getattr(args, "max_pages_total", None)
+    if max_pages_total is None:
+        max_pages_total = getattr(args, "max_pages", None)
+    if max_pages_total is None:
+        raise RuntimeError("Real provider mode requires finite --max-pages-total.")
+    max_pages_total = int(max_pages_total)
+    max_pages_per_call = int(getattr(args, "max_pages_per_call", 1))
+    max_pages_real_cap = int(getattr(args, "max_pages_real_cap", 10))
+    if max_pages_per_call != 1:
+        raise RuntimeError("Real provider mode requires --max-pages-per-call=1.")
+    if max_pages_total < 1 or max_pages_total > max_pages_real_cap:
+        raise RuntimeError("--max-pages-total must be between 1 and --max-pages-real-cap in real provider mode.")
 
 
 def build_small_batch_api_config(args: argparse.Namespace):
@@ -123,6 +143,8 @@ def build_small_batch_api_config(args: argparse.Namespace):
             "provider": args.provider,
             "model_name": args.model_name,
             "timeout_seconds": args.timeout_seconds,
+            "max_pages_total": getattr(args, "max_pages_total", None) or args.max_pages,
+            "max_pages_per_call": getattr(args, "max_pages_per_call", 1),
         },
     )
     if args.dry_run_fake_client:
@@ -438,6 +460,9 @@ def parse_crossdoc_batch_args() -> argparse.Namespace:
     parser.add_argument("--max-docs", type=int, default=5)
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
     parser.add_argument("--max-pages", type=int, default=10)
+    parser.add_argument("--max-pages-total", type=int, default=None)
+    parser.add_argument("--max-pages-per-call", type=int, default=1)
+    parser.add_argument("--max-pages-real-cap", type=int, default=10)
     parser.add_argument("--provider", default="siliconflow")
     parser.add_argument("--model-name", default=None)
     parser.add_argument("--prompt-version", default=PROMPT_VERSION)
@@ -467,6 +492,7 @@ def validate_crossdoc_args(args: argparse.Namespace) -> None:
         raise RuntimeError("Refusing real provider cross-doc batch without --enable-real-api.")
     if not args.run_real_trial:
         raise RuntimeError("Refusing real provider cross-doc batch without --run-real-trial.")
+    validate_real_page_limits(args)
 
 
 def build_crossdoc_api_config(args: argparse.Namespace):
@@ -478,6 +504,8 @@ def build_crossdoc_api_config(args: argparse.Namespace):
             "provider": provider_name,
             "model_name": args.model_name,
             "timeout_seconds": args.timeout_seconds,
+            "max_pages_total": getattr(args, "max_pages_total", None) or args.max_pages,
+            "max_pages_per_call": getattr(args, "max_pages_per_call", 1),
         },
     )
     api_config.image_payload_mode = _image_payload_mode(args)
@@ -1638,6 +1666,7 @@ def _build_provider_call_log_row(
 ) -> Dict[str, Any]:
     image_path = page_input.get("page_image_path")
     payload_sent = _image_payload_sent(page_input, image_payload_mode)
+    payload_audit = describe_image_payload(image_path if payload_sent else None, image_payload_mode)
     failure_type = None
     provider_error_type = str(page_result.get("provider_error_type") or "")
     if provider_error_type:
@@ -1659,6 +1688,7 @@ def _build_provider_call_log_row(
         "modality_route": _modality_route_for_page_input(page_input),
         "image_payload_sent": bool(payload_sent),
         "image_payload_mode": str(image_payload_mode),
+        "actual_image_payload_kind": payload_audit["actual_image_payload_kind"],
         "image_sha256": image_sha256,
         "image_sha256_unavailable_reason": _image_sha256_unavailable_reason(
             page_input,
@@ -1847,6 +1877,9 @@ def _public_stage2_command_args(args: argparse.Namespace | None) -> Dict[str, An
         "max_docs": int(getattr(args, "max_docs", 0)) if getattr(args, "max_docs", None) is not None else None,
         "max_pages_per_doc": int(getattr(args, "max_pages_per_doc", 0)) if getattr(args, "max_pages_per_doc", None) is not None else None,
         "max_pages": int(getattr(args, "max_pages", 0)) if getattr(args, "max_pages", None) is not None else None,
+        "max_pages_total": int(getattr(args, "max_pages_total", 0)) if getattr(args, "max_pages_total", None) is not None else None,
+        "max_pages_per_call": int(getattr(args, "max_pages_per_call", 1)),
+        "max_pages_real_cap": int(getattr(args, "max_pages_real_cap", 10)),
         "image_payload_mode": str(getattr(args, "image_payload_mode", "image_url")),
         "save_private_debug": bool(getattr(args, "save_private_debug", False)),
         "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
@@ -1877,6 +1910,9 @@ def _write_stage2_jsonl_manifest(
     image_payload_modes = sorted(
         {str(row.get("image_payload_mode")) for row in call_rows if row.get("image_payload_mode")}
     )
+    actual_image_payload_kinds = sorted(
+        {str(row.get("actual_image_payload_kind")) for row in call_rows if row.get("actual_image_payload_kind")}
+    )
     image_sha256_values = sorted(
         {str(row.get("image_sha256")) for row in call_rows if row.get("image_sha256")}
     )
@@ -1901,6 +1937,7 @@ def _write_stage2_jsonl_manifest(
         "pages_without_image_payload": sum(1 for row in call_rows if row.get("image_payload_sent") is False),
         "provider_modes": provider_modes,
         "image_payload_modes": image_payload_modes,
+        "actual_image_payload_kinds": actual_image_payload_kinds,
         "image_sha256_values": image_sha256_values,
         "image_sha256_summary": {
             "count": len(image_sha256_values),
@@ -1910,13 +1947,13 @@ def _write_stage2_jsonl_manifest(
         "command_args": _public_stage2_command_args(args),
         "forbidden_fields_checked": True,
         "no_public_leakage_checked": True,
-        "public_raw_outputs_written": (root / "raw_outputs.jsonl").is_file(),
+        "public_provider_outputs_written": (root / "raw_outputs.jsonl").is_file(),
         "private_debug_enabled": bool(getattr(args, "save_private_debug", False)) if args is not None else False,
         "private_debug_dir_recorded_as_public": False,
-        "no_public_raw_response": True,
-        "no_public_base64_payload": True,
-        "no_public_local_paths": True,
-        "no_public_api_keys": True,
+        "provider_body_redacted": True,
+        "encoded_payload_redacted": True,
+        "filesystem_locations_redacted": True,
+        "credentials_redacted": True,
     }
     if input_path.is_file():
         manifest["input_hash"] = _file_sha256(input_path)
@@ -2185,8 +2222,15 @@ def run_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
 
 
 def _resolve_doc_compile_max_pages(args: argparse.Namespace) -> int:
+    raw_max_pages_total = getattr(args, "max_pages_total", None)
+    if raw_max_pages_total not in (None, ""):
+        raw_value = raw_max_pages_total
+    else:
+        raw_value = None
     raw_max_pages_real = getattr(args, "max_pages_real", None)
-    if raw_max_pages_real not in (None, ""):
+    if raw_value is not None:
+        pass
+    elif raw_max_pages_real not in (None, ""):
         raw_value = raw_max_pages_real
     elif hasattr(args, "max_pages"):
         raw_value = getattr(args, "max_pages")
@@ -2208,6 +2252,7 @@ def _validate_doc_compile_real_args(args: argparse.Namespace) -> None:
         raise RuntimeError("Refusing real provider doc-compile without --enable-real-api.")
     if not bool(getattr(args, "run_real_trial", False)):
         raise RuntimeError("Refusing real provider doc-compile without --run-real-trial.")
+    validate_real_page_limits(args)
     _ = _resolve_doc_compile_max_pages(args)
 
 
@@ -2494,6 +2539,9 @@ def run_all_command(args: argparse.Namespace) -> Dict[str, Any]:
             max_docs=int(args.max_docs),
             max_pages_per_doc=int(args.max_pages_per_doc),
             max_pages=int(args.max_pages),
+            max_pages_total=getattr(args, "max_pages_total", None),
+            max_pages_per_call=getattr(args, "max_pages_per_call", 1),
+            max_pages_real_cap=getattr(args, "max_pages_real_cap", 10),
             max_pages_real=getattr(args, "max_pages_real", None),
             provider=args.provider,
             model_name=args.model_name,
@@ -2533,6 +2581,9 @@ def _add_compile_options(
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
     parser.add_argument("--max-pages", type=int, default=10)
     parser.add_argument("--max-pages-real", type=int, default=None)
+    parser.add_argument("--max-pages-total", type=int, default=None)
+    parser.add_argument("--max-pages-per-call", type=int, default=1)
+    parser.add_argument("--max-pages-real-cap", type=int, default=10)
     parser.add_argument("--provider", default=provider_default, choices=provider_choices)
     parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
     parser.add_argument("--prompt-version", default=PROMPT_VERSION)

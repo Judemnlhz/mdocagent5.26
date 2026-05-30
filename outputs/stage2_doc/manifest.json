@@ -1,0 +1,83 @@
+{
+  "actual_image_payload_kinds": [
+    "base64_data_url"
+  ],
+  "artifacts_hash": "4828140bc2ee2970e2bf3eacfcb7e96b1ceea4c710408e371e51ecd0eb6fd474",
+  "call_log_hash": "63c6016c1a1b725acd41ac719dd3e78f73d8e1c2a15d15b30594767ca57d360a",
+  "command_args": {
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": false,
+    "image_payload_mode": "image_url",
+    "max_docs": 5,
+    "max_pages": 10,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 2,
+    "max_pages_real_cap": 10,
+    "max_pages_total": null,
+    "max_retries": 2,
+    "model_name_recorded": true,
+    "provider": "fake",
+    "provider_mode": "fake",
+    "run_real_trial": false,
+    "save_private_debug": false
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "2243c6845709329d05b8af28cd5febc01d098311",
+  "image_payload_modes": [
+    "image_url"
+  ],
+  "image_sha256_summary": {
+    "count": 10,
+    "values": [
+      "026a4c8d9b2c7d17cf674739edb3473f36e1287502b3212dee2472e268d97c63",
+      "0580787ccef972d5205ceee6b098cf19c643c8d5e314f080883c3059ed97153c",
+      "6f0f67b518c67c6252b18247745a1ad90f0fee38d67c33897232160bd0cae006",
+      "b7d98087406db0765f90f76555384a8260ef4d26990190de62840c797ed607e9",
+      "b9da3f1d67f949c48280b60ca7a8f7654ad690cd6ee27fad8df0abc3a7648c92",
+      "dd0ed19697ef25936454cc394919d481653432b899db41ae8415b70ccab743f4",
+      "de162fa20ae79ed392d15c260763b9cf99da25f39373cc50a47810aa609bb536",
+      "e06728f78022b749cf3d7233a82b6788c50f9eaaf4a682f3b7274c464c9dd0ab",
+      "f4dd99f9ed9a19d2bae9ba85cebc459a3bfdb3d90a9406a9273525db6241b1a1",
+      "fa5e4b5861c0389cfab80c0db7da4fd65e6567234ef2377edc94d34cd7243d32"
+    ]
+  },
+  "image_sha256_values": [
+    "026a4c8d9b2c7d17cf674739edb3473f36e1287502b3212dee2472e268d97c63",
+    "0580787ccef972d5205ceee6b098cf19c643c8d5e314f080883c3059ed97153c",
+    "6f0f67b518c67c6252b18247745a1ad90f0fee38d67c33897232160bd0cae006",
+    "b7d98087406db0765f90f76555384a8260ef4d26990190de62840c797ed607e9",
+    "b9da3f1d67f949c48280b60ca7a8f7654ad690cd6ee27fad8df0abc3a7648c92",
+    "dd0ed19697ef25936454cc394919d481653432b899db41ae8415b70ccab743f4",
+    "de162fa20ae79ed392d15c260763b9cf99da25f39373cc50a47810aa609bb536",
+    "e06728f78022b749cf3d7233a82b6788c50f9eaaf4a682f3b7274c464c9dd0ab",
+    "f4dd99f9ed9a19d2bae9ba85cebc459a3bfdb3d90a9406a9273525db6241b1a1",
+    "fa5e4b5861c0389cfab80c0db7da4fd65e6567234ef2377edc94d34cd7243d32"
+  ],
+  "input_hash": "87a00395533c69249bb5a6b5202ad029724efb9b0e888f00c67c90725a5f4f31",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 20,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v1",
+  "provider_body_redacted": true,
+  "provider_call_count": 10,
+  "provider_modes": [
+    "fake"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "27e178c07f0abddff2b0c39cdc3c67aa692c37733ba41a59172cea43f5e95e46",
+  "schema_version": "stage2_artifact_schema_v1"
+}

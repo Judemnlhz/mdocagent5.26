@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 
 from mdocnexus.stage4.evidence_graph import (
+    CONTEXT_EDGE_TYPES,
     FORMAL_EDGE_TYPES,
     build_evidence_graph,
     build_manifest,
@@ -15,6 +16,7 @@ from mdocnexus.stage4.evidence_graph import (
     run_evidence_graph_build,
     stable_hash_json,
 )
+from mdocnexus.stage4.locator_policy import classify_locator, is_proof_trace_eligible
 
 
 FORBIDDEN_FORMAL_TYPES = {
@@ -58,11 +60,18 @@ class EvidenceGraphTest(unittest.TestCase):
                 normalized_content={"figure_id": "fig1", "caption_id": "caption1"},
             ),
         ]
-        self.graph = build_evidence_graph(artifacts=self.artifacts, retrieval_rows=[], stage2_records=[])
+        self.retrieval_rows = [
+            {
+                "query_hash": "query_hash_1",
+                "retrieval_method": "deterministic_lexical",
+                "retrieved_artifact_ids": ["a1", "a2", "a1_dup"],
+            }
+        ]
+        self.graph = build_evidence_graph(artifacts=self.artifacts, retrieval_rows=self.retrieval_rows, stage2_records=[])
 
     def test_formal_edges_use_only_allowed_rule_types(self) -> None:
         edge_types = {edge["edge_type"] for edge in self.graph["edges"]}
-        self.assertTrue(edge_types <= FORMAL_EDGE_TYPES)
+        self.assertTrue(edge_types <= FORMAL_EDGE_TYPES | CONTEXT_EDGE_TYPES)
         self.assertFalse(edge_types & FORBIDDEN_FORMAL_TYPES)
         self.assertFalse(self.graph["quality_report"]["semantic_edges_enabled"])
 
@@ -76,6 +85,36 @@ class EvidenceGraphTest(unittest.TestCase):
         self.assertFalse(self.graph["quality_report"]["same_record_in_formal_edges"])
         self.assertFalse(self.graph["quality_report"]["same_record_debug_in_formal_edges"])
 
+    def test_artifact_node_id_is_independent_of_record_or_input_order(self) -> None:
+        first = build_evidence_graph(
+            artifacts=[
+                make_artifact("stable", record_index=7, doc_id="doc.pdf", page_index=3),
+                make_artifact("other", record_index=1, doc_id="doc.pdf", page_index=3),
+            ],
+            retrieval_rows=[],
+            stage2_records=[],
+        )
+        second = build_evidence_graph(
+            artifacts=[
+                make_artifact("other", record_index=99, doc_id="doc.pdf", page_index=3),
+                make_artifact("stable", record_index=42, doc_id="doc.pdf", page_index=3),
+            ],
+            retrieval_rows=[],
+            stage2_records=[],
+        )
+        first_ids = {node["node_id"] for node in first["nodes"] if node.get("artifact_id") == "stable"}
+        second_ids = {node["node_id"] for node in second["nodes"] if node.get("artifact_id") == "stable"}
+
+        self.assertEqual(first_ids, second_ids)
+        self.assertEqual(first_ids, {"artifact:doc.pdf:3:stable"})
+
+    def test_formal_graph_contains_no_record_index(self) -> None:
+        formal_text = json.dumps({"nodes": self.graph["nodes"], "edges": self.graph["edges"]}, ensure_ascii=False)
+
+        self.assertNotIn("record_index", formal_text)
+        self.assertNotIn("same_record", formal_text)
+        self.assertNotIn("same_record_debug", formal_text)
+
     def test_formal_edges_include_required_audit_fields(self) -> None:
         required = {"edge_id", "source", "target", "edge_type", "provenance", "rule_name", "rule_version", "deterministic"}
         for edge in self.graph["edges"]:
@@ -86,10 +125,12 @@ class EvidenceGraphTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
             artifacts_path = root / "artifacts.jsonl"
+            retrieval_path = root / "retrieval.jsonl"
             write_jsonl(artifacts_path, self.artifacts)
+            write_jsonl(retrieval_path, self.retrieval_rows)
             output_dir = root / "graph"
 
-            run_evidence_graph_build(artifacts_path, output_dir=output_dir)
+            run_evidence_graph_build(artifacts_path, retrieval_jsonl_path=retrieval_path, output_dir=output_dir)
             formal_only = load_evidence_graph(output_dir)
             with_debug = load_evidence_graph(output_dir, debug=True)
 
@@ -136,7 +177,6 @@ class EvidenceGraphTest(unittest.TestCase):
 
     def test_same_source_and_next_block_edges_are_structural(self) -> None:
         self.assertTrue(has_edge(self.graph, "same_page"))
-        self.assertTrue(has_edge(self.graph, "same_doc"))
         self.assertTrue(has_edge(self.graph, "same_source_block"))
         self.assertTrue(has_edge(self.graph, "next_block"))
 
@@ -172,6 +212,47 @@ class EvidenceGraphTest(unittest.TestCase):
         self.assertEqual(len(manifest["debug_edges_hash"]), 64)
         self.assertEqual(len(manifest["quality_report_hash"]), 64)
         self.assertFalse(manifest["semantic_edges_enabled"])
+
+    def test_quality_report_splits_retrieval_context_and_debug_edges(self) -> None:
+        report = self.graph["quality_report"]
+
+        self.assertTrue(report["pairwise_clique_edges_disabled"])
+        self.assertNotIn("same_doc", report["formal_edge_types"])
+        self.assertIn("same_page", report["context_edge_types"])
+        self.assertNotIn("same_page", report["formal_retrieval_edge_types"])
+        self.assertEqual(report["debug_edge_types"], ["same_record_debug"])
+
+    def test_full_page_anchor_is_not_proof_trace_eligible(self) -> None:
+        artifact = make_artifact("visual", artifact_type="visual_observation", source_id="p000_full_page_image")
+        artifact["source_anchors"][0]["anchor_type"] = "full_page_image"
+
+        self.assertTrue(classify_locator(artifact)["source_anchored"])
+        self.assertFalse(is_proof_trace_eligible(artifact))
+
+    def test_page_sha256_alone_is_not_element_locator(self) -> None:
+        artifact = make_artifact("hash_only")
+        artifact["source_anchors"] = []
+        artifact["page_sha256"] = "abc"
+
+        self.assertFalse(classify_locator(artifact)["element_locatable"])
+
+    def test_text_span_needs_block_id_and_offset_or_bbox_for_proof(self) -> None:
+        no_offset = make_artifact("text_no_offset", artifact_type="text_span")
+        with_offset = make_artifact("text_with_offset", artifact_type="text_span", normalized_content={"start_offset": 1, "end_offset": 5})
+
+        self.assertFalse(is_proof_trace_eligible(no_offset))
+        self.assertTrue(is_proof_trace_eligible(with_offset))
+
+    def test_table_cell_requires_table_row_and_column(self) -> None:
+        incomplete = make_artifact("cell_bad", artifact_type="table_cell", normalized_content={"table_id": "t1", "row_index": 1})
+        complete = make_artifact(
+            "cell_good",
+            artifact_type="table_cell",
+            normalized_content={"table_id": "t1", "row_index": 1, "column_index": 2},
+        )
+
+        self.assertFalse(is_proof_trace_eligible(incomplete))
+        self.assertTrue(is_proof_trace_eligible(complete))
 
 
 def make_artifact(

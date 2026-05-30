@@ -1,0 +1,10 @@
+{
+  "artifacts_jsonl": "outputs/stage2_doc/artifacts.jsonl",
+  "debug_edges_read": false,
+  "edges_jsonl": "outputs/stage4/evidence_graph/edges.jsonl",
+  "evaluation_only": true,
+  "output_dir": "outputs/eval/stage4_graph_expansion_eval",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_jsonl": "outputs/stage3_doc_artifact_retrieval/retrieval.jsonl",
+  "stage": "stage4_graph_expansion_eval"
+}

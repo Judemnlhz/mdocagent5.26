@@ -52,6 +52,7 @@ REQUIRED_CALL_LOG_FIELDS = [
     "modality_route",
     "image_payload_sent",
     "image_payload_mode",
+    "actual_image_payload_kind",
     "prompt_hash",
     "response_schema_version",
     "call_succeeded",
@@ -67,11 +68,11 @@ PUBLIC_FILENAMES = [
     "discard.jsonl",
 ]
 SAFE_FORBIDDEN_SUBSTRING_KEYS = {
-    "no_public_api_keys",
-    "no_public_raw_response",
-    "no_public_base64_payload",
-    "public_raw_outputs_written",
-    "no_public_local_paths",
+    "credentials_redacted",
+    "provider_body_redacted",
+    "encoded_payload_redacted",
+    "public_provider_outputs_written",
+    "filesystem_locations_redacted",
 }
 TOKEN_ALLOWED_KEYS = {"token_count", "input_tokens", "output_tokens", "max_tokens", "tokenizer"}
 TOKEN_ALLOWED_STRING_FRAGMENTS = ("token_count", "input_tokens", "output_tokens", "max_tokens", "tokenizer")
@@ -190,12 +191,14 @@ def audit_output_dir(output_dir: Path, allow_large_real_smoke: bool = False) -> 
 
     provider_modes = list(manifest.get("provider_modes", [])) if isinstance(manifest.get("provider_modes"), list) else []
     image_payload_modes = list(manifest.get("image_payload_modes", [])) if isinstance(manifest.get("image_payload_modes"), list) else []
+    actual_image_payload_kinds = list(manifest.get("actual_image_payload_kinds", [])) if isinstance(manifest.get("actual_image_payload_kinds"), list) else []
     status = "pass" if not failures else "fail"
     report = {
         "files_checked": files_checked,
         "call_log_rows": len(call_rows),
         "provider_modes": provider_modes,
         "image_payload_modes": image_payload_modes,
+        "actual_image_payload_kinds": actual_image_payload_kinds,
         "pages_attempted": quality.get("pages_attempted"),
         "pages_with_image_payload": quality.get("pages_with_image_payload"),
         "image_payload_rate": quality.get("image_payload_rate"),
@@ -310,10 +313,14 @@ def _validate_image_payload_consistency(call_rows: List[Dict[str, Any]], output_
         sent = row.get("image_payload_sent") is True
         if sent and mode not in {"image_url", "base64"}:
             failures.append(f"call_log[{index}].image_payload_sent_requires_image_url_or_base64")
+        if sent and row.get("actual_image_payload_kind") != "base64_data_url":
+            failures.append(f"call_log[{index}].image_payload_sent_requires_actual_base64_data_url")
         if sent and not row.get("image_sha256"):
             failures.append(f"call_log[{index}].image_payload_sent_requires_image_sha256")
         if mode == "none" and sent:
             failures.append(f"call_log[{index}].image_payload_mode_none_requires_sent_false")
+        if mode == "none" and row.get("actual_image_payload_kind") != "none":
+            failures.append(f"call_log[{index}].image_payload_mode_none_requires_actual_none")
     for path in _public_paths(output_dir):
         for field_path, key, value in _iter_json_keys(path):
             if key == "image_url":

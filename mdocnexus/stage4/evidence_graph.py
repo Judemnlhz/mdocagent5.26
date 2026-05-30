@@ -18,6 +18,8 @@ import subprocess
 from typing import Any, Iterable
 from urllib.parse import quote
 
+from mdocnexus.stage4.locator_policy import classify_locator
+
 
 DEFAULT_ARTIFACTS_JSONL = "outputs/stage2_doc/artifacts.jsonl"
 DEFAULT_RETRIEVAL_JSONL = "outputs/stage3_doc_artifact_retrieval/retrieval.jsonl"
@@ -42,10 +44,7 @@ FORMAL_EDGE_TYPES = {
     "located_on_page",
     "supported_by_anchor",
     "anchor_on_page",
-    "same_page",
-    "same_doc",
     "adjacent_page",
-    "same_source_block",
     "next_block",
     "section_contains",
     "caption_of",
@@ -54,6 +53,8 @@ FORMAL_EDGE_TYPES = {
     "row_contains_cell",
     "column_contains_cell",
 }
+CONTEXT_EDGE_TYPES = {"same_page", "same_source_block"}
+FORMAL_RETRIEVAL_EDGE_TYPES = FORMAL_EDGE_TYPES - CONTEXT_EDGE_TYPES
 DEBUG_EDGE_TYPES = {"same_record_debug"}
 SEMANTIC_EDGE_TYPES = {
     "supports",
@@ -178,7 +179,7 @@ def build_evidence_graph(
 ) -> dict[str, Any]:
     """Return document-native structural graph rows and a quality report."""
 
-    _ = list(retrieval_rows or [])
+    retrieval_rows = list(retrieval_rows or [])
     _ = list(stage2_records or [])
     nodes: dict[str, dict[str, Any]] = {}
     edges: dict[tuple[str, str, str], dict[str, Any]] = {}
@@ -193,12 +194,14 @@ def build_evidence_graph(
     num_artifacts_with_source_anchor = 0
     num_artifacts_with_element_locator = 0
     num_proof_trace_eligible = 0
+    proof_trace_eligible_by_type: Counter[str] = Counter()
+    locator_kind_counts: Counter[str] = Counter()
 
     for input_order, artifact in enumerate(artifacts):
         if not isinstance(artifact, dict):
             continue
         num_artifacts += 1
-        ref = artifact_reference(artifact, input_order)
+        ref = artifact_reference(artifact)
         if ref is None:
             skipped["artifact_missing_required_identity"] += 1
             continue
@@ -221,7 +224,6 @@ def build_evidence_graph(
         anchors = valid_source_anchors(artifact, fallback_page_index=ref["page_index"])
         if anchors:
             num_artifacts_with_source_anchor += 1
-            num_proof_trace_eligible += 1
         else:
             skipped["artifact_missing_source_anchor"] += 1
         for anchor in anchors:
@@ -275,8 +277,13 @@ def build_evidence_graph(
                 }
             )
 
-        if has_element_locator(artifact):
+        locator_classification = classify_locator(artifact)
+        locator_kind_counts[str(locator_classification["locator_kind"])] += 1
+        if locator_classification["element_locatable"]:
             num_artifacts_with_element_locator += 1
+        if locator_classification["proof_trace_eligible"]:
+            num_proof_trace_eligible += 1
+            proof_trace_eligible_by_type[str(artifact.get("artifact_type") or "unknown")] += 1
         ref.update(extract_layout_locator(artifact))
         source_block_id = first_source_block_id(artifact)
         if source_block_id:
@@ -284,7 +291,8 @@ def build_evidence_graph(
         artifact_refs.append(ref)
         add_explicit_layout_edges(nodes, edges, artifact, ref, skipped)
 
-    add_pairwise_document_edges(edges, debug_edges, artifact_refs)
+    add_pairwise_document_edges(edges, artifact_refs, skipped)
+    add_same_record_debug_edges_from_retrieval(debug_edges, artifact_refs, retrieval_rows)
     add_adjacent_page_edges(edges, page_refs)
     add_next_block_edges(edges, anchor_refs, skipped)
 
@@ -300,22 +308,22 @@ def build_evidence_graph(
         num_artifacts_with_source_anchor=num_artifacts_with_source_anchor,
         num_artifacts_with_element_locator=num_artifacts_with_element_locator,
         num_proof_trace_eligible=num_proof_trace_eligible,
+        proof_trace_eligible_by_type=dict(sorted(proof_trace_eligible_by_type.items())),
+        locator_kind_counts=dict(sorted(locator_kind_counts.items())),
         skipped_rule_edges_by_reason=dict(sorted(skipped.items())),
     )
     assert_graph_outputs(node_rows, edge_rows, quality_report, debug_edge_rows)
     return {"nodes": node_rows, "edges": edge_rows, "debug_edges": debug_edge_rows, "quality_report": quality_report}
 
 
-def artifact_reference(artifact: dict[str, Any], input_order: int) -> dict[str, Any] | None:
-    record_index = coerce_int(artifact.get("record_index"), fallback=input_order)
+def artifact_reference(artifact: dict[str, Any]) -> dict[str, Any] | None:
     doc_id = str(artifact.get("doc_id") or "")
     page_index = coerce_int(artifact.get("page_index"), fallback=-1)
     artifact_id = str(artifact.get("artifact_id") or "")
     if not doc_id or page_index < 0 or not artifact_id:
         return None
     return {
-        "node_id": artifact_node_id(record_index, doc_id, page_index, artifact_id),
-        "record_index": record_index,
+        "node_id": artifact_node_id(doc_id, page_index, artifact_id),
         "doc_id": doc_id,
         "page_index": page_index,
         "artifact_id": artifact_id,
@@ -327,7 +335,6 @@ def build_artifact_node(artifact: dict[str, Any], ref: dict[str, Any]) -> dict[s
     node = {
         "node_id": ref["node_id"],
         "node_type": "artifact",
-        "record_index": ref["record_index"],
         "doc_id": ref["doc_id"],
         "page_id": page_node_id(ref["doc_id"], ref["page_index"]),
         "page_index": ref["page_index"],
@@ -415,35 +422,18 @@ def add_explicit_layout_edges(
 
 def add_pairwise_document_edges(
     edges: dict[tuple[str, str, str], dict[str, Any]],
-    debug_edges: dict[tuple[str, str, str], dict[str, Any]],
     artifact_refs: list[dict[str, Any]],
+    skipped: Counter[str],
 ) -> None:
-    by_record: dict[int, list[dict[str, Any]]] = defaultdict(list)
-    by_doc: dict[str, list[dict[str, Any]]] = defaultdict(list)
     by_page: dict[tuple[str, int], list[dict[str, Any]]] = defaultdict(list)
     by_source_block: dict[tuple[str, int, str], list[dict[str, Any]]] = defaultdict(list)
     for ref in artifact_refs:
-        by_record[int(ref["record_index"])].append(ref)
-        by_doc[str(ref["doc_id"])].append(ref)
         by_page[(str(ref["doc_id"]), int(ref["page_index"]))].append(ref)
         source_block_id = clean_id(ref.get("source_block_id"))
         if source_block_id:
             by_source_block[(str(ref["doc_id"]), int(ref["page_index"]), source_block_id)].append(ref)
 
-    for refs in by_record.values():
-        for left, right in sorted_pairs(refs):
-            add_edge(
-                debug_edges,
-                left["node_id"],
-                right["node_id"],
-                "same_record_debug",
-                rule_name="same_record_debug_only",
-                provenance={"doc_id": left["doc_id"], "record_index": int(left["record_index"])},
-                debug=True,
-            )
-    for doc_id, refs in by_doc.items():
-        for left, right in sorted_pairs(refs):
-            add_edge(edges, left["node_id"], right["node_id"], "same_doc", rule_name="same_doc_artifact_pair", provenance={"doc_id": doc_id})
+    skipped["same_doc_pairwise_clique_disabled"] += 1
     for (doc_id, page_index), refs in by_page.items():
         for left, right in sorted_pairs(refs):
             add_edge(edges, left["node_id"], right["node_id"], "same_page", rule_name="same_page_artifact_pair", provenance=build_provenance(doc_id, page_index))
@@ -456,6 +446,45 @@ def add_pairwise_document_edges(
                 "same_source_block",
                 rule_name="same_source_block_artifact_pair",
                 provenance=build_provenance(doc_id, page_index, source_block_id=source_block_id),
+            )
+
+
+def add_same_record_debug_edges_from_retrieval(
+    debug_edges: dict[tuple[str, str, str], dict[str, Any]],
+    artifact_refs: list[dict[str, Any]],
+    retrieval_rows: list[dict[str, Any]],
+) -> None:
+    refs_by_artifact_id: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for ref in artifact_refs:
+        refs_by_artifact_id[str(ref["artifact_id"])].append(ref)
+    for row in retrieval_rows:
+        artifact_ids = row.get("retrieved_artifact_ids")
+        if not isinstance(artifact_ids, list):
+            continue
+        refs: list[dict[str, Any]] = []
+        seen_node_ids: set[str] = set()
+        for artifact_id in artifact_ids:
+            for ref in refs_by_artifact_id.get(str(artifact_id), []):
+                if ref["node_id"] in seen_node_ids:
+                    continue
+                seen_node_ids.add(ref["node_id"])
+                refs.append(ref)
+        for left, right in sorted_pairs(refs):
+            add_edge(
+                debug_edges,
+                left["node_id"],
+                right["node_id"],
+                "same_record_debug",
+                rule_name="retrieval_row_debug_only",
+                provenance=clean_optional_fields(
+                    {
+                        "doc_id": left["doc_id"],
+                        "query_hash": row.get("query_hash"),
+                        "query_id": row.get("query_id"),
+                        "retrieval_method": row.get("retrieval_method"),
+                    }
+                ),
+                debug=True,
             )
 
 
@@ -545,7 +574,7 @@ def add_edge(
     provenance: dict[str, Any] | None = None,
     debug: bool = False,
 ) -> None:
-    allowed_edge_types = DEBUG_EDGE_TYPES if debug else FORMAL_EDGE_TYPES
+    allowed_edge_types = DEBUG_EDGE_TYPES if debug else FORMAL_EDGE_TYPES | CONTEXT_EDGE_TYPES
     if edge_type not in allowed_edge_types:
         raise ValueError(f"Unsupported edge_type: {edge_type}")
     if not debug and edge_type in FORBIDDEN_FORMAL_EDGE_TYPES:
@@ -590,6 +619,7 @@ def valid_source_anchors(artifact: dict[str, Any], fallback_page_index: int) -> 
                 "source_id": str(source_id),
                 "page_index": coerce_int(anchor.get("page_index"), fallback=fallback_page_index),
                 "bbox": anchor.get("bbox"),
+                "anchor_type": anchor.get("anchor_type"),
             }
         )
     return valid
@@ -641,10 +671,7 @@ def first_present_value(containers: Iterable[dict[str, Any]], keys: Iterable[str
 
 
 def has_element_locator(artifact: dict[str, Any]) -> bool:
-    if first_bbox(artifact) not in (None, "", []):
-        return True
-    locator = extract_layout_locator(artifact)
-    return any(key in locator for key in ELEMENT_LOCATOR_KEYS | {"page_sha256", "source_block_id"})
+    return bool(classify_locator(artifact)["element_locatable"])
 
 
 def first_source_block_id(artifact: dict[str, Any]) -> str | None:
@@ -755,6 +782,8 @@ def build_manifest(
         num_artifacts_with_source_anchor=0,
         num_artifacts_with_element_locator=0,
         num_proof_trace_eligible=0,
+        proof_trace_eligible_by_type={},
+        locator_kind_counts={},
         skipped_rule_edges_by_reason={},
     )
     manifest = {
@@ -768,6 +797,8 @@ def build_manifest(
         "quality_report_hash": stable_hash_json(quality_report),
         "semantic_edges_enabled": False,
         "formal_edge_types": sorted({edge["edge_type"] for edge in edges}),
+        "formal_retrieval_edge_types": sorted(edge_type for edge_type in {edge["edge_type"] for edge in edges} if edge_type in FORMAL_RETRIEVAL_EDGE_TYPES),
+        "context_edge_types": sorted(edge_type for edge_type in {edge["edge_type"] for edge in edges} if edge_type in CONTEXT_EDGE_TYPES),
         "debug_edge_types": sorted({edge["edge_type"] for edge in debug_edges}),
         "created_by_script": "scripts/stage4_build_evidence_graph.py",
         "command_args": command_args or {"artifacts_jsonl": public_path(artifacts_jsonl_path)},
@@ -790,6 +821,8 @@ def build_quality_report(
     num_artifacts_with_source_anchor: int,
     num_artifacts_with_element_locator: int,
     num_proof_trace_eligible: int,
+    proof_trace_eligible_by_type: dict[str, int],
+    locator_kind_counts: dict[str, int],
     skipped_rule_edges_by_reason: dict[str, int],
 ) -> dict[str, Any]:
     node_type_counts = Counter(str(node.get("node_type")) for node in nodes)
@@ -806,18 +839,27 @@ def build_quality_report(
         "edge_type_counts": dict(sorted(edge_type_counts.items())),
         "debug_edge_type_counts": dict(sorted(debug_edge_type_counts.items())),
         "formal_edge_types": formal_edge_types,
+        "formal_retrieval_edge_types": sorted(edge_type for edge_type in formal_edge_types if edge_type in FORMAL_RETRIEVAL_EDGE_TYPES),
+        "context_edge_types": sorted(edge_type for edge_type in formal_edge_types if edge_type in CONTEXT_EDGE_TYPES),
         "debug_edge_types": debug_edge_types,
         "semantic_edges_enabled": False,
         "same_record_in_formal_edges": "same_record" in edge_type_counts,
         "same_record_debug_in_formal_edges": "same_record_debug" in edge_type_counts,
         "skipped_rule_edges_by_reason": dict(sorted(skipped_rule_edges_by_reason.items())),
+        "pairwise_clique_edges_disabled": True,
         "num_artifacts": int(num_artifacts),
         "num_artifacts_with_page_locator": int(num_artifacts_with_page_locator),
         "num_artifacts_with_source_anchor": int(num_artifacts_with_source_anchor),
+        "num_source_anchored": int(num_artifacts_with_source_anchor),
+        "source_anchored_rate": int(num_artifacts_with_source_anchor) / denominator,
         "num_artifacts_with_element_locator": int(num_artifacts_with_element_locator),
+        "num_element_locatable": int(num_artifacts_with_element_locator),
+        "element_locator_rate": int(num_artifacts_with_element_locator) / denominator,
         "num_artifacts_without_element_locator": int(num_artifacts - num_artifacts_with_element_locator),
         "num_proof_trace_eligible": int(num_proof_trace_eligible),
         "proof_trace_eligible_rate": int(num_proof_trace_eligible) / denominator,
+        "proof_trace_eligible_by_type": dict(sorted(proof_trace_eligible_by_type.items())),
+        "locator_kind_counts": dict(sorted(locator_kind_counts.items())),
     }
 
 
@@ -834,7 +876,7 @@ def assert_graph_outputs(
     for edge in edges:
         assert_no_forbidden_keys(edge)
         edge_type = edge.get("edge_type")
-        if edge_type not in FORMAL_EDGE_TYPES:
+        if edge_type not in FORMAL_EDGE_TYPES | CONTEXT_EDGE_TYPES:
             raise ValueError(f"Unexpected formal edge_type: {edge_type}")
         if edge_type in FORBIDDEN_FORMAL_EDGE_TYPES:
             raise ValueError(f"Forbidden formal edge_type: {edge_type}")
@@ -1003,8 +1045,8 @@ def question_node_id(record_index: int) -> str:
     return make_node_id("question", record_index)
 
 
-def artifact_node_id(record_index: int, doc_id: str, page_index: int, artifact_id: str) -> str:
-    return make_node_id("artifact", record_index, doc_id, page_index, artifact_id)
+def artifact_node_id(doc_id: str, page_index: int, artifact_id: str) -> str:
+    return make_node_id("artifact", doc_id, page_index, artifact_id)
 
 
 def page_node_id(doc_id: str, page_index: int) -> str:

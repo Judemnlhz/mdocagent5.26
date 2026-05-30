@@ -15,9 +15,10 @@ from mdocnexus.stage2.provider import ApiRunConfig
 from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_smoke_test
 from mdocnexus.stage2.provider import CompatibleChatJsonProvider
 from mdocnexus.stage2.provider import _build_request_body
+from mdocnexus.stage2.provider import describe_image_payload
 from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderResponseFormatError
 from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
-from scripts.stage2 import validate_real_trial_args
+from scripts.stage2 import validate_real_page_limits, validate_real_trial_args
 
 class RealProviderAdapterTest(unittest.TestCase):
     def test_provider_requires_explicit_run_real_trial(self) -> None:
@@ -72,7 +73,44 @@ class RealProviderAdapterTest(unittest.TestCase):
         self.assertEqual(user_content[0], {"type": "text", "text": "user"})
         self.assertEqual(user_content[1]["type"], "image_url")
         self.assertTrue(user_content[1]["image_url"]["url"].startswith("data:image/png;base64,"))
+        self.assertEqual(request_body["metadata"]["actual_image_payload_kind"], "base64_data_url")
         self.assertNotIn(str(image_path), json.dumps(request_body))
+
+    def test_public_image_payload_audit_does_not_expose_payload_or_path(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+
+            audit = describe_image_payload(image_path, "image_url")
+            audit_text = json.dumps(audit)
+
+        self.assertEqual(audit["actual_image_payload_kind"], "base64_data_url")
+        self.assertTrue(audit["image_payload_sent"])
+        self.assertNotIn("data:image", audit_text)
+        self.assertNotIn("/home/", audit_text)
+        self.assertNotIn("image_path", audit_text)
+        self.assertNotIn("base64,", audit_text)
+
+    def test_image_payload_none_sends_no_image(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            image_path = Path(tmpdir) / "page.png"
+            image_path.write_bytes(b"test-image-bytes")
+
+            audit = describe_image_payload(image_path, "none")
+            request_body = _build_request_body(
+                model_name="dummy-model",
+                system_prompt="system",
+                user_prompt="user",
+                schema_dict={},
+                temperature=0.0,
+                max_tokens=None,
+                image_path=image_path,
+                image_payload_mode="none",
+            )
+
+        self.assertFalse(audit["image_payload_sent"])
+        self.assertEqual(audit["actual_image_payload_kind"], "none")
+        self.assertIsInstance(request_body["messages"][1]["content"], str)
 
     def test_real_api_client_passes_page_image_path_to_provider(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -290,6 +328,14 @@ class RealProviderAdapterTest(unittest.TestCase):
         args = argparse.Namespace(enable_real_api=True, run_real_trial=False, target_page_index=29)
         with self.assertRaises(RuntimeError):
             validate_real_trial_args(args)
+
+    def test_real_page_limits_require_finite_total_and_single_page_call(self) -> None:
+        with self.assertRaises(RuntimeError):
+            validate_real_page_limits(argparse.Namespace(max_pages_total=None, max_pages=None, max_pages_per_call=1, max_pages_real_cap=10))
+        with self.assertRaises(RuntimeError):
+            validate_real_page_limits(argparse.Namespace(max_pages_total=3, max_pages=None, max_pages_per_call=2, max_pages_real_cap=10))
+
+        validate_real_page_limits(argparse.Namespace(max_pages_total=3, max_pages=None, max_pages_per_call=1, max_pages_real_cap=10))
 
     def test_forbidden_fields_never_enter_artifact_store(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
