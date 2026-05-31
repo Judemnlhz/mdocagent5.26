@@ -366,7 +366,7 @@ class RealProviderAdapterTest(unittest.TestCase):
             "gold_annotation",
             "baseline_outputs",
             "source_record",
-            "proof_trace",
+            '"proof_trace"',
             "verified",
             "answer_supported",
             "proof_used",

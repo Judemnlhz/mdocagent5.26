@@ -22,8 +22,8 @@ from mdocnexus.evaluation.retrieval_metrics import (
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Evaluate Stage 3 artifact retrieval against gold pages.")
-    parser.add_argument("--retrieval-jsonl", default="outputs/stage3_doc_artifact_retrieval/retrieval.jsonl")
-    parser.add_argument("--artifacts-jsonl", default="outputs/stage2_doc/artifacts.jsonl")
+    parser.add_argument("--retrieval", "--retrieval-jsonl", dest="retrieval_jsonl", default="outputs/stage3_doc_artifact_retrieval/retrieval.jsonl")
+    parser.add_argument("--artifacts", "--artifacts-jsonl", dest="artifacts_jsonl", default="outputs/stage2_doc/artifacts.jsonl")
     parser.add_argument("--records", default="data/MMLongBench/sample-with-retrieval-results.json")
     parser.add_argument("--output-dir", default="outputs/eval/stage3_retrieval_eval")
     return parser
@@ -39,6 +39,7 @@ def main(argv: list[str] | None = None) -> None:
     )
     manifest = {
         "evaluation_only": True,
+        "not_consumed_by_stage2_stage3_stage4": True,
         "stage": "stage3_retrieval_eval",
         "retrieval_jsonl": args.retrieval_jsonl,
         "artifacts_jsonl": args.artifacts_jsonl,

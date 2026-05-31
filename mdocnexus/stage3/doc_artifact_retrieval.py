@@ -449,8 +449,8 @@ def coerce_int(value: Any, fallback: int) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run Stage 3 document-generic artifact retrieval dry-run.")
-    parser.add_argument("--artifacts-jsonl", default=DEFAULT_ARTIFACTS_JSONL)
-    parser.add_argument("--query-input", "--records-jsonl", dest="query_input", default=DEFAULT_QUERY_INPUT)
+    parser.add_argument("--artifacts", "--artifacts-jsonl", dest="artifacts_jsonl", default=DEFAULT_ARTIFACTS_JSONL)
+    parser.add_argument("--queries", "--query-input", "--records-jsonl", dest="query_input", default=DEFAULT_QUERY_INPUT)
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
     return parser

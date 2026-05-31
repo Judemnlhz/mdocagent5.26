@@ -1,0 +1,11 @@
+{
+  "artifacts_jsonl": "outputs/stage2_doc_coverage/artifacts.jsonl",
+  "debug_edges_read": false,
+  "edges_jsonl": "outputs/stage4/evidence_graph_coverage/edges.jsonl",
+  "evaluation_only": true,
+  "not_consumed_by_stage2_stage3_stage4": true,
+  "output_dir": "outputs/eval/stage4_graph_expansion_eval_coverage",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_jsonl": "outputs/stage3_doc_artifact_retrieval_coverage/retrieval.jsonl",
+  "stage": "stage4_graph_expansion_eval"
+}

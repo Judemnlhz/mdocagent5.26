@@ -21,14 +21,16 @@ class ArtifactType(str, Enum):
     table_cell = "table_cell"
     figure = "figure"
     caption = "caption"
+    visual_region = "visual_region"
     visual_observation = "visual_observation"
+    section_header = "section_header"
 
 
 class Modality(str, Enum):
     text = "text"
     image = "image"
     table = "table"
-    figure = "figure"
+    layout = "layout"
     numeric = "numeric"
 
 
@@ -101,6 +103,12 @@ class EvidenceArtifact:
     source_anchors: List[SourceAnchor] = field(default_factory=list)
     provenance: Optional[Provenance] = None
     validation_status: ValidationStatus = "candidate"
+    page_id: Optional[str] = None
+    status: ValidationStatus = "candidate"
+    locators: List[Dict[str, Any]] = field(default_factory=list)
+    source_anchored: bool = False
+    element_locatable: bool = False
+    proof_trace_eligible: bool = False
     compiler_metadata: Dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -109,6 +117,8 @@ class EvidenceArtifact:
         self.modality = _coerce_enum(self.modality, Modality, "modality")
         if self.validation_status not in ALLOWED_VALIDATION_STATUSES:
             raise ValueError(f"Unsupported validation_status: {self.validation_status!r}")
+        if self.status not in ALLOWED_VALIDATION_STATUSES:
+            raise ValueError(f"Unsupported status: {self.status!r}")
         if not self.content:
             raise ValueError("content must not be empty")
 
@@ -227,6 +237,7 @@ def build_evidence_artifact_schema_dict() -> Dict[str, Any]:
         "required": [
             "artifact_id",
             "doc_id",
+            "page_id",
             "page_index",
             "artifact_type",
             "modality",
@@ -234,12 +245,18 @@ def build_evidence_artifact_schema_dict() -> Dict[str, Any]:
             "normalized_content",
             "source_anchors",
             "provenance",
+            "status",
             "validation_status",
+            "locators",
+            "source_anchored",
+            "element_locatable",
+            "proof_trace_eligible",
             "compiler_metadata",
         ],
         "properties": {
             "artifact_id": {"type": "string", "minLength": 1},
             "doc_id": {"type": "string", "minLength": 1},
+            "page_id": {"type": "string", "minLength": 1},
             "page_index": {"type": "integer", "minimum": 0},
             "artifact_type": {
                 "type": "string",
@@ -257,10 +274,21 @@ def build_evidence_artifact_schema_dict() -> Dict[str, Any]:
                 "items": build_source_anchor_schema_dict(),
             },
             "provenance": build_provenance_schema_dict(),
+            "status": {
+                "type": "string",
+                "enum": get_allowed_validation_statuses(),
+            },
             "validation_status": {
                 "type": "string",
                 "enum": get_allowed_validation_statuses(),
             },
+            "locators": {
+                "type": "array",
+                "items": {"type": "object"},
+            },
+            "source_anchored": {"type": "boolean"},
+            "element_locatable": {"type": "boolean"},
+            "proof_trace_eligible": {"type": "boolean"},
             "compiler_metadata": {"type": "object"},
         },
     }

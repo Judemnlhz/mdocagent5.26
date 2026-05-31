@@ -92,14 +92,17 @@ from .artifact_schema import (
     get_allowed_validation_statuses,
 )
 from .artifact_schema import ValidationErrorType, ValidationIssue
+from .locator_enrichment import enrich_artifact_locators as _enrich_stage2_artifact_locators
+from .locator_enrichment import page_id_for
 
 
-PAGE_OUTPUT_ALLOWED_FIELDS = {"doc_id", "page_index", "artifacts", "uncertain_or_unreadable"}
+PAGE_OUTPUT_ALLOWED_FIELDS = {"doc_id", "page_id", "page_index", "artifacts", "uncertain_or_unreadable"}
 
 
 ARTIFACT_REQUIRED_FIELDS = [
     "artifact_id",
     "doc_id",
+    "page_id",
     "page_index",
     "artifact_type",
     "modality",
@@ -107,9 +110,16 @@ ARTIFACT_REQUIRED_FIELDS = [
     "normalized_content",
     "source_anchors",
     "provenance",
+    "status",
     "validation_status",
+    "locators",
+    "source_anchored",
+    "element_locatable",
+    "proof_trace_eligible",
     "compiler_metadata",
 ]
+
+FORBIDDEN_ARTIFACT_ID_TOKENS = ("record_index", "question_id", "question", "answer", "gold")
 
 
 def validate_page_artifact_output_schema(
@@ -275,6 +285,22 @@ def validate_evidence_artifact_schema(
             )
         )
 
+    if raw_artifact["page_id"] != page_id_for(doc_id, page_index):
+        issues.append(
+            ValidationIssue(
+                error_type=ValidationErrorType.schema_invalid,
+                message="artifact.page_id must match artifact doc_id and page_index.",
+                doc_id=doc_id,
+                page_index=page_index,
+                artifact_id=artifact_id,
+                field_path="page_id",
+                details={
+                    "observed_value": raw_artifact.get("page_id"),
+                    "expected_value": page_id_for(doc_id, page_index),
+                },
+            )
+        )
+
     if raw_artifact["page_index"] != page_index:
         issues.append(
             ValidationIssue(
@@ -288,6 +314,20 @@ def validate_evidence_artifact_schema(
                     "observed_value": raw_artifact.get("page_index"),
                     "expected_value": page_index,
                 },
+            )
+        )
+
+    artifact_id_text = str(raw_artifact["artifact_id"]).lower()
+    if any(token in artifact_id_text for token in FORBIDDEN_ARTIFACT_ID_TOKENS):
+        issues.append(
+            ValidationIssue(
+                error_type=ValidationErrorType.invalid_artifact_id,
+                message="artifact_id must not include record, question, answer, or gold-derived tokens.",
+                doc_id=doc_id,
+                page_index=page_index,
+                artifact_id=artifact_id,
+                field_path="artifact_id",
+                details={"observed_value": raw_artifact.get("artifact_id")},
             )
         )
 
@@ -330,6 +370,19 @@ def validate_evidence_artifact_schema(
             )
         )
 
+    if raw_artifact["status"] not in get_allowed_validation_statuses():
+        issues.append(
+            ValidationIssue(
+                error_type=ValidationErrorType.invalid_validation_status,
+                message="status is not allowed.",
+                doc_id=doc_id,
+                page_index=page_index,
+                artifact_id=artifact_id,
+                field_path="status",
+                details={"observed_value": raw_artifact.get("status")},
+            )
+        )
+
     if not isinstance(raw_artifact["content"], str) or not raw_artifact["content"].strip():
         issues.append(
             ValidationIssue(
@@ -348,6 +401,13 @@ def validate_evidence_artifact_schema(
 
     if not isinstance(raw_artifact["compiler_metadata"], dict):
         issues.append(_schema_type_issue(raw_artifact, doc_id, page_index, "compiler_metadata", "dict"))
+
+    if not isinstance(raw_artifact["locators"], list):
+        issues.append(_schema_type_issue(raw_artifact, doc_id, page_index, "locators", "list"))
+
+    for field_name in ("source_anchored", "element_locatable", "proof_trace_eligible"):
+        if not isinstance(raw_artifact[field_name], bool):
+            issues.append(_schema_type_issue(raw_artifact, doc_id, page_index, field_name, "bool"))
 
     if not isinstance(raw_artifact["source_anchors"], list) or not raw_artifact["source_anchors"]:
         issues.append(
@@ -549,7 +609,13 @@ def validate_page_artifact_output(
     doc_id = raw_output["doc_id"]
     page_index = raw_output["page_index"]
     artifact_issues_by_id: Dict[int, List[ValidationIssue]] = {}
-    artifacts = raw_output.get("artifacts", [])
+    raw_artifacts = raw_output.get("artifacts", [])
+    artifacts = [
+        _normalize_artifact_schema_aliases(raw_artifact, doc_id, page_index)
+        if isinstance(raw_artifact, dict)
+        else raw_artifact
+        for raw_artifact in raw_artifacts
+    ]
 
     for index, raw_artifact in enumerate(artifacts):
         artifact_issues = validate_evidence_artifact_schema(raw_artifact, doc_id, page_index)
@@ -571,9 +637,26 @@ def validate_page_artifact_output(
             continue
         anchored_artifact = dict(raw_artifact)
         anchored_artifact["validation_status"] = "anchored"
+        anchored_artifact["status"] = "anchored"
         valid_artifacts.append(anchored_artifact)
 
     return valid_artifacts, issues
+
+
+def _normalize_artifact_schema_aliases(raw_artifact: Dict[str, Any], doc_id: str, page_index: int) -> Dict[str, Any]:
+    normalized = dict(raw_artifact)
+    normalized.setdefault("page_id", page_id_for(doc_id, page_index))
+    if "status" not in normalized and "validation_status" in normalized:
+        normalized["status"] = normalized["validation_status"]
+    if "validation_status" not in normalized and "status" in normalized:
+        normalized["validation_status"] = normalized["status"]
+    normalized.setdefault("status", "candidate")
+    normalized.setdefault("validation_status", normalized.get("status", "candidate"))
+    normalized.setdefault("locators", [])
+    normalized.setdefault("source_anchored", False)
+    normalized.setdefault("element_locatable", False)
+    normalized.setdefault("proof_trace_eligible", False)
+    return normalized
 
 
 def _schema_type_issue(
@@ -1006,9 +1089,11 @@ def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any
 
     doc_id = page_input["doc_id"]
     page_index = int(page_input["page_index"])
+    page_id = page_id_for(doc_id, page_index)
     normalized_output = dict(raw_output)
     normalized_output["doc_id"] = doc_id
     normalized_output["page_index"] = page_index
+    normalized_output["page_id"] = page_id
 
     artifacts = raw_output.get("artifacts")
     if not isinstance(artifacts, list):
@@ -1022,6 +1107,11 @@ def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any
         normalized_artifact = dict(artifact)
         normalized_artifact["doc_id"] = doc_id
         normalized_artifact["page_index"] = page_index
+        normalized_artifact["page_id"] = page_id
+        if "status" not in normalized_artifact and "validation_status" in normalized_artifact:
+            normalized_artifact["status"] = normalized_artifact["validation_status"]
+        if "validation_status" not in normalized_artifact and "status" in normalized_artifact:
+            normalized_artifact["validation_status"] = normalized_artifact["status"]
         anchors = artifact.get("source_anchors")
         if isinstance(anchors, list):
             normalized_artifact["source_anchors"] = [
@@ -1053,68 +1143,9 @@ def _build_user_prompt_for_compile_mode(
 
 
 def enrich_artifact_locators(raw_output: Any, page_input: Dict[str, Any]) -> tuple[Any, List[Dict[str, Any]]]:
-    """Attach available page/block/bbox locators without changing the Stage 2 schema."""
+    """Attach Stage 2 document-generic locator fields."""
 
-    if not isinstance(raw_output, dict) or not isinstance(raw_output.get("artifacts"), list):
-        return raw_output, []
-
-    block_by_id = {
-        str(block.get("block_id")): block
-        for block in page_input.get("layout_blocks", [])
-        if isinstance(block, dict) and block.get("block_id") is not None
-    }
-    normalized_output = dict(raw_output)
-    notes: List[Dict[str, Any]] = []
-    normalized_artifacts: List[Any] = []
-    for artifact in raw_output.get("artifacts", []):
-        if not isinstance(artifact, dict):
-            normalized_artifacts.append(artifact)
-            continue
-        normalized_artifact = dict(artifact)
-        anchors = artifact.get("source_anchors")
-        if not isinstance(anchors, list) or not anchors:
-            normalized_artifacts.append(normalized_artifact)
-            continue
-
-        normalized_anchors: List[Any] = []
-        has_bbox = False
-        has_block = False
-        for anchor in anchors:
-            if not isinstance(anchor, dict):
-                normalized_anchors.append(anchor)
-                continue
-            normalized_anchor = dict(anchor)
-            source_id = normalized_anchor.get("source_id")
-            block = block_by_id.get(str(source_id))
-            if block is not None:
-                has_block = True
-                normalized_anchor["page_index"] = int(block.get("page_index", page_input["page_index"]))
-                if normalized_anchor.get("bbox") in (None, [], "") and block.get("bbox") not in (None, [], ""):
-                    normalized_anchor["bbox"] = block.get("bbox")
-            if normalized_anchor.get("bbox") not in (None, [], ""):
-                has_bbox = True
-            normalized_anchors.append(normalized_anchor)
-        normalized_artifact["source_anchors"] = normalized_anchors
-        if not has_block or not has_bbox:
-            normalized_output.setdefault("uncertain_or_unreadable", [])
-            if isinstance(normalized_output["uncertain_or_unreadable"], list):
-                artifact_id = str(normalized_artifact.get("artifact_id") or "unknown_artifact")
-                reason = "missing_bbox_locator" if has_block else "missing_block_locator"
-                marker = f"{artifact_id}:{reason}"
-                if marker not in normalized_output["uncertain_or_unreadable"]:
-                    normalized_output["uncertain_or_unreadable"].append(marker)
-                notes.append(
-                    {
-                        "artifact_id": normalized_artifact.get("artifact_id"),
-                        "reason": reason,
-                        "has_page_locator": normalized_artifact.get("page_index") is not None,
-                        "has_block_locator": has_block,
-                        "has_bbox_locator": has_bbox,
-                    }
-                )
-        normalized_artifacts.append(normalized_artifact)
-    normalized_output["artifacts"] = normalized_artifacts
-    return normalized_output, notes
+    return _enrich_stage2_artifact_locators(raw_output, page_input)
 
 
 def _count_validation_issue_types(validation_issues: List[ValidationIssue]) -> Dict[str, int]:

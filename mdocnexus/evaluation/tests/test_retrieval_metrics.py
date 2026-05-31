@@ -2,12 +2,17 @@
 
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from mdocnexus.evaluation.retrieval_metrics import (
     evaluate_stage3_retrieval,
     evaluate_stage4_graph_expansion,
 )
+from scripts.eval_stage3_retrieval import main as eval_stage3_main
+from scripts.eval_stage4_graph_expansion import main as eval_stage4_main
 
 
 class RetrievalMetricsTest(unittest.TestCase):
@@ -57,6 +62,32 @@ class RetrievalMetricsTest(unittest.TestCase):
                 records=[{"record_index": 0, "evidence_pages": "[1]"}],
                 formal_edges=[{"source": "artifact:doc.pdf:0:a1", "target": "artifact:doc.pdf:0:a2", "edge_type": "supports"}],
             )
+
+    def test_eval_manifests_are_marked_evaluation_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts = root / "artifacts.jsonl"
+            retrieval = root / "retrieval.jsonl"
+            records = root / "records.json"
+            graph = root / "graph"
+            graph.mkdir()
+            artifacts.write_text(json.dumps(make_artifact("a1")) + "\n", encoding="utf-8")
+            retrieval.write_text(json.dumps({"record_index": 0, "doc_id": "doc.pdf", "retrieved_artifact_ids": ["a1"], "query_hash": "q"}) + "\n", encoding="utf-8")
+            records.write_text(json.dumps([{"record_index": 0, "doc_id": "doc.pdf", "evidence_pages": "[1]"}]), encoding="utf-8")
+            (graph / "edges.jsonl").write_text("", encoding="utf-8")
+            stage3_out = root / "eval" / "stage3"
+            stage4_out = root / "eval" / "stage4"
+
+            eval_stage3_main(["--retrieval", str(retrieval), "--artifacts", str(artifacts), "--records", str(records), "--output-dir", str(stage3_out)])
+            eval_stage4_main(["--retrieval", str(retrieval), "--artifacts", str(artifacts), "--records", str(records), "--graph", str(graph), "--output-dir", str(stage4_out)])
+
+            stage3_manifest = json.loads((stage3_out / "manifest.json").read_text(encoding="utf-8"))
+            stage4_manifest = json.loads((stage4_out / "manifest.json").read_text(encoding="utf-8"))
+
+        self.assertTrue(stage3_manifest["evaluation_only"])
+        self.assertTrue(stage3_manifest["not_consumed_by_stage2_stage3_stage4"])
+        self.assertTrue(stage4_manifest["evaluation_only"])
+        self.assertTrue(stage4_manifest["not_consumed_by_stage2_stage3_stage4"])
 
 
 def make_artifact(

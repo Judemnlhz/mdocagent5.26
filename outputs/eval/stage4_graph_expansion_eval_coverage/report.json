@@ -1,0 +1,48 @@
+{
+  "delta_coverage_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "delta_recall_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "edge_types_used": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "evaluation_only": true,
+  "expansion_factor": 0.03727865796831314,
+  "flat_coverage_at_k": {
+    "1": 0.002516309412861137,
+    "3": 0.0034482758620689655,
+    "5": 0.0034482758620689655
+  },
+  "flat_recall_at_k": {
+    "1": 0.003727865796831314,
+    "3": 0.004659832246039142,
+    "5": 0.004659832246039142
+  },
+  "graph_coverage_at_k": {
+    "1": 0.002516309412861137,
+    "3": 0.0034482758620689655,
+    "5": 0.0034482758620689655
+  },
+  "graph_recall_at_k": {
+    "1": 0.003727865796831314,
+    "3": 0.004659832246039142,
+    "5": 0.004659832246039142
+  },
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

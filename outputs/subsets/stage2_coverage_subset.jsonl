@@ -1,0 +1,5 @@
+{"doc_id": "05-03-18-political-release.pdf", "page_indices": [0, 1], "selection_policy": "doc_id_deduplicated_stable_sort_first_n", "source_input": "outputs/stage3_query/public_queries.jsonl"}
+{"doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf", "page_indices": [0, 1], "selection_policy": "doc_id_deduplicated_stable_sort_first_n", "source_input": "outputs/stage3_query/public_queries.jsonl"}
+{"doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf", "page_indices": [0, 1], "selection_policy": "doc_id_deduplicated_stable_sort_first_n", "source_input": "outputs/stage3_query/public_queries.jsonl"}
+{"doc_id": "11-21-16-Updated-Post-Election-Release.pdf", "page_indices": [0, 1], "selection_policy": "doc_id_deduplicated_stable_sort_first_n", "source_input": "outputs/stage3_query/public_queries.jsonl"}
+{"doc_id": "12-15-15-ISIS-and-terrorism-release-final.pdf", "page_indices": [0, 1], "selection_policy": "doc_id_deduplicated_stable_sort_first_n", "source_input": "outputs/stage3_query/public_queries.jsonl"}

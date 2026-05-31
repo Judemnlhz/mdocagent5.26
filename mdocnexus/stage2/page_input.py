@@ -35,6 +35,7 @@ def build_basic_layout_blocks(
         for chunk_index, chunk in enumerate(chunks):
             normalized_chunk = chunk.strip()
             if normalized_chunk:
+                char_start = chunk_index * TEXT_BLOCK_SIZE
                 blocks.append(
                     {
                         "block_id": f"p{page_index:03d}_text_{chunk_index:04d}",
@@ -42,6 +43,8 @@ def build_basic_layout_blocks(
                         "page_index": page_index,
                         "bbox": None,
                         "text": normalized_chunk,
+                        "char_start": char_start,
+                        "char_end": char_start + len(chunk),
                     }
                 )
 
@@ -216,6 +219,7 @@ def prepare_pages_for_compilation(
         page = {
             "doc_id": doc_id,
             "page_index": page_index,
+            "page_id": f"{doc_id}#p{page_index:03d}",
             "page_text": routed_page_text,
             "page_text_path": routed_page_text_path,
             "page_image_path": routed_page_image_path,

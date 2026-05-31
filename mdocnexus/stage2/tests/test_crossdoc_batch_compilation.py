@@ -130,7 +130,7 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
 
         for forbidden in [
             "SECRET_SHOULD_NOT_LEAK",
-            "proof_trace",
+            '"proof_trace"',
             "verified",
             "answer_supported",
             "proof_used",
@@ -149,6 +149,7 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
             {
                 "record_index",
                 "doc_id",
+                "page_id",
                 "page_index",
                 "artifact_id",
                 "artifact_type",
@@ -157,7 +158,12 @@ class CrossDocBatchCompilationTest(unittest.TestCase):
                 "normalized_content",
                 "source_anchors",
                 "provenance",
+                "status",
                 "validation_status",
+                "locators",
+                "source_anchored",
+                "element_locatable",
+                "proof_trace_eligible",
             },
         )
         self.assertNotIn("compiler_metadata", combined)

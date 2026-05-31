@@ -47,6 +47,11 @@ from mdocnexus.stage2.logs import (
     write_raw_output_log,
     write_stage2_run_manifest,
 )
+from mdocnexus.stage2.locator_enrichment import (
+    classify_artifact_locator,
+    locator_kind_counts as stage2_locator_kind_counts,
+    page_id_for,
+)
 from mdocnexus.stage2.page_input import build_basic_layout_blocks, candidate_input_routes_for_page, load_page_content, prepare_pages_for_compilation
 from mdocnexus.stage2.provider import (
     ArtifactCompilerClient,
@@ -385,6 +390,7 @@ def build_page_input(selected_page: Dict[str, Any], extract_root: str | Path) ->
     page_input = {
         "doc_id": selected_page["doc_id"],
         "page_index": page_index,
+        "page_id": page_id_for(selected_page["doc_id"], page_index),
         "page_text": page_text,
         "page_text_path": page_text_path,
         "page_image_path": page_image_path,
@@ -1426,6 +1432,7 @@ DOC_COMPILE_DEFAULT_MAX_REAL_PAGES = 10
 FINAL_ARTIFACT_FIELDS = [
     "record_index",
     "doc_id",
+    "page_id",
     "page_index",
     "artifact_id",
     "artifact_type",
@@ -1434,7 +1441,12 @@ FINAL_ARTIFACT_FIELDS = [
     "normalized_content",
     "source_anchors",
     "provenance",
+    "status",
     "validation_status",
+    "locators",
+    "source_anchored",
+    "element_locatable",
+    "proof_trace_eligible",
 ]
 FINAL_ARTIFACT_TYPES = {
     "text_span",
@@ -1443,9 +1455,11 @@ FINAL_ARTIFACT_TYPES = {
     "table_cell",
     "figure",
     "caption",
+    "visual_region",
     "visual_observation",
+    "section_header",
 }
-FINAL_MODALITIES = {"text", "image", "table", "figure", "numeric"}
+FINAL_MODALITIES = {"text", "image", "table", "layout", "numeric"}
 CLEAN_OUTPUT_FILENAMES = (
     "artifacts.jsonl",
     "discard.jsonl",
@@ -1758,26 +1772,23 @@ def _project_final_artifact(selected_page: Dict[str, Any], artifact: Dict[str, A
     projected["record_index"] = int(selected_page["record_index"])
     projected["doc_id"] = str(selected_page["doc_id"])
     projected["page_index"] = int(selected_page["page_index"])
+    projected["page_id"] = str(artifact.get("page_id") or page_id_for(projected["doc_id"], projected["page_index"]))
+    projected["status"] = str(artifact.get("status") or artifact.get("validation_status") or "candidate")
+    projected["validation_status"] = str(artifact.get("validation_status") or projected["status"])
+    projected["locators"] = artifact.get("locators") if isinstance(artifact.get("locators"), list) else []
+    classification = classify_artifact_locator(projected)
+    projected["source_anchored"] = bool(artifact.get("source_anchored", classification["source_anchored"]))
+    projected["element_locatable"] = bool(artifact.get("element_locatable", classification["element_locatable"]))
+    projected["proof_trace_eligible"] = bool(artifact.get("proof_trace_eligible", classification["proof_trace_eligible"]))
     return {field: projected.get(field) for field in FINAL_ARTIFACT_FIELDS}
 
 
 def _has_artifact_locator(artifact: Dict[str, Any]) -> bool:
-    anchors = artifact.get("source_anchors")
-    if not isinstance(anchors, list) or not anchors:
-        return False
-    for anchor in anchors:
-        if not isinstance(anchor, dict):
-            continue
-        if anchor.get("source_id") and anchor.get("page_index") is not None:
-            return True
-    return False
+    return bool(classify_artifact_locator(artifact)["source_anchored"])
 
 
 def _has_artifact_bbox_locator(artifact: Dict[str, Any]) -> bool:
-    anchors = artifact.get("source_anchors")
-    if not isinstance(anchors, list):
-        return False
-    return any(isinstance(anchor, dict) and anchor.get("bbox") not in (None, [], "") for anchor in anchors)
+    return bool(stage2_locator_kind_counts(artifact).get("bbox"))
 
 
 def _count_blocking_reasons(records: List[Dict[str, Any]]) -> Dict[str, int]:
@@ -1806,6 +1817,26 @@ def _build_quality_report_from_files(
     call_rows = _read_jsonl(call_log_path) if call_log_path is not None else []
     artifact_type_counts = Counter(str(row.get("artifact_type")) for row in artifacts if row.get("artifact_type"))
     modality_counts = Counter(str(row.get("modality")) for row in artifacts if row.get("modality"))
+    status_counts = Counter(str(row.get("status") or row.get("validation_status") or "unknown") for row in artifacts)
+    locator_kind_counter: Counter[str] = Counter()
+    proof_trace_eligible_by_type: Counter[str] = Counter()
+    num_source_anchored = 0
+    num_element_locatable = 0
+    num_proof_trace_eligible = 0
+    for row in artifacts:
+        classification = classify_artifact_locator(row)
+        if classification["source_anchored"]:
+            num_source_anchored += 1
+        if classification["element_locatable"]:
+            num_element_locatable += 1
+        if classification["proof_trace_eligible"]:
+            num_proof_trace_eligible += 1
+            proof_trace_eligible_by_type[str(row.get("artifact_type") or "unknown")] += 1
+        kind_counts = stage2_locator_kind_counts(row)
+        if kind_counts:
+            locator_kind_counter.update(kind_counts)
+        else:
+            locator_kind_counter[str(classification["locator_kind"])] += 1
     locator_counts = Counter(
         "with_locator" if _has_artifact_locator(row) else "uncertain_or_unreadable"
         for row in artifacts
@@ -1815,6 +1846,7 @@ def _build_quality_report_from_files(
         for row in artifacts
     )
     denominator = len(artifacts) + len(discarded)
+    artifact_denominator = max(1, len(artifacts))
     schema_valid_rate = (len(artifacts) / denominator) if denominator else 1.0
     anchoring_rate = (len(artifacts) / denominator) if denominator else 1.0
     discard_rate = (len(discarded) / denominator) if denominator else 0.0
@@ -1830,6 +1862,17 @@ def _build_quality_report_from_files(
         "discard_rate": discard_rate,
         "artifact_type_counts": dict(sorted(artifact_type_counts.items())),
         "modality_counts": dict(sorted(modality_counts.items())),
+        "status_counts": dict(sorted(status_counts.items())),
+        "num_source_anchored": num_source_anchored,
+        "source_anchored_rate": num_source_anchored / artifact_denominator,
+        "num_element_locatable": num_element_locatable,
+        "element_locator_rate": num_element_locatable / artifact_denominator,
+        "num_proof_trace_eligible": num_proof_trace_eligible,
+        "proof_trace_eligible_rate": num_proof_trace_eligible / artifact_denominator,
+        "proof_trace_eligible_by_type": dict(sorted(proof_trace_eligible_by_type.items())),
+        "locator_kind_counts": dict(sorted(locator_kind_counter.items())),
+        "num_artifacts_without_element_locator": len(artifacts) - num_element_locatable,
+        "discard_reason_counts": dict(sorted(Counter(str(row.get("reason") or "unknown") for row in discarded).items())),
         "locator_status_counts": dict(sorted(locator_counts.items())),
         "bbox_locator_counts": dict(sorted(bbox_locator_counts.items())),
         "blocking_reason_counts": _count_blocking_reasons(records),
@@ -1845,7 +1888,10 @@ def _build_quality_report_from_files(
         "visual_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "visual_observation"),
         "figure_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "figure"),
         "caption_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "caption"),
-        "table_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") in {"table", "table_cell"}),
+        "table_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "table"),
+        "table_cell_artifact_count": sum(1 for row in artifacts if row.get("artifact_type") == "table_cell"),
+        "numeric_fact_count": sum(1 for row in artifacts if row.get("artifact_type") == "numeric_fact"),
+        "visual_region_count": sum(1 for row in artifacts if row.get("artifact_type") == "visual_region"),
         "empty_response_count": sum(1 for row in call_rows if int(row.get("parsed_artifact_count", 0)) == 0 and row.get("call_succeeded") is True),
         "parse_failure_count": sum(1 for row in call_rows if row.get("failure_type") == "parse_failure"),
         "schema_failure_count": sum(1 for row in discarded if str(row.get("reason", "")).startswith("schema") or row.get("reason") == "missing_required_field"),
@@ -1854,7 +1900,7 @@ def _build_quality_report_from_files(
         "provider_call_failed_count": sum(1 for row in call_rows if row.get("call_succeeded") is False),
         "json_parse_success_count": sum(1 for row in call_rows if row.get("call_succeeded") is True),
         "schema_valid_artifact_count": len(artifacts),
-        "anchored_artifact_count": sum(1 for row in artifacts if _has_artifact_locator(row)),
+        "anchored_artifact_count": num_source_anchored,
         "discarded_artifact_count": len(discarded),
     }
 
@@ -1880,6 +1926,7 @@ def _public_stage2_command_args(args: argparse.Namespace | None) -> Dict[str, An
         "max_pages_total": int(getattr(args, "max_pages_total", 0)) if getattr(args, "max_pages_total", None) is not None else None,
         "max_pages_per_call": int(getattr(args, "max_pages_per_call", 1)),
         "max_pages_real_cap": int(getattr(args, "max_pages_real_cap", 10)),
+        "subset_file_used": bool(getattr(args, "subset_file", None)),
         "image_payload_mode": str(getattr(args, "image_payload_mode", "image_url")),
         "save_private_debug": bool(getattr(args, "save_private_debug", False)),
         "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
@@ -2280,7 +2327,10 @@ def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.image_payload_mode = _image_payload_mode(args)
     args.save_private_debug = bool(getattr(args, "save_private_debug", False))
     args.private_debug_dir = str(getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"))
+    args.subset_file = getattr(args, "subset_file", None)
     args.provider_mode = _normalize_doc_compile_provider_mode(args)
+    if args.subset_file and args.provider_mode == "real":
+        raise RuntimeError("Refusing real provider doc-compile for fixed coverage subset runs.")
     if args.provider_mode in {"dry_run", "fake"}:
         args.dry_run_fake_client = True
         args.enable_real_api = False
@@ -2293,6 +2343,14 @@ def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.document_generic = True
     return run_document_generic_batch(args)
 
+
+def _read_document_generic_records(args: argparse.Namespace) -> List[Dict[str, Any]]:
+    stage2_json = getattr(args, "stage2_json", None)
+    if stage2_json not in (None, "") and Path(stage2_json).is_file():
+        return read_json_or_jsonl_records(stage2_json)
+    if getattr(args, "subset_file", None) not in (None, ""):
+        return []
+    return read_json_or_jsonl_records(stage2_json)
 
 def run_document_generic_batch(args: argparse.Namespace, client: ArtifactCompilerClient | None = None) -> Dict[str, Any]:
     validate_crossdoc_args(args)
@@ -2307,13 +2365,14 @@ def run_document_generic_batch(args: argparse.Namespace, client: ArtifactCompile
     raw_output_log_path = private_debug_dir / "raw_outputs.jsonl" if private_debug_dir is not None else None
     api_config = build_crossdoc_api_config(args)
     api_config.image_payload_mode = _image_payload_mode(args)
-    records = read_json_or_jsonl_records(args.stage2_json)
+    records = _read_document_generic_records(args)
     selected_pages = select_document_generic_pages(
         records=records,
         extract_root=args.extract_root,
         max_docs=int(args.max_docs),
         max_pages_per_doc=int(args.max_pages_per_doc),
         max_pages=int(args.max_pages),
+        subset_file=getattr(args, "subset_file", None),
     )
     active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
     schema_dict = build_page_artifact_output_schema_dict()
@@ -2372,7 +2431,18 @@ def select_document_generic_pages(
     max_docs: int,
     max_pages_per_doc: int,
     max_pages: int,
+    subset_file: str | Path | None = None,
 ) -> List[Dict[str, Any]]:
+    if subset_file not in (None, ""):
+        return select_document_generic_pages_from_subset(
+            subset_file=subset_file,
+            records=records,
+            extract_root=extract_root,
+            max_docs=max_docs,
+            max_pages_per_doc=max_pages_per_doc,
+            max_pages=max_pages,
+        )
+
     selected: List[Dict[str, Any]] = []
     doc_counts: Counter[str] = Counter()
     for record_index, record in enumerate(records):
@@ -2410,6 +2480,83 @@ def select_document_generic_pages(
             )
             doc_counts[doc_id] += 1
     return selected
+
+
+def select_document_generic_pages_from_subset(
+    subset_file: str | Path,
+    records: List[Dict[str, Any]],
+    extract_root: str | Path,
+    max_docs: int,
+    max_pages_per_doc: int,
+    max_pages: int,
+) -> List[Dict[str, Any]]:
+    record_index_by_doc = _record_index_by_doc_id(records)
+    selected: List[Dict[str, Any]] = []
+    for doc_id, subset_page_indices in _load_subset_doc_page_indices(subset_file, extract_root):
+        if len({page["doc_id"] for page in selected}) >= int(max_docs):
+            break
+        page_indices = subset_page_indices or discover_document_page_indices(doc_id, extract_root) or [0]
+        pages_added_for_doc = 0
+        for page_index in sorted({int(index) for index in page_indices if int(index) >= 0}):
+            if len(selected) >= int(max_pages):
+                return selected
+            if pages_added_for_doc >= int(max_pages_per_doc):
+                break
+            page_source = build_page_source(doc_id, extract_root, int(page_index))
+            if not page_source.get("has_page_text") and not page_source.get("has_page_image"):
+                continue
+            selected.append(
+                {
+                    "record_index": int(record_index_by_doc.get(doc_id, len(selected))),
+                    "doc_id": doc_id,
+                    "question": None,
+                    "answer_format": None,
+                    "page_index": int(page_index),
+                    "page_number_one_based": int(page_index) + 1,
+                    "selection_reason": "document_generic_coverage_subset",
+                    "page_image_path": page_source.get("page_image_path"),
+                    "page_text_path": page_source.get("page_text_path"),
+                    "layout_block_ids": list(page_source.get("layout_block_ids", [])),
+                    "stage2": {},
+                }
+            )
+            pages_added_for_doc += 1
+    return selected
+
+
+def _record_index_by_doc_id(records: List[Dict[str, Any]]) -> Dict[str, int]:
+    index_by_doc: Dict[str, int] = {}
+    for record_index, record in enumerate(records):
+        if not isinstance(record, dict) or record.get("doc_id") in (None, ""):
+            continue
+        index_by_doc.setdefault(str(record["doc_id"]), int(record.get("record_index", record_index)))
+    return index_by_doc
+
+
+def _load_subset_doc_page_indices(subset_file: str | Path, extract_root: str | Path) -> List[tuple[str, List[int]]]:
+    subset_path = Path(subset_file)
+    rows = _read_jsonl(subset_path) if subset_path.suffix.lower() == ".jsonl" else read_json_or_jsonl_records(subset_path)
+    page_indices_by_doc: Dict[str, List[int]] = {}
+    for row in rows:
+        if not isinstance(row, dict) or row.get("doc_id") in (None, ""):
+            continue
+        doc_id = str(row["doc_id"])
+        if doc_id not in page_indices_by_doc:
+            page_indices_by_doc[doc_id] = []
+        raw_page_indices = row.get("page_indices")
+        if isinstance(raw_page_indices, list):
+            for value in raw_page_indices:
+                try:
+                    page_indices_by_doc[doc_id].append(int(value))
+                except (TypeError, ValueError):
+                    continue
+    result: List[tuple[str, List[int]]] = []
+    for doc_id in sorted(page_indices_by_doc):
+        page_indices = sorted({index for index in page_indices_by_doc[doc_id] if index >= 0})
+        if not page_indices:
+            page_indices = discover_document_page_indices(doc_id, extract_root)
+        result.append((doc_id, page_indices))
+    return result
 
 
 def document_generic_candidate_page_indices(record: Dict[str, Any]) -> List[int]:
@@ -2625,6 +2772,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     doc_compile_parser = subparsers.add_parser("doc-compile", help="Compile question-independent artifacts into outputs/stage2_doc.")
     doc_compile_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
+    doc_compile_parser.add_argument("--subset-file", default=None)
     _add_compile_options(
         doc_compile_parser,
         provider_default="dry_run",

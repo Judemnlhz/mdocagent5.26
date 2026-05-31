@@ -344,6 +344,7 @@ def _read_error_body(error: HTTPError) -> str:
 
 
 from pathlib import Path
+import re
 from typing import Any, Dict, List, Optional
 
 
@@ -361,17 +362,26 @@ def build_mock_page_artifact_output(
     """Build deterministic mock artifacts anchored to existing layout blocks."""
 
     full_page_block = _first_block_of_type(layout_blocks, "full_page_image")
-    text_block = _first_block_of_type(layout_blocks, "text_block")
+    text_blocks = [block for block in layout_blocks if isinstance(block, dict) and block.get("block_type") == "text_block"]
+    text_block = text_blocks[0] if text_blocks else None
     artifacts: List[Dict[str, Any]] = []
 
     if full_page_block is not None:
-        artifacts.append(_build_visual_observation(doc_id, page_index, full_page_block))
+        artifacts.append(_build_visual_observation(doc_id, page_index, full_page_block, len(artifacts) + 1))
+        artifacts.append(_build_visual_region(doc_id, page_index, full_page_block, len(artifacts) + 1))
+        artifacts.append(_build_figure(doc_id, page_index, full_page_block, len(artifacts) + 1))
     if text_block is not None:
-        artifacts.append(_build_text_span(doc_id, page_index, text_block))
+        artifacts.append(_build_text_span(doc_id, page_index, text_block, len(artifacts) + 1))
+        artifacts.append(_build_section_header(doc_id, page_index, text_block, len(artifacts) + 1))
+        artifacts.append(_build_caption(doc_id, page_index, text_block, len(artifacts) + 1))
+        artifacts.append(_build_numeric_fact(doc_id, page_index, text_block, len(artifacts) + 1))
+        artifacts.append(_build_table(doc_id, page_index, text_block, len(artifacts) + 1))
+        artifacts.append(_build_table_cell(doc_id, page_index, text_block, len(artifacts) + 1))
 
     return {
         "doc_id": doc_id,
         "page_index": page_index,
+        "page_id": _page_id(doc_id, page_index),
         "artifacts": artifacts,
         "uncertain_or_unreadable": [],
     }
@@ -381,65 +391,346 @@ def _build_visual_observation(
     doc_id: str,
     page_index: int,
     block: Dict[str, Any],
+    local_index: int,
 ) -> Dict[str, Any]:
     source_id = block["block_id"]
-    return {
-        "artifact_id": f"{_doc_stem(doc_id)}_p{page_index:03d}_visual_observation_0001",
-        "doc_id": doc_id,
-        "page_index": page_index,
-        "artifact_type": "visual_observation",
-        "modality": "image",
-        "content": "Mock visual observation anchored to the full page image.",
-        "normalized_content": {
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="visual_observation",
+        modality="image",
+        local_index=local_index,
+        locator_id=source_id,
+        content="Mock visual observation anchored to the full page image.",
+        normalized_content={
             "observation_scope": "full_page",
             "presence": "undetermined",
         },
-        "source_anchors": [
-            {
-                "source_id": source_id,
-                "anchor_type": "full_page_image",
-                "page_index": page_index,
-                "bbox": None,
-            }
-        ],
-        "provenance": {
-            "op": "ATOM",
-            "sources": [source_id],
-        },
-        "validation_status": "candidate",
-        "compiler_metadata": dict(MOCK_COMPILER_METADATA),
-    }
+        source_anchor=_source_anchor(source_id, "full_page_image", page_index, block.get("bbox")),
+        locators=[{"locator_kind": "full_page_anchor", "source_id": source_id}],
+        source_anchored=True,
+        element_locatable=False,
+        proof_trace_eligible=False,
+    )
+
+
+def _build_visual_region(
+    doc_id: str,
+    page_index: int,
+    block: Dict[str, Any],
+    local_index: int,
+) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    figure_id = f"fig_{page_index:03d}_0001"
+    locators = [{"locator_kind": "full_page_anchor", "source_id": source_id}]
+    bbox = block.get("bbox")
+    if bbox not in (None, [], ""):
+        locators.append({"locator_kind": "bbox", "source_id": source_id, "bbox": bbox})
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="visual_region",
+        modality="layout",
+        local_index=local_index,
+        locator_id=figure_id,
+        content="Mock visual region candidate anchored to the page image.",
+        normalized_content={"figure_id": figure_id, "region_scope": "page_region"},
+        source_anchor=_source_anchor(source_id, "full_page_image", page_index, bbox),
+        locators=locators,
+        source_anchored=True,
+        element_locatable=bbox not in (None, [], ""),
+        proof_trace_eligible=bbox not in (None, [], ""),
+    )
+
+
+def _build_figure(
+    doc_id: str,
+    page_index: int,
+    block: Dict[str, Any],
+    local_index: int,
+) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    figure_id = f"fig_{page_index:03d}_0001"
+    bbox = block.get("bbox")
+    locators = [{"locator_kind": "full_page_anchor", "source_id": source_id}]
+    if bbox not in (None, [], ""):
+        locators.extend(
+            [
+                {"locator_kind": "bbox", "source_id": source_id, "bbox": bbox},
+                {"locator_kind": "figure_region", "figure_id": figure_id, "bbox": bbox},
+            ]
+        )
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="figure",
+        modality="image",
+        local_index=local_index,
+        locator_id=figure_id,
+        content="Mock figure candidate anchored to the page image.",
+        normalized_content={"figure_id": figure_id},
+        source_anchor=_source_anchor(source_id, "full_page_image", page_index, bbox),
+        locators=locators,
+        source_anchored=True,
+        element_locatable=bbox not in (None, [], ""),
+        proof_trace_eligible=bbox not in (None, [], ""),
+    )
 
 
 def _build_text_span(
     doc_id: str,
     page_index: int,
     block: Dict[str, Any],
+    local_index: int,
 ) -> Dict[str, Any]:
     source_id = block["block_id"]
-    return {
-        "artifact_id": f"{_doc_stem(doc_id)}_p{page_index:03d}_text_span_0001",
-        "doc_id": doc_id,
-        "page_index": page_index,
-        "artifact_type": "text_span",
-        "modality": "text",
-        "content": "Mock text span anchored to a text block.",
-        "normalized_content": {},
-        "source_anchors": [
-            {
-                "source_id": source_id,
-                "anchor_type": "text_block",
-                "page_index": page_index,
-                "bbox": None,
-            }
+    char_start, char_end = _text_offsets(block)
+    text_sample = _text_sample(block)
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="text_span",
+        modality="text",
+        local_index=local_index,
+        locator_id=source_id,
+        content=text_sample or "Mock text span anchored to a text block.",
+        normalized_content={
+            "block_id": source_id,
+            "char_start": char_start,
+            "char_end": char_end,
+        },
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[
+            {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+            {"locator_kind": "text_offset", "block_id": source_id, "char_start": char_start, "char_end": char_end},
         ],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _build_section_header(doc_id: str, page_index: int, block: Dict[str, Any], local_index: int) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    char_start, char_end = _text_offsets(block)
+    section_id = f"section_{page_index:03d}_{_local_suffix(local_index)}"
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="section_header",
+        modality="layout",
+        local_index=local_index,
+        locator_id=section_id,
+        content=_first_line(block) or "Mock section header candidate anchored to a text block.",
+        normalized_content={"section_id": section_id, "block_id": source_id, "char_start": char_start, "char_end": char_end},
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[
+            {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+            {"locator_kind": "section_block", "section_id": section_id, "block_id": source_id},
+            {"locator_kind": "text_offset", "block_id": source_id, "char_start": char_start, "char_end": char_end},
+        ],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _build_caption(doc_id: str, page_index: int, block: Dict[str, Any], local_index: int) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    caption_id = f"caption_{page_index:03d}_{_local_suffix(local_index)}"
+    figure_id = f"fig_{page_index:03d}_0001"
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="caption",
+        modality="text",
+        local_index=local_index,
+        locator_id=caption_id,
+        content="Mock caption candidate anchored to a text block.",
+        normalized_content={"caption_id": caption_id, "figure_id": figure_id, "block_id": source_id},
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[
+            {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+            {"locator_kind": "caption_block", "caption_id": caption_id, "block_id": source_id},
+        ],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _build_numeric_fact(doc_id: str, page_index: int, block: Dict[str, Any], local_index: int) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    char_start, char_end = _text_offsets(block)
+    value = _first_number(block)
+    content = f"Mock numeric fact candidate anchored to a text block: {value}." if value else "Mock numeric fact candidate anchored to a text block."
+    normalized_content: Dict[str, Any] = {
+        "block_id": source_id,
+        "char_start": char_start,
+        "char_end": char_end,
+    }
+    if value is not None:
+        normalized_content["value_text"] = value
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="numeric_fact",
+        modality="numeric",
+        local_index=local_index,
+        locator_id=source_id,
+        content=content,
+        normalized_content=normalized_content,
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[
+            {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+            {"locator_kind": "text_offset", "block_id": source_id, "char_start": char_start, "char_end": char_end},
+        ],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _build_table(doc_id: str, page_index: int, block: Dict[str, Any], local_index: int) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    table_id = f"table_{page_index:03d}_0001"
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="table",
+        modality="table",
+        local_index=local_index,
+        locator_id=table_id,
+        content="Mock table candidate anchored to a text block.",
+        normalized_content={"table_id": table_id, "block_id": source_id},
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[{"locator_kind": "source_block", "block_id": source_id, "source_id": source_id}],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _build_table_cell(doc_id: str, page_index: int, block: Dict[str, Any], local_index: int) -> Dict[str, Any]:
+    source_id = block["block_id"]
+    table_id = f"table_{page_index:03d}_0001"
+    return _base_artifact(
+        doc_id=doc_id,
+        page_index=page_index,
+        artifact_type="table_cell",
+        modality="table",
+        local_index=local_index,
+        locator_id=f"{table_id}_r000_c000",
+        content="Mock table cell candidate anchored to a text block.",
+        normalized_content={"table_id": table_id, "row_index": 0, "column_index": 0, "block_id": source_id},
+        source_anchor=_source_anchor(source_id, "text_block", page_index, block.get("bbox")),
+        locators=[
+            {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+            {"locator_kind": "table_cell", "table_id": table_id, "row_index": 0, "column_index": 0},
+        ],
+        source_anchored=True,
+        element_locatable=True,
+        proof_trace_eligible=True,
+    )
+
+
+def _base_artifact(
+    *,
+    doc_id: str,
+    page_index: int,
+    artifact_type: str,
+    modality: str,
+    local_index: int,
+    locator_id: str,
+    content: str,
+    normalized_content: Dict[str, Any],
+    source_anchor: Dict[str, Any],
+    locators: List[Dict[str, Any]],
+    source_anchored: bool,
+    element_locatable: bool,
+    proof_trace_eligible: bool,
+) -> Dict[str, Any]:
+    source_id = str(source_anchor["source_id"])
+    return {
+        "artifact_id": _artifact_id(doc_id, page_index, artifact_type, locator_id, local_index),
+        "doc_id": doc_id,
+        "page_id": _page_id(doc_id, page_index),
+        "page_index": int(page_index),
+        "artifact_type": artifact_type,
+        "modality": modality,
+        "content": content,
+        "normalized_content": normalized_content,
+        "source_anchors": [source_anchor],
         "provenance": {
             "op": "ATOM",
             "sources": [source_id],
         },
+        "status": "candidate",
         "validation_status": "candidate",
+        "locators": locators,
+        "source_anchored": bool(source_anchored),
+        "element_locatable": bool(element_locatable),
+        "proof_trace_eligible": bool(proof_trace_eligible),
         "compiler_metadata": dict(MOCK_COMPILER_METADATA),
     }
+
+
+def _source_anchor(source_id: str, anchor_type: str, page_index: int, bbox: Any) -> Dict[str, Any]:
+    return {
+        "source_id": source_id,
+        "anchor_type": anchor_type,
+        "page_index": int(page_index),
+        "bbox": bbox if bbox not in ([], "") else None,
+    }
+
+
+def _artifact_id(doc_id: str, page_index: int, artifact_type: str, locator_id: str, local_index: int) -> str:
+    _ = artifact_type
+    parts = [
+        _doc_stem(doc_id),
+        f"p{int(page_index):03d}",
+        _safe_id(locator_id),
+        _local_suffix(local_index),
+    ]
+    return "_".join(part for part in parts if part)
+
+
+def _page_id(doc_id: str, page_index: int) -> str:
+    return f"{doc_id}#p{int(page_index):03d}"
+
+
+def _local_suffix(local_index: int) -> str:
+    return f"{int(local_index):04d}"
+
+
+def _safe_id(value: Any) -> str:
+    return "".join(ch if ch.isalnum() or ch in {"_", "-", "."} else "_" for ch in str(value)).strip("_")
+
+
+def _text_offsets(block: Dict[str, Any]) -> tuple[int, int]:
+    if block.get("char_start") not in (None, "") and block.get("char_end") not in (None, ""):
+        return int(block["char_start"]), int(block["char_end"])
+    text = str(block.get("text") or "")
+    return 0, len(text)
+
+
+def _text_sample(block: Dict[str, Any], max_chars: int = 240) -> str:
+    text = " ".join(str(block.get("text") or "").split())
+    return text[:max_chars]
+
+
+def _first_line(block: Dict[str, Any]) -> str:
+    text = str(block.get("text") or "")
+    for line in text.splitlines():
+        clean = " ".join(line.split())
+        if clean:
+            return clean[:160]
+    return ""
+
+
+def _first_number(block: Dict[str, Any]) -> str | None:
+    match = re.search(r"[-+]?\d+(?:[.,]\d+)?%?", str(block.get("text") or ""))
+    return match.group(0) if match else None
 
 
 def _first_block_of_type(

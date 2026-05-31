@@ -93,6 +93,7 @@ FORBIDDEN_OUTPUT_KEYS = {
 }
 FORBIDDEN_TEXT_FRAGMENTS = ("file://", "/home/", "data:image")
 ELEMENT_LOCATOR_KEYS = {
+    "block_id",
     "table_id",
     "figure_id",
     "caption_id",
@@ -107,6 +108,8 @@ ELEMENT_LOCATOR_KEYS = {
     "text_span_offset",
     "text_span_start",
     "text_span_end",
+    "char_start",
+    "char_end",
     "start_offset",
     "end_offset",
 }
@@ -630,6 +633,9 @@ def extract_layout_locator(artifact: dict[str, Any]) -> dict[str, Any]:
     normalized = artifact.get("normalized_content") if isinstance(artifact.get("normalized_content"), dict) else {}
     provenance = artifact.get("provenance") if isinstance(artifact.get("provenance"), dict) else {}
     nested_locators = []
+    locators = artifact.get("locators")
+    if isinstance(locators, list):
+        nested_locators.extend(locator for locator in locators if isinstance(locator, dict))
     for key in ("locator", "element_locator", "layout", "metadata"):
         value = artifact.get(key)
         if isinstance(value, dict):
@@ -647,6 +653,9 @@ def extract_layout_locator(artifact: dict[str, Any]) -> dict[str, Any]:
         "row_index": ("row_index", "row"),
         "column_index": ("column_index", "col_index", "col", "column"),
         "source_block_id": ("source_block_id", "source_id", "block_id"),
+        "block_id": ("block_id", "source_block_id", "source_id"),
+        "char_start": ("char_start", "start_offset", "text_span_start"),
+        "char_end": ("char_end", "end_offset", "text_span_end"),
         "page_sha256": ("page_sha256",),
     }
     for output_key, input_keys in aliases.items():
@@ -1092,8 +1101,8 @@ def make_node_id(prefix: str, *parts: Any) -> str:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Build Stage 4B rule-only document-native structural evidence graph.")
-    parser.add_argument("--artifacts-jsonl", default=DEFAULT_ARTIFACTS_JSONL)
-    parser.add_argument("--retrieval-jsonl", default=DEFAULT_RETRIEVAL_JSONL)
+    parser.add_argument("--artifacts", "--artifacts-jsonl", dest="artifacts_jsonl", default=DEFAULT_ARTIFACTS_JSONL)
+    parser.add_argument("--retrieval", "--retrieval-jsonl", dest="retrieval_jsonl", default=DEFAULT_RETRIEVAL_JSONL)
     parser.add_argument("--stage2-json", default=DEFAULT_STAGE2_JSON)
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     return parser

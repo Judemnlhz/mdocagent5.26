@@ -1,0 +1,97 @@
+{
+  "context_edge_types": [
+    "same_page",
+    "same_source_block"
+  ],
+  "debug_edge_type_counts": {},
+  "debug_edge_types": [],
+  "edge_type_counts": {
+    "adjacent_page": 5,
+    "anchor_on_page": 20,
+    "caption_of": 10,
+    "column_contains_cell": 10,
+    "figure_has_caption": 10,
+    "located_on_page": 90,
+    "row_contains_cell": 10,
+    "same_page": 360,
+    "same_source_block": 180,
+    "section_contains": 10,
+    "supported_by_anchor": 90,
+    "table_contains_cell": 10
+  },
+  "element_locator_rate": 0.6666666666666666,
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "same_page",
+    "same_source_block",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "locator_kind_counts": {
+    "caption_block": 10,
+    "full_page_anchor": 30,
+    "section_block": 10,
+    "table_cell": 10,
+    "text_offset": 30
+  },
+  "node_type_counts": {
+    "artifact": 90,
+    "caption": 10,
+    "figure": 10,
+    "page": 10,
+    "section": 10,
+    "source_anchor": 20,
+    "table": 10,
+    "table_column": 10,
+    "table_row": 10
+  },
+  "num_artifacts": 90,
+  "num_artifacts_with_element_locator": 60,
+  "num_artifacts_with_page_locator": 90,
+  "num_artifacts_with_source_anchor": 90,
+  "num_artifacts_without_element_locator": 30,
+  "num_debug_edges": 0,
+  "num_edges": 805,
+  "num_element_locatable": 60,
+  "num_nodes": 180,
+  "num_proof_trace_eligible": 60,
+  "num_source_anchored": 90,
+  "pairwise_clique_edges_disabled": true,
+  "proof_trace_eligible_by_type": {
+    "caption": 10,
+    "numeric_fact": 10,
+    "section_header": 10,
+    "table": 10,
+    "table_cell": 10,
+    "text_span": 10
+  },
+  "proof_trace_eligible_rate": 0.6666666666666666,
+  "same_record_debug_in_formal_edges": false,
+  "same_record_in_formal_edges": false,
+  "semantic_edges_enabled": false,
+  "skipped_rule_edges_by_reason": {
+    "caption_figure_missing_explicit_pair": 20,
+    "next_block_unparseable_source_block_id": 30,
+    "same_doc_pairwise_clique_disabled": 1
+  },
+  "source_anchored_rate": 1.0
+}

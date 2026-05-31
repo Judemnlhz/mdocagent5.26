@@ -73,7 +73,8 @@ class ArtifactStoreDryRunTest(unittest.TestCase):
             page_index=29,
             layout_blocks=prepared_pages[0]["layout_blocks"],
         )
-        raw_output["artifacts"][0]["source_anchors"][0]["source_id"] = "not_exist"
+        for artifact in raw_output["artifacts"]:
+            artifact["source_anchors"][0]["source_id"] = "not_exist"
         valid_artifacts, issues = validate_page_artifact_output(
             raw_output,
             prepared_pages[0]["layout_blocks"],
@@ -175,7 +176,7 @@ class ArtifactStoreDryRunTest(unittest.TestCase):
             "gold_annotation",
             "baseline_outputs",
             "source_record",
-            "proof_trace",
+            '"proof_trace"',
             "verified",
             "answer_supported",
             "proof_used",

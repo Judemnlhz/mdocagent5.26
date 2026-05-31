@@ -165,7 +165,7 @@ class SmallBatchCompilationTest(unittest.TestCase):
         self.assertTrue(quality_exists)
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["doc_id"], "doc_a.pdf")
-        for forbidden in ["proof_trace", "verified", "answer_supported", "proof_used", "api_key"]:
+        for forbidden in ['"proof_trace"', "verified", "answer_supported", "proof_used", "api_key"]:
             self.assertNotIn(forbidden, store_text)
         self.assertEqual(result["summary"]["num_pages_attempted"], 1)
         self.assertEqual(result["summary"]["num_api_calls"], 0)
@@ -313,7 +313,9 @@ class SmallBatchCompilationTest(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(result["summary"]["artifact_type_counts"], {"text_span": 1, "visual_observation": 1})
+        self.assertEqual(result["summary"]["artifact_type_counts"]["text_span"], 1)
+        self.assertEqual(result["summary"]["artifact_type_counts"]["visual_observation"], 1)
+        self.assertEqual(result["summary"]["artifact_type_counts"]["table_cell"], 1)
 
     def test_doc_compile_image_route_records_payload_audit_without_public_payload(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

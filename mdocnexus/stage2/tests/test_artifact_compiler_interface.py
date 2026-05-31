@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import inspect
 import tempfile
 import unittest
 from pathlib import Path
@@ -17,6 +18,7 @@ from mdocnexus.stage2.provider import (
     RealArtifactCompilerClient,
 )
 from mdocnexus.stage2.artifact_pipeline import run_stage2_compiler_dry_run
+from mdocnexus.stage2.locator_enrichment import enrich_artifact_locators as enrich_stage2_locators
 from mdocnexus.stage2.provider import build_artifact_compiler_user_prompt
 from mdocnexus.stage2.provider import build_document_generic_artifact_compiler_user_prompt
 from mdocnexus.stage2.artifact_schema import (
@@ -92,6 +94,13 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertIn("uncertain_or_unreadable", normalized)
         self.assertEqual(notes[0]["reason"], "missing_bbox_locator")
 
+    def test_locator_enrichment_is_question_independent(self) -> None:
+        source = inspect.getsource(enrich_stage2_locators)
+
+        self.assertNotIn("question", source)
+        self.assertNotIn("answer", source)
+        self.assertNotIn("gold", source)
+
     def test_fake_client_output_validates(self) -> None:
         client = FakeArtifactCompilerClient()
         page_input = make_page_input(29)
@@ -114,6 +123,22 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertEqual(issues, [])
         self.assertGreater(len(valid_artifacts), 0)
         self.assertTrue(all(artifact["validation_status"] == "anchored" for artifact in valid_artifacts))
+
+    def test_fake_artifact_ids_do_not_include_question_or_gold_fields(self) -> None:
+        client = FakeArtifactCompilerClient()
+        page_input = make_page_input(29)
+        user_prompt = build_document_generic_artifact_compiler_user_prompt(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            schema_dict=build_page_artifact_output_schema_dict(),
+        )
+
+        raw_output = client.generate_page_artifacts("system", user_prompt, build_page_artifact_output_schema_dict())
+
+        for artifact in raw_output["artifacts"]:
+            artifact_id = artifact["artifact_id"].lower()
+            for forbidden in ("record_index", "question", "answer", "gold", "secret"):
+                self.assertNotIn(forbidden, artifact_id)
 
     def test_real_client_disabled_by_default(self) -> None:
         client = RealArtifactCompilerClient(enable_real_api=False)
@@ -291,7 +316,7 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
             )
             store_text = output_path.read_text(encoding="utf-8")
 
-        for forbidden in ["proof_trace", "verified", "answer_supported", "proof_used"]:
+        for forbidden in ['"proof_trace"', "verified", "answer_supported", "proof_used"]:
             self.assertNotIn(forbidden, store_text)
             self.assertNotIn(forbidden, get_allowed_validation_statuses())
 

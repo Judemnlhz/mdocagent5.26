@@ -254,6 +254,17 @@ class EvidenceGraphTest(unittest.TestCase):
         self.assertFalse(is_proof_trace_eligible(incomplete))
         self.assertTrue(is_proof_trace_eligible(complete))
 
+    def test_figure_and_caption_locator_policy(self) -> None:
+        full_page_figure = make_artifact("fig_full_page", artifact_type="figure", source_id="p000_full_page_image", normalized_content={"figure_id": "fig1"})
+        full_page_figure["source_anchors"][0]["anchor_type"] = "full_page_image"
+        bbox_figure = make_artifact("fig_bbox", artifact_type="figure", normalized_content={"figure_id": "fig1"})
+        bbox_figure["source_anchors"][0]["bbox"] = [0.1, 0.1, 0.5, 0.5]
+        caption = make_artifact("caption", artifact_type="caption", normalized_content={"caption_id": "cap1", "block_id": "p000_text_0000"})
+
+        self.assertFalse(is_proof_trace_eligible(full_page_figure))
+        self.assertTrue(is_proof_trace_eligible(bbox_figure))
+        self.assertTrue(is_proof_trace_eligible(caption))
+
 
 def make_artifact(
     artifact_id: str,

@@ -1,0 +1,62 @@
+{
+  "actual_image_payload_kinds": [
+    "none"
+  ],
+  "artifacts_hash": "de6e2e71642bd1349a5007f96ce36d36339df9c0ba1552622286f62b9bb14c32",
+  "call_log_hash": "0dbc960aa00730c14fa4e7d58a47e963059ac50e3364992be89ad13eef57ed7d",
+  "command_args": {
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": false,
+    "image_payload_mode": "none",
+    "max_docs": 5,
+    "max_pages": 10,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 2,
+    "max_pages_real_cap": 10,
+    "max_pages_total": null,
+    "max_retries": 2,
+    "model_name_recorded": true,
+    "provider": "fake",
+    "provider_mode": "fake",
+    "run_real_trial": false,
+    "save_private_debug": false,
+    "subset_file_used": true
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "58ada140463cce3166ff8bc401a6a3e53ef48a95",
+  "image_payload_modes": [
+    "none"
+  ],
+  "image_sha256_summary": {
+    "count": 0,
+    "values": []
+  },
+  "image_sha256_values": [],
+  "input_hash_unavailable_reason": "input_file_missing",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 90,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 0,
+  "pages_without_image_payload": 10,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v1",
+  "provider_body_redacted": true,
+  "provider_call_count": 10,
+  "provider_modes": [
+    "fake"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "ceabb729802243564b6f147189c9a7aeea15887b33dc3e5d68f911352c99e530",
+  "schema_version": "stage2_artifact_schema_v1"
+}

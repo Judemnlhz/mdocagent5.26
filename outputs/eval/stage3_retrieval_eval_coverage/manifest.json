@@ -1,0 +1,9 @@
+{
+  "artifacts_jsonl": "outputs/stage2_doc_coverage/artifacts.jsonl",
+  "evaluation_only": true,
+  "not_consumed_by_stage2_stage3_stage4": true,
+  "output_dir": "outputs/eval/stage3_retrieval_eval_coverage",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_jsonl": "outputs/stage3_doc_artifact_retrieval_coverage/retrieval.jsonl",
+  "stage": "stage3_retrieval_eval"
+}
