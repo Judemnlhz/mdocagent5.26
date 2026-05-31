@@ -196,7 +196,7 @@
       ],
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\n  \"config_files_checked\": [\n    \"config/model/deepseekv3.yaml\",\n    \"config/model/qwen3.yaml\",\n    \"config/model/qwen3vl.yaml\"\n  ],\n  \"config_violations\": [],\n  \"evaluation_model_violations\": [],\n  \"experiment_model_violations\": [],\n  \"model_ids\": {\n    \"config/model/deepseekv3.yaml\": \"deepseek-ai/DeepSeek-V3\",\n    \"config/model/qwen3.yaml\": \"Qwen/Qwen3-8B\",\n    \"config/model/qwen3vl.yaml\": \"Qwen/Qwen3-VL-8B-Instruct\"\n  },\n  \"public_secret_violations\": [],\n  \"stage2_model_violations\": [],\n  \"stage3_model_violations\": [],\n  \"stage4_model_violations\": [],\n  \"status\": \"pass\"\n}\n"
+      "stdout_tail": "{\n  \"config_files_checked\": [\n    \"config/model/deepseekv3.yaml\",\n    \"config/model/qwen3.yaml\",\n    \"config/model/qwen3vl.yaml\"\n  ],\n  \"config_violations\": [],\n  \"evaluation_model_violations\": [],\n  \"experiment_model_violations\": [],\n  \"model_ids\": {\n    \"config/model/deepseekv3.yaml\": \"deepseek-ai/DeepSeek-V3\",\n    \"config/model/qwen3.yaml\": \"Qwen/Qwen3-8B\",\n    \"config/model/qwen3vl.yaml\": \"Qwen/Qwen3-VL-8B-Instruct\"\n  },\n  \"public_credential_violations\": [],\n  \"stage2_model_violations\": [],\n  \"stage3_model_violations\": [],\n  \"stage4_model_violations\": [],\n  \"status\": \"pass\"\n}\n"
     }
   ],
   "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",

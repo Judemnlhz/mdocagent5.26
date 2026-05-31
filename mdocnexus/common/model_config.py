@@ -190,7 +190,7 @@ def audit_model_configs(
 ) -> dict[str, Any]:
     config_files_checked: list[str] = []
     model_ids: dict[str, str | None] = {}
-    public_secret_violations: list[dict[str, str]] = []
+    public_credential_violations: list[dict[str, str]] = []
     config_by_path: dict[str, dict[str, Any]] = {}
     for path in config_paths:
         config_path = Path(path)
@@ -199,10 +199,10 @@ def audit_model_configs(
         config_by_path[str(config_path)] = config
         model_ids[str(config_path)] = model_id_from_config(config)
         if config.get("api_key") not in (None, ""):
-            public_secret_violations.append({"path": str(config_path), "reason": "non_empty_api_key_in_model_config"})
+            public_credential_violations.append({"path": str(config_path), "reason": "non_empty_api_key_in_model_config"})
         for key, value in config.items():
             if str(key).lower() in SECRET_KEYS and value not in (None, ""):
-                public_secret_violations.append({"path": str(config_path), "reason": f"non_empty_secret_field:{key}"})
+                public_credential_violations.append({"path": str(config_path), "reason": f"non_empty_credential_field:{key}"})
 
     stage2_model_violations = validate_stage_outputs(stage2_dirs, stage_name="stage2", allow_deepseek=False)
     stage3_model_violations = validate_stage_outputs(stage3_dirs, stage_name="stage3", allow_deepseek=False)
@@ -216,7 +216,7 @@ def audit_model_configs(
         + stage4_model_violations
         + evaluation_model_violations
         + experiment_violations
-        + public_secret_violations
+        + public_credential_violations
         + config_violations
     )
     return {
@@ -227,7 +227,7 @@ def audit_model_configs(
         "stage4_model_violations": stage4_model_violations,
         "evaluation_model_violations": evaluation_model_violations,
         "experiment_model_violations": experiment_violations,
-        "public_secret_violations": public_secret_violations,
+        "public_credential_violations": public_credential_violations,
         "config_violations": config_violations,
         "status": "fail" if all_violations else "pass",
     }
