@@ -1,0 +1,80 @@
+{
+  "expansion_mode": "page_neighborhood",
+  "no_gold_fields_used": true,
+  "retrieval_method": "deterministic_hybrid",
+  "run_name": "retrieval_topk_hybrid_page",
+  "scope_mode": "retrieval_topk_scope",
+  "stage2_artifact_coverage": {
+    "artifact_type_counts": {
+      "caption": 50,
+      "figure": 50,
+      "numeric_fact": 50,
+      "section_header": 50,
+      "table": 50,
+      "table_cell": 50,
+      "text_span": 50,
+      "visual_observation": 50,
+      "visual_region": 50
+    },
+    "image_payload_rate": 0.0,
+    "num_artifacts": 450,
+    "num_selected_docs": 17,
+    "num_selected_pages": 50,
+    "proof_trace_eligible_rate": 0.6666666666666666
+  },
+  "stage3_retrieval": {
+    "artifact_coverage_rate": 0.11742777260018639,
+    "coverage_at_k_by_page": {
+      "1": 0.02190121155638397,
+      "3": 0.031997514756135444,
+      "5": 0.03479341410375893
+    },
+    "num_queries_with_doc_artifacts": 126,
+    "num_queries_with_nonzero_scores": 126,
+    "recall_at_k_by_page": {
+      "1": 0.027958993476234855,
+      "3": 0.0391425908667288,
+      "5": 0.04193849021435228
+    },
+    "zero_hit_query_count": 947
+  },
+  "stage4_graph_expansion": {
+    "avg_added_artifacts": 2.0298229263746506,
+    "delta_coverage_at_k": {
+      "1": 0.006989748369058715,
+      "3": 0.005591798695246966,
+      "5": 0.002795899347623483
+    },
+    "delta_recall_at_k": {
+      "1": 0.00465983224603914,
+      "3": 0.004659832246039143,
+      "5": 0.00186393289841566
+    },
+    "expanded_coverage_at_k": {
+      "1": 0.028890959925442685,
+      "3": 0.03758931345138241,
+      "5": 0.03758931345138241
+    },
+    "expanded_recall_at_k": {
+      "1": 0.032618825722273995,
+      "3": 0.04380242311276794,
+      "5": 0.04380242311276794
+    },
+    "expansion_factor": 0.5233923578751162,
+    "flat_coverage_at_k": {
+      "1": 0.02190121155638397,
+      "3": 0.031997514756135444,
+      "5": 0.03479341410375893
+    },
+    "flat_recall_at_k": {
+      "1": 0.027958993476234855,
+      "3": 0.0391425908667288,
+      "5": 0.04193849021435228
+    },
+    "num_edges": 4011,
+    "used_debug_edges": false,
+    "used_semantic_edges": false
+  },
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

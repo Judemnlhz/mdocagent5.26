@@ -1,8 +1,9 @@
 """Deterministic document-generic artifact retrieval for Stage 3.
 
-The retriever ranks Stage 2 document-generic artifacts with lexical scoring.
-It may read query text, but it ignores gold/evaluation-only fields and never
-calls a model provider or generates an answer.
+The retriever ranks Stage 2 document-generic artifacts with deterministic
+lexical or hybrid scoring. It may read public query text, but it ignores
+Gold/evaluation-only fields and never calls a model provider or generates an
+answer.
 """
 
 from __future__ import annotations
@@ -16,14 +17,20 @@ from pathlib import Path
 import re
 import subprocess
 from typing import Any, Iterable
+from urllib.parse import unquote
+
+from mdocnexus.stage2.locator_enrichment import classify_artifact_locator
 
 
 DEFAULT_ARTIFACTS_JSONL = "outputs/stage2_doc/artifacts.jsonl"
 DEFAULT_QUERY_INPUT = "outputs/stage3_query/public_queries.jsonl"
 DEFAULT_OUTPUT_DIR = "outputs/stage3_doc_artifact_retrieval"
 DEFAULT_TOP_K = 5
-RETRIEVAL_METHOD = "deterministic_lexical"
+DEFAULT_RETRIEVAL_METHOD = "deterministic_lexical"
+RETRIEVAL_METHODS = {"deterministic_lexical", "deterministic_hybrid"}
 SCHEMA_VERSION = "stage3_doc_artifact_retrieval_v1"
+SEMANTIC_EDGE_TYPES = {"supports", "contradicts", "derived_from", "semantic_relation", "entails", "refutes"}
+DEBUG_EDGE_TYPES = {"same_record", "same_record_debug"}
 
 GOLD_FIELD_NAMES = {
     "answer",
@@ -81,12 +88,16 @@ def run_doc_artifact_retrieval(
     query_input_path: str | Path = DEFAULT_QUERY_INPUT,
     output_dir: str | Path = DEFAULT_OUTPUT_DIR,
     top_k: int = DEFAULT_TOP_K,
+    retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
+    graph_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """Rank document-generic artifacts for each query and write public outputs."""
 
     top_k = int(top_k)
     if top_k < 1:
         raise ValueError("top_k must be at least 1")
+    if retrieval_method not in RETRIEVAL_METHODS:
+        raise ValueError(f"Unsupported retrieval_method: {retrieval_method}")
 
     artifacts_path = Path(artifacts_jsonl_path)
     query_path = Path(query_input_path)
@@ -97,6 +108,7 @@ def run_doc_artifact_retrieval(
     queries = load_query_records(query_path)
     artifacts_hash = file_sha256(artifacts_path)
     query_input_hash = file_sha256(query_path)
+    graph_prior, graph_edges_hash = load_graph_prior(graph_path)
     artifacts_by_doc = group_artifacts_by_doc_id(artifacts)
 
     retrieval_rows: list[dict[str, Any]] = []
@@ -107,6 +119,8 @@ def run_doc_artifact_retrieval(
             query_text=str(query.get("question") or ""),
             candidate_artifacts=candidate_artifacts,
             top_k=top_k,
+            retrieval_method=retrieval_method,
+            graph_prior=graph_prior,
         )
         row = build_retrieval_row(
             query=query,
@@ -115,6 +129,7 @@ def run_doc_artifact_retrieval(
             candidate_count=len(candidate_artifacts),
             top_k=top_k,
             artifacts_hash=artifacts_hash,
+            retrieval_method=retrieval_method,
         )
         assert_no_forbidden_public_fields(row)
         retrieval_rows.append(row)
@@ -123,7 +138,7 @@ def run_doc_artifact_retrieval(
     write_jsonl(retrieval_path, retrieval_rows)
     retrieval_hash = canonical_json_hash(retrieval_rows)
 
-    quality_report = build_quality_report(retrieval_rows, top_k=top_k)
+    quality_report = build_quality_report(retrieval_rows, top_k=top_k, retrieval_method=retrieval_method, graph_prior_enabled=bool(graph_prior))
     assert_no_forbidden_public_fields(quality_report)
     quality_report_hash = canonical_json_hash(quality_report)
     quality_report_path = output_root / "quality_report.json"
@@ -137,6 +152,9 @@ def run_doc_artifact_retrieval(
         retrieval_hash=retrieval_hash,
         quality_report_hash=quality_report_hash,
         top_k=top_k,
+        retrieval_method=retrieval_method,
+        graph_path=graph_path,
+        graph_edges_hash=graph_edges_hash,
     )
     assert_no_forbidden_public_fields(manifest)
     manifest_path = output_root / "manifest.json"
@@ -203,15 +221,64 @@ def group_artifacts_by_doc_id(artifacts: Iterable[dict[str, Any]]) -> dict[str, 
     return dict(grouped)
 
 
-def rank_artifacts(query_text: str, candidate_artifacts: list[dict[str, Any]], top_k: int) -> list[tuple[dict[str, Any], float]]:
+def rank_artifacts(
+    query_text: str,
+    candidate_artifacts: list[dict[str, Any]],
+    top_k: int,
+    retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
+    graph_prior: dict[str, float] | None = None,
+) -> list[tuple[dict[str, Any], float, dict[str, float]]]:
     if not candidate_artifacts:
         return []
     query_tokens = tokenize(query_text)
     artifact_tokens = [tokenize(artifact_retrieval_text(artifact)) for artifact in candidate_artifacts]
-    scores = bm25_scores(query_tokens, artifact_tokens)
-    scored = [(artifact, round(float(score), 8)) for artifact, score in zip(candidate_artifacts, scores)]
+    lexical_scores = bm25_scores(query_tokens, artifact_tokens)
+    scored: list[tuple[dict[str, Any], float, dict[str, float]]] = []
+    for artifact, lexical_score in zip(candidate_artifacts, lexical_scores):
+        components = score_components(
+            query_tokens=query_tokens,
+            artifact=artifact,
+            lexical_score=float(lexical_score),
+            graph_prior=graph_prior or {},
+            retrieval_method=retrieval_method,
+        )
+        total_score = components["lexical_score"]
+        if retrieval_method == "deterministic_hybrid":
+            total_score = (
+                components["lexical_score"]
+                + 0.50 * components["metadata_score"]
+                + 0.25 * components["locator_score"]
+                + 0.25 * components["type_modality_score"]
+                + 0.25 * components["graph_prior_score"]
+            )
+        scored.append((artifact, round(float(total_score), 8), {key: round(float(value), 8) for key, value in components.items()}))
     scored.sort(key=lambda item: (-item[1], str(item[0].get("artifact_id") or "")))
     return scored[:top_k]
+
+
+def score_components(
+    query_tokens: list[str],
+    artifact: dict[str, Any],
+    lexical_score: float,
+    graph_prior: dict[str, float],
+    retrieval_method: str,
+) -> dict[str, float]:
+    if retrieval_method == "deterministic_lexical":
+        return {
+            "lexical_score": float(lexical_score),
+            "metadata_score": 0.0,
+            "locator_score": 0.0,
+            "type_modality_score": 0.0,
+            "graph_prior_score": 0.0,
+        }
+    query_set = set(query_tokens)
+    return {
+        "lexical_score": float(lexical_score),
+        "metadata_score": token_overlap_score(query_set, artifact_metadata_tokens(artifact)),
+        "locator_score": locator_quality_score(artifact),
+        "type_modality_score": token_overlap_score(query_set, tokenize(f"{artifact.get('artifact_type', '')} {artifact.get('modality', '')}")),
+        "graph_prior_score": float(graph_prior.get(str(artifact.get("artifact_id") or ""), 0.0)),
+    }
 
 
 def bm25_scores(query_tokens: list[str], document_tokens: list[list[str]]) -> list[float]:
@@ -264,20 +331,53 @@ def artifact_retrieval_text(artifact: dict[str, Any]) -> str:
     return "\n".join(chunks)
 
 
+def artifact_metadata_tokens(artifact: dict[str, Any]) -> list[str]:
+    chunks: list[str] = []
+    for key in ("artifact_type", "modality", "artifact_id", "page_id", "status", "validation_status"):
+        if artifact.get(key) not in (None, ""):
+            chunks.append(str(artifact.get(key)))
+    for key in ("normalized_content", "locators", "source_anchors", "provenance"):
+        value = artifact.get(key)
+        if value not in (None, "", []):
+            chunks.append(json.dumps(value, ensure_ascii=False, sort_keys=True))
+    return tokenize("\n".join(chunks))
+
+
+def token_overlap_score(query_tokens: set[str], candidate_tokens: list[str]) -> float:
+    if not query_tokens:
+        return 0.0
+    return len(query_tokens & set(candidate_tokens)) / len(query_tokens)
+
+
+def locator_quality_score(artifact: dict[str, Any]) -> float:
+    classification = classify_artifact_locator(artifact)
+    score = 0.0
+    if classification.get("source_anchored"):
+        score += 0.20
+    if classification.get("element_locatable"):
+        score += 0.30
+    if classification.get("proof_trace_eligible"):
+        score += 0.50
+    return score
+
+
 def build_retrieval_row(
     query: dict[str, Any],
     doc_id: str,
-    ranked_artifacts: list[tuple[dict[str, Any], float]],
+    ranked_artifacts: list[tuple[dict[str, Any], float, dict[str, float]]],
     candidate_count: int,
     top_k: int,
     artifacts_hash: str,
+    retrieval_method: str,
 ) -> dict[str, Any]:
+    component_averages = average_components([components for _, _, components in ranked_artifacts])
     row: dict[str, Any] = {
         "record_index": int(query.get("record_index", -1)),
         "doc_id": doc_id,
-        "retrieved_artifact_ids": [str(artifact.get("artifact_id")) for artifact, _ in ranked_artifacts],
-        "retrieval_scores": [score for _, score in ranked_artifacts],
-        "retrieval_method": RETRIEVAL_METHOD,
+        "retrieved_artifact_ids": [str(artifact.get("artifact_id")) for artifact, _, _ in ranked_artifacts],
+        "retrieval_scores": [score for _, score, _ in ranked_artifacts],
+        "retrieval_score_components": component_averages,
+        "retrieval_method": retrieval_method,
         "top_k": int(top_k),
         "candidate_artifact_count": int(candidate_count),
         "used_debug_edges": False,
@@ -295,6 +395,13 @@ def build_retrieval_row(
     return row
 
 
+def average_components(component_rows: list[dict[str, float]]) -> dict[str, float]:
+    names = ["lexical_score", "metadata_score", "locator_score", "type_modality_score", "graph_prior_score"]
+    if not component_rows:
+        return {name: 0.0 for name in names}
+    return {name: round(sum(float(row.get(name, 0.0)) for row in component_rows) / len(component_rows), 8) for name in names}
+
+
 def query_public_identity(query: dict[str, Any]) -> dict[str, Any]:
     return {
         key: query.get(key)
@@ -303,12 +410,23 @@ def query_public_identity(query: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def build_quality_report(result_rows: list[dict[str, Any]], top_k: int) -> dict[str, Any]:
+def build_quality_report(
+    result_rows: list[dict[str, Any]],
+    top_k: int,
+    retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
+    graph_prior_enabled: bool = False,
+) -> dict[str, Any]:
     num_queries = len(result_rows)
     denominator = max(1, num_queries)
     with_artifacts = sum(1 for row in result_rows if int(row.get("candidate_artifact_count", 0)) > 0)
     total_candidates = sum(int(row.get("candidate_artifact_count", 0)) for row in result_rows)
     total_retrieved = sum(len(row.get("retrieved_artifact_ids", [])) for row in result_rows)
+    component_names = ["lexical_score", "metadata_score", "locator_score", "type_modality_score", "graph_prior_score"]
+    component_averages = {
+        name: sum(float(row.get("retrieval_score_components", {}).get(name, 0.0)) for row in result_rows) / denominator
+        for name in component_names
+    }
+    num_nonzero = sum(1 for row in result_rows if any(float(score) > 0.0 for score in row.get("retrieval_scores", [])))
     return {
         "num_queries": num_queries,
         "num_queries_with_doc_artifacts": with_artifacts,
@@ -316,13 +434,59 @@ def build_quality_report(result_rows: list[dict[str, Any]], top_k: int) -> dict[
         "artifact_coverage_rate": with_artifacts / denominator,
         "avg_candidate_artifacts_per_query": total_candidates / denominator,
         "avg_retrieved_artifacts_per_query": total_retrieved / denominator,
-        "retrieval_method": RETRIEVAL_METHOD,
+        "retrieval_method": retrieval_method,
+        "scoring_components": component_names,
+        "avg_lexical_score": component_averages["lexical_score"],
+        "avg_metadata_score": component_averages["metadata_score"],
+        "avg_locator_score": component_averages["locator_score"],
+        "avg_graph_prior_score": component_averages["graph_prior_score"],
+        "avg_type_modality_score": component_averages["type_modality_score"],
+        "num_queries_with_nonzero_scores": num_nonzero,
+        "graph_prior_enabled": bool(graph_prior_enabled),
         "top_k": int(top_k),
         "num_outputs_with_answer_field": 0,
         "num_gold_field_violations": 0,
         "used_debug_edges": False,
         "no_gold_fields_used": True,
     }
+
+
+def load_graph_prior(graph_path: str | Path | None) -> tuple[dict[str, float], str | None]:
+    if graph_path in (None, ""):
+        return {}, None
+    edges_path = resolve_graph_edges_path(graph_path)
+    if not edges_path.is_file():
+        return {}, "missing"
+    rows = read_jsonl(edges_path)
+    degree: Counter[str] = Counter()
+    for edge in rows:
+        edge_type = str(edge.get("edge_type") or "")
+        if edge.get("debug") is True or edge_type in SEMANTIC_EDGE_TYPES or edge_type in DEBUG_EDGE_TYPES:
+            continue
+        left = parse_artifact_node_id(edge.get("source"))
+        right = parse_artifact_node_id(edge.get("target"))
+        if left:
+            degree[left] += 1
+        if right:
+            degree[right] += 1
+    max_degree = max(degree.values(), default=0)
+    if max_degree <= 0:
+        return {}, file_sha256(edges_path)
+    return {artifact_id: count / max_degree for artifact_id, count in sorted(degree.items())}, file_sha256(edges_path)
+
+
+def resolve_graph_edges_path(graph_path: str | Path) -> Path:
+    path = Path(graph_path)
+    if path.is_dir():
+        return path / "edges.jsonl"
+    return path
+
+
+def parse_artifact_node_id(node_id: Any) -> str | None:
+    parts = str(node_id or "").split(":", 3)
+    if len(parts) != 4 or parts[0] != "artifact":
+        return None
+    return unquote(parts[3])
 
 
 def build_manifest(
@@ -333,18 +497,25 @@ def build_manifest(
     retrieval_hash: str,
     quality_report_hash: str,
     top_k: int,
+    retrieval_method: str,
+    graph_path: str | Path | None,
+    graph_edges_hash: str | None,
 ) -> dict[str, Any]:
     commit = current_git_commit()
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "stage": "stage3_doc_artifact_retrieval",
         "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
+        "retrieval_method": retrieval_method,
         "input_artifacts_path": public_path(artifacts_jsonl_path),
         "input_artifacts_hash": artifacts_hash,
         "query_input_path": public_path(query_input_path),
         "query_input_hash": query_input_hash,
         "retrieval_hash": retrieval_hash,
         "quality_report_hash": quality_report_hash,
+        "graph_prior_enabled": graph_path not in (None, ""),
+        "graph_edges_path": public_path(resolve_graph_edges_path(graph_path)) if graph_path not in (None, "") else None,
+        "graph_edges_hash": graph_edges_hash,
         "no_answer_generation": True,
         "no_gold_fields_used": True,
         "used_debug_edges": False,
@@ -353,13 +524,15 @@ def build_manifest(
             "artifacts_jsonl": public_path(artifacts_jsonl_path),
             "query_input": public_path(query_input_path),
             "top_k": int(top_k),
+            "retrieval_method": retrieval_method,
+            "graph_prior_enabled": graph_path not in (None, ""),
         },
     }
     if commit == "unknown":
         manifest["git_commit_unavailable_reason"] = "git_rev_parse_failed"
     else:
         manifest["git_commit"] = commit
-    return manifest
+    return {key: value for key, value in manifest.items() if value is not None}
 
 
 def read_records(path: str | Path) -> list[Any]:
@@ -380,6 +553,17 @@ def read_records(path: str | Path) -> list[Any]:
             if isinstance(records, list):
                 return records
     raise ValueError(f"Expected query records in {input_path}")
+
+
+def read_jsonl(path: str | Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with Path(path).open("r", encoding="utf-8") as file_obj:
+        for line in file_obj:
+            if line.strip():
+                value = json.loads(line)
+                if isinstance(value, dict):
+                    rows.append(value)
+    return rows
 
 
 def write_jsonl(path: str | Path, rows: Iterable[dict[str, Any]]) -> None:
@@ -453,6 +637,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--queries", "--query-input", "--records-jsonl", dest="query_input", default=DEFAULT_QUERY_INPUT)
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
+    parser.add_argument("--retrieval-method", choices=sorted(RETRIEVAL_METHODS), default=DEFAULT_RETRIEVAL_METHOD)
+    parser.add_argument("--graph", default=None, help="Optional Stage 4 graph directory or formal edges.jsonl for deterministic graph prior.")
     return parser
 
 
@@ -464,6 +650,8 @@ def main(argv: list[str] | None = None) -> None:
         query_input_path=args.query_input,
         output_dir=args.output_dir,
         top_k=args.top_k,
+        retrieval_method=args.retrieval_method,
+        graph_path=args.graph,
     )
     print(json.dumps(result["quality_report"], ensure_ascii=False, indent=2, sort_keys=True))
 

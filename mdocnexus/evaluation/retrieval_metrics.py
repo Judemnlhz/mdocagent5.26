@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, defaultdict
 import json
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 
 SEMANTIC_EDGE_TYPES = {"supports", "contradicts", "derived_from", "semantic_relation", "entails", "refutes"}
@@ -23,6 +23,9 @@ DEFAULT_EXPANSION_EDGE_TYPES = {
     "caption_of",
     "figure_has_caption",
 }
+EXPANSION_MODES = {"direct_structural", "page_neighborhood", "source_anchor_neighborhood"}
+DEBUG_EDGE_TYPES = {"same_record", "same_record_debug"}
+CONTEXT_CLIQUE_EDGE_TYPES = {"same_page", "same_source_block"}
 
 
 def evaluate_stage3_retrieval(
@@ -90,55 +93,99 @@ def evaluate_stage4_graph_expansion(
     formal_edges: list[dict[str, Any]],
     k_values: Iterable[int] = (1, 3, 5),
     allowed_edge_types: set[str] | None = None,
+    expansion_mode: str = "direct_structural",
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    if expansion_mode not in EXPANSION_MODES:
+        raise ValueError(f"Unsupported expansion_mode: {expansion_mode}")
     allowed = set(allowed_edge_types or DEFAULT_EXPANSION_EDGE_TYPES)
     if allowed & SEMANTIC_EDGE_TYPES:
         raise ValueError("Semantic edge types are not allowed for graph expansion evaluation")
-    adjacency, edge_types_used = build_formal_adjacency(formal_edges, allowed)
+    graph_index = build_formal_edge_index(formal_edges, allowed | CONTEXT_CLIQUE_EDGE_TYPES)
     artifact_by_id = {str(artifact.get("artifact_id")): artifact for artifact in artifacts}
     records_by_index = {int(record.get("record_index", index)): record for index, record in enumerate(records) if isinstance(record, dict)}
+    records_by_doc = {str(record.get("doc_id")): record for record in records if isinstance(record, dict) and record.get("doc_id")}
     node_to_artifact = {artifact_node_id(artifact): str(artifact.get("artifact_id")) for artifact in artifacts}
+    artifact_to_node = {str(artifact.get("artifact_id")): artifact_node_id(artifact) for artifact in artifacts}
     per_query: list[dict[str, Any]] = []
     expansion_factors: list[float] = []
+    added_counts: list[int] = []
+    all_edge_types_used: set[str] = set()
 
     for row_index, row in enumerate(retrieval_rows):
-        record = records_by_index.get(int(row.get("record_index", -1)), {})
+        record = records_by_index.get(int(row.get("record_index", -1))) or records_by_doc.get(str(row.get("doc_id") or "")) or {}
         gold_pages = extract_gold_pages(record)
         flat_ids = [str(value) for value in row.get("retrieved_artifact_ids", [])]
-        expanded_ids = expand_artifact_ids(flat_ids, artifact_by_id, node_to_artifact, adjacency)
+        expanded_ids, edge_types_used = expand_artifact_ids(
+            flat_ids,
+            artifact_by_id=artifact_by_id,
+            node_to_artifact=node_to_artifact,
+            artifact_to_node=artifact_to_node,
+            graph_index=graph_index,
+            expansion_mode=expansion_mode,
+        )
+        all_edge_types_used.update(edge_types_used)
+        added = max(0, len(expanded_ids) - len(list(dict.fromkeys(flat_ids))))
+        added_counts.append(added)
         expansion_factors.append(len(expanded_ids) / max(1, len(flat_ids)))
-        flat_pages = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in flat_ids]
-        graph_pages = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in expanded_ids]
-        flat_pages = [page for page in flat_pages if page is not None]
-        graph_pages = [page for page in graph_pages if page is not None]
+        flat_pages_all = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in flat_ids]
+        flat_pages_all = [page for page in flat_pages_all if page is not None]
+        flat_recall_at_k: dict[str, float] = {}
+        expanded_recall_at_k: dict[str, float] = {}
+        flat_coverage_at_k: dict[str, float] = {}
+        expanded_coverage_at_k: dict[str, float] = {}
+        for k in k_values:
+            seed_ids = flat_ids[: int(k)]
+            expanded_seed_ids, seed_edge_types = expand_artifact_ids(
+                seed_ids,
+                artifact_by_id=artifact_by_id,
+                node_to_artifact=node_to_artifact,
+                artifact_to_node=artifact_to_node,
+                graph_index=graph_index,
+                expansion_mode=expansion_mode,
+            )
+            all_edge_types_used.update(seed_edge_types)
+            expanded_pages_for_k = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in expanded_seed_ids]
+            expanded_pages_for_k = [page for page in expanded_pages_for_k if page is not None]
+            flat_recall_at_k[str(k)] = recall_at_k(gold_pages, flat_pages_all, k)
+            flat_coverage_at_k[str(k)] = coverage_at_k(gold_pages, flat_pages_all, k)
+            expanded_recall_at_k[str(k)] = recall_over_pages(gold_pages, expanded_pages_for_k)
+            expanded_coverage_at_k[str(k)] = coverage_over_pages(gold_pages, expanded_pages_for_k)
         per_query.append(
             {
                 "query_key": row.get("query_hash") or row.get("query_id") or row_index,
                 "record_index": row.get("record_index"),
                 "doc_id": row.get("doc_id"),
                 "flat_num_retrieved": len(flat_ids),
+                "expanded_num_retrieved": len(expanded_ids),
                 "graph_num_retrieved": len(expanded_ids),
-                "flat_recall_at_k": {str(k): recall_at_k(gold_pages, flat_pages, k) for k in k_values},
-                "graph_recall_at_k": {str(k): recall_at_k(gold_pages, graph_pages, k) for k in k_values},
-                "flat_coverage_at_k": {str(k): coverage_at_k(gold_pages, flat_pages, k) for k in k_values},
-                "graph_coverage_at_k": {str(k): coverage_at_k(gold_pages, graph_pages, k) for k in k_values},
+                "num_added_artifacts": added,
+                "flat_recall_at_k": flat_recall_at_k,
+                "expanded_recall_at_k": expanded_recall_at_k,
+                "graph_recall_at_k": expanded_recall_at_k,
+                "flat_coverage_at_k": flat_coverage_at_k,
+                "expanded_coverage_at_k": expanded_coverage_at_k,
+                "graph_coverage_at_k": expanded_coverage_at_k,
                 "evaluation_only": True,
             }
         )
 
     flat_recall = average_metric(per_query, "flat_recall_at_k", k_values)
-    graph_recall = average_metric(per_query, "graph_recall_at_k", k_values)
+    expanded_recall = average_metric(per_query, "expanded_recall_at_k", k_values)
     flat_coverage = average_metric(per_query, "flat_coverage_at_k", k_values)
-    graph_coverage = average_metric(per_query, "graph_coverage_at_k", k_values)
+    expanded_coverage = average_metric(per_query, "expanded_coverage_at_k", k_values)
     report = {
+        "expansion_mode": expansion_mode,
         "flat_recall_at_k": flat_recall,
-        "graph_recall_at_k": graph_recall,
-        "delta_recall_at_k": {str(k): graph_recall[str(k)] - flat_recall[str(k)] for k in k_values},
+        "expanded_recall_at_k": expanded_recall,
+        "graph_recall_at_k": expanded_recall,
+        "delta_recall_at_k": {str(k): expanded_recall[str(k)] - flat_recall[str(k)] for k in k_values},
         "flat_coverage_at_k": flat_coverage,
-        "graph_coverage_at_k": graph_coverage,
-        "delta_coverage_at_k": {str(k): graph_coverage[str(k)] - flat_coverage[str(k)] for k in k_values},
+        "expanded_coverage_at_k": expanded_coverage,
+        "graph_coverage_at_k": expanded_coverage,
+        "delta_coverage_at_k": {str(k): expanded_coverage[str(k)] - flat_coverage[str(k)] for k in k_values},
         "expansion_factor": sum(expansion_factors) / max(1, len(expansion_factors)),
-        "edge_types_used": sorted(edge_types_used),
+        "avg_added_artifacts": sum(added_counts) / max(1, len(added_counts)),
+        "edge_types_used": sorted(all_edge_types_used),
         "used_debug_edges": False,
         "used_semantic_edges": False,
         "evaluation_only": True,
@@ -146,12 +193,14 @@ def evaluate_stage4_graph_expansion(
     return report, per_query
 
 
-def build_formal_adjacency(edges: list[dict[str, Any]], allowed_edge_types: set[str]) -> tuple[dict[str, set[str]], set[str]]:
-    adjacency: dict[str, set[str]] = {}
-    edge_types_used: set[str] = set()
+def build_formal_edge_index(edges: list[dict[str, Any]], allowed_edge_types: set[str]) -> dict[str, Any]:
+    out_by_type: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    in_by_type: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    undirected_by_type: dict[str, dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
+    edge_types_seen: set[str] = set()
     for edge in edges:
         edge_type = str(edge.get("edge_type") or "")
-        if edge_type in SEMANTIC_EDGE_TYPES or edge_type in {"same_record", "same_record_debug"}:
+        if edge.get("debug") is True or edge_type in SEMANTIC_EDGE_TYPES or edge_type in DEBUG_EDGE_TYPES:
             raise ValueError(f"Forbidden edge type in graph expansion evaluation: {edge_type}")
         if edge_type not in allowed_edge_types:
             continue
@@ -159,8 +208,26 @@ def build_formal_adjacency(edges: list[dict[str, Any]], allowed_edge_types: set[
         target = str(edge.get("target") or "")
         if not source or not target:
             continue
-        adjacency.setdefault(source, set()).add(target)
-        adjacency.setdefault(target, set()).add(source)
+        out_by_type[edge_type][source].add(target)
+        in_by_type[edge_type][target].add(source)
+        undirected_by_type[edge_type][source].add(target)
+        undirected_by_type[edge_type][target].add(source)
+        edge_types_seen.add(edge_type)
+    return {
+        "out": out_by_type,
+        "in": in_by_type,
+        "undirected": undirected_by_type,
+        "edge_types_seen": edge_types_seen,
+    }
+
+
+def build_formal_adjacency(edges: list[dict[str, Any]], allowed_edge_types: set[str]) -> tuple[dict[str, set[str]], set[str]]:
+    graph_index = build_formal_edge_index(edges, allowed_edge_types)
+    adjacency: dict[str, set[str]] = {}
+    edge_types_used: set[str] = set()
+    for edge_type, by_source in graph_index["undirected"].items():
+        for source, targets in by_source.items():
+            adjacency.setdefault(source, set()).update(targets)
         edge_types_used.add(edge_type)
     return adjacency, edge_types_used
 
@@ -169,21 +236,103 @@ def expand_artifact_ids(
     artifact_ids: list[str],
     artifact_by_id: dict[str, dict[str, Any]],
     node_to_artifact: dict[str, str],
-    adjacency: dict[str, set[str]],
-) -> list[str]:
-    expanded = list(dict.fromkeys(artifact_ids))
-    seen = set(expanded)
+    artifact_to_node: dict[str, str] | None = None,
+    graph_index: dict[str, Any] | None = None,
+    expansion_mode: str = "direct_structural",
+    adjacency: dict[str, set[str]] | None = None,
+) -> tuple[list[str], set[str]] | list[str]:
+    legacy_return = graph_index is None and adjacency is not None
+    if graph_index is None:
+        graph_index = {"undirected": {"direct": adjacency or {}}, "out": {}, "in": {}}
+    artifact_to_node = artifact_to_node or {artifact_id: artifact_node_id(artifact) for artifact_id, artifact in artifact_by_id.items()}
+    expanded: list[str] = []
+    seen: set[str] = set()
+    edge_types_used: set[str] = set()
     for artifact_id in artifact_ids:
+        if artifact_id not in seen:
+            seen.add(artifact_id)
+            expanded.append(artifact_id)
         artifact = artifact_by_id.get(artifact_id)
         if not artifact:
             continue
-        start_node = artifact_node_id(artifact)
-        for neighbor in sorted(adjacency.get(start_node, set())):
-            neighbor_artifact = node_to_artifact.get(neighbor)
-            if neighbor_artifact and neighbor_artifact not in seen:
-                seen.add(neighbor_artifact)
-                expanded.append(neighbor_artifact)
-    return expanded
+        start_node = artifact_to_node.get(artifact_id) or artifact_node_id(artifact)
+        neighbors, used = artifact_neighbors_for_mode(start_node, graph_index, node_to_artifact, expansion_mode)
+        edge_types_used.update(used)
+        for neighbor_artifact_id in sorted(neighbors):
+            if neighbor_artifact_id not in seen:
+                seen.add(neighbor_artifact_id)
+                expanded.append(neighbor_artifact_id)
+    if legacy_return:
+        return expanded
+    return expanded, edge_types_used
+
+
+def artifact_neighbors_for_mode(
+    start_node: str,
+    graph_index: dict[str, Any],
+    node_to_artifact: dict[str, str],
+    expansion_mode: str,
+) -> tuple[set[str], set[str]]:
+    if expansion_mode == "direct_structural":
+        return direct_structural_neighbors(start_node, graph_index, node_to_artifact)
+    if expansion_mode == "page_neighborhood":
+        return page_neighborhood_neighbors(start_node, graph_index, node_to_artifact)
+    if expansion_mode == "source_anchor_neighborhood":
+        return source_anchor_neighborhood_neighbors(start_node, graph_index, node_to_artifact)
+    raise ValueError(f"Unsupported expansion_mode: {expansion_mode}")
+
+
+def direct_structural_neighbors(start_node: str, graph_index: dict[str, Any], node_to_artifact: dict[str, str]) -> tuple[set[str], set[str]]:
+    neighbors: set[str] = set()
+    edge_types_used: set[str] = set()
+    for edge_type in DEFAULT_EXPANSION_EDGE_TYPES:
+        for node in graph_index["undirected"].get(edge_type, {}).get(start_node, set()):
+            artifact_id = node_to_artifact.get(node)
+            if artifact_id:
+                neighbors.add(artifact_id)
+                edge_types_used.add(edge_type)
+    return neighbors, edge_types_used
+
+
+def page_neighborhood_neighbors(start_node: str, graph_index: dict[str, Any], node_to_artifact: dict[str, str]) -> tuple[set[str], set[str]]:
+    neighbors: set[str] = set()
+    edge_types_used: set[str] = set()
+    pages = set(graph_index["out"].get("located_on_page", {}).get(start_node, set()))
+    pages.update(graph_index["in"].get("located_on_page", {}).get(start_node, set()))
+    if pages:
+        edge_types_used.add("located_on_page")
+    for page in sorted(pages):
+        same_page_nodes = graph_index["in"].get("located_on_page", {}).get(page, set())
+        for node in same_page_nodes:
+            artifact_id = node_to_artifact.get(node)
+            if artifact_id:
+                neighbors.add(artifact_id)
+        adjacent_pages = set(graph_index["out"].get("adjacent_page", {}).get(page, set()))
+        adjacent_pages.update(graph_index["in"].get("adjacent_page", {}).get(page, set()))
+        if adjacent_pages:
+            edge_types_used.add("adjacent_page")
+        for neighbor_page in sorted(adjacent_pages):
+            for node in graph_index["in"].get("located_on_page", {}).get(neighbor_page, set()):
+                artifact_id = node_to_artifact.get(node)
+                if artifact_id:
+                    neighbors.add(artifact_id)
+                    edge_types_used.add("located_on_page")
+    return neighbors, edge_types_used
+
+
+def source_anchor_neighborhood_neighbors(start_node: str, graph_index: dict[str, Any], node_to_artifact: dict[str, str]) -> tuple[set[str], set[str]]:
+    neighbors: set[str] = set()
+    edge_types_used: set[str] = set()
+    anchors = set(graph_index["out"].get("supported_by_anchor", {}).get(start_node, set()))
+    anchors.update(graph_index["in"].get("supported_by_anchor", {}).get(start_node, set()))
+    if anchors:
+        edge_types_used.add("supported_by_anchor")
+    for anchor in sorted(anchors):
+        for node in graph_index["in"].get("supported_by_anchor", {}).get(anchor, set()):
+            artifact_id = node_to_artifact.get(node)
+            if artifact_id:
+                neighbors.add(artifact_id)
+    return neighbors, edge_types_used
 
 
 def extract_gold_pages(record: dict[str, Any]) -> set[int]:
@@ -219,6 +368,18 @@ def coverage_at_k(gold_pages: set[int], retrieved_pages: list[int], k: int) -> f
     return len(gold_pages & set(retrieved_pages[: int(k)])) / len(gold_pages)
 
 
+def recall_over_pages(gold_pages: set[int], retrieved_pages: list[int]) -> float:
+    if not gold_pages:
+        return 0.0
+    return 1.0 if gold_pages & set(retrieved_pages) else 0.0
+
+
+def coverage_over_pages(gold_pages: set[int], retrieved_pages: list[int]) -> float:
+    if not gold_pages:
+        return 0.0
+    return len(gold_pages & set(retrieved_pages)) / len(gold_pages)
+
+
 def average_metric(rows: list[dict[str, Any]], field: str, k_values: Iterable[int]) -> dict[str, float]:
     return {
         str(k): sum(float(row[field][str(k)]) for row in rows) / max(1, len(rows))
@@ -236,8 +397,6 @@ def artifact_page(artifact: dict[str, Any] | None) -> int | None:
 
 
 def artifact_node_id(artifact: dict[str, Any]) -> str:
-    from urllib.parse import quote
-
     return ":".join(
         [
             "artifact",

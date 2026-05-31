@@ -145,6 +145,62 @@ class DocArtifactRetrievalTest(unittest.TestCase):
         self.assertEqual(DEFAULT_QUERY_INPUT, "outputs/stage3_query/public_queries.jsonl")
         self.assertNotIn("sample-with-stage2-index", DEFAULT_QUERY_INPUT)
 
+
+    def test_hybrid_retrieval_is_deterministic_and_reports_components(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path = root / "artifacts.jsonl"
+            query_path = root / "queries.jsonl"
+            write_jsonl(
+                artifacts_path,
+                [
+                    make_artifact("b_artifact", content="same token", artifact_type="caption", modality="text"),
+                    make_artifact("a_artifact", content="same token", artifact_type="caption", modality="text"),
+                ],
+            )
+            write_jsonl(query_path, [{"record_id": "r1", "doc_id": "doc.pdf", "question": "same"}])
+
+            first = run_doc_artifact_retrieval(artifacts_path, query_path, root / "out1", top_k=2, retrieval_method="deterministic_hybrid")
+            second = run_doc_artifact_retrieval(artifacts_path, query_path, root / "out2", top_k=2, retrieval_method="deterministic_hybrid")
+            row = read_jsonl(root / "out1" / "retrieval.jsonl")[0]
+
+        self.assertEqual(first["retrieval_hash"], second["retrieval_hash"])
+        self.assertEqual(row["retrieved_artifact_ids"], ["a_artifact", "b_artifact"])
+        self.assertEqual(first["quality_report"]["retrieval_method"], "deterministic_hybrid")
+        self.assertIn("metadata_score", first["quality_report"]["scoring_components"])
+        self.assertGreaterEqual(first["quality_report"]["num_queries_with_nonzero_scores"], 1)
+
+    def test_graph_prior_reads_formal_edges_only(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path = root / "artifacts.jsonl"
+            query_path = root / "queries.jsonl"
+            graph = root / "graph"
+            graph.mkdir()
+            write_jsonl(
+                artifacts_path,
+                [
+                    make_artifact("a_artifact", content="same token"),
+                    make_artifact("b_artifact", content="same token"),
+                ],
+            )
+            write_jsonl(query_path, [{"record_id": "r1", "doc_id": "doc.pdf", "question": "same"}])
+            write_jsonl(
+                graph / "edges.jsonl",
+                [{"source": "artifact:doc.pdf:0:b_artifact", "target": "page:doc.pdf:0", "edge_type": "located_on_page"}],
+            )
+            (graph / "debug_edges.jsonl").write_text(json.dumps({"edge_type": "same_record_debug", "raw_response": "SHOULD_NOT_READ"}) + "\n", encoding="utf-8")
+
+            result = run_doc_artifact_retrieval(artifacts_path, query_path, root / "out", top_k=2, retrieval_method="deterministic_hybrid", graph_path=graph)
+            row = read_jsonl(root / "out" / "retrieval.jsonl")[0]
+            public_text = public_output_text(root / "out")
+
+        self.assertEqual(row["retrieved_artifact_ids"][0], "b_artifact")
+        self.assertTrue(result["quality_report"]["graph_prior_enabled"])
+        self.assertFalse(result["quality_report"]["used_debug_edges"])
+        self.assertNotIn("SHOULD_NOT_READ", public_text)
+        self.assertNotIn("same_record_debug", public_text)
+
     def test_retrieval_output_has_query_hash_not_question_text(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -192,14 +248,14 @@ def write_fixture_inputs(root: Path) -> tuple[Path, Path]:
     return artifacts_path, query_path
 
 
-def make_artifact(artifact_id: str, doc_id: str = "doc.pdf", content: str = "content") -> dict:
+def make_artifact(artifact_id: str, doc_id: str = "doc.pdf", content: str = "content", artifact_type: str = "text_span", modality: str = "text") -> dict:
     return {
         "record_index": 0,
         "doc_id": doc_id,
         "page_index": 0,
         "artifact_id": artifact_id,
-        "artifact_type": "text_span",
-        "modality": "text",
+        "artifact_type": artifact_type,
+        "modality": modality,
         "content": content,
         "normalized_content": {"text": content},
         "source_anchors": [{"source_id": "p000_text_0000", "page_index": 0, "bbox": None}],

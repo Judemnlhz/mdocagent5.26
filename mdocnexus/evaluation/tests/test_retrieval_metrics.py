@@ -54,6 +54,49 @@ class RetrievalMetricsTest(unittest.TestCase):
         self.assertEqual(report["delta_recall_at_k"]["2"], 1.0)
         self.assertEqual(report["edge_types_used"], ["adjacent_page"])
 
+
+    def test_page_neighborhood_ignores_same_page_clique_and_computes_delta(self) -> None:
+        report, per_query = evaluate_stage4_graph_expansion(
+            retrieval_rows=[{"record_index": 0, "doc_id": "doc.pdf", "retrieved_artifact_ids": ["a1"], "query_hash": "q"}],
+            artifacts=[make_artifact("a1", page_index=0), make_artifact("a2", page_index=0), make_artifact("a3", page_index=1)],
+            records=[{"record_index": 0, "doc_id": "doc.pdf", "evidence_pages": "[2]"}],
+            formal_edges=[
+                {"source": "artifact:doc.pdf:0:a1", "target": "page:doc.pdf:0", "edge_type": "located_on_page"},
+                {"source": "artifact:doc.pdf:1:a3", "target": "page:doc.pdf:1", "edge_type": "located_on_page"},
+                {"source": "page:doc.pdf:0", "target": "page:doc.pdf:1", "edge_type": "adjacent_page"},
+                {"source": "artifact:doc.pdf:0:a1", "target": "artifact:doc.pdf:0:a2", "edge_type": "same_page"},
+            ],
+            k_values=(2,),
+            expansion_mode="page_neighborhood",
+        )
+
+        self.assertEqual(report["expansion_mode"], "page_neighborhood")
+        self.assertNotIn("same_page", report["edge_types_used"])
+        self.assertEqual(per_query[0]["expanded_num_retrieved"], 2)
+        self.assertEqual(report["flat_recall_at_k"]["2"], 0.0)
+        self.assertEqual(report["expanded_recall_at_k"]["2"], 1.0)
+        self.assertEqual(report["delta_recall_at_k"]["2"], 1.0)
+        self.assertEqual(report["expansion_factor"], 2.0)
+        self.assertEqual(report["avg_added_artifacts"], 1.0)
+
+    def test_source_anchor_neighborhood_ignores_debug_edges(self) -> None:
+        report, per_query = evaluate_stage4_graph_expansion(
+            retrieval_rows=[{"record_index": 0, "doc_id": "doc.pdf", "retrieved_artifact_ids": ["a1"], "query_hash": "q"}],
+            artifacts=[make_artifact("a1", page_index=0), make_artifact("a2", page_index=0)],
+            records=[{"record_index": 0, "doc_id": "doc.pdf", "evidence_pages": "[1]"}],
+            formal_edges=[
+                {"source": "artifact:doc.pdf:0:a1", "target": "anchor:doc.pdf:0:s1", "edge_type": "supported_by_anchor"},
+                {"source": "artifact:doc.pdf:0:a2", "target": "anchor:doc.pdf:0:s1", "edge_type": "supported_by_anchor"},
+            ],
+            k_values=(2,),
+            expansion_mode="source_anchor_neighborhood",
+        )
+
+        self.assertFalse(report["used_debug_edges"])
+        self.assertFalse(report["used_semantic_edges"])
+        self.assertEqual(per_query[0]["expanded_num_retrieved"], 2)
+        self.assertEqual(report["edge_types_used"], ["supported_by_anchor"])
+
     def test_stage4_expansion_rejects_semantic_edges(self) -> None:
         with self.assertRaises(ValueError):
             evaluate_stage4_graph_expansion(

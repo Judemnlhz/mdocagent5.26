@@ -1,0 +1,15 @@
+{
+  "compile_scope_source": "mdocagent_retrieval_topk",
+  "created_by_script": "scripts/build_stage2_coverage_subset.py",
+  "git_commit": "5e99ba8026527af02cf1262ae9306de77323fdaa",
+  "input_hash": "49dbec9530c5068a9006c8b5c118eb656de56f8ba4576c3047e9fe9ddc334acd",
+  "max_docs": 20,
+  "max_pages_per_doc": 3,
+  "no_gold_fields_used": true,
+  "num_documents": 20,
+  "num_pages": 60,
+  "output": "outputs/experiments/retrieval_topk_hybrid_page/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl",
+  "scope_mode": "retrieval_topk_scope",
+  "selection_stable": true,
+  "top_k": 5
+}

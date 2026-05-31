@@ -1,0 +1,52 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/retrieval_topk_hybrid_page/stage2_doc_coverage/artifacts.jsonl",
+    "output_dir": "outputs/experiments/retrieval_topk_hybrid_page/stage4/evidence_graph",
+    "retrieval_jsonl": "outputs/experiments/retrieval_topk_hybrid_page/stage3_doc_artifact_retrieval/retrieval.jsonl",
+    "stage2_json": "outputs/stage2/clean/sample-with-stage2-index.json"
+  },
+  "context_edge_types": [
+    "same_page",
+    "same_source_block"
+  ],
+  "created_by_script": "scripts/stage4_build_evidence_graph.py",
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
+  "debug_edges_hash": "204a8d3f03752dc71add3de764dbf99e33cbc06f0d1fffc504454d4b18654b95",
+  "edges_hash": "ca6e20f39194bf4d62112481bd96993da65e4b23bec9abdfd9fd4b9d584d440f",
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "same_page",
+    "same_source_block",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "git_commit": "5e99ba8026527af02cf1262ae9306de77323fdaa",
+  "graph_mode": "rule_only_document_native_structural",
+  "input_artifacts_hash": "8db69cba35d7c5f49a152539790a23a2be6060ddc528211c30b6443b08404930",
+  "input_artifacts_path": "outputs/experiments/retrieval_topk_hybrid_page/stage2_doc_coverage/artifacts.jsonl",
+  "nodes_hash": "d0a26806414f7f5a89c82f33e07b31377c1cc41c8e4d7b3e64df8b8a45137412",
+  "quality_report_hash": "5483bbd5545b9d5afdc5ba603d26e8b1435aa3dd2f0a7ed4c96a82e2604a63cf",
+  "schema_version": "stage4_evidence_graph_v2",
+  "semantic_edges_enabled": false
+}

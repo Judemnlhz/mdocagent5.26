@@ -1,0 +1,35 @@
+{
+  "coverage_at_k_by_page": {
+    "1": 0.02190121155638397,
+    "3": 0.031997514756135444,
+    "5": 0.03479341410375893
+  },
+  "evaluation_only": true,
+  "no_gold_available_count": 226,
+  "num_queries": 1073,
+  "num_queries_with_gold": 847,
+  "recall_at_k_by_page": {
+    "1": 0.027958993476234855,
+    "3": 0.0391425908667288,
+    "5": 0.04193849021435228
+  },
+  "retrieved_artifact_type_distribution": {
+    "caption": 98,
+    "figure": 56,
+    "numeric_fact": 86,
+    "section_header": 95,
+    "table": 43,
+    "table_cell": 8,
+    "text_span": 219,
+    "visual_observation": 16,
+    "visual_region": 9
+  },
+  "retrieved_modality_distribution": {
+    "image": 72,
+    "layout": 104,
+    "numeric": 86,
+    "table": 51,
+    "text": 317
+  },
+  "zero_hit_query_count": 947
+}

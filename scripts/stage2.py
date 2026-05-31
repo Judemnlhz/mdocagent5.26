@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import argparse
-from collections import Counter
+from collections import Counter, defaultdict
 import csv
 from datetime import datetime, timezone
 import hashlib
@@ -1927,6 +1927,9 @@ def _public_stage2_command_args(args: argparse.Namespace | None) -> Dict[str, An
         "max_pages_per_call": int(getattr(args, "max_pages_per_call", 1)),
         "max_pages_real_cap": int(getattr(args, "max_pages_real_cap", 10)),
         "subset_file_used": bool(getattr(args, "subset_file", None)),
+        "scope_mode": str(getattr(args, "scope_mode", "doc_first")),
+        "retrieval_topk_file_used": bool(getattr(args, "retrieval_topk_file", None)),
+        "retrieval_topk": int(getattr(args, "retrieval_topk", 0)) if getattr(args, "retrieval_topk", None) is not None else None,
         "image_payload_mode": str(getattr(args, "image_payload_mode", "image_url")),
         "save_private_debug": bool(getattr(args, "save_private_debug", False)),
         "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
@@ -2240,6 +2243,25 @@ def run_crossdoc_batch(args: argparse.Namespace, client: ArtifactCompilerClient 
     }
 
 
+def _build_compile_scope_quality_fields(
+    selected_pages: List[Dict[str, Any]],
+    report: Dict[str, Any],
+    scope_mode: str,
+) -> Dict[str, Any]:
+    num_pages = len(selected_pages)
+    num_docs = len({str(page.get("doc_id")) for page in selected_pages if page.get("doc_id") not in (None, "")})
+    num_artifacts = int(report.get("num_artifacts", 0))
+    source_counts = Counter(str(page.get("selection_source") or page.get("selection_reason") or "unknown") for page in selected_pages)
+    return {
+        "compile_scope_mode": str(scope_mode),
+        "num_selected_docs": int(num_docs),
+        "num_selected_pages": int(num_pages),
+        "num_artifacts_per_doc_avg": num_artifacts / max(1, num_docs),
+        "num_artifacts_per_page_avg": num_artifacts / max(1, num_pages),
+        "page_selection_source_counts": dict(sorted(source_counts.items())),
+    }
+
+
 def run_index_command(args: argparse.Namespace) -> Dict[str, Any]:
     output = Path(args.output) if getattr(args, "output", None) else _stage2_index_path(args.output_dir)
     records = augment_retrieval_results_file(
@@ -2328,8 +2350,11 @@ def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.save_private_debug = bool(getattr(args, "save_private_debug", False))
     args.private_debug_dir = str(getattr(args, "private_debug_dir", "outputs_private/stage2_debug/"))
     args.subset_file = getattr(args, "subset_file", None)
+    args.scope_mode = str(getattr(args, "scope_mode", "doc_first") or "doc_first")
+    args.retrieval_topk_file = getattr(args, "retrieval_topk_file", None)
+    args.retrieval_topk = int(getattr(args, "retrieval_topk", 5))
     args.provider_mode = _normalize_doc_compile_provider_mode(args)
-    if args.subset_file and args.provider_mode == "real":
+    if (args.subset_file or args.retrieval_topk_file) and args.provider_mode == "real":
         raise RuntimeError("Refusing real provider doc-compile for fixed coverage subset runs.")
     if args.provider_mode in {"dry_run", "fake"}:
         args.dry_run_fake_client = True
@@ -2348,7 +2373,7 @@ def _read_document_generic_records(args: argparse.Namespace) -> List[Dict[str, A
     stage2_json = getattr(args, "stage2_json", None)
     if stage2_json not in (None, "") and Path(stage2_json).is_file():
         return read_json_or_jsonl_records(stage2_json)
-    if getattr(args, "subset_file", None) not in (None, ""):
+    if getattr(args, "subset_file", None) not in (None, "") or getattr(args, "retrieval_topk_file", None) not in (None, ""):
         return []
     return read_json_or_jsonl_records(stage2_json)
 
@@ -2373,6 +2398,9 @@ def run_document_generic_batch(args: argparse.Namespace, client: ArtifactCompile
         max_pages_per_doc=int(args.max_pages_per_doc),
         max_pages=int(args.max_pages),
         subset_file=getattr(args, "subset_file", None),
+        scope_mode=str(getattr(args, "scope_mode", "doc_first")),
+        retrieval_topk_file=getattr(args, "retrieval_topk_file", None),
+        retrieval_topk=int(getattr(args, "retrieval_topk", 5)),
     )
     active_client = client or (FakeArtifactCompilerClient() if args.dry_run_fake_client else RealApiArtifactCompilerClient(api_config))
     schema_dict = build_page_artifact_output_schema_dict()
@@ -2406,6 +2434,7 @@ def run_document_generic_batch(args: argparse.Namespace, client: ArtifactCompile
         call_log_path=output_paths.get("call_log"),
     )
     report["document_generic"] = True
+    report.update(_build_compile_scope_quality_fields(selected_pages, report, str(getattr(args, "scope_mode", "doc_first"))))
     _write_quality_report(report, Path(output_paths["quality_report"]))
     manifest = _write_stage2_jsonl_manifest(
         output_dir=args.output_dir,
@@ -2432,6 +2461,9 @@ def select_document_generic_pages(
     max_pages_per_doc: int,
     max_pages: int,
     subset_file: str | Path | None = None,
+    scope_mode: str = "doc_first",
+    retrieval_topk_file: str | Path | None = None,
+    retrieval_topk: int = 5,
 ) -> List[Dict[str, Any]]:
     if subset_file not in (None, ""):
         return select_document_generic_pages_from_subset(
@@ -2441,6 +2473,15 @@ def select_document_generic_pages(
             max_docs=max_docs,
             max_pages_per_doc=max_pages_per_doc,
             max_pages=max_pages,
+        )
+    if str(scope_mode) == "retrieval_topk_scope" and retrieval_topk_file not in (None, ""):
+        return select_document_generic_pages_from_retrieval_topk(
+            retrieval_topk_file=retrieval_topk_file,
+            extract_root=extract_root,
+            max_docs=max_docs,
+            max_pages_per_doc=max_pages_per_doc,
+            max_pages=max_pages,
+            top_k=retrieval_topk,
         )
 
     selected: List[Dict[str, Any]] = []
@@ -2472,6 +2513,7 @@ def select_document_generic_pages(
                     "page_index": int(page_index),
                     "page_number_one_based": int(page_index) + 1,
                     "selection_reason": "document_generic_page_available",
+                    "selection_source": str(scope_mode),
                     "page_image_path": page_source.get("page_image_path"),
                     "page_text_path": page_source.get("page_text_path"),
                     "layout_block_ids": list(page_source.get("layout_block_ids", [])),
@@ -2492,7 +2534,10 @@ def select_document_generic_pages_from_subset(
 ) -> List[Dict[str, Any]]:
     record_index_by_doc = _record_index_by_doc_id(records)
     selected: List[Dict[str, Any]] = []
-    for doc_id, subset_page_indices in _load_subset_doc_page_indices(subset_file, extract_root):
+    for subset_row in _load_subset_doc_page_indices(subset_file, extract_root):
+        doc_id = str(subset_row["doc_id"])
+        subset_page_indices = list(subset_row.get("page_indices", []))
+        selection_source = str(subset_row.get("selection_source") or "coverage_subset")
         if len({page["doc_id"] for page in selected}) >= int(max_docs):
             break
         page_indices = subset_page_indices or discover_document_page_indices(doc_id, extract_root) or [0]
@@ -2514,6 +2559,7 @@ def select_document_generic_pages_from_subset(
                     "page_index": int(page_index),
                     "page_number_one_based": int(page_index) + 1,
                     "selection_reason": "document_generic_coverage_subset",
+                    "selection_source": selection_source,
                     "page_image_path": page_source.get("page_image_path"),
                     "page_text_path": page_source.get("page_text_path"),
                     "layout_block_ids": list(page_source.get("layout_block_ids", [])),
@@ -2522,6 +2568,80 @@ def select_document_generic_pages_from_subset(
             )
             pages_added_for_doc += 1
     return selected
+
+
+def select_document_generic_pages_from_retrieval_topk(
+    retrieval_topk_file: str | Path,
+    extract_root: str | Path,
+    max_docs: int,
+    max_pages_per_doc: int,
+    max_pages: int,
+    top_k: int,
+) -> List[Dict[str, Any]]:
+    records = read_json_or_jsonl_records(retrieval_topk_file)
+    page_scores_by_doc: Dict[str, Dict[int, float]] = defaultdict(lambda: defaultdict(float))
+    for record in records:
+        if not isinstance(record, dict) or record.get("doc_id") in (None, ""):
+            continue
+        doc_id = str(record["doc_id"])
+        for page_index, score in _retrieval_topk_pages(record, int(top_k)):
+            if page_index >= 0:
+                page_scores_by_doc[doc_id][page_index] += score
+    selected: List[Dict[str, Any]] = []
+    for doc_id in sorted(page_scores_by_doc)[: int(max_docs)]:
+        ranked_pages = sorted(page_scores_by_doc[doc_id], key=lambda page: (-page_scores_by_doc[doc_id][page], page))
+        pages_added_for_doc = 0
+        for page_index in ranked_pages:
+            if len(selected) >= int(max_pages):
+                return selected
+            if pages_added_for_doc >= int(max_pages_per_doc):
+                break
+            page_source = build_page_source(doc_id, extract_root, int(page_index))
+            if not page_source.get("has_page_text") and not page_source.get("has_page_image"):
+                continue
+            selected.append(
+                {
+                    "record_index": len(selected),
+                    "doc_id": doc_id,
+                    "question": None,
+                    "answer_format": None,
+                    "page_index": int(page_index),
+                    "page_number_one_based": int(page_index) + 1,
+                    "selection_reason": "document_generic_retrieval_topk_scope",
+                    "selection_source": "retrieval_topk_non_gold",
+                    "page_image_path": page_source.get("page_image_path"),
+                    "page_text_path": page_source.get("page_text_path"),
+                    "layout_block_ids": list(page_source.get("layout_block_ids", [])),
+                    "stage2": {},
+                }
+            )
+            pages_added_for_doc += 1
+    return selected
+
+
+def _retrieval_topk_pages(record: Dict[str, Any], top_k: int) -> List[tuple[int, float]]:
+    pages: List[tuple[int, float]] = []
+    for key in sorted(record):
+        key_text = str(key)
+        lowered = key_text.lower()
+        if _is_scope_forbidden_key(key_text):
+            continue
+        if "top" not in lowered or "score" in lowered:
+            continue
+        values = record.get(key)
+        if not isinstance(values, list):
+            continue
+        for rank, value in enumerate(values[: int(top_k)]):
+            try:
+                page_index = int(value)
+            except (TypeError, ValueError):
+                continue
+            pages.append((page_index, 1.0 / float(rank + 1)))
+    return pages
+
+
+def _is_scope_forbidden_key(key: str) -> bool:
+    return key in {"answer", "gold_answer", "evidence_pages", "evidence_sources", "binary_correctness"} or str(key).startswith("gold_")
 
 
 def _record_index_by_doc_id(records: List[Dict[str, Any]]) -> Dict[str, int]:
@@ -2533,16 +2653,19 @@ def _record_index_by_doc_id(records: List[Dict[str, Any]]) -> Dict[str, int]:
     return index_by_doc
 
 
-def _load_subset_doc_page_indices(subset_file: str | Path, extract_root: str | Path) -> List[tuple[str, List[int]]]:
+def _load_subset_doc_page_indices(subset_file: str | Path, extract_root: str | Path) -> List[Dict[str, Any]]:
     subset_path = Path(subset_file)
     rows = _read_jsonl(subset_path) if subset_path.suffix.lower() == ".jsonl" else read_json_or_jsonl_records(subset_path)
     page_indices_by_doc: Dict[str, List[int]] = {}
+    selection_source_by_doc: Dict[str, str] = {}
     for row in rows:
         if not isinstance(row, dict) or row.get("doc_id") in (None, ""):
             continue
         doc_id = str(row["doc_id"])
         if doc_id not in page_indices_by_doc:
             page_indices_by_doc[doc_id] = []
+        if row.get("selection_source") not in (None, ""):
+            selection_source_by_doc.setdefault(doc_id, str(row.get("selection_source")))
         raw_page_indices = row.get("page_indices")
         if isinstance(raw_page_indices, list):
             for value in raw_page_indices:
@@ -2550,12 +2673,12 @@ def _load_subset_doc_page_indices(subset_file: str | Path, extract_root: str | P
                     page_indices_by_doc[doc_id].append(int(value))
                 except (TypeError, ValueError):
                     continue
-    result: List[tuple[str, List[int]]] = []
+    result: List[Dict[str, Any]] = []
     for doc_id in sorted(page_indices_by_doc):
         page_indices = sorted({index for index in page_indices_by_doc[doc_id] if index >= 0})
         if not page_indices:
             page_indices = discover_document_page_indices(doc_id, extract_root)
-        result.append((doc_id, page_indices))
+        result.append({"doc_id": doc_id, "page_indices": page_indices, "selection_source": selection_source_by_doc.get(doc_id, "coverage_subset")})
     return result
 
 
@@ -2773,6 +2896,9 @@ def build_parser() -> argparse.ArgumentParser:
     doc_compile_parser = subparsers.add_parser("doc-compile", help="Compile question-independent artifacts into outputs/stage2_doc.")
     doc_compile_parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
     doc_compile_parser.add_argument("--subset-file", default=None)
+    doc_compile_parser.add_argument("--scope-mode", choices=("doc_first", "query_doc_all", "retrieval_topk_scope"), default="doc_first")
+    doc_compile_parser.add_argument("--retrieval-topk-file", default=None)
+    doc_compile_parser.add_argument("--retrieval-topk", type=int, default=5)
     _add_compile_options(
         doc_compile_parser,
         provider_default="dry_run",

@@ -28,6 +28,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--graph", default=None, help="Stage 4 graph directory or edges.jsonl path.")
     parser.add_argument("--edges-jsonl", default="outputs/stage4/evidence_graph/edges.jsonl")
     parser.add_argument("--output-dir", default="outputs/eval/stage4_graph_expansion_eval")
+    parser.add_argument("--expansion-mode", choices=("direct_structural", "page_neighborhood", "source_anchor_neighborhood"), default="direct_structural")
     return parser
 
 
@@ -49,6 +50,7 @@ def main(argv: list[str] | None = None) -> None:
         artifacts=read_jsonl(args.artifacts_jsonl),
         records=read_records(args.records),
         formal_edges=read_jsonl(edges_jsonl),
+        expansion_mode=args.expansion_mode,
     )
     manifest = {
         "evaluation_only": True,
@@ -59,6 +61,7 @@ def main(argv: list[str] | None = None) -> None:
         "records": args.records,
         "edges_jsonl": str(edges_jsonl),
         "debug_edges_read": False,
+        "expansion_mode": args.expansion_mode,
         "output_dir": str(output_dir),
     }
     write_json(output_dir / "report.json", report)
