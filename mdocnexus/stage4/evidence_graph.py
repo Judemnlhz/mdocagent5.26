@@ -18,6 +18,7 @@ import subprocess
 from typing import Any, Iterable
 from urllib.parse import quote
 
+from mdocnexus.common.model_config import deterministic_stage_model_fields
 from mdocnexus.stage4.locator_policy import classify_locator
 
 
@@ -798,6 +799,7 @@ def build_manifest(
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "graph_mode": GRAPH_MODE,
+        **deterministic_stage_model_fields("none_rule_only", "stage4_rule_only_document_native_graph"),
         "input_artifacts_path": public_path(artifacts_jsonl_path),
         "input_artifacts_hash": stable_hash_json(artifacts if artifacts is not None else []),
         "nodes_hash": stable_hash_json(nodes),

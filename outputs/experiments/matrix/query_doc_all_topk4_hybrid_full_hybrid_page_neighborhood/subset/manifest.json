@@ -1,0 +1,14 @@
+{
+  "created_by_script": "scripts/build_stage2_coverage_subset.py",
+  "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",
+  "input_hash": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+  "max_docs": 20,
+  "max_pages_per_doc": 4,
+  "no_gold_fields_used": true,
+  "num_documents": 20,
+  "num_pages": 80,
+  "output": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/subset/stage2_coverage_subset_query_doc_all.jsonl",
+  "scope_mode": "query_doc_all",
+  "selection_stable": true,
+  "top_k": 4
+}

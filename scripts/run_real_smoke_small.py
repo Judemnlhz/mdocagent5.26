@@ -9,12 +9,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
+import sys
 from typing import Any
 
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DEFAULT_OUTPUT_DIR = "outputs/stage2_doc_real_smoke_small"
+from mdocnexus.common.model_config import QWEN3VL_CONFIG, QWEN3VL_MODEL_ID, load_model_config, model_id_from_config
+
+DEFAULT_OUTPUT_DIR = "outputs/stage2_doc_real_smoke_qwen3vl"
 DEFAULT_EXTRACT_ROOT = "tmp/MMLongBench"
 MAX_PAGES_TOTAL_CAP = 5
 
@@ -22,14 +27,16 @@ MAX_PAGES_TOTAL_CAP = 5
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run or print a small bounded real-provider Stage 2 smoke command.")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--dry-run", action="store_true", help="Print commands without executing. This is the default.")
     parser.add_argument("--enable-real-api", action="store_true")
     parser.add_argument("--run-real-trial", action="store_true")
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
     parser.add_argument("--input", "--stage2-json", dest="stage2_json", default=None)
     parser.add_argument("--config", default=None)
+    parser.add_argument("--model-config", default=QWEN3VL_CONFIG)
     parser.add_argument("--provider", default="real", choices=("real",))
-    parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
+    parser.add_argument("--model-name", default=None)
     parser.add_argument("--max-pages-total", type=int, default=3)
     parser.add_argument("--max-pages-per-call", type=int, default=1)
     parser.add_argument("--image-payload-mode", choices=("image_url", "base64", "none"), default="image_url")
@@ -45,10 +52,16 @@ def validate_args(args: argparse.Namespace) -> None:
         raise RuntimeError("--max-pages-per-call must be 1 for real smoke small.")
     if args.execute and (not args.enable_real_api or not args.run_real_trial):
         raise RuntimeError("Real smoke execution requires both --enable-real-api and --run-real-trial.")
+    config = load_model_config(args.model_config)
+    model_id = model_id_from_config(config)
+    if model_id != QWEN3VL_MODEL_ID:
+        raise RuntimeError("Real smoke small requires Qwen/Qwen3-VL-8B-Instruct model config.")
 
 
 def build_commands(args: argparse.Namespace) -> list[list[str]]:
     max_pages_total = int(args.max_pages_total)
+    model_config = load_model_config(args.model_config)
+    model_name = args.model_name or model_id_from_config(model_config) or QWEN3VL_MODEL_ID
     stage2_cmd = [
         "python3",
         "scripts/stage2.py",
@@ -73,8 +86,10 @@ def build_commands(args: argparse.Namespace) -> list[list[str]]:
         args.extract_root,
         "--output-dir",
         args.output_dir,
+        "--model-config",
+        args.model_config,
         "--model-name",
-        args.model_name,
+        model_name,
         "--image-payload-mode",
         args.image_payload_mode,
     ]
@@ -88,7 +103,17 @@ def build_commands(args: argparse.Namespace) -> list[list[str]]:
         "--output-dir",
         args.output_dir,
     ]
-    return [stage2_cmd, audit_cmd]
+    audit_model_cmd = [
+        "python3",
+        "scripts/audit_model_configs.py",
+        "--stage2-dir",
+        args.output_dir,
+        "--output",
+        "outputs/audits/model_config_audit_report.json",
+    ]
+    audit_no_gold_cmd = ["python3", "scripts/audit_no_gold_leakage.py", "--scan-dir", args.output_dir]
+    audit_repro_cmd = ["python3", "scripts/audit_reproducibility.py", "--stage2-dir", args.output_dir]
+    return [stage2_cmd, audit_cmd, audit_model_cmd, audit_no_gold_cmd, audit_repro_cmd]
 
 
 def run_command(command: list[str], cwd: Path) -> dict[str, Any]:

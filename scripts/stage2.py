@@ -15,7 +15,7 @@ import subprocess
 import sys
 from typing import Any, Dict, List, Optional
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from mdocnexus.stage2.artifact_pipeline import (
     build_document_artifact_store,
@@ -23,6 +23,7 @@ from mdocnexus.stage2.artifact_pipeline import (
     run_stage2_single_page_real_api_smoke_test,
     write_artifact_store,
 )
+from mdocnexus.common.model_config import QWEN3VL_CONFIG, stage2_model_fields
 from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
 from mdocnexus.stage2.index_builder import (
     OUT_OF_RANGE_ERROR,
@@ -450,7 +451,7 @@ def small_batch_main() -> None:
     print(json.dumps(result["summary"], ensure_ascii=False, indent=2))
 
 
-MAX_ALLOWED_DOCS = 20
+MAX_ALLOWED_DOCS = 50
 MAX_ALLOWED_PAGES_PER_DOC = 5
 MAX_ALLOWED_CROSSDOC_PAGES = 50
 STAGE_NAME = "stage2_crossdoc_small_batch_artifact_compilation"
@@ -484,7 +485,7 @@ def parse_crossdoc_batch_args() -> argparse.Namespace:
 
 def validate_crossdoc_args(args: argparse.Namespace) -> None:
     if int(args.max_docs) < 1 or int(args.max_docs) > MAX_ALLOWED_DOCS:
-        raise RuntimeError("--max-docs must be between 1 and 20.")
+        raise RuntimeError("--max-docs must be between 1 and 50.")
     if int(args.max_pages_per_doc) < 1 or int(args.max_pages_per_doc) > MAX_ALLOWED_PAGES_PER_DOC:
         raise RuntimeError("--max-pages-per-doc must be between 1 and 5.")
     if int(args.max_pages) < 1 or int(args.max_pages) > MAX_ALLOWED_CROSSDOC_PAGES:
@@ -1972,6 +1973,10 @@ def _write_stage2_jsonl_manifest(
         "compiler_mode": "document_generic" if document_generic else "crossdoc_clean",
         "prompt_version": str(prompt_version),
         "model_version": str(model_version or "unknown"),
+        **stage2_model_fields(
+            str(getattr(args, "provider_mode", getattr(args, "provider", "dry_run")) if args is not None else "dry_run"),
+            getattr(args, "model_config", None) if args is not None else None,
+        ),
         "git_commit": _current_git_commit(),
         "num_artifacts": int(report.get("num_artifacts", 0)),
         "num_nodes": 0,
@@ -2353,6 +2358,7 @@ def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.scope_mode = str(getattr(args, "scope_mode", "doc_first") or "doc_first")
     args.retrieval_topk_file = getattr(args, "retrieval_topk_file", None)
     args.retrieval_topk = int(getattr(args, "retrieval_topk", 5))
+    args.model_config = getattr(args, "model_config", QWEN3VL_CONFIG)
     args.provider_mode = _normalize_doc_compile_provider_mode(args)
     if (args.subset_file or args.retrieval_topk_file) and args.provider_mode == "real":
         raise RuntimeError("Refusing real provider doc-compile for fixed coverage subset runs.")
@@ -2855,6 +2861,7 @@ def _add_compile_options(
     parser.add_argument("--max-pages-per-call", type=int, default=1)
     parser.add_argument("--max-pages-real-cap", type=int, default=10)
     parser.add_argument("--provider", default=provider_default, choices=provider_choices)
+    parser.add_argument("--model-config", default=QWEN3VL_CONFIG)
     parser.add_argument("--model-name", default="Qwen/Qwen3-VL-8B-Instruct")
     parser.add_argument("--prompt-version", default=PROMPT_VERSION)
     parser.add_argument("--image-payload-mode", choices=("image_url", "base64", "none"), default="image_url")

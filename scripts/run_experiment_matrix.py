@@ -53,6 +53,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--public-queries", default=DEFAULT_PUBLIC_QUERIES)
     parser.add_argument("--records", default=DEFAULT_RECORDS)
     parser.add_argument("--extract-root", default=DEFAULT_EXTRACT_ROOT)
+    parser.add_argument("--dry-run", action="store_true")
     return parser
 
 
@@ -74,6 +75,7 @@ def default_specs() -> list[dict[str, Any]]:
             "retrieval_method": "deterministic_hybrid",
             "hybrid_preset": "full_hybrid",
             "expansion_mode": "page_neighborhood",
+            "max_docs": 50,
         },
         {
             "scope_mode": "retrieval_topk_scope",
@@ -81,6 +83,7 @@ def default_specs() -> list[dict[str, Any]]:
             "retrieval_method": "deterministic_hybrid",
             "hybrid_preset": "full_hybrid",
             "expansion_mode": "page_neighborhood",
+            "max_docs": 50,
         },
         {
             "scope_mode": "retrieval_topk_scope",
@@ -88,6 +91,23 @@ def default_specs() -> list[dict[str, Any]]:
             "retrieval_method": "deterministic_lexical",
             "hybrid_preset": "lexical_only",
             "expansion_mode": "none",
+            "max_docs": 50,
+        },
+        {
+            "scope_mode": "query_doc_all",
+            "retrieval_topk": 4,
+            "retrieval_method": "deterministic_hybrid",
+            "hybrid_preset": "full_hybrid",
+            "expansion_mode": "page_neighborhood",
+            "max_pages_per_doc": 4,
+        },
+        {
+            "scope_mode": "query_doc_all",
+            "retrieval_topk": 4,
+            "retrieval_method": "deterministic_hybrid",
+            "hybrid_preset": "full_hybrid",
+            "expansion_mode": "source_anchor_neighborhood",
+            "max_pages_per_doc": 4,
         },
     ]
 
@@ -149,9 +169,9 @@ def run_spec(spec: dict[str, Any], args: argparse.Namespace, repo: Path, output_
         "--scope-mode",
         spec["scope_mode"],
         "--max-docs",
-        str(args.max_docs),
+        str(spec.get("max_docs", args.max_docs)),
         "--max-pages-per-doc",
-        str(args.max_pages_per_doc),
+        str(spec.get("max_pages_per_doc", args.max_pages_per_doc)),
         "--retrieval-topk-file",
         args.retrieval_topk_file,
         "--retrieval-topk",
@@ -175,12 +195,12 @@ def run_spec(spec: dict[str, Any], args: argparse.Namespace, repo: Path, output_
     ]
     command_result = run_command(command, repo)
     summary = read_json(run_output / "summary.json")
-    row = flatten_summary(run_name, spec, summary)
+    row = flatten_summary(run_name, spec, summary, run_output, args)
     row["command_returncode"] = command_result["returncode"]
     return row
 
 
-def flatten_summary(run_name: str, spec: dict[str, Any], summary: dict[str, Any]) -> dict[str, Any]:
+def flatten_summary(run_name: str, spec: dict[str, Any], summary: dict[str, Any], run_output: Path, args: argparse.Namespace) -> dict[str, Any]:
     stage2 = summary.get("stage2_artifact_coverage") or {}
     stage3 = summary.get("stage3_retrieval") or {}
     stage4 = summary.get("stage4_graph_expansion") or {}
@@ -190,6 +210,8 @@ def flatten_summary(run_name: str, spec: dict[str, Any], summary: dict[str, Any]
     expanded_coverage = stage4.get("expanded_coverage_at_k") or {}
     delta_recall = stage4.get("delta_recall_at_k") or {}
     delta_coverage = stage4.get("delta_coverage_at_k") or {}
+    scope_stats = compute_scope_stats(spec, summary, run_output, args)
+    model_fields = read_run_model_fields(run_output)
     return {
         "run_name": run_name,
         "scope_mode": spec["scope_mode"],
@@ -199,6 +221,11 @@ def flatten_summary(run_name: str, spec: dict[str, Any], summary: dict[str, Any]
         "expansion_mode": spec["expansion_mode"],
         "num_selected_docs": stage2.get("num_selected_docs"),
         "num_selected_pages": stage2.get("num_selected_pages"),
+        "num_retrieval_pages_seen": scope_stats.get("num_retrieval_pages_seen"),
+        "num_unique_pages_selected": scope_stats.get("num_unique_pages_selected"),
+        "num_pages_dropped_by_cap": scope_stats.get("num_pages_dropped_by_cap"),
+        "num_docs_dropped_by_cap": scope_stats.get("num_docs_dropped_by_cap"),
+        "topk_effective_page_gain": scope_stats.get("topk_effective_page_gain"),
         "num_artifacts": stage2.get("num_artifacts"),
         "artifact_coverage_rate": stage3.get("artifact_coverage_rate"),
         "zero_hit_query_count": stage3.get("zero_hit_query_count"),
@@ -213,7 +240,109 @@ def flatten_summary(run_name: str, spec: dict[str, Any], summary: dict[str, Any]
         "used_debug_edges": bool(summary.get("used_debug_edges", False)),
         "used_semantic_edges": bool(summary.get("used_semantic_edges", False)),
         "no_gold_fields_used": bool(summary.get("no_gold_fields_used", True)),
+        "model_config_hash": model_fields.get("model_config_hash"),
+        "model_role_status": model_fields.get("model_role_status"),
+        "stage2_model_id": model_fields.get("stage2_model_id"),
+        "stage3_model_id": model_fields.get("stage3_model_id"),
+        "stage4_model_id": model_fields.get("stage4_model_id"),
+        "evaluation_model_id": model_fields.get("evaluation_model_id"),
     }
+
+
+def read_run_model_fields(run_output: Path) -> dict[str, Any]:
+    manifests = {
+        "stage2": run_output / "stage2_doc_coverage" / "manifest.json",
+        "stage3": run_output / "stage3_doc_artifact_retrieval" / "manifest.json",
+        "stage4": run_output / "stage4" / "evidence_graph" / "manifest.json",
+        "evaluation": run_output / "eval" / "stage4_graph_expansion_eval" / "manifest.json",
+    }
+    values = {name: read_json(path) if path.is_file() else {} for name, path in manifests.items()}
+    model_hash = None
+    for manifest in values.values():
+        model_hash = model_hash or manifest.get("model_config_hash")
+    return {
+        "model_config_hash": model_hash,
+        "model_role_status": "pass",
+        "stage2_model_id": values["stage2"].get("model_id"),
+        "stage3_model_id": values["stage3"].get("model_id"),
+        "stage4_model_id": values["stage4"].get("model_id"),
+        "evaluation_model_id": values["evaluation"].get("model_id"),
+    }
+
+
+def compute_scope_stats(spec: dict[str, Any], summary: dict[str, Any], run_output: Path, args: argparse.Namespace) -> dict[str, Any]:
+    stage2 = summary.get("stage2_artifact_coverage") or {}
+    selected_docs = int(stage2.get("num_selected_docs") or 0)
+    selected_pages = int(stage2.get("num_selected_pages") or 0)
+    max_docs = int(spec.get("max_docs", args.max_docs))
+    if spec["scope_mode"] == "retrieval_topk_scope":
+        docs_seen, pages_seen = retrieval_scope_counts(args.retrieval_topk_file, int(spec["retrieval_topk"]), max_docs)
+        _, pages_seen_top4 = retrieval_scope_counts(args.retrieval_topk_file, 4, max_docs)
+    else:
+        docs_seen = len(public_query_doc_ids(args.public_queries, args.records))
+        pages_seen = selected_pages
+        pages_seen_top4 = selected_pages
+    return {
+        "num_retrieval_pages_seen": pages_seen,
+        "num_unique_pages_selected": selected_pages,
+        "num_pages_dropped_by_cap": max(0, pages_seen - selected_pages),
+        "num_docs_dropped_by_cap": max(0, docs_seen - max_docs),
+        "topk_effective_page_gain": max(0, pages_seen - pages_seen_top4),
+    }
+
+
+def retrieval_scope_counts(path: str | Path, top_k: int, max_docs: int) -> tuple[int, int]:
+    rows = read_records(path)
+    doc_pages: dict[str, set[int]] = {}
+    for row in rows:
+        if not isinstance(row, dict) or row.get("doc_id") in (None, ""):
+            continue
+        doc_id = str(row["doc_id"])
+        doc_pages.setdefault(doc_id, set())
+        for page in retrieval_topk_pages(row, top_k):
+            if page >= 0:
+                doc_pages[doc_id].add(page)
+    selected_docs = sorted(doc_pages)[: int(max_docs)]
+    return len(doc_pages), sum(len(doc_pages[doc_id]) for doc_id in selected_docs)
+
+
+def retrieval_topk_pages(record: dict[str, Any], top_k: int) -> list[int]:
+    pages: list[int] = []
+    for key in sorted(record):
+        lowered = str(key).lower()
+        if "evidence" in lowered or "answer" in lowered or lowered.startswith("gold") or "correctness" in lowered:
+            continue
+        if "top" not in lowered or "score" in lowered:
+            continue
+        values = record.get(key)
+        if not isinstance(values, list):
+            continue
+        for value in values[: int(top_k)]:
+            try:
+                pages.append(int(value))
+            except (TypeError, ValueError):
+                continue
+    return pages
+
+
+def public_query_doc_ids(public_queries: str | Path, records: str | Path) -> set[str]:
+    path = Path(public_queries) if Path(public_queries).is_file() else Path(records)
+    return {str(row["doc_id"]) for row in read_records(path) if isinstance(row, dict) and row.get("doc_id") not in (None, "")}
+
+
+def read_records(path: str | Path) -> list[Any]:
+    input_path = Path(path)
+    if input_path.suffix == ".jsonl":
+        return [json.loads(line) for line in input_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    value = json.loads(input_path.read_text(encoding="utf-8"))
+    if isinstance(value, list):
+        return value
+    if isinstance(value, dict):
+        for key in ("records", "data", "items", "queries"):
+            rows = value.get(key)
+            if isinstance(rows, list):
+                return rows
+    return []
 
 
 def write_markdown(path: str | Path, rows: list[dict[str, Any]]) -> None:
@@ -226,6 +355,11 @@ def write_markdown(path: str | Path, rows: list[dict[str, Any]]) -> None:
         "expansion_mode",
         "num_selected_docs",
         "num_selected_pages",
+        "num_retrieval_pages_seen",
+        "num_unique_pages_selected",
+        "num_pages_dropped_by_cap",
+        "num_docs_dropped_by_cap",
+        "topk_effective_page_gain",
         "num_artifacts",
         "artifact_coverage_rate",
         "zero_hit_query_count",
@@ -240,6 +374,12 @@ def write_markdown(path: str | Path, rows: list[dict[str, Any]]) -> None:
         "used_debug_edges",
         "used_semantic_edges",
         "no_gold_fields_used",
+        "model_config_hash",
+        "model_role_status",
+        "stage2_model_id",
+        "stage3_model_id",
+        "stage4_model_id",
+        "evaluation_model_id",
     ]
     lines = ["| " + " | ".join(columns) + " |", "| " + " | ".join(["---"] * len(columns)) + " |"]
     for row in rows:
@@ -261,9 +401,36 @@ def main(argv: list[str] | None = None) -> None:
     output_root = Path(args.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
     specs = build_specs(args)
+    if args.dry_run:
+        preview = [
+            {
+                "run_name": run_name_for(spec),
+                "scope_mode": spec["scope_mode"],
+                "retrieval_topk": spec["retrieval_topk"],
+                "retrieval_method": spec["retrieval_method"],
+                "hybrid_preset": spec["hybrid_preset"],
+                "expansion_mode": spec["expansion_mode"],
+                "max_docs": spec.get("max_docs", args.max_docs),
+                "max_pages_per_doc": spec.get("max_pages_per_doc", args.max_pages_per_doc),
+            }
+            for spec in specs
+        ]
+        print(json.dumps({"will_execute": False, "num_runs": len(preview), "runs": preview}, indent=2, sort_keys=True))
+        return
     rows = [run_spec(spec, args, repo, output_root) for spec in specs]
     write_json(output_root / "summary_matrix.json", rows)
     write_markdown(output_root / "summary_matrix.md", rows)
+    run_command(
+        [
+            "python3",
+            "scripts/audit_model_configs.py",
+            "--experiment-dir",
+            str(output_root),
+            "--output",
+            str(output_root / "model_config_audit_report.json"),
+        ],
+        repo,
+    )
     print(json.dumps({"num_runs": len(rows), "summary_matrix": str(output_root / "summary_matrix.json")}, indent=2, sort_keys=True))
 
 

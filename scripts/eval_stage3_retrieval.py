@@ -9,8 +9,9 @@ import os
 from pathlib import Path
 import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+from mdocnexus.common.model_config import DEEPSEEK_CONFIG, evaluation_model_fields
 from mdocnexus.evaluation.retrieval_metrics import (
     evaluate_stage3_retrieval,
     read_jsonl,
@@ -26,6 +27,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--artifacts", "--artifacts-jsonl", dest="artifacts_jsonl", default="outputs/stage2_doc/artifacts.jsonl")
     parser.add_argument("--records", default="data/MMLongBench/sample-with-retrieval-results.json")
     parser.add_argument("--output-dir", default="outputs/eval/stage3_retrieval_eval")
+    parser.add_argument("--evaluator-model-config", default=DEEPSEEK_CONFIG)
+    parser.add_argument("--use-evaluator-model", action="store_true")
     return parser
 
 
@@ -41,6 +44,7 @@ def main(argv: list[str] | None = None) -> None:
         "evaluation_only": True,
         "not_consumed_by_stage2_stage3_stage4": True,
         "stage": "stage3_retrieval_eval",
+        **evaluation_model_fields(args.evaluator_model_config, evaluator_model_used=bool(args.use_evaluator_model)),
         "retrieval_jsonl": args.retrieval_jsonl,
         "artifacts_jsonl": args.artifacts_jsonl,
         "records": args.records,

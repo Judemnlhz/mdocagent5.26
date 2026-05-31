@@ -1,0 +1,85 @@
+{
+  "added_artifact_count_by_edge_type": {
+    "supported_by_anchor": 990
+  },
+  "added_gold_page_hit_rate": 0.14583333333333334,
+  "added_ratio": 0.9226467847157502,
+  "adjacent_page_added_gold_hit_rate": 0.0,
+  "avg_added_artifacts": 0.9226467847157502,
+  "avg_expanded_artifacts": 1.369990680335508,
+  "avg_flat_artifacts": 0.4473438956197577,
+  "caption_edge_added_gold_hit_rate": 0.0,
+  "delta_coverage_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "delta_recall_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "edge_type_added_artifact_count": {
+    "supported_by_anchor": 990
+  },
+  "edge_type_added_gold_hit_rate": {
+    "supported_by_anchor": 0.14583333333333334
+  },
+  "edge_type_delta_coverage": {
+    "supported_by_anchor": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_type_delta_recall": {
+    "supported_by_anchor": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_types_used": [
+    "supported_by_anchor"
+  ],
+  "evaluation_only": true,
+  "expanded_coverage_at_k": {
+    "1": 0.005312208760484623,
+    "3": 0.007176141658900279,
+    "5": 0.009816713264989127
+  },
+  "expanded_recall_at_k": {
+    "1": 0.007455731593662628,
+    "3": 0.009319664492078284,
+    "5": 0.0130475302889096
+  },
+  "expansion_factor": 1.369990680335508,
+  "expansion_mode": "source_anchor_neighborhood",
+  "expansion_ratio": 1.369990680335508,
+  "figure_edge_added_gold_hit_rate": 0.0,
+  "flat_coverage_at_k": {
+    "1": 0.005312208760484623,
+    "3": 0.007176141658900279,
+    "5": 0.009816713264989127
+  },
+  "flat_recall_at_k": {
+    "1": 0.007455731593662628,
+    "3": 0.009319664492078284,
+    "5": 0.0130475302889096
+  },
+  "graph_coverage_at_k": {
+    "1": 0.005312208760484623,
+    "3": 0.007176141658900279,
+    "5": 0.009816713264989127
+  },
+  "graph_recall_at_k": {
+    "1": 0.007455731593662628,
+    "3": 0.009319664492078284,
+    "5": 0.0130475302889096
+  },
+  "located_on_page_added_gold_hit_rate": 0.0,
+  "source_anchor_added_gold_hit_rate": 0.14583333333333334,
+  "table_edge_added_gold_hit_rate": 0.0,
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

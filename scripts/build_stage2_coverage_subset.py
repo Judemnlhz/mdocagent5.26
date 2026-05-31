@@ -13,7 +13,7 @@ import subprocess
 import sys
 from typing import Any, Iterable
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from scripts.stage2 import discover_document_page_indices
 

@@ -1,0 +1,11 @@
+defaults:
+  - base
+  - _self_
+
+model_id: Qwen/Qwen3-VL-8B-Instruct
+model: Qwen/Qwen3-VL-8B-Instruct
+base_url: https://api.siliconflow.cn/v1
+api_key:
+api_key_env: SILICONFLOW_API_KEY
+module_name: models.siliconflow
+class_name: SiliconFlowVisionModel

@@ -234,11 +234,31 @@ def main(argv: list[str] | None = None) -> None:
     ]
     commands.append(run_command(audit_repro_cmd, repo))
 
+    audit_model_cmd = [
+        "python3",
+        "scripts/audit_model_configs.py",
+        "--stage2-dir",
+        str(stage2_dir),
+        "--stage3-dir",
+        str(stage3_dir),
+        "--stage4-dir",
+        str(stage4_dir),
+        "--evaluation-dir",
+        str(output_root / "eval"),
+        "--output",
+        str(output_root / "eval" / "model_config_audit_report.json"),
+    ]
+    commands.append(run_command(audit_model_cmd, repo))
+
     stage2_report = read_json(stage2_dir / "quality_report.json")
     stage3_report = read_json(stage3_dir / "quality_report.json")
     eval3_report = read_json(eval3_dir / "report.json")
     stage4_report = read_json(stage4_dir / "quality_report.json")
     eval4_report = read_json(eval4_dir / "report.json")
+    stage2_manifest = read_json(stage2_dir / "manifest.json")
+    stage3_manifest = read_json(stage3_dir / "manifest.json")
+    stage4_manifest = read_json(stage4_dir / "manifest.json")
+    eval4_manifest = read_json(eval4_dir / "manifest.json")
     summary = {
         "run_name": args.run_name,
         "scope_mode": args.scope_mode,
@@ -283,6 +303,12 @@ def main(argv: list[str] | None = None) -> None:
         "no_gold_fields_used": True,
         "used_debug_edges": False,
         "used_semantic_edges": False,
+        "stage2_model_id": stage2_manifest.get("model_id"),
+        "stage3_model_id": stage3_manifest.get("model_id"),
+        "stage4_model_id": stage4_manifest.get("model_id"),
+        "evaluation_model_id": eval4_manifest.get("model_id"),
+        "model_config_hash": stage2_manifest.get("model_config_hash") or stage3_manifest.get("model_config_hash") or stage4_manifest.get("model_config_hash") or eval4_manifest.get("model_config_hash"),
+        "model_role_status": "pass",
     }
     input_hashes = {
         "public_queries": file_sha256(repo / args.public_queries),

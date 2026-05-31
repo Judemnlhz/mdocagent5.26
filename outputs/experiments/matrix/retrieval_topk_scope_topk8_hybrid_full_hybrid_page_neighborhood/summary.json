@@ -1,4 +1,5 @@
 {
+  "evaluation_model_id": null,
   "expansion_mode": "page_neighborhood",
   "hybrid_preset": "full_hybrid",
   "hybrid_weights": {
@@ -8,6 +9,8 @@
     "metadata_score": 0.5,
     "type_modality_score": 0.25
   },
+  "model_config_hash": null,
+  "model_role_status": "pass",
   "no_gold_fields_used": true,
   "retrieval_method": "deterministic_hybrid",
   "run_name": "retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood",
@@ -30,6 +33,8 @@
     "num_selected_pages": 50,
     "proof_trace_eligible_rate": 0.6666666666666666
   },
+  "stage2_model_id": null,
+  "stage3_model_id": null,
   "stage3_retrieval": {
     "artifact_coverage_rate": 0.11742777260018639,
     "coverage_at_k_by_page": {
@@ -88,6 +93,7 @@
     "used_debug_edges": false,
     "used_semantic_edges": false
   },
+  "stage4_model_id": null,
   "used_debug_edges": false,
   "used_semantic_edges": false
 }

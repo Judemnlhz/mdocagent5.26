@@ -9,7 +9,8 @@
     "top_k": 5
   },
   "created_by_script": "scripts/stage3_doc_artifact_retrieval.py",
-  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "evaluator_model_used": false,
+  "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",
   "graph_prior_enabled": false,
   "graph_prior_requested": false,
   "hybrid_preset": "lexical_only",
@@ -22,6 +23,8 @@
   },
   "input_artifacts_hash": "fc5fa6cbd33287e2fcb3e08b7ad21a393af29eb8cbdc44a25977901c566c3f3f",
   "input_artifacts_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl",
+  "model_role": "none_deterministic",
+  "model_used_for": "stage3_deterministic_artifact_retrieval",
   "no_answer_generation": true,
   "no_gold_fields_used": true,
   "quality_report_hash": "bd293a75430152ebd5177ea4e5f2697a8b110e11b1b1c28569ffb42bbdf6b773",

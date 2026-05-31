@@ -5,9 +5,11 @@
   },
   "added_gold_page_hit_rate": 0.3888888888888889,
   "added_ratio": 2.0801491146318734,
+  "adjacent_page_added_gold_hit_rate": 0.44047619047619047,
   "avg_added_artifacts": 2.0801491146318734,
   "avg_expanded_artifacts": 2.6672879776328053,
   "avg_flat_artifacts": 0.587138863000932,
+  "caption_edge_added_gold_hit_rate": 0.0,
   "delta_coverage_at_k": {
     "1": 0.00745573159366263,
     "3": 0.005591798695246966,
@@ -17,6 +19,14 @@
     "1": 0.005591798695246973,
     "3": 0.004659832246039136,
     "5": 0.001863932898415653
+  },
+  "edge_type_added_artifact_count": {
+    "adjacent_page": 1668,
+    "located_on_page": 2232
+  },
+  "edge_type_added_gold_hit_rate": {
+    "adjacent_page": 0.44047619047619047,
+    "located_on_page": 0.3888888888888889
   },
   "edge_type_delta_coverage": {
     "adjacent_page": {
@@ -60,6 +70,7 @@
   "expansion_factor": 2.6672879776328053,
   "expansion_mode": "page_neighborhood",
   "expansion_ratio": 2.6672879776328053,
+  "figure_edge_added_gold_hit_rate": 0.0,
   "flat_coverage_at_k": {
     "1": 0.023765144454799627,
     "3": 0.032649891270580926,
@@ -80,6 +91,9 @@
     "3": 0.045666356011183594,
     "5": 0.045666356011183594
   },
+  "located_on_page_added_gold_hit_rate": 0.3888888888888889,
+  "source_anchor_added_gold_hit_rate": 0.0,
+  "table_edge_added_gold_hit_rate": 0.0,
   "used_debug_edges": false,
   "used_semantic_edges": false
 }

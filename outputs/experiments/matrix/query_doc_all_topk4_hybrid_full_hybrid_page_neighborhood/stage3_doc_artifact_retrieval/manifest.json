@@ -1,0 +1,39 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+    "graph_prior_enabled": false,
+    "hybrid_config_used": false,
+    "hybrid_preset": "full_hybrid",
+    "query_input": "outputs/stage3_query/public_queries.jsonl",
+    "retrieval_method": "deterministic_hybrid",
+    "top_k": 5
+  },
+  "created_by_script": "scripts/stage3_doc_artifact_retrieval.py",
+  "evaluator_model_used": false,
+  "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",
+  "graph_prior_enabled": false,
+  "graph_prior_requested": false,
+  "hybrid_preset": "full_hybrid",
+  "hybrid_weights": {
+    "graph_prior_score": 0.25,
+    "lexical_score": 1.0,
+    "locator_score": 0.25,
+    "metadata_score": 0.5,
+    "type_modality_score": 0.25
+  },
+  "input_artifacts_hash": "8fb912108fb7f2e8afdaf1b9ab39af1cf5c20592b549159c2f49093156ac8050",
+  "input_artifacts_path": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "model_role": "none_deterministic",
+  "model_used_for": "stage3_deterministic_artifact_retrieval",
+  "no_answer_generation": true,
+  "no_gold_fields_used": true,
+  "quality_report_hash": "69d77a595ce1233f5f292c36c9613aa4f6c3138ce94d6efdb7a188e0acf4798d",
+  "query_input_hash": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+  "query_input_path": "outputs/stage3_query/public_queries.jsonl",
+  "retrieval_hash": "61dd0337d0a375451a02389d82ff0c1f6345255b9589d5aad0ad6b9727f97a19",
+  "retrieval_method": "deterministic_hybrid",
+  "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
+  "schema_version": "stage3_doc_artifact_retrieval_v1",
+  "stage": "stage3_doc_artifact_retrieval",
+  "used_debug_edges": false
+}

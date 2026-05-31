@@ -4,7 +4,7 @@
     "extract_root": "tmp/MMLongBench",
     "hybrid_config": null,
     "hybrid_preset": "lexical_only",
-    "max_docs": 20,
+    "max_docs": 50,
     "max_pages_per_doc": 3,
     "output_root": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none",
     "public_queries": "outputs/stage3_query/public_queries.jsonl",
@@ -29,7 +29,7 @@
         "--extract-root",
         "tmp/MMLongBench",
         "--max-docs",
-        "20",
+        "50",
         "--max-pages-per-doc",
         "3",
         "--retrieval-topk-file",
@@ -43,7 +43,7 @@
       ],
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\"manifest\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/subset/manifest.json\", \"no_gold_fields_used\": true, \"num_documents\": 20, \"num_pages\": 60, \"output\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl\", \"scope_mode\": \"retrieval_topk_scope\"}\n"
+      "stdout_tail": "{\"manifest\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/subset/manifest.json\", \"no_gold_fields_used\": true, \"num_documents\": 50, \"num_pages\": 150, \"output\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl\", \"scope_mode\": \"retrieval_topk_scope\"}\n"
     },
     {
       "command": [
@@ -59,7 +59,7 @@
         "--retrieval-topk",
         "4",
         "--max-docs",
-        "20",
+        "50",
         "--max-pages-per-doc",
         "3",
         "--max-pages",
@@ -147,7 +147,7 @@
       ],
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\n  \"added_artifact_count_by_edge_type\": {},\n  \"added_gold_page_hit_rate\": 0.0,\n  \"added_ratio\": 0.0,\n  \"avg_added_artifacts\": 0.0,\n  \"avg_expanded_artifacts\": 0.587138863000932,\n  \"avg_flat_artifacts\": 0.587138863000932,\n  \"delta_coverage_at_k\": {\n    \"1\": 0.0,\n    \"3\": 0.0,\n    \"5\": 0.0\n  },\n  \"delta_recall_at_k\": {\n    \"1\": 0.0,\n    \"3\": 0.0,\n    \"5\": 0.0\n  },\n  \"edge_type_delta_coverage\": {},\n  \"edge_type_delta_recall\": {},\n  \"edge_types_used\": [],\n  \"evaluation_only\": true,\n  \"expanded_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"expanded_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"expansion_factor\": 0.587138863000932,\n  \"expansion_mode\": \"flat\",\n  \"expansion_ratio\": 0.587138863000932,\n  \"flat_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"flat_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"graph_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"graph_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"used_debug_edges\": false,\n  \"used_semantic_edges\": false\n}\n"
+      "stdout_tail": "{\n  \"added_artifact_count_by_edge_type\": {},\n  \"added_gold_page_hit_rate\": 0.0,\n  \"added_ratio\": 0.0,\n  \"adjacent_page_added_gold_hit_rate\": 0.0,\n  \"avg_added_artifacts\": 0.0,\n  \"avg_expanded_artifacts\": 0.587138863000932,\n  \"avg_flat_artifacts\": 0.587138863000932,\n  \"caption_edge_added_gold_hit_rate\": 0.0,\n  \"delta_coverage_at_k\": {\n    \"1\": 0.0,\n    \"3\": 0.0,\n    \"5\": 0.0\n  },\n  \"delta_recall_at_k\": {\n    \"1\": 0.0,\n    \"3\": 0.0,\n    \"5\": 0.0\n  },\n  \"edge_type_added_artifact_count\": {},\n  \"edge_type_added_gold_hit_rate\": {},\n  \"edge_type_delta_coverage\": {},\n  \"edge_type_delta_recall\": {},\n  \"edge_types_used\": [],\n  \"evaluation_only\": true,\n  \"expanded_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"expanded_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"expansion_factor\": 0.587138863000932,\n  \"expansion_mode\": \"flat\",\n  \"expansion_ratio\": 0.587138863000932,\n  \"figure_edge_added_gold_hit_rate\": 0.0,\n  \"flat_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"flat_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"graph_coverage_at_k\": {\n    \"1\": 0.023019571295433364,\n    \"3\": 0.03423423423423424,\n    \"5\": 0.036564150357253807\n  },\n  \"graph_recall_at_k\": {\n    \"1\": 0.02982292637465051,\n    \"3\": 0.04287045666356011,\n    \"5\": 0.045666356011183594\n  },\n  \"located_on_page_added_gold_hit_rate\": 0.0,\n  \"source_anchor_added_gold_hit_rate\": 0.0,\n  \"table_edge_added_gold_hit_rate\": 0.0,\n  \"used_debug_edges\": false,\n  \"used_semantic_edges\": false\n}\n"
     },
     {
       "command": [
@@ -177,10 +177,29 @@
       ],
       "returncode": 0,
       "stderr_tail": "",
-      "stdout_tail": "{\n  \"checked_hashes\": [\n    {\n      \"field\": \"artifacts_hash\",\n      \"hash\": \"c51f86651949c6cbe2fcc82b3568c1d51872d56cf77715fd6527043bf563a130\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"call_log_hash\",\n      \"hash\": \"7d54a00d0dbd1e8fbc60c9c183e6a853a95a4b8d9bf591a55c15a90073aad269\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/call_log.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"discard_hash\",\n      \"hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/discard.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"123b83da20c780e0bb244e8618f24717bc4051d6ff05aca5109b1e4a1d77b860\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/quality_report.json\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"retrieval_hash\",\n      \"hash\": \"8f7363e42a70db3cfbf5c2205e64d647c458050cdd2658d189a800f6c8014165\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval/retrieval.jsonl\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"bd293a75430152ebd5177ea4e5f2697a8b110e11b1b1c28569ffb42bbdf6b773\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval/quality_report.json\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"nodes_hash\",\n      \"hash\": \"d84b2d88d70f19aa828cf9d890fd14192f558c9bc122f66b016d7af1c97de467\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/nodes.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"edges_hash\",\n      \"hash\": \"9c25bf1e0ef10024f055546a2430be9dd2833af9b2cfafe80cd5e287dfe8c8d8\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"debug_edges_hash\",\n      \"hash\": \"23b0dc80e08b5bf63093b2203e0770bf788fd657e2816a9347578d3377658701\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/debug_edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"12530a7e1ecb0183009d80f8ff72b3062a9ba20e89f6a82775f9232ea93095b2\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/quality_report.json\",\n      \"stage\": \"stage4\"\n    }\n  ],\n  \"mismatches\": [],\n  \"num_checked_hashes\": 10,\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"legacy_file_sha256_accepted:stage2:artifacts_hash\",\n    \"legacy_file_sha256_accepted:stage2:call_log_hash\",\n    \"legacy_file_sha256_accepted:stage2:discard_hash\",\n    \"legacy_file_sha256_accepted:stage2:quality_report_hash\"\n  ]\n}\n"
+      "stdout_tail": "{\n  \"checked_hashes\": [\n    {\n      \"field\": \"artifacts_hash\",\n      \"hash\": \"c51f86651949c6cbe2fcc82b3568c1d51872d56cf77715fd6527043bf563a130\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"call_log_hash\",\n      \"hash\": \"341e3d677e6638bd30e8450d2cf76a869f228b3fedc11fa9c4be1097fbebdb5c\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/call_log.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"discard_hash\",\n      \"hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/discard.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"123b83da20c780e0bb244e8618f24717bc4051d6ff05aca5109b1e4a1d77b860\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/quality_report.json\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"retrieval_hash\",\n      \"hash\": \"8f7363e42a70db3cfbf5c2205e64d647c458050cdd2658d189a800f6c8014165\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval/retrieval.jsonl\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"bd293a75430152ebd5177ea4e5f2697a8b110e11b1b1c28569ffb42bbdf6b773\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval/quality_report.json\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"nodes_hash\",\n      \"hash\": \"d84b2d88d70f19aa828cf9d890fd14192f558c9bc122f66b016d7af1c97de467\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/nodes.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"edges_hash\",\n      \"hash\": \"9c25bf1e0ef10024f055546a2430be9dd2833af9b2cfafe80cd5e287dfe8c8d8\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"debug_edges_hash\",\n      \"hash\": \"23b0dc80e08b5bf63093b2203e0770bf788fd657e2816a9347578d3377658701\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/debug_edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"12530a7e1ecb0183009d80f8ff72b3062a9ba20e89f6a82775f9232ea93095b2\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph/quality_report.json\",\n      \"stage\": \"stage4\"\n    }\n  ],\n  \"mismatches\": [],\n  \"num_checked_hashes\": 10,\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"legacy_file_sha256_accepted:stage2:artifacts_hash\",\n    \"legacy_file_sha256_accepted:stage2:call_log_hash\",\n    \"legacy_file_sha256_accepted:stage2:discard_hash\",\n    \"legacy_file_sha256_accepted:stage2:quality_report_hash\"\n  ]\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/audit_model_configs.py",
+        "--stage2-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage",
+        "--stage3-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval",
+        "--stage4-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph",
+        "--evaluation-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/eval",
+        "--output",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/eval/model_config_audit_report.json"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"config_files_checked\": [\n    \"config/model/deepseekv3.yaml\",\n    \"config/model/qwen3.yaml\",\n    \"config/model/qwen3vl.yaml\"\n  ],\n  \"config_violations\": [],\n  \"evaluation_model_violations\": [],\n  \"experiment_model_violations\": [],\n  \"model_ids\": {\n    \"config/model/deepseekv3.yaml\": \"deepseek-ai/DeepSeek-V3\",\n    \"config/model/qwen3.yaml\": \"Qwen/Qwen3-8B\",\n    \"config/model/qwen3vl.yaml\": \"Qwen/Qwen3-VL-8B-Instruct\"\n  },\n  \"public_secret_violations\": [],\n  \"stage2_model_violations\": [],\n  \"stage3_model_violations\": [],\n  \"stage4_model_violations\": [],\n  \"status\": \"pass\"\n}\n"
     }
   ],
-  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",
   "hybrid_preset": "lexical_only",
   "hybrid_weights": {
     "graph_prior_score": 0.0,

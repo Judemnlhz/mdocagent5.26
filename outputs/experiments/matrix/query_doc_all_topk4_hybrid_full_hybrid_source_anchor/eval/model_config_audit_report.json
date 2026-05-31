@@ -1,0 +1,20 @@
+{
+  "config_files_checked": [
+    "config/model/deepseekv3.yaml",
+    "config/model/qwen3.yaml",
+    "config/model/qwen3vl.yaml"
+  ],
+  "config_violations": [],
+  "evaluation_model_violations": [],
+  "experiment_model_violations": [],
+  "model_ids": {
+    "config/model/deepseekv3.yaml": "deepseek-ai/DeepSeek-V3",
+    "config/model/qwen3.yaml": "Qwen/Qwen3-8B",
+    "config/model/qwen3vl.yaml": "Qwen/Qwen3-VL-8B-Instruct"
+  },
+  "public_secret_violations": [],
+  "stage2_model_violations": [],
+  "stage3_model_violations": [],
+  "stage4_model_violations": [],
+  "status": "pass"
+}

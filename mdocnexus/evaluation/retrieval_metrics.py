@@ -116,6 +116,8 @@ def evaluate_stage4_graph_expansion(
     added_counts: list[int] = []
     added_gold_hits: list[int] = []
     added_artifact_count_by_edge_type: Counter[str] = Counter()
+    added_gold_hit_by_edge_type: Counter[str] = Counter()
+    added_gold_total_by_edge_type: Counter[str] = Counter()
     all_edge_types_used: set[str] = set()
 
     for row_index, row in enumerate(retrieval_rows):
@@ -145,6 +147,11 @@ def evaluate_stage4_graph_expansion(
         added_pages = [page for page in added_pages if page is not None]
         if added:
             added_gold_hits.append(1 if gold_pages & set(added_pages) else 0)
+        added_gold_hit = bool(added and gold_pages & set(added_pages))
+        for edge_type in edge_types_used:
+            added_gold_total_by_edge_type[str(edge_type)] += 1
+            if added_gold_hit:
+                added_gold_hit_by_edge_type[str(edge_type)] += 1
         flat_recall_at_k: dict[str, float] = {}
         expanded_recall_at_k: dict[str, float] = {}
         flat_coverage_at_k: dict[str, float] = {}
@@ -223,6 +230,14 @@ def evaluate_stage4_graph_expansion(
         "expansion_factor": avg_expanded_artifacts / max(1.0, avg_flat_artifacts),
         "added_gold_page_hit_rate": sum(added_gold_hits) / max(1, len(added_gold_hits)),
         "added_artifact_count_by_edge_type": dict(sorted(added_artifact_count_by_edge_type.items())),
+        "edge_type_added_artifact_count": dict(sorted(added_artifact_count_by_edge_type.items())),
+        "edge_type_added_gold_hit_rate": build_edge_type_gold_hit_rates(added_gold_hit_by_edge_type, added_gold_total_by_edge_type),
+        "table_edge_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"table_contains_cell", "row_contains_cell", "column_contains_cell"}),
+        "caption_edge_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"caption_of", "figure_has_caption"}),
+        "figure_edge_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"caption_of", "figure_has_caption"}),
+        "adjacent_page_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"adjacent_page"}),
+        "located_on_page_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"located_on_page"}),
+        "source_anchor_added_gold_hit_rate": grouped_edge_hit_rate(added_gold_hit_by_edge_type, added_gold_total_by_edge_type, {"supported_by_anchor", "anchor_on_page"}),
         "edge_type_delta_recall": edge_type_delta_recall,
         "edge_type_delta_coverage": edge_type_delta_coverage,
         "edge_types_used": sorted(all_edge_types_used),
@@ -260,6 +275,21 @@ def evaluate_edge_type_deltas(
         delta_recall[edge_type] = dict(report.get("delta_recall_at_k", {}))
         delta_coverage[edge_type] = dict(report.get("delta_coverage_at_k", {}))
     return delta_recall, delta_coverage
+
+
+def build_edge_type_gold_hit_rates(hit_counts: Counter[str], total_counts: Counter[str]) -> dict[str, float]:
+    return {
+        edge_type: float(hit_counts.get(edge_type, 0)) / max(1, int(total_counts.get(edge_type, 0)))
+        for edge_type in sorted(total_counts)
+    }
+
+
+def grouped_edge_hit_rate(hit_counts: Counter[str], total_counts: Counter[str], edge_types: set[str]) -> float:
+    total = sum(int(total_counts.get(edge_type, 0)) for edge_type in edge_types)
+    if total <= 0:
+        return 0.0
+    hits = sum(int(hit_counts.get(edge_type, 0)) for edge_type in edge_types)
+    return hits / total
 
 
 def build_formal_edge_index(edges: list[dict[str, Any]], allowed_edge_types: set[str]) -> dict[str, Any]:

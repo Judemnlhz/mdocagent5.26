@@ -19,6 +19,7 @@ import subprocess
 from typing import Any, Iterable
 from urllib.parse import unquote
 
+from mdocnexus.common.model_config import deterministic_stage_model_fields
 from mdocnexus.stage2.locator_enrichment import classify_artifact_locator
 
 
@@ -666,6 +667,7 @@ def build_manifest(
         "stage": "stage3_doc_artifact_retrieval",
         "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
         "retrieval_method": retrieval_method,
+        **deterministic_stage_model_fields("none_deterministic", "stage3_deterministic_artifact_retrieval"),
         "hybrid_preset": hybrid_settings.get("preset"),
         "hybrid_weights": normalize_hybrid_weights(hybrid_settings.get("weights", {})),
         "hybrid_config_path": public_path(hybrid_config_path) if hybrid_config_path not in (None, "") else None,

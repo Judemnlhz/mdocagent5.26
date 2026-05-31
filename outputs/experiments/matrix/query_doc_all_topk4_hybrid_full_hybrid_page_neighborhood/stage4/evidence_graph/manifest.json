@@ -1,0 +1,59 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+    "output_dir": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph",
+    "retrieval_jsonl": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+    "stage2_json": "outputs/stage2/clean/sample-with-stage2-index.json"
+  },
+  "context_edge_types": [
+    "same_page",
+    "same_source_block"
+  ],
+  "created_by_script": "scripts/stage4_build_evidence_graph.py",
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
+  "debug_edges_hash": "b8df6eb1769ac1cb9ac2e621e2c45473f5625be3220527c10fce58ad2c779f59",
+  "edges_hash": "7193b3347038efd45d253fddc9134dd194822e3a7857bf64a7737d2811b602cd",
+  "evaluator_model_used": false,
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "same_page",
+    "same_source_block",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "git_commit": "9f6bf6def347adb2e08b87a389d4b0beac4b9ded",
+  "graph_mode": "rule_only_document_native_structural",
+  "input_artifacts_hash": "664c8bcdb83ab0e2d058dcb4ba2319eacae2ef4ebc223453f382b06a115304f6",
+  "input_artifacts_path": "outputs/experiments/matrix/query_doc_all_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "model_config_hash": null,
+  "model_config_path": null,
+  "model_id": null,
+  "model_provider": null,
+  "model_role": "none_rule_only",
+  "model_used_for": "stage4_rule_only_document_native_graph",
+  "nodes_hash": "8407ee311841a68ada8d47dd74c38bde1a1cca221f8e0170950753ad828efcf2",
+  "quality_report_hash": "0e34e9d25d51b46a2d8f7e621efeb2110cad81a70b38e0c7f83d939957ca62a8",
+  "schema_version": "stage4_evidence_graph_v2",
+  "semantic_edges_enabled": false
+}

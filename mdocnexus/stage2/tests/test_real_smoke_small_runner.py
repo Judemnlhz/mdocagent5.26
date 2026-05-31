@@ -7,7 +7,7 @@ import json
 import unittest
 from contextlib import redirect_stdout
 
-from scripts.run_real_smoke_small import build_parser, main, validate_args
+from scripts.run_real_smoke_small import DEFAULT_OUTPUT_DIR, build_commands, build_parser, main, validate_args
 
 
 class RealSmokeSmallRunnerTest(unittest.TestCase):
@@ -21,6 +21,7 @@ class RealSmokeSmallRunnerTest(unittest.TestCase):
         self.assertTrue(payload["requires_execute"])
         self.assertTrue(payload["requires_enable_real_api"])
         self.assertTrue(payload["requires_run_real_trial"])
+        self.assertEqual(payload["output_dir"], DEFAULT_OUTPUT_DIR)
 
     def test_execute_requires_double_confirmation(self) -> None:
         parser = build_parser()
@@ -44,6 +45,16 @@ class RealSmokeSmallRunnerTest(unittest.TestCase):
 
         for forbidden in ("raw_response", "raw_output", "data:image", "file:///home", "api_key", "secret", "image_path"):
             self.assertNotIn(forbidden, text)
+
+    def test_qwen3vl_config_is_default_real_smoke_model(self) -> None:
+        parser = build_parser()
+        args = parser.parse_args([])
+        commands = build_commands(args)
+        stage2_cmd = commands[0]
+
+        self.assertIn("--model-config", stage2_cmd)
+        self.assertIn("config/model/qwen3vl.yaml", stage2_cmd)
+        self.assertIn("Qwen/Qwen3-VL-8B-Instruct", stage2_cmd)
 
 
 if __name__ == "__main__":

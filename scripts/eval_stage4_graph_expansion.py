@@ -10,8 +10,9 @@ from pathlib import Path
 import sys
 from typing import Any
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
+from mdocnexus.common.model_config import DEEPSEEK_CONFIG, evaluation_model_fields
 from mdocnexus.evaluation.retrieval_metrics import (
     evaluate_stage4_graph_expansion,
     read_jsonl,
@@ -33,6 +34,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--edge-ablation", action="store_true")
     parser.add_argument("--allowed-edge-types", default=None, help="Comma-separated formal edge type allowlist for expansion.")
     parser.add_argument("--blocked-edge-types", default=None, help="Comma-separated formal edge types to remove from expansion.")
+    parser.add_argument("--evaluator-model-config", default=DEEPSEEK_CONFIG)
+    parser.add_argument("--use-evaluator-model", action="store_true")
     return parser
 
 
@@ -161,6 +164,7 @@ def main(argv: list[str] | None = None) -> None:
         "evaluation_only": True,
         "not_consumed_by_stage2_stage3_stage4": True,
         "stage": "stage4_graph_expansion_eval",
+        **evaluation_model_fields(args.evaluator_model_config, evaluator_model_used=bool(args.use_evaluator_model)),
         "retrieval_jsonl": args.retrieval_jsonl,
         "artifacts_jsonl": args.artifacts_jsonl,
         "records": args.records,

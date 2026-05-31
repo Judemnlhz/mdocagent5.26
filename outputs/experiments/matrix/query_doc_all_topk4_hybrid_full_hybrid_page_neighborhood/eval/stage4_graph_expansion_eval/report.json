@@ -1,0 +1,99 @@
+{
+  "added_artifact_count_by_edge_type": {
+    "adjacent_page": 2460,
+    "located_on_page": 2460
+  },
+  "added_gold_page_hit_rate": 0.15625,
+  "added_ratio": 2.292637465051258,
+  "adjacent_page_added_gold_hit_rate": 0.15625,
+  "avg_added_artifacts": 2.292637465051258,
+  "avg_expanded_artifacts": 2.739981360671016,
+  "avg_flat_artifacts": 0.4473438956197577,
+  "caption_edge_added_gold_hit_rate": 0.0,
+  "delta_coverage_at_k": {
+    "1": 0.0045045045045045045,
+    "3": 0.003572538055296676,
+    "5": 0.0009319664492078283
+  },
+  "delta_recall_at_k": {
+    "1": 0.005591798695246971,
+    "3": 0.004659832246039143,
+    "5": 0.0009319664492078283
+  },
+  "edge_type_added_artifact_count": {
+    "adjacent_page": 2460,
+    "located_on_page": 2460
+  },
+  "edge_type_added_gold_hit_rate": {
+    "adjacent_page": 0.15625,
+    "located_on_page": 0.15625
+  },
+  "edge_type_delta_coverage": {
+    "adjacent_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    },
+    "located_on_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_type_delta_recall": {
+    "adjacent_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    },
+    "located_on_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_types_used": [
+    "adjacent_page",
+    "located_on_page"
+  ],
+  "evaluation_only": true,
+  "expanded_coverage_at_k": {
+    "1": 0.009816713264989127,
+    "3": 0.010748679714196956,
+    "5": 0.010748679714196956
+  },
+  "expanded_recall_at_k": {
+    "1": 0.0130475302889096,
+    "3": 0.013979496738117428,
+    "5": 0.013979496738117428
+  },
+  "expansion_factor": 2.739981360671016,
+  "expansion_mode": "page_neighborhood",
+  "expansion_ratio": 2.739981360671016,
+  "figure_edge_added_gold_hit_rate": 0.0,
+  "flat_coverage_at_k": {
+    "1": 0.005312208760484623,
+    "3": 0.007176141658900279,
+    "5": 0.009816713264989127
+  },
+  "flat_recall_at_k": {
+    "1": 0.007455731593662628,
+    "3": 0.009319664492078284,
+    "5": 0.0130475302889096
+  },
+  "graph_coverage_at_k": {
+    "1": 0.009816713264989127,
+    "3": 0.010748679714196956,
+    "5": 0.010748679714196956
+  },
+  "graph_recall_at_k": {
+    "1": 0.0130475302889096,
+    "3": 0.013979496738117428,
+    "5": 0.013979496738117428
+  },
+  "located_on_page_added_gold_hit_rate": 0.15625,
+  "source_anchor_added_gold_hit_rate": 0.0,
+  "table_edge_added_gold_hit_rate": 0.0,
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

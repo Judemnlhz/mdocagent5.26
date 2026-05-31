@@ -2,9 +2,11 @@
   "added_artifact_count_by_edge_type": {},
   "added_gold_page_hit_rate": 0.0,
   "added_ratio": 0.0,
+  "adjacent_page_added_gold_hit_rate": 0.0,
   "avg_added_artifacts": 0.0,
   "avg_expanded_artifacts": 0.587138863000932,
   "avg_flat_artifacts": 0.587138863000932,
+  "caption_edge_added_gold_hit_rate": 0.0,
   "delta_coverage_at_k": {
     "1": 0.0,
     "3": 0.0,
@@ -15,6 +17,8 @@
     "3": 0.0,
     "5": 0.0
   },
+  "edge_type_added_artifact_count": {},
+  "edge_type_added_gold_hit_rate": {},
   "edge_type_delta_coverage": {},
   "edge_type_delta_recall": {},
   "edge_types_used": [],
@@ -32,6 +36,7 @@
   "expansion_factor": 0.587138863000932,
   "expansion_mode": "flat",
   "expansion_ratio": 0.587138863000932,
+  "figure_edge_added_gold_hit_rate": 0.0,
   "flat_coverage_at_k": {
     "1": 0.023019571295433364,
     "3": 0.03423423423423424,
@@ -52,6 +57,9 @@
     "3": 0.04287045666356011,
     "5": 0.045666356011183594
   },
+  "located_on_page_added_gold_hit_rate": 0.0,
+  "source_anchor_added_gold_hit_rate": 0.0,
+  "table_edge_added_gold_hit_rate": 0.0,
   "used_debug_edges": false,
   "used_semantic_edges": false
 }
