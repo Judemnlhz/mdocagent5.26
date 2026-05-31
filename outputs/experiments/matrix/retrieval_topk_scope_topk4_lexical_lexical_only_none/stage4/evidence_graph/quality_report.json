@@ -1,0 +1,101 @@
+{
+  "context_edge_types": [
+    "same_page",
+    "same_source_block"
+  ],
+  "debug_edge_type_counts": {
+    "same_record_debug": 544
+  },
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
+  "edge_type_counts": {
+    "adjacent_page": 11,
+    "anchor_on_page": 100,
+    "caption_of": 50,
+    "column_contains_cell": 50,
+    "figure_has_caption": 50,
+    "located_on_page": 450,
+    "row_contains_cell": 50,
+    "same_page": 1800,
+    "same_source_block": 900,
+    "section_contains": 50,
+    "supported_by_anchor": 450,
+    "table_contains_cell": 50
+  },
+  "element_locator_rate": 0.6666666666666666,
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "same_page",
+    "same_source_block",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "locator_kind_counts": {
+    "caption_block": 50,
+    "full_page_anchor": 150,
+    "section_block": 50,
+    "table_cell": 50,
+    "text_offset": 150
+  },
+  "node_type_counts": {
+    "artifact": 450,
+    "caption": 50,
+    "figure": 50,
+    "page": 50,
+    "section": 50,
+    "source_anchor": 100,
+    "table": 50,
+    "table_column": 50,
+    "table_row": 50
+  },
+  "num_artifacts": 450,
+  "num_artifacts_with_element_locator": 300,
+  "num_artifacts_with_page_locator": 450,
+  "num_artifacts_with_source_anchor": 450,
+  "num_artifacts_without_element_locator": 150,
+  "num_debug_edges": 544,
+  "num_edges": 4011,
+  "num_element_locatable": 300,
+  "num_nodes": 900,
+  "num_proof_trace_eligible": 300,
+  "num_source_anchored": 450,
+  "pairwise_clique_edges_disabled": true,
+  "proof_trace_eligible_by_type": {
+    "caption": 50,
+    "numeric_fact": 50,
+    "section_header": 50,
+    "table": 50,
+    "table_cell": 50,
+    "text_span": 50
+  },
+  "proof_trace_eligible_rate": 0.6666666666666666,
+  "same_record_debug_in_formal_edges": false,
+  "same_record_in_formal_edges": false,
+  "semantic_edges_enabled": false,
+  "skipped_rule_edges_by_reason": {
+    "caption_figure_missing_explicit_pair": 100,
+    "next_block_unparseable_source_block_id": 150,
+    "same_doc_pairwise_clique_disabled": 1
+  },
+  "source_anchored_rate": 1.0
+}

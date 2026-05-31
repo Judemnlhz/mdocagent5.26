@@ -28,9 +28,63 @@ DEFAULT_OUTPUT_DIR = "outputs/stage3_doc_artifact_retrieval"
 DEFAULT_TOP_K = 5
 DEFAULT_RETRIEVAL_METHOD = "deterministic_lexical"
 RETRIEVAL_METHODS = {"deterministic_lexical", "deterministic_hybrid"}
+DEFAULT_HYBRID_PRESET = "full_hybrid"
 SCHEMA_VERSION = "stage3_doc_artifact_retrieval_v1"
 SEMANTIC_EDGE_TYPES = {"supports", "contradicts", "derived_from", "semantic_relation", "entails", "refutes"}
 DEBUG_EDGE_TYPES = {"same_record", "same_record_debug"}
+COMPONENT_NAMES = ["lexical_score", "metadata_score", "locator_score", "type_modality_score", "graph_prior_score"]
+HYBRID_PRESET_WEIGHTS: dict[str, dict[str, float]] = {
+    "lexical_only": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.0,
+        "locator_score": 0.0,
+        "type_modality_score": 0.0,
+        "graph_prior_score": 0.0,
+    },
+    "lexical_metadata": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.50,
+        "locator_score": 0.0,
+        "type_modality_score": 0.25,
+        "graph_prior_score": 0.0,
+    },
+    "lexical_locator": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.0,
+        "locator_score": 0.50,
+        "type_modality_score": 0.0,
+        "graph_prior_score": 0.0,
+    },
+    "lexical_graph": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.0,
+        "locator_score": 0.0,
+        "type_modality_score": 0.0,
+        "graph_prior_score": 0.50,
+    },
+    "full_hybrid": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.50,
+        "locator_score": 0.25,
+        "type_modality_score": 0.25,
+        "graph_prior_score": 0.25,
+    },
+    "hybrid_no_graph": {
+        "lexical_score": 1.0,
+        "metadata_score": 0.50,
+        "locator_score": 0.25,
+        "type_modality_score": 0.25,
+        "graph_prior_score": 0.0,
+    },
+    "graph_only_prior": {
+        "lexical_score": 0.0,
+        "metadata_score": 0.0,
+        "locator_score": 0.0,
+        "type_modality_score": 0.0,
+        "graph_prior_score": 1.0,
+    },
+}
+HYBRID_PRESETS = set(HYBRID_PRESET_WEIGHTS)
 
 GOLD_FIELD_NAMES = {
     "answer",
@@ -90,6 +144,8 @@ def run_doc_artifact_retrieval(
     top_k: int = DEFAULT_TOP_K,
     retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
     graph_path: str | Path | None = None,
+    hybrid_config_path: str | Path | None = None,
+    hybrid_preset: str | None = None,
 ) -> dict[str, Any]:
     """Rank document-generic artifacts for each query and write public outputs."""
 
@@ -108,7 +164,13 @@ def run_doc_artifact_retrieval(
     queries = load_query_records(query_path)
     artifacts_hash = file_sha256(artifacts_path)
     query_input_hash = file_sha256(query_path)
-    graph_prior, graph_edges_hash = load_graph_prior(graph_path)
+    hybrid_settings = resolve_hybrid_settings(retrieval_method, hybrid_config_path, hybrid_preset)
+    graph_prior_requested = graph_path not in (None, "")
+    graph_prior, graph_edges_hash = (
+        load_graph_prior(graph_path)
+        if graph_prior_requested and hybrid_settings["weights"].get("graph_prior_score", 0.0) > 0.0
+        else ({}, None)
+    )
     artifacts_by_doc = group_artifacts_by_doc_id(artifacts)
 
     retrieval_rows: list[dict[str, Any]] = []
@@ -121,6 +183,7 @@ def run_doc_artifact_retrieval(
             top_k=top_k,
             retrieval_method=retrieval_method,
             graph_prior=graph_prior,
+            hybrid_weights=hybrid_settings["weights"],
         )
         row = build_retrieval_row(
             query=query,
@@ -138,7 +201,13 @@ def run_doc_artifact_retrieval(
     write_jsonl(retrieval_path, retrieval_rows)
     retrieval_hash = canonical_json_hash(retrieval_rows)
 
-    quality_report = build_quality_report(retrieval_rows, top_k=top_k, retrieval_method=retrieval_method, graph_prior_enabled=bool(graph_prior))
+    quality_report = build_quality_report(
+        retrieval_rows,
+        top_k=top_k,
+        retrieval_method=retrieval_method,
+        graph_prior_enabled=bool(graph_prior),
+        hybrid_settings=hybrid_settings,
+    )
     assert_no_forbidden_public_fields(quality_report)
     quality_report_hash = canonical_json_hash(quality_report)
     quality_report_path = output_root / "quality_report.json"
@@ -155,6 +224,9 @@ def run_doc_artifact_retrieval(
         retrieval_method=retrieval_method,
         graph_path=graph_path,
         graph_edges_hash=graph_edges_hash,
+        graph_prior_enabled=bool(graph_prior),
+        hybrid_settings=hybrid_settings,
+        hybrid_config_path=hybrid_config_path,
     )
     assert_no_forbidden_public_fields(manifest)
     manifest_path = output_root / "manifest.json"
@@ -227,6 +299,7 @@ def rank_artifacts(
     top_k: int,
     retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
     graph_prior: dict[str, float] | None = None,
+    hybrid_weights: dict[str, float] | None = None,
 ) -> list[tuple[dict[str, Any], float, dict[str, float]]]:
     if not candidate_artifacts:
         return []
@@ -244,13 +317,8 @@ def rank_artifacts(
         )
         total_score = components["lexical_score"]
         if retrieval_method == "deterministic_hybrid":
-            total_score = (
-                components["lexical_score"]
-                + 0.50 * components["metadata_score"]
-                + 0.25 * components["locator_score"]
-                + 0.25 * components["type_modality_score"]
-                + 0.25 * components["graph_prior_score"]
-            )
+            weights = normalize_hybrid_weights(hybrid_weights or HYBRID_PRESET_WEIGHTS[DEFAULT_HYBRID_PRESET])
+            total_score = sum(weights[name] * components[name] for name in COMPONENT_NAMES)
         scored.append((artifact, round(float(total_score), 8), {key: round(float(value), 8) for key, value in components.items()}))
     scored.sort(key=lambda item: (-item[1], str(item[0].get("artifact_id") or "")))
     return scored[:top_k]
@@ -396,10 +464,9 @@ def build_retrieval_row(
 
 
 def average_components(component_rows: list[dict[str, float]]) -> dict[str, float]:
-    names = ["lexical_score", "metadata_score", "locator_score", "type_modality_score", "graph_prior_score"]
     if not component_rows:
-        return {name: 0.0 for name in names}
-    return {name: round(sum(float(row.get(name, 0.0)) for row in component_rows) / len(component_rows), 8) for name in names}
+        return {name: 0.0 for name in COMPONENT_NAMES}
+    return {name: round(sum(float(row.get(name, 0.0)) for row in component_rows) / len(component_rows), 8) for name in COMPONENT_NAMES}
 
 
 def query_public_identity(query: dict[str, Any]) -> dict[str, Any]:
@@ -415,16 +482,23 @@ def build_quality_report(
     top_k: int,
     retrieval_method: str = DEFAULT_RETRIEVAL_METHOD,
     graph_prior_enabled: bool = False,
+    hybrid_settings: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     num_queries = len(result_rows)
     denominator = max(1, num_queries)
     with_artifacts = sum(1 for row in result_rows if int(row.get("candidate_artifact_count", 0)) > 0)
     total_candidates = sum(int(row.get("candidate_artifact_count", 0)) for row in result_rows)
     total_retrieved = sum(len(row.get("retrieved_artifact_ids", [])) for row in result_rows)
-    component_names = ["lexical_score", "metadata_score", "locator_score", "type_modality_score", "graph_prior_score"]
+    settings = hybrid_settings or resolve_hybrid_settings(retrieval_method)
+    weights = normalize_hybrid_weights(settings.get("weights", {}))
+    component_names = active_scoring_components(retrieval_method, weights)
     component_averages = {
         name: sum(float(row.get("retrieval_score_components", {}).get(name, 0.0)) for row in result_rows) / denominator
-        for name in component_names
+        for name in COMPONENT_NAMES
+    }
+    nonzero_component_counts = {
+        name: sum(1 for row in result_rows if float(row.get("retrieval_score_components", {}).get(name, 0.0)) > 0.0)
+        for name in COMPONENT_NAMES
     }
     num_nonzero = sum(1 for row in result_rows if any(float(score) > 0.0 for score in row.get("retrieval_scores", [])))
     return {
@@ -436,11 +510,15 @@ def build_quality_report(
         "avg_retrieved_artifacts_per_query": total_retrieved / denominator,
         "retrieval_method": retrieval_method,
         "scoring_components": component_names,
+        "hybrid_preset": settings.get("preset"),
+        "hybrid_weights": weights,
         "avg_lexical_score": component_averages["lexical_score"],
         "avg_metadata_score": component_averages["metadata_score"],
         "avg_locator_score": component_averages["locator_score"],
         "avg_graph_prior_score": component_averages["graph_prior_score"],
         "avg_type_modality_score": component_averages["type_modality_score"],
+        "avg_component_scores": {name: component_averages[name] for name in COMPONENT_NAMES},
+        "num_queries_with_nonzero_component_scores": nonzero_component_counts,
         "num_queries_with_nonzero_scores": num_nonzero,
         "graph_prior_enabled": bool(graph_prior_enabled),
         "top_k": int(top_k),
@@ -449,6 +527,84 @@ def build_quality_report(
         "used_debug_edges": False,
         "no_gold_fields_used": True,
     }
+
+
+def resolve_hybrid_settings(
+    retrieval_method: str,
+    hybrid_config_path: str | Path | None = None,
+    hybrid_preset: str | None = None,
+) -> dict[str, Any]:
+    config = load_hybrid_config(hybrid_config_path) if hybrid_config_path not in (None, "") else {}
+    if retrieval_method == "deterministic_lexical":
+        preset = "lexical_only"
+        weights = dict(HYBRID_PRESET_WEIGHTS[preset])
+    else:
+        preset = str(hybrid_preset or config.get("hybrid_preset") or config.get("preset") or DEFAULT_HYBRID_PRESET)
+        if preset not in HYBRID_PRESETS:
+            raise ValueError(f"Unsupported hybrid_preset: {preset}")
+        weights = dict(HYBRID_PRESET_WEIGHTS[preset])
+        config_weights = config.get("weights")
+        if isinstance(config_weights, dict):
+            weights.update({str(key): float(value) for key, value in config_weights.items() if str(key) in COMPONENT_NAMES})
+    weights = normalize_hybrid_weights(weights)
+    return {
+        "preset": preset,
+        "weights": weights,
+        "config_path": public_path(hybrid_config_path) if hybrid_config_path not in (None, "") else None,
+        "config_hash": file_sha256(hybrid_config_path) if hybrid_config_path not in (None, "") else None,
+    }
+
+
+def normalize_hybrid_weights(weights: dict[str, Any]) -> dict[str, float]:
+    normalized: dict[str, float] = {}
+    for name in COMPONENT_NAMES:
+        try:
+            normalized[name] = float(weights.get(name, 0.0))
+        except (TypeError, ValueError):
+            raise ValueError(f"Invalid hybrid weight for {name}: {weights.get(name)!r}") from None
+    return normalized
+
+
+def active_scoring_components(retrieval_method: str, weights: dict[str, float]) -> list[str]:
+    if retrieval_method == "deterministic_lexical":
+        return ["lexical_score"]
+    return [name for name in COMPONENT_NAMES if float(weights.get(name, 0.0)) != 0.0]
+
+
+def load_hybrid_config(path: str | Path) -> dict[str, Any]:
+    """Load the small retrieval YAML subset used by checked-in configs."""
+
+    config_path = Path(path)
+    result: dict[str, Any] = {}
+    current_map: str | None = None
+    for raw_line in config_path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.split("#", 1)[0].rstrip()
+        if not line.strip():
+            continue
+        if not line.startswith(" ") and line.endswith(":"):
+            current_map = line[:-1].strip()
+            result[current_map] = {}
+            continue
+        if ":" not in line:
+            raise ValueError(f"Unsupported hybrid config line: {raw_line}")
+        key, value = line.split(":", 1)
+        key = key.strip()
+        value = value.strip()
+        target = result[current_map] if current_map and raw_line.startswith((" ", "\t")) else result
+        target[key] = parse_config_scalar(value)
+    return result
+
+
+def parse_config_scalar(value: str) -> Any:
+    if value in {"", "null", "None"}:
+        return None
+    lowered = value.lower()
+    if lowered in {"true", "false"}:
+        return lowered == "true"
+    try:
+        return float(value)
+    except ValueError:
+        return value.strip("\"'")
 
 
 def load_graph_prior(graph_path: str | Path | None) -> tuple[dict[str, float], str | None]:
@@ -500,6 +656,9 @@ def build_manifest(
     retrieval_method: str,
     graph_path: str | Path | None,
     graph_edges_hash: str | None,
+    graph_prior_enabled: bool,
+    hybrid_settings: dict[str, Any],
+    hybrid_config_path: str | Path | None = None,
 ) -> dict[str, Any]:
     commit = current_git_commit()
     manifest = {
@@ -507,13 +666,18 @@ def build_manifest(
         "stage": "stage3_doc_artifact_retrieval",
         "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
         "retrieval_method": retrieval_method,
+        "hybrid_preset": hybrid_settings.get("preset"),
+        "hybrid_weights": normalize_hybrid_weights(hybrid_settings.get("weights", {})),
+        "hybrid_config_path": public_path(hybrid_config_path) if hybrid_config_path not in (None, "") else None,
+        "hybrid_config_hash": hybrid_settings.get("config_hash"),
         "input_artifacts_path": public_path(artifacts_jsonl_path),
         "input_artifacts_hash": artifacts_hash,
         "query_input_path": public_path(query_input_path),
         "query_input_hash": query_input_hash,
         "retrieval_hash": retrieval_hash,
         "quality_report_hash": quality_report_hash,
-        "graph_prior_enabled": graph_path not in (None, ""),
+        "graph_prior_enabled": bool(graph_prior_enabled),
+        "graph_prior_requested": graph_path not in (None, ""),
         "graph_edges_path": public_path(resolve_graph_edges_path(graph_path)) if graph_path not in (None, "") else None,
         "graph_edges_hash": graph_edges_hash,
         "no_answer_generation": True,
@@ -525,7 +689,9 @@ def build_manifest(
             "query_input": public_path(query_input_path),
             "top_k": int(top_k),
             "retrieval_method": retrieval_method,
-            "graph_prior_enabled": graph_path not in (None, ""),
+            "hybrid_preset": hybrid_settings.get("preset"),
+            "hybrid_config_used": hybrid_config_path not in (None, ""),
+            "graph_prior_enabled": bool(graph_prior_enabled),
         },
     }
     if commit == "unknown":
@@ -639,6 +805,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
     parser.add_argument("--retrieval-method", choices=sorted(RETRIEVAL_METHODS), default=DEFAULT_RETRIEVAL_METHOD)
     parser.add_argument("--graph", default=None, help="Optional Stage 4 graph directory or formal edges.jsonl for deterministic graph prior.")
+    parser.add_argument("--hybrid-config", default=None, help="Optional fixed YAML weights for deterministic_hybrid scoring.")
+    parser.add_argument("--hybrid-preset", choices=sorted(HYBRID_PRESETS), default=None)
     return parser
 
 
@@ -652,6 +820,8 @@ def main(argv: list[str] | None = None) -> None:
         top_k=args.top_k,
         retrieval_method=args.retrieval_method,
         graph_path=args.graph,
+        hybrid_config_path=args.hybrid_config,
+        hybrid_preset=args.hybrid_preset,
     )
     print(json.dumps(result["quality_report"], ensure_ascii=False, indent=2, sort_keys=True))
 

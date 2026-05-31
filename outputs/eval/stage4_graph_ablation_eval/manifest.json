@@ -1,0 +1,17 @@
+{
+  "allowed_edge_types": [],
+  "artifacts_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "blocked_edge_types": [],
+  "debug_edges_read": false,
+  "edge_ablation": true,
+  "edges_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph/edges.jsonl",
+  "evaluation_only": true,
+  "expansion_mode": "direct_structural",
+  "not_consumed_by_stage2_stage3_stage4": true,
+  "output_dir": "outputs/eval/stage4_graph_ablation_eval",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+  "stage": "stage4_graph_expansion_eval",
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

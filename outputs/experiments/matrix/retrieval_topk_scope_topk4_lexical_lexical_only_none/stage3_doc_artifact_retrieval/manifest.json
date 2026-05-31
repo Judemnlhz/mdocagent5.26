@@ -1,0 +1,36 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl",
+    "graph_prior_enabled": false,
+    "hybrid_config_used": false,
+    "hybrid_preset": "lexical_only",
+    "query_input": "outputs/stage3_query/public_queries.jsonl",
+    "retrieval_method": "deterministic_lexical",
+    "top_k": 5
+  },
+  "created_by_script": "scripts/stage3_doc_artifact_retrieval.py",
+  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "graph_prior_enabled": false,
+  "graph_prior_requested": false,
+  "hybrid_preset": "lexical_only",
+  "hybrid_weights": {
+    "graph_prior_score": 0.0,
+    "lexical_score": 1.0,
+    "locator_score": 0.0,
+    "metadata_score": 0.0,
+    "type_modality_score": 0.0
+  },
+  "input_artifacts_hash": "fc5fa6cbd33287e2fcb3e08b7ad21a393af29eb8cbdc44a25977901c566c3f3f",
+  "input_artifacts_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl",
+  "no_answer_generation": true,
+  "no_gold_fields_used": true,
+  "quality_report_hash": "bd293a75430152ebd5177ea4e5f2697a8b110e11b1b1c28569ffb42bbdf6b773",
+  "query_input_hash": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+  "query_input_path": "outputs/stage3_query/public_queries.jsonl",
+  "retrieval_hash": "8f7363e42a70db3cfbf5c2205e64d647c458050cdd2658d189a800f6c8014165",
+  "retrieval_method": "deterministic_lexical",
+  "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
+  "schema_version": "stage3_doc_artifact_retrieval_v1",
+  "stage": "stage3_doc_artifact_retrieval",
+  "used_debug_edges": false
+}

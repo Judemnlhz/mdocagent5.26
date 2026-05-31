@@ -1,0 +1,36 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+    "graph_prior_enabled": false,
+    "hybrid_config_used": false,
+    "hybrid_preset": "full_hybrid",
+    "query_input": "outputs/stage3_query/public_queries.jsonl",
+    "retrieval_method": "deterministic_hybrid",
+    "top_k": 5
+  },
+  "created_by_script": "scripts/stage3_doc_artifact_retrieval.py",
+  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "graph_prior_enabled": false,
+  "graph_prior_requested": false,
+  "hybrid_preset": "full_hybrid",
+  "hybrid_weights": {
+    "graph_prior_score": 0.25,
+    "lexical_score": 1.0,
+    "locator_score": 0.25,
+    "metadata_score": 0.5,
+    "type_modality_score": 0.25
+  },
+  "input_artifacts_hash": "016b785d4c1e637a44d483480e50543a287ad4fdb777a6d69ef06095c197963b",
+  "input_artifacts_path": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "no_answer_generation": true,
+  "no_gold_fields_used": true,
+  "quality_report_hash": "f8be0d156210c84ebfab6837efca8d76512af1f2c1e574a5a01070f5c16e3875",
+  "query_input_hash": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+  "query_input_path": "outputs/stage3_query/public_queries.jsonl",
+  "retrieval_hash": "d62dfd083975d2781a423373f1b36323c8c16ba1932a77590527fc9ee9684bab",
+  "retrieval_method": "deterministic_hybrid",
+  "retrieval_mode": "query_conditioned_over_document_generic_artifacts",
+  "schema_version": "stage3_doc_artifact_retrieval_v1",
+  "stage": "stage3_doc_artifact_retrieval",
+  "used_debug_edges": false
+}

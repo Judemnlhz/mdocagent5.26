@@ -1,0 +1,7 @@
+hybrid_preset: full_hybrid
+weights:
+  lexical_score: 1.0
+  metadata_score: 0.5
+  locator_score: 0.25
+  type_modality_score: 0.25
+  graph_prior_score: 0.25

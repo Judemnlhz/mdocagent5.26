@@ -23,7 +23,7 @@ DEFAULT_EXPANSION_EDGE_TYPES = {
     "caption_of",
     "figure_has_caption",
 }
-EXPANSION_MODES = {"direct_structural", "page_neighborhood", "source_anchor_neighborhood"}
+EXPANSION_MODES = {"flat", "direct_structural", "page_neighborhood", "source_anchor_neighborhood"}
 DEBUG_EDGE_TYPES = {"same_record", "same_record_debug"}
 CONTEXT_CLIQUE_EDGE_TYPES = {"same_page", "same_source_block"}
 
@@ -93,11 +93,15 @@ def evaluate_stage4_graph_expansion(
     formal_edges: list[dict[str, Any]],
     k_values: Iterable[int] = (1, 3, 5),
     allowed_edge_types: set[str] | None = None,
+    blocked_edge_types: set[str] | None = None,
     expansion_mode: str = "direct_structural",
+    include_edge_type_deltas: bool = True,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     if expansion_mode not in EXPANSION_MODES:
         raise ValueError(f"Unsupported expansion_mode: {expansion_mode}")
     allowed = set(allowed_edge_types or DEFAULT_EXPANSION_EDGE_TYPES)
+    if blocked_edge_types:
+        allowed -= set(blocked_edge_types)
     if allowed & SEMANTIC_EDGE_TYPES:
         raise ValueError("Semantic edge types are not allowed for graph expansion evaluation")
     graph_index = build_formal_edge_index(formal_edges, allowed | CONTEXT_CLIQUE_EDGE_TYPES)
@@ -107,14 +111,18 @@ def evaluate_stage4_graph_expansion(
     node_to_artifact = {artifact_node_id(artifact): str(artifact.get("artifact_id")) for artifact in artifacts}
     artifact_to_node = {str(artifact.get("artifact_id")): artifact_node_id(artifact) for artifact in artifacts}
     per_query: list[dict[str, Any]] = []
-    expansion_factors: list[float] = []
+    flat_counts: list[int] = []
+    expanded_counts: list[int] = []
     added_counts: list[int] = []
+    added_gold_hits: list[int] = []
+    added_artifact_count_by_edge_type: Counter[str] = Counter()
     all_edge_types_used: set[str] = set()
 
     for row_index, row in enumerate(retrieval_rows):
         record = records_by_index.get(int(row.get("record_index", -1))) or records_by_doc.get(str(row.get("doc_id") or "")) or {}
         gold_pages = extract_gold_pages(record)
         flat_ids = [str(value) for value in row.get("retrieved_artifact_ids", [])]
+        flat_unique_ids = list(dict.fromkeys(flat_ids))
         expanded_ids, edge_types_used = expand_artifact_ids(
             flat_ids,
             artifact_by_id=artifact_by_id,
@@ -124,11 +132,19 @@ def evaluate_stage4_graph_expansion(
             expansion_mode=expansion_mode,
         )
         all_edge_types_used.update(edge_types_used)
-        added = max(0, len(expanded_ids) - len(list(dict.fromkeys(flat_ids))))
+        added_ids = [artifact_id for artifact_id in expanded_ids if artifact_id not in set(flat_unique_ids)]
+        added = len(added_ids)
+        for edge_type in edge_types_used:
+            added_artifact_count_by_edge_type[str(edge_type)] += added
         added_counts.append(added)
-        expansion_factors.append(len(expanded_ids) / max(1, len(flat_ids)))
+        flat_counts.append(len(flat_unique_ids))
+        expanded_counts.append(len(expanded_ids))
         flat_pages_all = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in flat_ids]
         flat_pages_all = [page for page in flat_pages_all if page is not None]
+        added_pages = [artifact_page(artifact_by_id.get(artifact_id)) for artifact_id in added_ids]
+        added_pages = [page for page in added_pages if page is not None]
+        if added:
+            added_gold_hits.append(1 if gold_pages & set(added_pages) else 0)
         flat_recall_at_k: dict[str, float] = {}
         expanded_recall_at_k: dict[str, float] = {}
         flat_coverage_at_k: dict[str, float] = {}
@@ -159,6 +175,7 @@ def evaluate_stage4_graph_expansion(
                 "expanded_num_retrieved": len(expanded_ids),
                 "graph_num_retrieved": len(expanded_ids),
                 "num_added_artifacts": added,
+                "added_gold_page_hit": bool(added and gold_pages & set(added_pages)),
                 "flat_recall_at_k": flat_recall_at_k,
                 "expanded_recall_at_k": expanded_recall_at_k,
                 "graph_recall_at_k": expanded_recall_at_k,
@@ -173,6 +190,21 @@ def evaluate_stage4_graph_expansion(
     expanded_recall = average_metric(per_query, "expanded_recall_at_k", k_values)
     flat_coverage = average_metric(per_query, "flat_coverage_at_k", k_values)
     expanded_coverage = average_metric(per_query, "expanded_coverage_at_k", k_values)
+    avg_flat_artifacts = sum(flat_counts) / max(1, len(flat_counts))
+    avg_added_artifacts = sum(added_counts) / max(1, len(added_counts))
+    avg_expanded_artifacts = sum(expanded_counts) / max(1, len(expanded_counts))
+    edge_type_delta_recall: dict[str, dict[str, float]] = {}
+    edge_type_delta_coverage: dict[str, dict[str, float]] = {}
+    if include_edge_type_deltas and expansion_mode != "flat":
+        edge_type_delta_recall, edge_type_delta_coverage = evaluate_edge_type_deltas(
+            retrieval_rows=retrieval_rows,
+            artifacts=artifacts,
+            records=records,
+            formal_edges=formal_edges,
+            k_values=k_values,
+            edge_types=all_edge_types_used,
+            expansion_mode=expansion_mode,
+        )
     report = {
         "expansion_mode": expansion_mode,
         "flat_recall_at_k": flat_recall,
@@ -183,14 +215,51 @@ def evaluate_stage4_graph_expansion(
         "expanded_coverage_at_k": expanded_coverage,
         "graph_coverage_at_k": expanded_coverage,
         "delta_coverage_at_k": {str(k): expanded_coverage[str(k)] - flat_coverage[str(k)] for k in k_values},
-        "expansion_factor": sum(expansion_factors) / max(1, len(expansion_factors)),
-        "avg_added_artifacts": sum(added_counts) / max(1, len(added_counts)),
+        "avg_flat_artifacts": avg_flat_artifacts,
+        "avg_added_artifacts": avg_added_artifacts,
+        "avg_expanded_artifacts": avg_expanded_artifacts,
+        "expansion_ratio": avg_expanded_artifacts / max(1.0, avg_flat_artifacts),
+        "added_ratio": avg_added_artifacts / max(1.0, avg_flat_artifacts),
+        "expansion_factor": avg_expanded_artifacts / max(1.0, avg_flat_artifacts),
+        "added_gold_page_hit_rate": sum(added_gold_hits) / max(1, len(added_gold_hits)),
+        "added_artifact_count_by_edge_type": dict(sorted(added_artifact_count_by_edge_type.items())),
+        "edge_type_delta_recall": edge_type_delta_recall,
+        "edge_type_delta_coverage": edge_type_delta_coverage,
         "edge_types_used": sorted(all_edge_types_used),
         "used_debug_edges": False,
         "used_semantic_edges": False,
         "evaluation_only": True,
     }
     return report, per_query
+
+
+def evaluate_edge_type_deltas(
+    retrieval_rows: list[dict[str, Any]],
+    artifacts: list[dict[str, Any]],
+    records: list[dict[str, Any]],
+    formal_edges: list[dict[str, Any]],
+    k_values: Iterable[int],
+    edge_types: set[str],
+    expansion_mode: str,
+) -> tuple[dict[str, dict[str, float]], dict[str, dict[str, float]]]:
+    delta_recall: dict[str, dict[str, float]] = {}
+    delta_coverage: dict[str, dict[str, float]] = {}
+    for edge_type in sorted(edge_types):
+        if edge_type in SEMANTIC_EDGE_TYPES or edge_type in DEBUG_EDGE_TYPES:
+            continue
+        report, _ = evaluate_stage4_graph_expansion(
+            retrieval_rows=retrieval_rows,
+            artifacts=artifacts,
+            records=records,
+            formal_edges=formal_edges,
+            k_values=k_values,
+            allowed_edge_types={edge_type},
+            expansion_mode=expansion_mode,
+            include_edge_type_deltas=False,
+        )
+        delta_recall[edge_type] = dict(report.get("delta_recall_at_k", {}))
+        delta_coverage[edge_type] = dict(report.get("delta_coverage_at_k", {}))
+    return delta_recall, delta_coverage
 
 
 def build_formal_edge_index(edges: list[dict[str, Any]], allowed_edge_types: set[str]) -> dict[str, Any]:
@@ -273,6 +342,8 @@ def artifact_neighbors_for_mode(
     node_to_artifact: dict[str, str],
     expansion_mode: str,
 ) -> tuple[set[str], set[str]]:
+    if expansion_mode == "flat":
+        return set(), set()
     if expansion_mode == "direct_structural":
         return direct_structural_neighbors(start_node, graph_index, node_to_artifact)
     if expansion_mode == "page_neighborhood":

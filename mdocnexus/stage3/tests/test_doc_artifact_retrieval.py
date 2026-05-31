@@ -168,7 +168,113 @@ class DocArtifactRetrievalTest(unittest.TestCase):
         self.assertEqual(row["retrieved_artifact_ids"], ["a_artifact", "b_artifact"])
         self.assertEqual(first["quality_report"]["retrieval_method"], "deterministic_hybrid")
         self.assertIn("metadata_score", first["quality_report"]["scoring_components"])
+        self.assertEqual(first["quality_report"]["hybrid_preset"], "full_hybrid")
+        self.assertIn("hybrid_weights", first["manifest"])
         self.assertGreaterEqual(first["quality_report"]["num_queries_with_nonzero_scores"], 1)
+
+    def test_hybrid_presets_change_reported_scoring_components(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path, query_path = write_fixture_inputs(root)
+
+            lexical_only = run_doc_artifact_retrieval(
+                artifacts_path,
+                query_path,
+                root / "lexical_only",
+                top_k=2,
+                retrieval_method="deterministic_hybrid",
+                hybrid_preset="lexical_only",
+            )
+            full = run_doc_artifact_retrieval(
+                artifacts_path,
+                query_path,
+                root / "full",
+                top_k=2,
+                retrieval_method="deterministic_hybrid",
+                hybrid_preset="full_hybrid",
+            )
+
+        self.assertEqual(lexical_only["quality_report"]["scoring_components"], ["lexical_score"])
+        self.assertIn("metadata_score", full["quality_report"]["scoring_components"])
+        self.assertNotEqual(lexical_only["quality_report"]["scoring_components"], full["quality_report"]["scoring_components"])
+
+    def test_hybrid_config_hash_and_output_are_stable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path, query_path = write_fixture_inputs(root)
+            config_path = root / "hybrid.yaml"
+            config_path.write_text(
+                "\n".join(
+                    [
+                        "hybrid_preset: lexical_metadata",
+                        "weights:",
+                        "  lexical_score: 1.0",
+                        "  metadata_score: 0.5",
+                        "  locator_score: 0.0",
+                        "  type_modality_score: 0.25",
+                        "  graph_prior_score: 0.0",
+                    ]
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            first = run_doc_artifact_retrieval(
+                artifacts_path,
+                query_path,
+                root / "out1",
+                top_k=2,
+                retrieval_method="deterministic_hybrid",
+                hybrid_config_path=config_path,
+            )
+            second = run_doc_artifact_retrieval(
+                artifacts_path,
+                query_path,
+                root / "out2",
+                top_k=2,
+                retrieval_method="deterministic_hybrid",
+                hybrid_config_path=config_path,
+            )
+
+        self.assertEqual(first["retrieval_hash"], second["retrieval_hash"])
+        self.assertEqual(first["manifest"]["hybrid_config_hash"], second["manifest"]["hybrid_config_hash"])
+        self.assertEqual(first["quality_report"]["hybrid_preset"], "lexical_metadata")
+
+    def test_hybrid_no_graph_preset_keeps_graph_prior_score_zero(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            artifacts_path = root / "artifacts.jsonl"
+            query_path = root / "queries.jsonl"
+            graph = root / "graph"
+            graph.mkdir()
+            write_jsonl(
+                artifacts_path,
+                [
+                    make_artifact("a_artifact", content="same token"),
+                    make_artifact("b_artifact", content="same token"),
+                ],
+            )
+            write_jsonl(query_path, [{"record_id": "r1", "doc_id": "doc.pdf", "question": "same"}])
+            write_jsonl(
+                graph / "edges.jsonl",
+                [{"source": "artifact:doc.pdf:0:b_artifact", "target": "page:doc.pdf:0", "edge_type": "located_on_page"}],
+            )
+
+            result = run_doc_artifact_retrieval(
+                artifacts_path,
+                query_path,
+                root / "out",
+                top_k=2,
+                retrieval_method="deterministic_hybrid",
+                graph_path=graph,
+                hybrid_preset="hybrid_no_graph",
+            )
+            row = read_jsonl(root / "out" / "retrieval.jsonl")[0]
+
+        self.assertEqual(row["retrieved_artifact_ids"][0], "a_artifact")
+        self.assertEqual(result["quality_report"]["avg_graph_prior_score"], 0.0)
+        self.assertFalse(result["quality_report"]["graph_prior_enabled"])
+        self.assertTrue(result["manifest"]["graph_prior_requested"])
 
     def test_graph_prior_reads_formal_edges_only(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:

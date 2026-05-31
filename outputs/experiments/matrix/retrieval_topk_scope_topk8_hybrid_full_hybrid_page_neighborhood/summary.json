@@ -1,0 +1,93 @@
+{
+  "expansion_mode": "page_neighborhood",
+  "hybrid_preset": "full_hybrid",
+  "hybrid_weights": {
+    "graph_prior_score": 0.25,
+    "lexical_score": 1.0,
+    "locator_score": 0.25,
+    "metadata_score": 0.5,
+    "type_modality_score": 0.25
+  },
+  "no_gold_fields_used": true,
+  "retrieval_method": "deterministic_hybrid",
+  "run_name": "retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood",
+  "scope_mode": "retrieval_topk_scope",
+  "stage2_artifact_coverage": {
+    "artifact_type_counts": {
+      "caption": 50,
+      "figure": 50,
+      "numeric_fact": 50,
+      "section_header": 50,
+      "table": 50,
+      "table_cell": 50,
+      "text_span": 50,
+      "visual_observation": 50,
+      "visual_region": 50
+    },
+    "image_payload_rate": 0.0,
+    "num_artifacts": 450,
+    "num_selected_docs": 17,
+    "num_selected_pages": 50,
+    "proof_trace_eligible_rate": 0.6666666666666666
+  },
+  "stage3_retrieval": {
+    "artifact_coverage_rate": 0.11742777260018639,
+    "coverage_at_k_by_page": {
+      "1": 0.023765144454799627,
+      "3": 0.032649891270580926,
+      "5": 0.03544579061820441
+    },
+    "num_queries_with_doc_artifacts": 126,
+    "num_queries_with_nonzero_scores": 126,
+    "recall_at_k_by_page": {
+      "1": 0.03075489282385834,
+      "3": 0.04100652376514446,
+      "5": 0.04380242311276794
+    },
+    "zero_hit_query_count": 947
+  },
+  "stage4_graph_expansion": {
+    "added_gold_page_hit_rate": 0.3888888888888889,
+    "added_ratio": 2.0801491146318734,
+    "avg_added_artifacts": 2.0801491146318734,
+    "avg_expanded_artifacts": 2.6672879776328053,
+    "avg_flat_artifacts": 0.587138863000932,
+    "delta_coverage_at_k": {
+      "1": 0.00745573159366263,
+      "3": 0.005591798695246966,
+      "5": 0.002795899347623483
+    },
+    "delta_recall_at_k": {
+      "1": 0.005591798695246973,
+      "3": 0.004659832246039136,
+      "5": 0.001863932898415653
+    },
+    "expanded_coverage_at_k": {
+      "1": 0.031220876048462257,
+      "3": 0.03824168996582789,
+      "5": 0.03824168996582789
+    },
+    "expanded_recall_at_k": {
+      "1": 0.036346691519105315,
+      "3": 0.045666356011183594,
+      "5": 0.045666356011183594
+    },
+    "expansion_factor": 2.6672879776328053,
+    "expansion_ratio": 2.6672879776328053,
+    "flat_coverage_at_k": {
+      "1": 0.023765144454799627,
+      "3": 0.032649891270580926,
+      "5": 0.03544579061820441
+    },
+    "flat_recall_at_k": {
+      "1": 0.03075489282385834,
+      "3": 0.04100652376514446,
+      "5": 0.04380242311276794
+    },
+    "num_edges": 4013,
+    "used_debug_edges": false,
+    "used_semantic_edges": false
+  },
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

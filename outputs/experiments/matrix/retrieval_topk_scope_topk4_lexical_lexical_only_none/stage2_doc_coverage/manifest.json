@@ -1,0 +1,65 @@
+{
+  "actual_image_payload_kinds": [
+    "none"
+  ],
+  "artifacts_hash": "fc5fa6cbd33287e2fcb3e08b7ad21a393af29eb8cbdc44a25977901c566c3f3f",
+  "call_log_hash": "1e7971a4efa8a3448179266118a91afd4d41f097eecda0cf480e4eab513fd2f5",
+  "command_args": {
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": false,
+    "image_payload_mode": "none",
+    "max_docs": 20,
+    "max_pages": 50,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 3,
+    "max_pages_real_cap": 10,
+    "max_pages_total": null,
+    "max_retries": 2,
+    "model_name_recorded": true,
+    "provider": "fake",
+    "provider_mode": "fake",
+    "retrieval_topk": 4,
+    "retrieval_topk_file_used": true,
+    "run_real_trial": false,
+    "save_private_debug": false,
+    "scope_mode": "retrieval_topk_scope",
+    "subset_file_used": true
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "image_payload_modes": [
+    "none"
+  ],
+  "image_sha256_summary": {
+    "count": 0,
+    "values": []
+  },
+  "image_sha256_values": [],
+  "input_hash_unavailable_reason": "input_file_missing",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 450,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 0,
+  "pages_without_image_payload": 50,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v1",
+  "provider_body_redacted": true,
+  "provider_call_count": 50,
+  "provider_modes": [
+    "fake"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "616cde2ce41f67447e42358cf58f6c32d078e5d91b4940e1fea68b74f7dd4214",
+  "schema_version": "stage2_artifact_schema_v1"
+}

@@ -1,0 +1,17 @@
+{
+  "best_by_delta_recall_at_5": "page_neighborhood",
+  "edge_ablation": true,
+  "evaluation_only": true,
+  "num_settings": 7,
+  "settings": [
+    "flat",
+    "page_neighborhood",
+    "source_anchor_neighborhood",
+    "page_neighborhood_without_adjacent_page",
+    "page_neighborhood_without_table_edges",
+    "page_neighborhood_without_caption_edges",
+    "source_anchor_only"
+  ],
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

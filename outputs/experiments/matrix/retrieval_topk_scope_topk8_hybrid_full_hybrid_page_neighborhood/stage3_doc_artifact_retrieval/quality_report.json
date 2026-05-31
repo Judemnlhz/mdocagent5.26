@@ -1,0 +1,50 @@
+{
+  "artifact_coverage_rate": 0.11742777260018639,
+  "avg_candidate_artifacts_per_query": 3.103448275862069,
+  "avg_component_scores": {
+    "graph_prior_score": 0.0,
+    "lexical_score": 0.25949189601118344,
+    "locator_score": 0.10534948741845297,
+    "metadata_score": 0.0036804743616029824,
+    "type_modality_score": 0.0013961584995340166
+  },
+  "avg_graph_prior_score": 0.0,
+  "avg_lexical_score": 0.25949189601118344,
+  "avg_locator_score": 0.10534948741845297,
+  "avg_metadata_score": 0.0036804743616029824,
+  "avg_retrieved_artifacts_per_query": 0.587138863000932,
+  "avg_type_modality_score": 0.0013961584995340166,
+  "graph_prior_enabled": false,
+  "hybrid_preset": "full_hybrid",
+  "hybrid_weights": {
+    "graph_prior_score": 0.25,
+    "lexical_score": 1.0,
+    "locator_score": 0.25,
+    "metadata_score": 0.5,
+    "type_modality_score": 0.25
+  },
+  "no_gold_fields_used": true,
+  "num_gold_field_violations": 0,
+  "num_outputs_with_answer_field": 0,
+  "num_queries": 1073,
+  "num_queries_with_doc_artifacts": 126,
+  "num_queries_with_nonzero_component_scores": {
+    "graph_prior_score": 0,
+    "lexical_score": 105,
+    "locator_score": 126,
+    "metadata_score": 50,
+    "type_modality_score": 28
+  },
+  "num_queries_with_nonzero_scores": 126,
+  "num_queries_without_doc_artifacts": 947,
+  "retrieval_method": "deterministic_hybrid",
+  "scoring_components": [
+    "lexical_score",
+    "metadata_score",
+    "locator_score",
+    "type_modality_score",
+    "graph_prior_score"
+  ],
+  "top_k": 5,
+  "used_debug_edges": false
+}

@@ -1,0 +1,201 @@
+{
+  "command_args": {
+    "expansion_mode": "page_neighborhood",
+    "extract_root": "tmp/MMLongBench",
+    "hybrid_config": null,
+    "hybrid_preset": "full_hybrid",
+    "max_docs": 20,
+    "max_pages_per_doc": 3,
+    "output_root": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood",
+    "public_queries": "outputs/stage3_query/public_queries.jsonl",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json",
+    "retrieval_method": "deterministic_hybrid",
+    "retrieval_topk": 8,
+    "retrieval_topk_file": "data/MMLongBench/sample-with-retrieval-results.json",
+    "run_name": "retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood",
+    "scope_mode": "retrieval_topk_scope"
+  },
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "scripts/build_stage2_coverage_subset.py",
+        "--scope-mode",
+        "retrieval_topk_scope",
+        "--public-query-input",
+        "outputs/stage3_query/public_queries.jsonl",
+        "--records",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--extract-root",
+        "tmp/MMLongBench",
+        "--max-docs",
+        "20",
+        "--max-pages-per-doc",
+        "3",
+        "--retrieval-topk-file",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--retrieval-topk",
+        "8",
+        "--output",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl",
+        "--manifest-output",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/subset/manifest.json"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\"manifest\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/subset/manifest.json\", \"no_gold_fields_used\": true, \"num_documents\": 20, \"num_pages\": 60, \"output\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl\", \"scope_mode\": \"retrieval_topk_scope\"}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/stage2.py",
+        "doc-compile",
+        "--subset-file",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/subset/stage2_coverage_subset_retrieval_topk_scope.jsonl",
+        "--scope-mode",
+        "retrieval_topk_scope",
+        "--retrieval-topk-file",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--retrieval-topk",
+        "8",
+        "--max-docs",
+        "20",
+        "--max-pages-per-doc",
+        "3",
+        "--max-pages",
+        "50",
+        "--extract-root",
+        "tmp/MMLongBench",
+        "--output-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage",
+        "--provider",
+        "fake",
+        "--image-payload-mode",
+        "none"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 39,\n      \"doc_id\": \"2305.13186v3.pdf\",\n      \"page_index\": 1,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 40,\n      \"doc_id\": \"2305.13186v3.pdf\",\n      \"page_index\": 3,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 41,\n      \"doc_id\": \"2305.13186v3.pdf\",\n      \"page_index\": 4,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 42,\n      \"doc_id\": \"2305.14160v4.pdf\",\n      \"page_index\": 2,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 43,\n      \"doc_id\": \"2305.14160v4.pdf\",\n      \"page_index\": 3,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 44,\n      \"doc_id\": \"2305.14160v4.pdf\",\n      \"page_index\": 7,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 45,\n      \"doc_id\": \"2306.05425v1.pdf\",\n      \"page_index\": 3,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 46,\n      \"doc_id\": \"2306.05425v1.pdf\",\n      \"page_index\": 4,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 47,\n      \"doc_id\": \"2306.05425v1.pdf\",\n      \"page_index\": 7,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 48,\n      \"doc_id\": \"2307.09288v2.pdf\",\n      \"page_index\": 17,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 49,\n      \"doc_id\": \"2307.09288v2.pdf\",\n      \"page_index\": 37,\n      \"num_raw_artifacts\": 9,\n      \"num_valid_artifacts\": 9,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    }\n  ],\n  \"paths\": {\n    \"root\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage\",\n    \"artifacts\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl\",\n    \"discard\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/discard.jsonl\",\n    \"quality_report\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/quality_report.json\",\n    \"call_log\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/call_log.jsonl\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/stage3_doc_artifact_retrieval.py",
+        "--artifacts",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+        "--queries",
+        "outputs/stage3_query/public_queries.jsonl",
+        "--retrieval-method",
+        "deterministic_hybrid",
+        "--output-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval",
+        "--hybrid-preset",
+        "full_hybrid"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"artifact_coverage_rate\": 0.11742777260018639,\n  \"avg_candidate_artifacts_per_query\": 3.103448275862069,\n  \"avg_component_scores\": {\n    \"graph_prior_score\": 0.0,\n    \"lexical_score\": 0.25949189601118344,\n    \"locator_score\": 0.10534948741845297,\n    \"metadata_score\": 0.0036804743616029824,\n    \"type_modality_score\": 0.0013961584995340166\n  },\n  \"avg_graph_prior_score\": 0.0,\n  \"avg_lexical_score\": 0.25949189601118344,\n  \"avg_locator_score\": 0.10534948741845297,\n  \"avg_metadata_score\": 0.0036804743616029824,\n  \"avg_retrieved_artifacts_per_query\": 0.587138863000932,\n  \"avg_type_modality_score\": 0.0013961584995340166,\n  \"graph_prior_enabled\": false,\n  \"hybrid_preset\": \"full_hybrid\",\n  \"hybrid_weights\": {\n    \"graph_prior_score\": 0.25,\n    \"lexical_score\": 1.0,\n    \"locator_score\": 0.25,\n    \"metadata_score\": 0.5,\n    \"type_modality_score\": 0.25\n  },\n  \"no_gold_fields_used\": true,\n  \"num_gold_field_violations\": 0,\n  \"num_outputs_with_answer_field\": 0,\n  \"num_queries\": 1073,\n  \"num_queries_with_doc_artifacts\": 126,\n  \"num_queries_with_nonzero_component_scores\": {\n    \"graph_prior_score\": 0,\n    \"lexical_score\": 105,\n    \"locator_score\": 126,\n    \"metadata_score\": 50,\n    \"type_modality_score\": 28\n  },\n  \"num_queries_with_nonzero_scores\": 126,\n  \"num_queries_without_doc_artifacts\": 947,\n  \"retrieval_method\": \"deterministic_hybrid\",\n  \"scoring_components\": [\n    \"lexical_score\",\n    \"metadata_score\",\n    \"locator_score\",\n    \"type_modality_score\",\n    \"graph_prior_score\"\n  ],\n  \"top_k\": 5,\n  \"used_debug_edges\": false\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/eval_stage3_retrieval.py",
+        "--retrieval",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+        "--artifacts",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+        "--records",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--output-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/eval/stage3_retrieval_eval"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"coverage_at_k_by_page\": {\n    \"1\": 0.023765144454799627,\n    \"3\": 0.032649891270580926,\n    \"5\": 0.03544579061820441\n  },\n  \"evaluation_only\": true,\n  \"no_gold_available_count\": 226,\n  \"num_queries\": 1073,\n  \"num_queries_with_gold\": 847,\n  \"recall_at_k_by_page\": {\n    \"1\": 0.03075489282385834,\n    \"3\": 0.04100652376514446,\n    \"5\": 0.04380242311276794\n  },\n  \"retrieved_artifact_type_distribution\": {\n    \"caption\": 98,\n    \"figure\": 56,\n    \"numeric_fact\": 86,\n    \"section_header\": 96,\n    \"table\": 43,\n    \"table_cell\": 8,\n    \"text_span\": 218,\n    \"visual_observation\": 16,\n    \"visual_region\": 9\n  },\n  \"retrieved_modality_distribution\": {\n    \"image\": 72,\n    \"layout\": 105,\n    \"numeric\": 86,\n    \"table\": 51,\n    \"text\": 316\n  },\n  \"zero_hit_query_count\": 947\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/stage4_build_evidence_graph.py",
+        "--artifacts",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+        "--retrieval",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+        "--output-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"context_edge_types\": [\n    \"same_page\",\n    \"same_source_block\"\n  ],\n  \"debug_edge_type_counts\": {\n    \"same_record_debug\": 525\n  },\n  \"debug_edge_types\": [\n    \"same_record_debug\"\n  ],\n  \"edge_type_counts\": {\n    \"adjacent_page\": 13,\n    \"anchor_on_page\": 100,\n    \"caption_of\": 50,\n    \"column_contains_cell\": 50,\n    \"figure_has_caption\": 50,\n    \"located_on_page\": 450,\n    \"row_contains_cell\": 50,\n    \"same_page\": 1800,\n    \"same_source_block\": 900,\n    \"section_contains\": 50,\n    \"supported_by_anchor\": 450,\n    \"table_contains_cell\": 50\n  },\n  \"element_locator_rate\": 0.6666666666666666,\n  \"formal_edge_types\": [\n    \"adjacent_page\",\n    \"anchor_on_page\",\n    \"caption_of\",\n    \"column_contains_cell\",\n    \"figure_has_caption\",\n    \"located_on_page\",\n    \"row_contains_cell\",\n    \"same_page\",\n    \"same_source_block\",\n    \"section_contains\",\n    \"supported_by_anchor\",\n    \"table_contains_cell\"\n  ],\n  \"formal_retrieval_edge_types\": [\n    \"adjacent_page\",\n    \"anchor_on_page\",\n    \"caption_of\",\n    \"column_contains_cell\",\n    \"figure_has_caption\",\n    \"located_on_page\",\n    \"row_contains_cell\",\n    \"section_contains\",\n    \"supported_by_anchor\",\n    \"table_contains_cell\"\n  ],\n  \"locator_kind_counts\": {\n    \"caption_block\": 50,\n    \"full_page_anchor\": 150,\n    \"section_block\": 50,\n    \"table_cell\": 50,\n    \"text_offset\": 150\n  },\n  \"node_type_counts\": {\n    \"artifact\": 450,\n    \"caption\": 50,\n    \"figure\": 50,\n    \"page\": 50,\n    \"section\": 50,\n    \"source_anchor\": 100,\n    \"table\": 50,\n    \"table_column\": 50,\n    \"table_row\": 50\n  },\n  \"num_artifacts\": 450,\n  \"num_artifacts_with_element_locator\": 300,\n  \"num_artifacts_with_page_locator\": 450,\n  \"num_artifacts_with_source_anchor\": 450,\n  \"num_artifacts_without_element_locator\": 150,\n  \"num_debug_edges\": 525,\n  \"num_edges\": 4013,\n  \"num_element_locatable\": 300,\n  \"num_nodes\": 900,\n  \"num_proof_trace_eligible\": 300,\n  \"num_source_anchored\": 450,\n  \"pairwise_clique_edges_disabled\": true,\n  \"proof_trace_eligible_by_type\": {\n    \"caption\": 50,\n    \"numeric_fact\": 50,\n    \"section_header\": 50,\n    \"table\": 50,\n    \"table_cell\": 50,\n    \"text_span\": 50\n  },\n  \"proof_trace_eligible_rate\": 0.6666666666666666,\n  \"same_record_debug_in_formal_edges\": false,\n  \"same_record_in_formal_edges\": false,\n  \"semantic_edges_enabled\": false,\n  \"skipped_rule_edges_by_reason\": {\n    \"caption_figure_missing_explicit_pair\": 100,\n    \"next_block_unparseable_source_block_id\": 150,\n    \"same_doc_pairwise_clique_disabled\": 1\n  },\n  \"source_anchored_rate\": 1.0\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/eval_stage4_graph_expansion.py",
+        "--retrieval",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+        "--graph",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph",
+        "--artifacts",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+        "--records",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--expansion-mode",
+        "page_neighborhood",
+        "--output-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/eval/stage4_graph_expansion_eval"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"added_artifact_count_by_edge_type\": {\n    \"adjacent_page\": 1668,\n    \"located_on_page\": 2232\n  },\n  \"added_gold_page_hit_rate\": 0.3888888888888889,\n  \"added_ratio\": 2.0801491146318734,\n  \"avg_added_artifacts\": 2.0801491146318734,\n  \"avg_expanded_artifacts\": 2.6672879776328053,\n  \"avg_flat_artifacts\": 0.587138863000932,\n  \"delta_coverage_at_k\": {\n    \"1\": 0.00745573159366263,\n    \"3\": 0.005591798695246966,\n    \"5\": 0.002795899347623483\n  },\n  \"delta_recall_at_k\": {\n    \"1\": 0.005591798695246973,\n    \"3\": 0.004659832246039136,\n    \"5\": 0.001863932898415653\n  },\n  \"edge_type_delta_coverage\": {\n    \"adjacent_page\": {\n      \"1\": 0.0,\n      \"3\": 0.0,\n      \"5\": 0.0\n    },\n    \"located_on_page\": {\n      \"1\": 0.0,\n      \"3\": 0.0,\n      \"5\": 0.0\n    }\n  },\n  \"edge_type_delta_recall\": {\n    \"adjacent_page\": {\n      \"1\": 0.0,\n      \"3\": 0.0,\n      \"5\": 0.0\n    },\n    \"located_on_page\": {\n      \"1\": 0.0,\n      \"3\": 0.0,\n      \"5\": 0.0\n    }\n  },\n  \"edge_types_used\": [\n    \"adjacent_page\",\n    \"located_on_page\"\n  ],\n  \"evaluation_only\": true,\n  \"expanded_coverage_at_k\": {\n    \"1\": 0.031220876048462257,\n    \"3\": 0.03824168996582789,\n    \"5\": 0.03824168996582789\n  },\n  \"expanded_recall_at_k\": {\n    \"1\": 0.036346691519105315,\n    \"3\": 0.045666356011183594,\n    \"5\": 0.045666356011183594\n  },\n  \"expansion_factor\": 2.6672879776328053,\n  \"expansion_mode\": \"page_neighborhood\",\n  \"expansion_ratio\": 2.6672879776328053,\n  \"flat_coverage_at_k\": {\n    \"1\": 0.023765144454799627,\n    \"3\": 0.032649891270580926,\n    \"5\": 0.03544579061820441\n  },\n  \"flat_recall_at_k\": {\n    \"1\": 0.03075489282385834,\n    \"3\": 0.04100652376514446,\n    \"5\": 0.04380242311276794\n  },\n  \"graph_coverage_at_k\": {\n    \"1\": 0.031220876048462257,\n    \"3\": 0.03824168996582789,\n    \"5\": 0.03824168996582789\n  },\n  \"graph_recall_at_k\": {\n    \"1\": 0.036346691519105315,\n    \"3\": 0.045666356011183594,\n    \"5\": 0.045666356011183594\n  },\n  \"used_debug_edges\": false,\n  \"used_semantic_edges\": false\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/audit_no_gold_leakage.py",
+        "--scan-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage",
+        "--scan-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval",
+        "--scan-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"files_checked\": 13,\n  \"public_leakage_violations\": [],\n  \"status\": \"pass\",\n  \"warnings\": []\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/audit_reproducibility.py",
+        "--stage2-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage",
+        "--stage3-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval",
+        "--stage4-dir",
+        "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"checked_hashes\": [\n    {\n      \"field\": \"artifacts_hash\",\n      \"hash\": \"930c26756d25515dde913ee8af198ce93585a23e5ae62ceb0d316cf167a1b3d1\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"call_log_hash\",\n      \"hash\": \"cd8c9459f50e034c4d02c244ec09d57b4361032b917ba3d4febcffa9915177ef\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/call_log.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"discard_hash\",\n      \"hash\": \"4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/discard.jsonl\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"123b83da20c780e0bb244e8618f24717bc4051d6ff05aca5109b1e4a1d77b860\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/quality_report.json\",\n      \"stage\": \"stage2\"\n    },\n    {\n      \"field\": \"retrieval_hash\",\n      \"hash\": \"d62dfd083975d2781a423373f1b36323c8c16ba1932a77590527fc9ee9684bab\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"f8be0d156210c84ebfab6837efca8d76512af1f2c1e574a5a01070f5c16e3875\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/quality_report.json\",\n      \"stage\": \"stage3\"\n    },\n    {\n      \"field\": \"nodes_hash\",\n      \"hash\": \"ba6fd57de9d4ad05363a526f3666dd88af2e91513fc4bfc0d461e314f9ab0f67\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph/nodes.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"edges_hash\",\n      \"hash\": \"a4dc19a2aaf64e2dcc3faa445d53883d529b9dd6be90b25c6392d30954cfeefc\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph/edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"debug_edges_hash\",\n      \"hash\": \"8faf9a04ad1e81899f2b967a5f6af6dd242ac9ff4711e72b0eec23e7a08bc6ce\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph/debug_edges.jsonl\",\n      \"stage\": \"stage4\"\n    },\n    {\n      \"field\": \"quality_report_hash\",\n      \"hash\": \"ec2f270f8aeb676aeb455f662268089640eced06bbe7107f9c1c2627ff8d1692\",\n      \"path\": \"outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage4/evidence_graph/quality_report.json\",\n      \"stage\": \"stage4\"\n    }\n  ],\n  \"mismatches\": [],\n  \"num_checked_hashes\": 10,\n  \"status\": \"pass\",\n  \"warnings\": [\n    \"legacy_file_sha256_accepted:stage2:artifacts_hash\",\n    \"legacy_file_sha256_accepted:stage2:call_log_hash\",\n    \"legacy_file_sha256_accepted:stage2:discard_hash\",\n    \"legacy_file_sha256_accepted:stage2:quality_report_hash\"\n  ]\n}\n"
+    }
+  ],
+  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "hybrid_preset": "full_hybrid",
+  "hybrid_weights": {
+    "graph_prior_score": 0.25,
+    "lexical_score": 1.0,
+    "locator_score": 0.25,
+    "metadata_score": 0.5,
+    "type_modality_score": 0.25
+  },
+  "input_hashes": {
+    "public_queries": "5b8a82618aeed9898e38fb79f89e3b56fca52ffcfd84a5dc5d3478640235141a",
+    "records": "49dbec9530c5068a9006c8b5c118eb656de56f8ba4576c3047e9fe9ddc334acd",
+    "retrieval_topk_file": "49dbec9530c5068a9006c8b5c118eb656de56f8ba4576c3047e9fe9ddc334acd"
+  },
+  "no_answer_generation": true,
+  "no_gold_fields_used": true,
+  "no_real_api": true,
+  "run_name": "retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood"
+}

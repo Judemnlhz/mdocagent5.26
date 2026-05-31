@@ -1,0 +1,52 @@
+{
+  "command_args": {
+    "artifacts_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl",
+    "output_dir": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage4/evidence_graph",
+    "retrieval_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage3_doc_artifact_retrieval/retrieval.jsonl",
+    "stage2_json": "outputs/stage2/clean/sample-with-stage2-index.json"
+  },
+  "context_edge_types": [
+    "same_page",
+    "same_source_block"
+  ],
+  "created_by_script": "scripts/stage4_build_evidence_graph.py",
+  "debug_edge_types": [
+    "same_record_debug"
+  ],
+  "debug_edges_hash": "23b0dc80e08b5bf63093b2203e0770bf788fd657e2816a9347578d3377658701",
+  "edges_hash": "9c25bf1e0ef10024f055546a2430be9dd2833af9b2cfafe80cd5e287dfe8c8d8",
+  "formal_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "same_page",
+    "same_source_block",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "formal_retrieval_edge_types": [
+    "adjacent_page",
+    "anchor_on_page",
+    "caption_of",
+    "column_contains_cell",
+    "figure_has_caption",
+    "located_on_page",
+    "row_contains_cell",
+    "section_contains",
+    "supported_by_anchor",
+    "table_contains_cell"
+  ],
+  "git_commit": "a4ab379bc39489ed47cd9ae38e1b7f670b7e5eea",
+  "graph_mode": "rule_only_document_native_structural",
+  "input_artifacts_hash": "c51f86651949c6cbe2fcc82b3568c1d51872d56cf77715fd6527043bf563a130",
+  "input_artifacts_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_lexical_lexical_only_none/stage2_doc_coverage/artifacts.jsonl",
+  "nodes_hash": "d84b2d88d70f19aa828cf9d890fd14192f558c9bc122f66b016d7af1c97de467",
+  "quality_report_hash": "12530a7e1ecb0183009d80f8ff72b3062a9ba20e89f6a82775f9232ea93095b2",
+  "schema_version": "stage4_evidence_graph_v2",
+  "semantic_edges_enabled": false
+}

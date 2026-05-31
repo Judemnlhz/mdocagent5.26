@@ -1,0 +1,46 @@
+{
+  "artifact_coverage_rate": 0.11742777260018639,
+  "avg_candidate_artifacts_per_query": 3.103448275862069,
+  "avg_component_scores": {
+    "graph_prior_score": 0.0,
+    "lexical_score": 0.2686218444175208,
+    "locator_score": 0.0,
+    "metadata_score": 0.0,
+    "type_modality_score": 0.0
+  },
+  "avg_graph_prior_score": 0.0,
+  "avg_lexical_score": 0.2686218444175208,
+  "avg_locator_score": 0.0,
+  "avg_metadata_score": 0.0,
+  "avg_retrieved_artifacts_per_query": 0.587138863000932,
+  "avg_type_modality_score": 0.0,
+  "graph_prior_enabled": false,
+  "hybrid_preset": "lexical_only",
+  "hybrid_weights": {
+    "graph_prior_score": 0.0,
+    "lexical_score": 1.0,
+    "locator_score": 0.0,
+    "metadata_score": 0.0,
+    "type_modality_score": 0.0
+  },
+  "no_gold_fields_used": true,
+  "num_gold_field_violations": 0,
+  "num_outputs_with_answer_field": 0,
+  "num_queries": 1073,
+  "num_queries_with_doc_artifacts": 126,
+  "num_queries_with_nonzero_component_scores": {
+    "graph_prior_score": 0,
+    "lexical_score": 106,
+    "locator_score": 0,
+    "metadata_score": 0,
+    "type_modality_score": 0
+  },
+  "num_queries_with_nonzero_scores": 106,
+  "num_queries_without_doc_artifacts": 947,
+  "retrieval_method": "deterministic_lexical",
+  "scoring_components": [
+    "lexical_score"
+  ],
+  "top_k": 5,
+  "used_debug_edges": false
+}

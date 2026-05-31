@@ -1,0 +1,57 @@
+{
+  "added_artifact_count_by_edge_type": {},
+  "added_gold_page_hit_rate": 0.0,
+  "added_ratio": 0.0,
+  "avg_added_artifacts": 0.0,
+  "avg_expanded_artifacts": 0.587138863000932,
+  "avg_flat_artifacts": 0.587138863000932,
+  "delta_coverage_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "delta_recall_at_k": {
+    "1": 0.0,
+    "3": 0.0,
+    "5": 0.0
+  },
+  "edge_type_delta_coverage": {},
+  "edge_type_delta_recall": {},
+  "edge_types_used": [],
+  "evaluation_only": true,
+  "expanded_coverage_at_k": {
+    "1": 0.023019571295433364,
+    "3": 0.03423423423423424,
+    "5": 0.036564150357253807
+  },
+  "expanded_recall_at_k": {
+    "1": 0.02982292637465051,
+    "3": 0.04287045666356011,
+    "5": 0.045666356011183594
+  },
+  "expansion_factor": 0.587138863000932,
+  "expansion_mode": "flat",
+  "expansion_ratio": 0.587138863000932,
+  "flat_coverage_at_k": {
+    "1": 0.023019571295433364,
+    "3": 0.03423423423423424,
+    "5": 0.036564150357253807
+  },
+  "flat_recall_at_k": {
+    "1": 0.02982292637465051,
+    "3": 0.04287045666356011,
+    "5": 0.045666356011183594
+  },
+  "graph_coverage_at_k": {
+    "1": 0.023019571295433364,
+    "3": 0.03423423423423424,
+    "5": 0.036564150357253807
+  },
+  "graph_recall_at_k": {
+    "1": 0.02982292637465051,
+    "3": 0.04287045666356011,
+    "5": 0.045666356011183594
+  },
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}

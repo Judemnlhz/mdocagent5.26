@@ -1,0 +1,9 @@
+{
+  "artifacts_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "evaluation_only": true,
+  "not_consumed_by_stage2_stage3_stage4": true,
+  "output_dir": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/eval/stage3_retrieval_eval",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_jsonl": "outputs/experiments/matrix/retrieval_topk_scope_topk8_hybrid_full_hybrid_page_neighborhood/stage3_doc_artifact_retrieval/retrieval.jsonl",
+  "stage": "stage3_retrieval_eval"
+}

@@ -63,7 +63,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--retrieval-topk-file", default=DEFAULT_RECORDS)
     parser.add_argument("--retrieval-topk", type=int, default=5)
     parser.add_argument("--retrieval-method", choices=("deterministic_lexical", "deterministic_hybrid"), default="deterministic_hybrid")
-    parser.add_argument("--expansion-mode", choices=("direct_structural", "page_neighborhood", "source_anchor_neighborhood"), default="page_neighborhood")
+    parser.add_argument("--hybrid-config", default=None)
+    parser.add_argument(
+        "--hybrid-preset",
+        choices=("lexical_only", "lexical_metadata", "lexical_locator", "lexical_graph", "full_hybrid", "hybrid_no_graph", "graph_only_prior"),
+        default=None,
+    )
+    parser.add_argument("--expansion-mode", choices=("none", "flat", "direct_structural", "page_neighborhood", "source_anchor_neighborhood"), default="page_neighborhood")
     parser.add_argument("--run-name", default="coverage_experiment")
     parser.add_argument("--output-root", default=None)
     parser.add_argument("--public-queries", default=DEFAULT_PUBLIC_QUERIES)
@@ -88,7 +94,7 @@ def main(argv: list[str] | None = None) -> None:
 
     commands: list[dict[str, Any]] = []
     build_subset_cmd = [
-         "python3",
+        "python3",
         "scripts/build_stage2_coverage_subset.py",
         "--scope-mode",
         args.scope_mode,
@@ -114,7 +120,7 @@ def main(argv: list[str] | None = None) -> None:
     commands.append(run_command(build_subset_cmd, repo))
 
     stage2_cmd = [
-         "python3",
+        "python3",
         "scripts/stage2.py",
         "doc-compile",
         "--subset-file",
@@ -143,7 +149,7 @@ def main(argv: list[str] | None = None) -> None:
     commands.append(run_command(stage2_cmd, repo))
 
     stage3_cmd = [
-         "python3",
+        "python3",
         "scripts/stage3_doc_artifact_retrieval.py",
         "--artifacts",
         str(stage2_dir / "artifacts.jsonl"),
@@ -154,10 +160,14 @@ def main(argv: list[str] | None = None) -> None:
         "--output-dir",
         str(stage3_dir),
     ]
+    if args.hybrid_config:
+        stage3_cmd.extend(["--hybrid-config", args.hybrid_config])
+    if args.hybrid_preset:
+        stage3_cmd.extend(["--hybrid-preset", args.hybrid_preset])
     commands.append(run_command(stage3_cmd, repo))
 
     eval3_cmd = [
-         "python3",
+        "python3",
         "scripts/eval_stage3_retrieval.py",
         "--retrieval",
         str(stage3_dir / "retrieval.jsonl"),
@@ -171,7 +181,7 @@ def main(argv: list[str] | None = None) -> None:
     commands.append(run_command(eval3_cmd, repo))
 
     stage4_cmd = [
-         "python3",
+        "python3",
         "scripts/stage4_build_evidence_graph.py",
         "--artifacts",
         str(stage2_dir / "artifacts.jsonl"),
@@ -183,7 +193,7 @@ def main(argv: list[str] | None = None) -> None:
     commands.append(run_command(stage4_cmd, repo))
 
     eval4_cmd = [
-         "python3",
+        "python3",
         "scripts/eval_stage4_graph_expansion.py",
         "--retrieval",
         str(stage3_dir / "retrieval.jsonl"),
@@ -194,14 +204,14 @@ def main(argv: list[str] | None = None) -> None:
         "--records",
         args.records,
         "--expansion-mode",
-        args.expansion_mode,
+        "flat" if args.expansion_mode == "none" else args.expansion_mode,
         "--output-dir",
         str(eval4_dir),
     ]
     commands.append(run_command(eval4_cmd, repo))
 
     audit_no_gold_cmd = [
-         "python3",
+        "python3",
         "scripts/audit_no_gold_leakage.py",
         "--scan-dir",
         str(stage2_dir),
@@ -213,7 +223,7 @@ def main(argv: list[str] | None = None) -> None:
     commands.append(run_command(audit_no_gold_cmd, repo))
 
     audit_repro_cmd = [
-         "python3",
+        "python3",
         "scripts/audit_reproducibility.py",
         "--stage2-dir",
         str(stage2_dir),
@@ -233,6 +243,8 @@ def main(argv: list[str] | None = None) -> None:
         "run_name": args.run_name,
         "scope_mode": args.scope_mode,
         "retrieval_method": args.retrieval_method,
+        "hybrid_preset": stage3_report.get("hybrid_preset"),
+        "hybrid_weights": stage3_report.get("hybrid_weights"),
         "expansion_mode": args.expansion_mode,
         "stage2_artifact_coverage": {
             "num_artifacts": stage2_report.get("num_artifacts"),
@@ -260,6 +272,11 @@ def main(argv: list[str] | None = None) -> None:
             "delta_coverage_at_k": eval4_report.get("delta_coverage_at_k"),
             "expansion_factor": eval4_report.get("expansion_factor"),
             "avg_added_artifacts": eval4_report.get("avg_added_artifacts"),
+            "avg_flat_artifacts": eval4_report.get("avg_flat_artifacts"),
+            "avg_expanded_artifacts": eval4_report.get("avg_expanded_artifacts"),
+            "expansion_ratio": eval4_report.get("expansion_ratio"),
+            "added_ratio": eval4_report.get("added_ratio"),
+            "added_gold_page_hit_rate": eval4_report.get("added_gold_page_hit_rate"),
             "used_debug_edges": eval4_report.get("used_debug_edges"),
             "used_semantic_edges": eval4_report.get("used_semantic_edges"),
         },
@@ -267,15 +284,20 @@ def main(argv: list[str] | None = None) -> None:
         "used_debug_edges": False,
         "used_semantic_edges": False,
     }
+    input_hashes = {
+        "public_queries": file_sha256(repo / args.public_queries),
+        "records": file_sha256(repo / args.records),
+        "retrieval_topk_file": file_sha256(repo / args.retrieval_topk_file),
+    }
+    if args.hybrid_config:
+        input_hashes["hybrid_config"] = file_sha256(repo / args.hybrid_config)
     manifest = {
         "run_name": args.run_name,
         "git_commit": current_git_commit(repo),
         "command_args": vars(args),
-        "input_hashes": {
-            "public_queries": file_sha256(repo / args.public_queries),
-            "records": file_sha256(repo / args.records),
-            "retrieval_topk_file": file_sha256(repo / args.retrieval_topk_file),
-        },
+        "hybrid_preset": stage3_report.get("hybrid_preset"),
+        "hybrid_weights": stage3_report.get("hybrid_weights"),
+        "input_hashes": input_hashes,
         "commands": commands,
         "no_real_api": True,
         "no_answer_generation": True,

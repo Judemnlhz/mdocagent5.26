@@ -1,0 +1,85 @@
+{
+  "added_artifact_count_by_edge_type": {
+    "adjacent_page": 1387,
+    "located_on_page": 2196
+  },
+  "added_gold_page_hit_rate": 0.3968253968253968,
+  "added_ratio": 2.0465983224603916,
+  "avg_added_artifacts": 2.0465983224603916,
+  "avg_expanded_artifacts": 2.633737185461323,
+  "avg_flat_artifacts": 0.587138863000932,
+  "delta_coverage_at_k": {
+    "1": 0.00559179869524697,
+    "3": 0.004193849021435228,
+    "5": 0.00186393289841566
+  },
+  "delta_recall_at_k": {
+    "1": 0.003727865796831313,
+    "3": 0.003727865796831313,
+    "5": 0.00093196644920783
+  },
+  "edge_type_delta_coverage": {
+    "adjacent_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    },
+    "located_on_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_type_delta_recall": {
+    "adjacent_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    },
+    "located_on_page": {
+      "1": 0.0,
+      "3": 0.0,
+      "5": 0.0
+    }
+  },
+  "edge_types_used": [
+    "adjacent_page",
+    "located_on_page"
+  ],
+  "evaluation_only": true,
+  "expanded_coverage_at_k": {
+    "1": 0.028611369990680334,
+    "3": 0.03842808325566947,
+    "5": 0.03842808325566947
+  },
+  "expanded_recall_at_k": {
+    "1": 0.033550792171481825,
+    "3": 0.046598322460391424,
+    "5": 0.046598322460391424
+  },
+  "expansion_factor": 2.633737185461323,
+  "expansion_mode": "page_neighborhood",
+  "expansion_ratio": 2.633737185461323,
+  "flat_coverage_at_k": {
+    "1": 0.023019571295433364,
+    "3": 0.03423423423423424,
+    "5": 0.036564150357253807
+  },
+  "flat_recall_at_k": {
+    "1": 0.02982292637465051,
+    "3": 0.04287045666356011,
+    "5": 0.045666356011183594
+  },
+  "graph_coverage_at_k": {
+    "1": 0.028611369990680334,
+    "3": 0.03842808325566947,
+    "5": 0.03842808325566947
+  },
+  "graph_recall_at_k": {
+    "1": 0.033550792171481825,
+    "3": 0.046598322460391424,
+    "5": 0.046598322460391424
+  },
+  "used_debug_edges": false,
+  "used_semantic_edges": false
+}
