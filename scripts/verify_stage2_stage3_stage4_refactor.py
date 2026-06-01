@@ -14,9 +14,12 @@ COMMANDS = [
     ("stage3_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/stage3/tests", "-v"]),
     ("stage4_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/stage4/tests", "-v"]),
     ("evaluation_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/evaluation/tests", "-v"]),
+    ("integration_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/integration/tests", "-v"]),
+    ("mdocagent_module_ablation_prepare", [sys.executable, "scripts/run_mdocagent_module_ablation.py"]),
     ("audit_no_gold_leakage", [sys.executable, "scripts/audit_no_gold_leakage.py"]),
     ("audit_real_provider_smoke", [sys.executable, "scripts/audit_real_provider_smoke.py"]),
     ("audit_reproducibility", [sys.executable, "scripts/audit_reproducibility.py"]),
+    ("audit_model_configs", [sys.executable, "scripts/audit_model_configs.py"]),
     ("compileall", [sys.executable, "-m", "compileall", "-q", "mdocnexus", "scripts"]),
     ("diff_check", ["git", "diff", "--check", "--", "mdocnexus", "scripts"]),
 ]
@@ -26,6 +29,7 @@ def main() -> int:
     results: list[dict[str, Any]] = []
     for name, command in COMMANDS:
         results.append(run_command(name, command))
+    results.append(run_integration_checks())
     failed = [result for result in results if result.get("returncode", 0) != 0]
     report = {
         "results": results,
@@ -49,6 +53,55 @@ def run_command(name: str, command: list[str]) -> dict[str, Any]:
 def tail(text: str, max_lines: int = 20) -> str:
     lines = text.splitlines()
     return "\n".join(lines[-max_lines:])
+
+
+def run_integration_checks() -> dict[str, Any]:
+    root = "outputs/experiments/mdocagent_module_ablation"
+    summary_path = f"{root}/summary.json"
+    manifest_root = f"{root}/manifests"
+    errors: list[str] = []
+    try:
+        from pathlib import Path
+
+        summary_file = Path(summary_path)
+        if not summary_file.is_file():
+            errors.append(f"missing_summary:{summary_path}")
+        else:
+            summary = json.loads(summary_file.read_text(encoding="utf-8"))
+            if not isinstance(summary.get("runs"), list) or not summary["runs"]:
+                errors.append("summary_runs_missing")
+        manifest_dir = Path(manifest_root)
+        if not manifest_dir.is_dir():
+            errors.append(f"missing_manifest_dir:{manifest_root}")
+        for manifest_path in sorted(manifest_dir.glob("*.json")) if manifest_dir.is_dir() else []:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            adapter_manifest = manifest.get("adapter_manifest")
+            if not isinstance(adapter_manifest, dict):
+                errors.append(f"missing_adapter_manifest:{manifest_path}")
+                continue
+            if adapter_manifest.get("no_gold_fields_used") is not True:
+                errors.append(f"adapter_no_gold_false:{manifest_path}")
+            if adapter_manifest.get("same_page_budget_as_baseline") is not True:
+                errors.append(f"adapter_page_budget_false:{manifest_path}")
+            if adapter_manifest.get("used_debug_edges") is not False:
+                errors.append(f"adapter_debug_edges_true:{manifest_path}")
+            if adapter_manifest.get("used_semantic_edges") is not False:
+                errors.append(f"adapter_semantic_edges_true:{manifest_path}")
+            if adapter_manifest.get("model_role") != "none_deterministic":
+                errors.append(f"adapter_model_role_not_deterministic:{manifest_path}")
+            if adapter_manifest.get("evaluator_model_used") is not False:
+                errors.append(f"adapter_evaluator_model_used:{manifest_path}")
+            if "DeepSeek-V3" in json.dumps(adapter_manifest, ensure_ascii=False, sort_keys=True):
+                errors.append(f"deepseek_in_adapter_manifest:{manifest_path}")
+    except Exception as exc:
+        errors.append(f"integration_check_exception:{exc}")
+    return {
+        "name": "mdocagent_integration_checks",
+        "command": ["internal"],
+        "returncode": 1 if errors else 0,
+        "stdout_tail": json.dumps({"errors": errors}, ensure_ascii=False, sort_keys=True),
+        "stderr_tail": "",
+    }
 
 
 if __name__ == "__main__":

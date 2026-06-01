@@ -36,6 +36,25 @@ def build_parser() -> argparse.ArgumentParser:
     audit_parser.add_argument("--no-gold", action="store_true")
     audit_parser.add_argument("--reproducibility", action="store_true")
     audit_parser.add_argument("--all", action="store_true")
+
+    adapt_parser = subparsers.add_parser("mdocagent-adapt", help="Write MDocAgent-compatible MDocNexus retrieval records.")
+    adapt_parser.add_argument("--input-retrieval", required=True)
+    adapt_parser.add_argument("--artifacts", required=True)
+    adapt_parser.add_argument("--graph-dir", default=None)
+    adapt_parser.add_argument("--output-retrieval", required=True)
+    adapt_parser.add_argument(
+        "--mode",
+        choices=["original_only", "artifact_only", "original_plus_artifact", "graph_context"],
+        required=True,
+    )
+    adapt_parser.add_argument("--top-k", type=int, default=4)
+    adapt_parser.add_argument("--lambda-weight", type=float, default=0.5)
+    adapt_parser.add_argument(
+        "--expansion-mode",
+        choices=["page_neighborhood", "source_anchor_neighborhood", "direct_structural"],
+        default="page_neighborhood",
+    )
+    adapt_parser.add_argument("--manifest-path", required=True)
     return parser
 
 
@@ -75,12 +94,75 @@ def run_audit(args: argparse.Namespace, repo: Path, forwarded_args: list[str]) -
     return status
 
 
+def run_mdocagent_adapt(args: argparse.Namespace, repo: Path) -> int:
+    sys.path.insert(0, str(repo))
+    from mdocnexus.integration.mdocagent_adapter import (
+        build_mdocagent_adapter_manifest,
+        load_artifacts_by_page,
+        load_mdocagent_retrieval_records,
+        rerank_pages_with_artifacts,
+        select_pages_with_graph,
+        write_manifest,
+        write_mdocagent_compatible_records,
+    )
+
+    records = load_mdocagent_retrieval_records(args.input_retrieval)
+    artifacts_by_page = load_artifacts_by_page(args.artifacts)
+    if args.mode == "graph_context":
+        if not args.graph_dir:
+            raise SystemExit("--graph-dir is required when --mode graph_context")
+        adapted = select_pages_with_graph(
+            records,
+            artifacts_by_page,
+            args.graph_dir,
+            top_k=args.top_k,
+            expansion_mode=args.expansion_mode,
+        )
+    else:
+        adapted = rerank_pages_with_artifacts(
+            records,
+            artifacts_by_page,
+            top_k=args.top_k,
+            mode=args.mode,
+            lambda_weight=args.lambda_weight,
+        )
+    write_mdocagent_compatible_records(adapted, args.output_retrieval)
+    manifest = build_mdocagent_adapter_manifest(
+        mode=args.mode,
+        top_k=args.top_k,
+        lambda_weight=args.lambda_weight,
+        input_retrieval=args.input_retrieval,
+        artifacts=args.artifacts,
+        graph_dir=args.graph_dir,
+        output_retrieval=args.output_retrieval,
+        expansion_mode=args.expansion_mode if args.mode == "graph_context" else None,
+        command_args=args,
+        repo_root=repo,
+    )
+    write_manifest(manifest, args.manifest_path)
+    print(
+        json.dumps(
+            {
+                "output_retrieval": str(Path(args.output_retrieval)),
+                "manifest_path": str(Path(args.manifest_path)),
+                "output_hash": manifest["output_hash"],
+                "status": "prepared",
+            },
+            indent=2,
+            sort_keys=True,
+        )
+    )
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args, forwarded_args = parser.parse_known_args(argv)
     repo = Path(__file__).resolve().parents[1]
     if args.command == "audit":
         return run_audit(args, repo, forwarded_args)
+    if args.command == "mdocagent-adapt":
+        return run_mdocagent_adapt(args, repo)
     return run_forwarded(args.command, forwarded_args, repo)
 
 
