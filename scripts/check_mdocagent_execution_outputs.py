@@ -540,17 +540,40 @@ def score_by_run_name(run_reports: list[dict[str, Any]]) -> dict[str, float | No
     return {run["run_name"]: run["binary_correctness"]["average"] for run in run_reports}
 
 
+def current_run_tag(output_dir: Path) -> str | None:
+    if output_dir.parent.name == "run_tags":
+        return output_dir.name
+    return None
+
+
+def paired_phase_tag(current_tag: str | None, target_phase: str) -> str:
+    if target_phase == "phase_1_small_gate":
+        if current_tag and current_tag.startswith("small_artifact"):
+            return current_tag.replace("small_artifact", "small_gate", 1)
+        if current_tag and current_tag.startswith("small_graph"):
+            return current_tag.replace("small_graph", "small_gate", 1)
+        return "small_gate"
+    if target_phase == "phase_2_small_artifact":
+        if current_tag and current_tag.startswith("small_graph"):
+            return current_tag.replace("small_graph", "small_artifact", 1)
+        return "small_artifact"
+    raise ValueError(f"Unsupported paired phase: {target_phase}")
+
+
 def add_cross_phase_scores(scores: dict[str, float | None], output_dir: Path, phase_name: str) -> dict[str, float | None]:
     enriched = dict(scores)
     run_tags_dir = output_dir.parent
+    tag = current_run_tag(output_dir)
     if phase_name in {"phase_2_small_artifact", "phase_3_small_graph"}:
-        phase1_report = run_tags_dir / "small_gate" / "execution_gate_report.json"
+        phase1_tag = paired_phase_tag(tag, "phase_1_small_gate")
+        phase1_report = run_tags_dir / phase1_tag / "execution_gate_report.json"
         if phase1_report.is_file():
             phase1 = load_json(phase1_report)
             enriched.setdefault("mdocagent_top4_official_reproduction", phase1.get("mdocagent_top4_score"))
             enriched.setdefault("top4_original_only", phase1.get("original_only_score"))
     if phase_name == "phase_3_small_graph":
-        phase2_report = run_tags_dir / "small_artifact" / "execution_gate_report.json"
+        phase2_tag = paired_phase_tag(tag, "phase_2_small_artifact")
+        phase2_report = run_tags_dir / phase2_tag / "execution_gate_report.json"
         if phase2_report.is_file():
             phase2 = load_json(phase2_report)
             enriched.setdefault("top4_artifact_only", phase2.get("artifact_only_score"))
