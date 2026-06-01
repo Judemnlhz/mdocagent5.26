@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -108,10 +109,24 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
     records = load_mdocagent_retrieval_records(args.input_retrieval)
     artifacts_by_page = load_artifacts_by_page(args.artifacts)
     model_config_hash = combined_model_config_hash(repo)
+    selected_run_names = parse_run_filter(args.runs)
 
     summary_rows: list[dict[str, Any]] = []
     for spec in RUN_SPECS:
-        row = prepare_run(spec, args, repo, records, artifacts_by_page, records_dir, manifests_dir, compatibility_dir, model_config_hash)
+        run_name = str(spec["run_name"])
+        execute_selected = selected_run_names is None or run_name in selected_run_names
+        row = prepare_run(
+            spec,
+            args,
+            repo,
+            records,
+            artifacts_by_page,
+            records_dir,
+            manifests_dir,
+            compatibility_dir,
+            model_config_hash,
+            execute_selected=execute_selected,
+        )
         summary_rows.append(row)
 
     summary = {
@@ -119,6 +134,7 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
         "prepare_only": not args.execute_predict and not args.execute_eval,
         "official_reproduction_top_k": [1, 4],
         "additional_budget_policy": "top-8/top-10/top-20 are additional_budget_diagnostic only, not official reproduction",
+        "selected_runs": sorted(selected_run_names) if selected_run_names is not None else "all",
         "runs": summary_rows,
     }
     summary_path = output_root / "summary.json"
@@ -133,6 +149,7 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
         "summary_path": str(summary_path),
         "summary_md_path": str(output_root / "summary.md"),
         "num_runs": len(summary_rows),
+        "selected_runs": sorted(selected_run_names) if selected_run_names is not None else "all",
         "num_failed_runs": len(failed_rows),
         "prepare_only": not args.execute_predict and not args.execute_eval,
         "status": "fail" if failed_rows else ("prepared" if not args.execute_predict and not args.execute_eval else "executed_or_attempted"),
@@ -149,6 +166,7 @@ def prepare_run(
     manifests_dir: Path,
     compatibility_dir: Path,
     model_config_hash: str,
+    execute_selected: bool = True,
 ) -> dict[str, Any]:
     run_name = str(spec["run_name"])
     top_k = int(spec["top_k"])
@@ -209,10 +227,10 @@ def prepare_run(
     status = "prepared_not_run"
     if compatibility_returncode != 0:
         status = "compatibility_failed"
-    if compatibility_returncode == 0 and args.execute_predict:
+    if compatibility_returncode == 0 and execute_selected and args.execute_predict:
         prediction_returncode = run_command(prediction_command, repo)
         status = "prediction_failed" if prediction_returncode != 0 else "prediction_complete"
-    if compatibility_returncode == 0 and args.execute_eval:
+    if compatibility_returncode == 0 and execute_selected and args.execute_eval:
         if args.execute_predict and prediction_returncode not in (0, None):
             status = "prediction_failed"
         else:
@@ -296,6 +314,34 @@ def public_path(path: str | Path | None, repo_root: str | Path) -> str | None:
         return path_obj.name
 
 
+def parse_run_filter(value: str | None) -> set[str] | None:
+    if value in (None, ""):
+        return None
+    selected = {item.strip() for item in value.split(",") if item.strip()}
+    valid = {str(spec["run_name"]) for spec in RUN_SPECS}
+    unknown = sorted(selected - valid)
+    if unknown:
+        raise ValueError(f"Unknown run name(s): {', '.join(unknown)}")
+    if not selected:
+        raise ValueError("--runs was provided but no run names were parsed")
+    return selected
+
+
+def has_siliconflow_credentials(repo: Path) -> bool:
+    if os.environ.get("SILICONFLOW_API_KEY"):
+        return True
+    model_dir = repo / "config" / "model"
+    for path in model_dir.glob("*.yaml"):
+        for line in path.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if stripped.startswith("api_key:"):
+                _, value = stripped.split(":", 1)
+                value = value.strip().strip("'\"")
+                if value and not value.startswith("${"):
+                    return True
+    return False
+
+
 def write_summary_md(path: Path, rows: list[dict[str, Any]]) -> None:
     lines = [
         "# MDocAgent Module Ablation",
@@ -338,6 +384,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--execute-predict", action="store_true", help="Run predict.py for each prepared run.")
     parser.add_argument("--execute-eval", action="store_true", help="Run eval.py for each prepared run.")
     parser.add_argument("--execute", action="store_true", help="Deprecated alias for --execute-predict --execute-eval.")
+    parser.add_argument("--runs", help="Comma-separated run names to execute. All runs are still prepared for manifest consistency.")
+    parser.add_argument("--confirm-run-api", action="store_true", help="Required with --execute-predict to allow real prediction API calls.")
+    parser.add_argument("--confirm-run-eval", action="store_true", help="Required with --execute-eval to allow real evaluation API calls.")
     return parser
 
 
@@ -346,6 +395,24 @@ def main(argv: list[str] | None = None) -> int:
     if args.execute:
         args.execute_predict = True
         args.execute_eval = True
+    try:
+        parse_run_filter(args.runs)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    if args.execute_predict and not args.confirm_run_api:
+        print("--confirm-run-api is required with --execute-predict", file=sys.stderr)
+        return 2
+    if args.execute_eval and not args.confirm_run_eval:
+        print("--confirm-run-eval is required with --execute-eval", file=sys.stderr)
+        return 2
+    repo = Path(__file__).resolve().parents[1]
+    if (args.execute_predict or args.execute_eval) and not has_siliconflow_credentials(repo):
+        print(
+            "SILICONFLOW_API_KEY or a non-empty config/model/*.yaml api_key is required for --execute-predict/--execute-eval",
+            file=sys.stderr,
+        )
+        return 2
     result = run_module_ablation(args)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result.get("status") != "fail" else 1
