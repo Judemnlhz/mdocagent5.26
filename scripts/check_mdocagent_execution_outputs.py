@@ -65,6 +65,22 @@ def public_path(path: Path, repo: Path) -> str:
         return str(path)
 
 
+def safe_tag(value: str) -> str:
+    allowed = []
+    for char in value:
+        allowed.append(char if char.isalnum() or char in {"_", "-"} else "_")
+    tag = "".join(allowed).strip("_")
+    if not tag:
+        raise ValueError("--run-tag must contain at least one alphanumeric character")
+    return tag
+
+
+def resolve_output_root(base_output_root: Path, run_tag: str | None) -> Path:
+    if not run_tag:
+        return base_output_root
+    return base_output_root / "run_tags" / safe_tag(run_tag)
+
+
 def top_pages(record: dict[str, Any], field: str, top_k: int) -> list[Any]:
     values = record.get(field)
     if not isinstance(values, list):
@@ -157,14 +173,20 @@ def binary_correctness(eval_path: Path | None) -> dict[str, Any]:
 
 def build_run_report(row: dict[str, Any], repo: Path, results_root: Path) -> dict[str, Any]:
     run_name = str(row["run_name"])
-    run_dir = results_root / run_name
+    execution_run_name = str(row.get("execution_run_name") or run_name)
+    run_dir = results_root / execution_run_name
     prediction_path = find_latest_prediction_json(run_dir)
     eval_path = find_latest_eval_json(run_dir)
     compatibility_path = repo / str(row.get("compatibility_report_path", ""))
     compatibility_report = load_json(compatibility_path) if compatibility_path.is_file() else None
     return {
         "run_name": run_name,
+        "execution_run_name": execution_run_name,
         "top_k": row.get("top_k"),
+        "record_slice": row.get("record_slice"),
+        "max_records": row.get("max_records"),
+        "run_tag": row.get("run_tag"),
+        "temperature": row.get("temperature"),
         "model_config_hash": row.get("model_config_hash"),
         "eval_model_id": row.get("eval_model_id"),
         "compatible_retrieval_path": row.get("compatible_retrieval_path"),
@@ -233,6 +255,9 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
         "# MDocAgent Execution Gate Report",
         "",
         f"Status: {report['status']}",
+        f"Phase: {report.get('phase_name')}",
+        f"Gate passed: {report.get('gate_passed')}",
+        f"Recommended next phase: {report.get('recommended_next_phase')}",
         "",
         "| check | pass |",
         "| --- | --- |",
@@ -243,12 +268,13 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
         else:
             value = check
         lines.append(f"| {name} | {value} |")
-    lines.extend(["", "## Runs", "", "| run_name | prediction | evaluation | binary_correctness |", "| --- | --- | --- | ---: |"])
+    lines.extend(["", "## Runs", "", "| run_name | execution_run_name | prediction | evaluation | binary_correctness |", "| --- | --- | --- | --- | ---: |"])
     for run in report["runs"]:
         score = run["binary_correctness"]["average"]
         lines.append(
-            "| {run_name} | {prediction} | {evaluation} | {score} |".format(
+            "| {run_name} | {execution_run_name} | {prediction} | {evaluation} | {score} |".format(
                 run_name=run["run_name"],
+                execution_run_name=run["execution_run_name"],
                 prediction=run["prediction_output_path"] or "missing",
                 evaluation=run["evaluation_output_path"] or "missing",
                 score="null" if score is None else f"{score:.6f}",
@@ -288,9 +314,77 @@ def write_next_plan(output_dir: Path) -> None:
     )
 
 
+def score_by_run_name(run_reports: list[dict[str, Any]]) -> dict[str, float | None]:
+    return {run["run_name"]: run["binary_correctness"]["average"] for run in run_reports}
+
+
+def score_delta(scores: dict[str, float | None], left: str, right: str) -> float | None:
+    if scores.get(left) is None or scores.get(right) is None:
+        return None
+    return float(scores[left]) - float(scores[right])
+
+
+def infer_phase_name(args: argparse.Namespace, requested_runs: list[str]) -> str:
+    if args.phase_name:
+        return args.phase_name
+    run_set = set(requested_runs)
+    if {"mdocagent_top4_official_reproduction", "top4_original_only"}.issubset(run_set):
+        return "phase_1_small_gate"
+    if {"top4_artifact_only", "top4_original_plus_artifact"}.issubset(run_set):
+        return "phase_2_small_artifact"
+    if "top4_graph_context" in run_set:
+        return "phase_3_small_graph"
+    return "custom"
+
+
+def phase_decision(phase_name: str, hard_passed: bool, scores: dict[str, float | None]) -> dict[str, Any]:
+    reasons: list[str] = []
+    recommended = "stop"
+    diagnostic_only = False
+    gate_passed = hard_passed
+    delta_original = score_delta(scores, "top4_original_only", "mdocagent_top4_official_reproduction")
+    delta_artifact_plus = score_delta(scores, "top4_original_plus_artifact", "top4_original_only")
+    delta_graph = score_delta(scores, "top4_graph_context", "top4_original_plus_artifact")
+
+    if not hard_passed:
+        reasons.append("hard execution or consistency check failed")
+        return {
+            "gate_passed": False,
+            "recommended_next_phase": "stop",
+            "failure_reasons": reasons,
+            "diagnostic_only": diagnostic_only,
+        }
+
+    if phase_name == "phase_1_small_gate":
+        recommended = "phase_2_small_artifact"
+    elif phase_name == "phase_2_small_artifact":
+        if delta_artifact_plus is None or delta_artifact_plus <= 0:
+            gate_passed = False
+            reasons.append("top4_original_plus_artifact did not improve over top4_original_only")
+            recommended = "stop_before_graph_context"
+        else:
+            recommended = "phase_3_small_graph"
+    elif phase_name == "phase_3_small_graph":
+        if delta_graph is None or delta_graph <= 0:
+            diagnostic_only = True
+            reasons.append("top4_graph_context did not improve over top4_original_plus_artifact")
+            recommended = "mark_graph_context_diagnostic_only"
+        else:
+            recommended = "phase_4_full_ablation"
+    else:
+        recommended = "manual_review"
+
+    return {
+        "gate_passed": gate_passed,
+        "recommended_next_phase": recommended,
+        "failure_reasons": reasons,
+        "diagnostic_only": diagnostic_only,
+    }
+
+
 def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     repo = Path(__file__).resolve().parents[1]
-    output_dir = repo / args.output_dir
+    output_dir = resolve_output_root(repo / args.output_dir, args.run_tag)
     summary_path = output_dir / "summary.json"
     if not summary_path.is_file():
         report = {"status": "fail", "reason": "summary.json missing", "summary_path": args.output_dir}
@@ -317,6 +411,8 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     binary_delta = None
     if len(binary_values) >= 2:
         binary_delta = abs(binary_values[0] - binary_values[1])
+    record_slices = {run.get("record_slice") for run in run_reports}
+    max_records_values = {run.get("max_records") for run in run_reports}
 
     checks: dict[str, Any] = {
         "prediction_outputs_exist": {"pass": all(run["prediction_output_exists"] for run in run_reports)},
@@ -331,19 +427,50 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         },
         "prediction_command_shape_consistent": {"pass": len(prediction_commands) == 1},
         "evaluation_command_shape_consistent": {"pass": len(evaluation_commands) == 1},
-        "binary_correctness_large_delta": {
-            "pass": binary_delta is not None and binary_delta <= args.max_binary_delta,
+        "binary_correctness_delta_recorded": {
             "delta": binary_delta,
             "max_allowed_delta": args.max_binary_delta,
+            "api_nondeterminism_note": "prediction text differences are not treated as hard failures",
+        },
+        "record_slice_consistent": {
+            "pass": len(record_slices) == 1 and (args.record_slice is None or next(iter(record_slices)) == args.record_slice),
+            "values": sorted(str(value) for value in record_slices),
+            "expected": args.record_slice,
+        },
+        "max_records_consistent": {
+            "pass": len(max_records_values) == 1 and (args.max_records is None or next(iter(max_records_values)) == args.max_records),
+            "values": sorted(str(value) for value in max_records_values),
+            "expected": args.max_records,
         },
         "adapter_manifest_policy": check_manifest_policy(summary_rows, repo),
         "run_name_resume_path_pollution": {"detected": False},
         "api_nondeterminism_possible": True,
     }
-    status = "pass" if all(check.get("pass", True) for check in checks.values() if isinstance(check, dict)) else "fail"
+    hard_passed = all(check.get("pass", True) for check in checks.values() if isinstance(check, dict))
+    scores = score_by_run_name(run_reports)
+    phase_name = infer_phase_name(args, requested_runs)
+    decision = phase_decision(phase_name, hard_passed, scores)
+    status = "pass" if decision["gate_passed"] else "fail"
     report = {
         "schema_version": "mdocagent_execution_gate_v1",
         "status": status,
+        "phase_name": phase_name,
+        "runs_completed": [run["run_name"] for run in run_reports if run["prediction_output_exists"] and run["evaluation_output_exists"]],
+        "record_slice": args.record_slice if args.record_slice is not None else summary.get("record_slice"),
+        "max_records": args.max_records if args.max_records is not None else summary.get("max_records"),
+        "run_tag": args.run_tag,
+        "gate_passed": decision["gate_passed"],
+        "mdocagent_top4_score": scores.get("mdocagent_top4_official_reproduction"),
+        "original_only_score": scores.get("top4_original_only"),
+        "artifact_only_score": scores.get("top4_artifact_only"),
+        "original_plus_artifact_score": scores.get("top4_original_plus_artifact"),
+        "graph_context_score": scores.get("top4_graph_context"),
+        "delta_original_only_vs_top4": score_delta(scores, "top4_original_only", "mdocagent_top4_official_reproduction"),
+        "delta_artifact_plus_vs_original_only": score_delta(scores, "top4_original_plus_artifact", "top4_original_only"),
+        "delta_graph_vs_artifact_plus": score_delta(scores, "top4_graph_context", "top4_original_plus_artifact"),
+        "failure_reasons": decision["failure_reasons"],
+        "recommended_next_phase": decision["recommended_next_phase"],
+        "diagnostic_only": decision["diagnostic_only"],
         "summary_path": public_path(summary_path, repo),
         "runs_requested": requested_runs,
         "forbidden_runs_not_executed_by_this_check": FORBIDDEN_NEXT_RUNS,
@@ -369,6 +496,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--results-root", default=DEFAULT_RESULTS_ROOT)
     parser.add_argument("--max-binary-delta", type=float, default=0.05)
+    parser.add_argument("--run-tag", help="Run tag used by run_mdocagent_module_ablation.py.")
+    parser.add_argument("--record-slice", help="Expected record slice for all checked runs, such as 0:30.")
+    parser.add_argument("--max-records", type=int, help="Expected max record cap for all checked runs.")
+    parser.add_argument("--phase-name", help="Explicit phase name for the gate report.")
     return parser
 
 

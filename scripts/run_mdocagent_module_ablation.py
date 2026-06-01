@@ -36,6 +36,8 @@ DEFAULT_ARTIFACTS = "outputs/stage2_doc/artifacts.jsonl"
 DEFAULT_GRAPH_DIR = "outputs/stage4/evidence_graph"
 DEFAULT_OUTPUT_DIR = "outputs/experiments/mdocagent_module_ablation"
 EVAL_MODEL_ID = "deepseek-ai/DeepSeek-V3"
+PREDICT_CALLS_PER_RECORD = 5
+EVAL_CALLS_PER_RECORD = 1
 
 
 RUN_SPECS = [
@@ -98,7 +100,8 @@ RUN_SPECS = [
 
 def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
     repo = Path(__file__).resolve().parents[1]
-    output_root = Path(args.output_dir)
+    base_output_root = Path(args.output_dir)
+    output_root = resolve_output_root(base_output_root, args.run_tag)
     records_dir = output_root / "reranked_records"
     manifests_dir = output_root / "manifests"
     compatibility_dir = output_root / "compatibility"
@@ -106,10 +109,16 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
     manifests_dir.mkdir(parents=True, exist_ok=True)
     compatibility_dir.mkdir(parents=True, exist_ok=True)
 
-    records = load_mdocagent_retrieval_records(args.input_retrieval)
+    records = select_records(
+        load_mdocagent_retrieval_records(args.input_retrieval),
+        record_slice=args.record_slice,
+        max_records=args.max_records,
+        record_ids_file=args.record_ids_file,
+    )
     artifacts_by_page = load_artifacts_by_page(args.artifacts)
     model_config_hash = combined_model_config_hash(repo)
     selected_run_names = parse_run_filter(args.runs)
+    write_phased_experiment_plan(base_output_root)
 
     summary_rows: list[dict[str, Any]] = []
     for spec in RUN_SPECS:
@@ -128,13 +137,23 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
             execute_selected=execute_selected,
         )
         summary_rows.append(row)
+    cost_summary = write_cost_log_if_requested(args, repo, output_root, summary_rows, len(records))
 
     summary = {
-        "schema_version": "mdocagent_module_ablation_v2",
+        "schema_version": "mdocagent_module_ablation_v3",
         "prepare_only": not args.execute_predict and not args.execute_eval,
         "official_reproduction_top_k": [1, 4],
         "additional_budget_policy": "top-8/top-10/top-20 are additional_budget_diagnostic only, not official reproduction",
         "selected_runs": sorted(selected_run_names) if selected_run_names is not None else "all",
+        "run_tag": args.run_tag,
+        "record_slice": args.record_slice,
+        "max_records": args.max_records,
+        "record_ids_file": args.record_ids_file,
+        "num_records": len(records),
+        "temperature": args.temperature,
+        "resume_safe": bool(args.resume_safe),
+        "overwrite_output": bool(args.overwrite_output),
+        "cost_log_path": cost_summary.get("path") if cost_summary else None,
         "runs": summary_rows,
     }
     summary_path = output_root / "summary.json"
@@ -150,6 +169,11 @@ def run_module_ablation(args: argparse.Namespace) -> dict[str, Any]:
         "summary_md_path": str(output_root / "summary.md"),
         "num_runs": len(summary_rows),
         "selected_runs": sorted(selected_run_names) if selected_run_names is not None else "all",
+        "run_tag": args.run_tag,
+        "record_slice": args.record_slice,
+        "max_records": args.max_records,
+        "num_records": len(records),
+        "cost_log_path": cost_summary.get("path") if cost_summary else None,
         "num_failed_runs": len(failed_rows),
         "prepare_only": not args.execute_predict and not args.execute_eval,
         "status": "fail" if failed_rows else ("prepared" if not args.execute_predict and not args.execute_eval else "executed_or_attempted"),
@@ -169,6 +193,7 @@ def prepare_run(
     execute_selected: bool = True,
 ) -> dict[str, Any]:
     run_name = str(spec["run_name"])
+    execution_run_name = tagged_run_name(run_name, args.run_tag)
     top_k = int(spec["top_k"])
     mode = str(spec["mode"])
     output_retrieval = records_dir / f"{run_name}.json"
@@ -200,8 +225,23 @@ def prepare_run(
             "top_k": top_k,
             "lambda_weight": args.lambda_weight,
             "expansion_mode": args.expansion_mode if mode == "graph_context" else None,
+            "record_slice": args.record_slice,
+            "max_records": args.max_records,
+            "record_ids_file": args.record_ids_file,
+            "run_tag": args.run_tag,
+            "temperature": args.temperature,
         },
         repo_root=repo,
+    )
+    adapter_manifest.update(
+        {
+            "record_slice": args.record_slice,
+            "max_records": args.max_records,
+            "record_ids_file": public_path(args.record_ids_file, repo) if args.record_ids_file else None,
+            "num_records": len(adapted),
+            "run_tag": args.run_tag,
+            "temperature": args.temperature,
+        }
     )
     write_manifest(adapter_manifest, adapter_manifest_path)
 
@@ -220,18 +260,24 @@ def prepare_run(
     )
     compatibility_report = load_json_if_exists(compatibility_report_path)
 
-    prediction_command = build_prediction_command(args, run_name, top_k, output_retrieval)
-    evaluation_command = build_evaluation_command(args, run_name)
+    prediction_command = build_prediction_command(args, execution_run_name, top_k, output_retrieval)
+    evaluation_command = build_evaluation_command(args, execution_run_name)
     prediction_returncode: int | None = None
     evaluation_returncode: int | None = None
     status = "prepared_not_run"
+    output_blocker = find_existing_execution_output(repo, execution_run_name)
     if compatibility_returncode != 0:
         status = "compatibility_failed"
+    elif execute_selected and (args.execute_predict or args.execute_eval) and output_blocker and not args.overwrite_output and not args.resume_safe:
+        status = "blocked_existing_output"
     if compatibility_returncode == 0 and execute_selected and args.execute_predict:
-        prediction_returncode = run_command(prediction_command, repo)
-        status = "prediction_failed" if prediction_returncode != 0 else "prediction_complete"
+        if status != "blocked_existing_output":
+            prediction_returncode = run_command(prediction_command, repo)
+            status = "prediction_failed" if prediction_returncode != 0 else "prediction_complete"
     if compatibility_returncode == 0 and execute_selected and args.execute_eval:
-        if args.execute_predict and prediction_returncode not in (0, None):
+        if status == "blocked_existing_output":
+            evaluation_returncode = None
+        elif args.execute_predict and prediction_returncode not in (0, None):
             status = "prediction_failed"
         else:
             evaluation_returncode = run_command(evaluation_command, repo)
@@ -239,6 +285,7 @@ def prepare_run(
 
     row = {
         "run_name": run_name,
+        "execution_run_name": execution_run_name,
         "experiment_group": spec["experiment_group"],
         "baseline_relation": spec["baseline_relation"],
         "official_mdocagent_setting": bool(spec["official_mdocagent_setting"]),
@@ -262,6 +309,15 @@ def prepare_run(
         "used_debug_edges": False,
         "used_semantic_edges": False,
         "status": status,
+        "record_slice": args.record_slice,
+        "max_records": args.max_records,
+        "record_ids_file": public_path(args.record_ids_file, repo) if args.record_ids_file else None,
+        "num_records": len(adapted),
+        "run_tag": args.run_tag,
+        "temperature": args.temperature,
+        "resume_safe": bool(args.resume_safe),
+        "overwrite_output": bool(args.overwrite_output),
+        "existing_output_path": public_path(output_blocker, repo) if output_blocker else None,
         "adapter_manifest_hash": canonical_json_hash(adapter_manifest),
         "retrieval_records_hash": adapter_manifest["output_hash"],
         "additional_budget_diagnostic": False,
@@ -276,7 +332,7 @@ def prepare_run(
 
 
 def build_prediction_command(args: argparse.Namespace, run_name: str, top_k: int, retrieval_path: Path) -> list[str]:
-    return [
+    command = [
         "python3",
         "scripts/predict.py",
         "--config-name",
@@ -285,6 +341,13 @@ def build_prediction_command(args: argparse.Namespace, run_name: str, top_k: int
         f"dataset.top_k={top_k}",
         f"dataset.sample_with_retrieval_path={public_path(retrieval_path, Path(__file__).resolve().parents[1])}",
     ]
+    if args.temperature is not None:
+        command.append(f"+runtime.temperature={args.temperature}")
+    if args.resume_safe:
+        resume_path = latest_prediction_path(Path(__file__).resolve().parents[1], run_name)
+        if resume_path:
+            command.append(f"+runtime.resume_path={public_path(resume_path, Path(__file__).resolve().parents[1])}")
+    return command
 
 
 def build_evaluation_command(args: argparse.Namespace, run_name: str) -> list[str]:
@@ -314,6 +377,168 @@ def public_path(path: str | Path | None, repo_root: str | Path) -> str | None:
         return path_obj.name
 
 
+def resolve_output_root(base_output_root: Path, run_tag: str | None) -> Path:
+    if not run_tag:
+        return base_output_root
+    return base_output_root / "run_tags" / safe_tag(run_tag)
+
+
+def safe_tag(value: str) -> str:
+    allowed = []
+    for char in value:
+        if char.isalnum() or char in {"_", "-"}:
+            allowed.append(char)
+        else:
+            allowed.append("_")
+    tag = "".join(allowed).strip("_")
+    if not tag:
+        raise ValueError("--run-tag must contain at least one alphanumeric character")
+    return tag
+
+
+def tagged_run_name(run_name: str, run_tag: str | None) -> str:
+    if not run_tag:
+        return run_name
+    return f"{run_name}__{safe_tag(run_tag)}"
+
+
+def parse_record_slice(value: str | None, total: int) -> slice:
+    if value in (None, ""):
+        return slice(None)
+    parts = value.split(":")
+    if len(parts) > 3:
+        raise ValueError("--record-slice must use Python slice syntax such as 0:30")
+    parsed: list[int | None] = []
+    for part in parts:
+        parsed.append(int(part) if part.strip() else None)
+    while len(parsed) < 3:
+        parsed.append(None)
+    result = slice(parsed[0], parsed[1], parsed[2])
+    range(total)[result]
+    return result
+
+
+def load_record_ids(path: str | None) -> list[int] | None:
+    if not path:
+        return None
+    ids_path = Path(path)
+    text = ids_path.read_text(encoding="utf-8")
+    if ids_path.suffix == ".json":
+        data = json.loads(text)
+        if not isinstance(data, list):
+            raise ValueError("--record-ids-file JSON must contain a list of 0-based integer indices")
+        values = data
+    else:
+        values = [line.strip() for line in text.splitlines() if line.strip() and not line.strip().startswith("#")]
+    record_ids = [int(value) for value in values]
+    if len(record_ids) != len(set(record_ids)):
+        raise ValueError("--record-ids-file contains duplicate indices")
+    return record_ids
+
+
+def select_records(
+    records: list[dict[str, Any]],
+    record_slice: str | None,
+    max_records: int | None,
+    record_ids_file: str | None,
+) -> list[dict[str, Any]]:
+    selected = records
+    record_ids = load_record_ids(record_ids_file)
+    if record_ids is not None:
+        selected = [records[index] for index in record_ids]
+    if record_slice:
+        selected = selected[parse_record_slice(record_slice, len(selected))]
+    if max_records is not None:
+        if max_records < 0:
+            raise ValueError("--max-records must be non-negative")
+        selected = selected[:max_records]
+    return list(selected)
+
+
+def result_dir(repo: Path, execution_run_name: str) -> Path:
+    return repo / "results" / "MMLongBench" / execution_run_name
+
+
+def latest_prediction_path(repo: Path, execution_run_name: str) -> Path | None:
+    directory = result_dir(repo, execution_run_name)
+    if not directory.is_dir():
+        return None
+    candidates = [path for path in directory.glob("*-*-*-*-*.json") if not path.name.endswith("_results.json")]
+    if not candidates:
+        return None
+    return max(candidates, key=lambda path: (path.stat().st_mtime, path.name))
+
+
+def find_existing_execution_output(repo: Path, execution_run_name: str) -> Path | None:
+    directory = result_dir(repo, execution_run_name)
+    if not directory.is_dir():
+        return None
+    candidates = list(directory.glob("*.json")) + list(directory.glob("results.txt"))
+    if not candidates:
+        return None
+    return max(candidates, key=lambda path: (path.stat().st_mtime, path.name))
+
+
+def count_prediction_outputs(repo: Path, execution_run_name: str, ans_key: str) -> dict[str, int]:
+    path = latest_prediction_path(repo, execution_run_name)
+    if not path:
+        return {"completed": 0, "failed": 0}
+    records = json.loads(path.read_text(encoding="utf-8"))
+    completed = sum(1 for record in records if isinstance(record, dict) and record.get(ans_key) is not None)
+    return {"completed": completed, "failed": max(len(records) - completed, 0)}
+
+
+def write_cost_log_if_requested(
+    args: argparse.Namespace,
+    repo: Path,
+    output_root: Path,
+    rows: list[dict[str, Any]],
+    num_records: int,
+) -> dict[str, Any] | None:
+    if args.cost_log is None:
+        return None
+    path = output_root / "cost_log.json" if args.cost_log == "" else Path(args.cost_log)
+    if not path.is_absolute():
+        path = repo / path
+    selected = parse_run_filter(args.runs)
+    selected_rows = [row for row in rows if selected is None or row["run_name"] in selected]
+    run_items = []
+    totals = {"estimated_api_calls": 0, "completed_api_calls": 0, "failed_api_calls": 0}
+    for row in selected_rows:
+        calls_per_record = 0
+        if args.execute_predict:
+            calls_per_record += PREDICT_CALLS_PER_RECORD
+        if args.execute_eval:
+            calls_per_record += EVAL_CALLS_PER_RECORD
+        estimate = num_records * calls_per_record
+        ans_key = f"ans_{row['execution_run_name']}"
+        counts = count_prediction_outputs(repo, row["execution_run_name"], ans_key)
+        completed = counts["completed"] * (PREDICT_CALLS_PER_RECORD if args.execute_predict else 0)
+        failed = counts["failed"] * (PREDICT_CALLS_PER_RECORD if args.execute_predict else 0)
+        item = {
+            "run_name": row["run_name"],
+            "execution_run_name": row["execution_run_name"],
+            "estimated_api_calls": estimate,
+            "completed_api_calls": completed,
+            "failed_api_calls": failed,
+        }
+        for key in totals:
+            totals[key] += item[key]
+        run_items.append(item)
+    cost_log = {
+        "schema_version": "mdocagent_cost_log_v1",
+        "run_tag": args.run_tag,
+        "record_slice": args.record_slice,
+        "max_records": args.max_records,
+        "num_records": num_records,
+        "runs": run_items,
+        **totals,
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(cost_log, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    return {"path": public_path(path, repo), **totals}
+
+
 def parse_run_filter(value: str | None) -> set[str] | None:
     if value in (None, ""):
         return None
@@ -340,6 +565,73 @@ def has_siliconflow_credentials(repo: Path) -> bool:
                 if value and not value.startswith("${"):
                     return True
     return False
+
+
+def write_phased_experiment_plan(output_root: Path) -> None:
+    output_root.mkdir(parents=True, exist_ok=True)
+    phases = [
+        {
+            "phase_name": "phase_1_small_gate",
+            "runs": ["mdocagent_top4_official_reproduction", "top4_original_only"],
+            "record_slice": "0:30",
+            "purpose": "adapter consistency under real QA",
+            "allowed_if": "adapter gate has passed",
+        },
+        {
+            "phase_name": "phase_2_small_artifact",
+            "runs": ["top4_artifact_only", "top4_original_plus_artifact"],
+            "record_slice": "0:30",
+            "purpose": "test artifact-aware reranking signal under same page budget",
+            "allowed_if": "phase_1_small_gate passes",
+        },
+        {
+            "phase_name": "phase_3_small_graph",
+            "runs": ["top4_graph_context"],
+            "record_slice": "0:30",
+            "purpose": "test graph_context only after artifact signal is positive",
+            "allowed_if": "top4_original_plus_artifact has positive signal",
+        },
+        {
+            "phase_name": "phase_4_full_ablation",
+            "runs": [
+                "mdocagent_top4_official_reproduction",
+                "top4_original_only",
+                "top4_artifact_only",
+                "top4_original_plus_artifact",
+                "top4_graph_context",
+            ],
+            "record_slice": None,
+            "purpose": "paper-facing full top-4 QA ablation",
+            "allowed_if": "small runs pass sanity",
+        },
+    ]
+    plan = {
+        "schema_version": "mdocagent_phased_experiment_plan_v1",
+        "default_record_slice": "0:30",
+        "do_not_run_all_phases_automatically": True,
+        "phases": phases,
+    }
+    (output_root / "phased_experiment_plan.json").write_text(
+        json.dumps(plan, ensure_ascii=False, indent=2, sort_keys=True),
+        encoding="utf-8",
+    )
+    lines = [
+        "# MDocAgent Phased Experiment Plan",
+        "",
+        "Run phases sequentially. Do not run artifact or graph ablations until the preceding gate passes.",
+    ]
+    for phase in phases:
+        lines.extend(
+            [
+                "",
+                f"## {phase['phase_name']}",
+                f"- runs: {', '.join(phase['runs'])}",
+                f"- record_slice: {phase['record_slice']}",
+                f"- purpose: {phase['purpose']}",
+                f"- allowed_if: {phase['allowed_if']}",
+            ]
+        )
+    (output_root / "phased_experiment_plan.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def write_summary_md(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -387,6 +679,19 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--runs", help="Comma-separated run names to execute. All runs are still prepared for manifest consistency.")
     parser.add_argument("--confirm-run-api", action="store_true", help="Required with --execute-predict to allow real prediction API calls.")
     parser.add_argument("--confirm-run-eval", action="store_true", help="Required with --execute-eval to allow real evaluation API calls.")
+    parser.add_argument("--max-records", type=int, help="Optional cap applied after record ids and record slice.")
+    parser.add_argument("--record-slice", help="Optional Python-style slice such as 0:30. Applied to all runs.")
+    parser.add_argument("--record-ids-file", help="Optional file containing 0-based record indices, one per line or JSON list.")
+    parser.add_argument("--run-tag", help="Tag used to isolate small or phased run outputs.")
+    parser.add_argument("--temperature", type=float, help="Optional prediction model temperature override recorded in manifests.")
+    parser.add_argument("--resume-safe", action="store_true", help="Resume from the latest prediction JSON instead of blocking on existing outputs.")
+    parser.add_argument("--overwrite-output", action="store_true", help="Allow execution when prior outputs exist for the tagged run.")
+    parser.add_argument(
+        "--cost-log",
+        nargs="?",
+        const="",
+        help="Write API call cost log. With no value, writes cost_log.json under the run output directory.",
+    )
     return parser
 
 
@@ -397,15 +702,21 @@ def main(argv: list[str] | None = None) -> int:
         args.execute_eval = True
     try:
         parse_run_filter(args.runs)
+        if args.run_tag:
+            safe_tag(args.run_tag)
+        if args.record_slice:
+            parse_record_slice(args.record_slice, 10**12)
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
         return 2
     if args.execute_predict and not args.confirm_run_api:
-        print("--confirm-run-api is required with --execute-predict", file=sys.stderr)
-        return 2
+        print("blocked_missing_confirm_run_api", file=sys.stderr)
+        print(json.dumps({"status": "blocked_missing_confirm_run_api"}, ensure_ascii=False, sort_keys=True))
+        return 1
     if args.execute_eval and not args.confirm_run_eval:
-        print("--confirm-run-eval is required with --execute-eval", file=sys.stderr)
-        return 2
+        print("blocked_missing_confirm_run_eval", file=sys.stderr)
+        print(json.dumps({"status": "blocked_missing_confirm_run_eval"}, ensure_ascii=False, sort_keys=True))
+        return 1
     repo = Path(__file__).resolve().parents[1]
     if (args.execute_predict or args.execute_eval) and not has_siliconflow_credentials(repo):
         print(
