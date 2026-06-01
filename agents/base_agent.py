@@ -59,17 +59,55 @@ class Agent:
         except Exception as e:
             print(f"Error evaluating answer: {str(e)}")
             return {"binary_correctness": 0}
-    
+
+    def _load_eval_gold_lookup(self, dataset: BaseDataset):
+        sample_path = dataset.config.sample_path
+        gt_key = dataset.config.gt_key
+        question_key = dataset.config.question_key
+        try:
+            with open(sample_path, "r", encoding="utf-8") as file_obj:
+                gold_samples = json.load(file_obj)
+        except Exception as exc:
+            print(f"Could not load evaluation gold samples from {sample_path}: {exc}")
+            return {}, {}
+
+        lookup = {}
+        offsets = {}
+        for gold_sample in gold_samples:
+            key = (gold_sample.get("doc_id"), gold_sample.get(question_key))
+            if key[0] is None or key[1] is None or gt_key not in gold_sample:
+                continue
+            lookup.setdefault(key, []).append(gold_sample[gt_key])
+        return lookup, offsets
+
+    def _resolve_eval_ground_truth(self, dataset: BaseDataset, sample, gold_lookup, gold_offsets):
+        gt_key = dataset.config.gt_key
+        if gt_key in sample:
+            return sample[gt_key]
+
+        key = (sample.get("doc_id"), sample.get(dataset.config.question_key))
+        candidates = gold_lookup.get(key, [])
+        if not candidates:
+            raise KeyError(gt_key)
+
+        offset = gold_offsets.get(key, 0)
+        gold_offsets[key] = offset + 1
+        if offset < len(candidates):
+            return candidates[offset]
+        return candidates[-1]
+
     def eval_dataset(self, dataset: BaseDataset):
         samples, ans_path = dataset.load_latest_results()
         if self.config.truncate_len:
             samples = samples[:self.config.truncate_len]
+
+        gold_lookup, gold_offsets = self._load_eval_gold_lookup(dataset)
         samples_with_answer = []
         for sample in tqdm(samples):
             try:
                 question = sample[dataset.config.question_key]
                 answer = sample[self.config.ans_key]
-                gt = sample[dataset.config.gt_key]
+                gt = self._resolve_eval_ground_truth(dataset, sample, gold_lookup, gold_offsets)
                 result = self.eval(question, answer, gt)
                 sample['binary_correctness'] = result.get('binary_correctness', None)
                 samples_with_answer.append(sample)
