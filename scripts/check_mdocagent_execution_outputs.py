@@ -443,28 +443,89 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def write_next_plan(output_dir: Path) -> None:
+def write_next_plan(output_dir: Path, report: dict[str, Any]) -> None:
+    recommended_next_phase = report.get("recommended_next_phase")
+    source_run_tag = report.get("run_tag")
+    record_slice = report.get("record_slice")
+    common_args = []
+    if record_slice:
+        common_args.extend(["--record-slice", str(record_slice)])
+
+    if recommended_next_phase == "phase_2_small_artifact":
+        allowed_runs = ["top4_artifact_only", "top4_original_plus_artifact"]
+        blocked_until_signal = ["top4_graph_context"]
+        purpose = "Run the small artifact ablation only; graph_context remains gated on positive artifact signal."
+        next_run_arg = ",".join(allowed_runs)
+        next_run_tag = "small_artifact"
+    elif recommended_next_phase == "phase_3_small_graph":
+        allowed_runs = ["top4_graph_context"]
+        blocked_until_signal = []
+        purpose = "Run the small graph_context diagnostic after original_plus_artifact showed positive signal."
+        next_run_arg = ",".join(allowed_runs)
+        next_run_tag = "small_graph"
+    elif recommended_next_phase == "phase_4_full_ablation":
+        allowed_runs = [
+            "mdocagent_top4_official_reproduction",
+            "top4_original_only",
+            "top4_artifact_only",
+            "top4_original_plus_artifact",
+            "top4_graph_context",
+        ]
+        blocked_until_signal = []
+        purpose = "Small gates passed; full ablation is now the recommended next phase."
+        next_run_arg = ",".join(allowed_runs)
+        next_run_tag = "full_ablation"
+    else:
+        allowed_runs = []
+        blocked_until_signal = FORBIDDEN_NEXT_RUNS
+        purpose = "No automatic next phase is recommended; inspect the gate report."
+        next_run_arg = ""
+        next_run_tag = None
+
+    if next_run_tag:
+        common_args.extend(["--run-tag", next_run_tag])
+    common_suffix = " ".join(common_args)
+    common_suffix = f" {common_suffix}" if common_suffix else ""
+
+    commands = []
+    if next_run_arg:
+        commands = [
+            f"python3 scripts/run_mdocagent_module_ablation.py --execute-predict --runs {next_run_arg}{common_suffix} --confirm-run-api",
+            f"python3 scripts/run_mdocagent_module_ablation.py --execute-eval --runs {next_run_arg}{common_suffix} --confirm-run-eval",
+        ]
+
     plan = {
         "status": "ready_after_gate_pass",
-        "allowed_next_runs": FORBIDDEN_NEXT_RUNS,
+        "recommended_next_phase": recommended_next_phase,
+        "source_run_tag": source_run_tag,
+        "next_run_tag": next_run_tag,
+        "allowed_next_runs": allowed_runs,
+        "blocked_until_positive_signal": blocked_until_signal,
         "do_not_run_automatically": True,
-        "commands": [
-            "python3 scripts/run_mdocagent_module_ablation.py --execute-predict --runs top4_artifact_only,top4_original_plus_artifact,top4_graph_context --confirm-run-api",
-            "python3 scripts/run_mdocagent_module_ablation.py --execute-eval --runs top4_artifact_only,top4_original_plus_artifact,top4_graph_context --confirm-run-eval",
-        ],
+        "purpose": purpose,
+        "commands": commands,
     }
     (output_dir / "next_ablation_plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    run_lines = [f"- {run}" for run in allowed_runs] or ["- none"]
+    blocked_lines = [f"- {run}" for run in blocked_until_signal] or ["- none"]
+    command_lines = [f"- `{command}`" for command in commands] or ["- none"]
     (output_dir / "next_ablation_plan.md").write_text(
         "\n".join(
             [
                 "# Next Ablation Plan",
                 "",
-                "The adapter consistency gate passed. Do not run these automatically.",
+                purpose,
+                "",
+                "Do not run these automatically.",
                 "",
                 "Recommended next runs:",
-                "- top4_artifact_only",
-                "- top4_original_plus_artifact",
-                "- top4_graph_context",
+                *run_lines,
+                "",
+                "Blocked until positive signal:",
+                *blocked_lines,
+                "",
+                "Commands:",
+                *command_lines,
                 "",
                 "Keep the same top-4 page budget and the same model configuration.",
             ]
@@ -660,7 +721,7 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
     report_json.write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
     write_markdown_report(report_md, report)
     if status == "pass":
-        write_next_plan(output_dir)
+        write_next_plan(output_dir, report)
     else:
         (output_dir / "failure_analysis.md").write_text(build_failure_analysis(report), encoding="utf-8")
     return report, 0 if status == "pass" else 1
