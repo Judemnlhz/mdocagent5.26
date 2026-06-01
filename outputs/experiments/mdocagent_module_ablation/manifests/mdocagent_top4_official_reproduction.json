@@ -13,7 +13,7 @@
     },
     "evaluator_model_used": false,
     "formula": "original_retrieval_order",
-    "git_commit": "184a9a8ee9651cc638bdc8ed3f0a418f4e2aa68b",
+    "git_commit": "f663a161d492305ef8150255e09a763d85aafc33",
     "graph_hash": null,
     "input_retrieval_hash": "c61544a5d3a1d565d91ec411495fc091d232bd47de5b9b6e8db6b7660fd6d107",
     "lambda_weight": 0.5,
@@ -28,11 +28,28 @@
     "used_debug_edges": false,
     "used_semantic_edges": false
   },
-  "adapter_manifest_hash": "0904687f7a6557afbb6304016dc95c0b7ed6e73fd2b7a8c1a926c6ffc49e74d8",
+  "adapter_manifest_hash": "e25485790aed4c8ca12427b917ec41d1d2a6239dc341fa41c675fefbcb38ba41",
+  "adapter_manifest_path": "outputs/experiments/mdocagent_module_ablation/manifests/mdocagent_top4_official_reproduction.adapter.json",
   "additional_budget_diagnostic": false,
-  "answer_generation_status": "pending_or_not_run",
   "baseline_relation": "mdocagent_top4_scope",
-  "command_returncode": null,
+  "compatibility_report": {
+    "forbidden_fields_found": [],
+    "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json",
+    "loader_compatible": true,
+    "loader_errors": [],
+    "missing_required_fields": [],
+    "num_records": 1073,
+    "status": "pass",
+    "top_k_checked": [
+      1,
+      4
+    ]
+  },
+  "compatibility_report_path": "outputs/experiments/mdocagent_module_ablation/compatibility/mdocagent_top4_official_reproduction.compatibility_report.json",
+  "compatibility_status": "pass",
+  "compatible_retrieval_path": "outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json",
+  "delta_vs_mdocagent_top4": null,
+  "eval_model_id": "deepseek-ai/DeepSeek-V3",
   "evaluation_command": [
     "python3",
     "scripts/eval.py",
@@ -56,11 +73,12 @@
     "dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json"
   ],
   "prediction_returncode": null,
+  "qa_accuracy_or_binary_correctness": null,
   "retrieval_records_hash": "577a42fc7316fb6264e3cff1360c66e73cfc7c0b128c74a0684624490dce9cf0",
-  "retrieval_records_path": "outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json",
   "run_name": "mdocagent_top4_official_reproduction",
   "same_model_as_baseline": true,
   "same_page_budget_as_baseline": true,
+  "status": "prepared_not_run",
   "top_k": 4,
   "used_debug_edges": false,
   "used_semantic_edges": false

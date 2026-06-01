@@ -15,7 +15,9 @@ COMMANDS = [
     ("stage4_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/stage4/tests", "-v"]),
     ("evaluation_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/evaluation/tests", "-v"]),
     ("integration_tests", [sys.executable, "-m", "unittest", "discover", "mdocnexus/integration/tests", "-v"]),
-    ("mdocagent_module_ablation_prepare", [sys.executable, "scripts/run_mdocagent_module_ablation.py"]),
+    ("adapter_compatibility_help", [sys.executable, "scripts/check_mdocagent_adapter_compatibility.py", "--help"]),
+    ("mdocagent_adapt_help", [sys.executable, "scripts/mdocnexus.py", "mdocagent-adapt", "--help"]),
+    ("mdocagent_module_ablation_prepare", [sys.executable, "scripts/run_mdocagent_module_ablation.py", "--prepare-only"]),
     ("audit_no_gold_leakage", [sys.executable, "scripts/audit_no_gold_leakage.py"]),
     ("audit_real_provider_smoke", [sys.executable, "scripts/audit_real_provider_smoke.py"]),
     ("audit_reproducibility", [sys.executable, "scripts/audit_reproducibility.py"]),
@@ -70,10 +72,30 @@ def run_integration_checks() -> dict[str, Any]:
             summary = json.loads(summary_file.read_text(encoding="utf-8"))
             if not isinstance(summary.get("runs"), list) or not summary["runs"]:
                 errors.append("summary_runs_missing")
+            for row in summary.get("runs", []):
+                if row.get("same_page_budget_as_baseline") is not True:
+                    errors.append(f"summary_page_budget_false:{row.get('run_name')}")
+                if row.get("no_gold_fields_used") is not True:
+                    errors.append(f"summary_no_gold_false:{row.get('run_name')}")
+                if row.get("used_debug_edges") is not False:
+                    errors.append(f"summary_debug_edges_true:{row.get('run_name')}")
+                if row.get("used_semantic_edges") is not False:
+                    errors.append(f"summary_semantic_edges_true:{row.get('run_name')}")
+                compatibility_path = row.get("compatibility_report_path")
+                if not compatibility_path:
+                    errors.append(f"summary_missing_compatibility_path:{row.get('run_name')}")
+                elif not Path(str(compatibility_path)).is_file():
+                    errors.append(f"missing_compatibility_report:{compatibility_path}")
+                else:
+                    compatibility = json.loads(Path(str(compatibility_path)).read_text(encoding="utf-8"))
+                    if compatibility.get("status") != "pass":
+                        errors.append(f"compatibility_not_pass:{compatibility_path}")
         manifest_dir = Path(manifest_root)
         if not manifest_dir.is_dir():
             errors.append(f"missing_manifest_dir:{manifest_root}")
         for manifest_path in sorted(manifest_dir.glob("*.json")) if manifest_dir.is_dir() else []:
+            if manifest_path.name.endswith(".adapter.json"):
+                continue
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             adapter_manifest = manifest.get("adapter_manifest")
             if not isinstance(adapter_manifest, dict):

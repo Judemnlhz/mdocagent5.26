@@ -24,6 +24,24 @@ Graph-guided page selection reads only formal `edges.jsonl` edges. It never read
 
 All module ablations use the same MDocAgent models and the same top-k/page budget as the baseline. This prevents a stronger model or larger page budget from being the reason for any QA gain.
 
+`original_only` is an adapter sanity check, not a new method. If
+`top4_original_only` does not preserve the original MDocAgent top-4 retrieval
+order, the adapter connection is broken and `artifact_only`,
+`original_plus_artifact`, and `graph_context` must not be interpreted as method
+ablations.
+
+The actual module-ablation rows are:
+
+- `artifact_only`: deterministic artifact-aware page reranking only.
+- `original_plus_artifact`: fixed-weight combination of original retrieval score
+  and artifact score.
+- `graph_context`: formal-edge-only graph-guided page selection under the same
+  final `top_k` page budget.
+
+Top-8 and top-10 runs are additional budget diagnostics only. They can test
+whether a gain is simply explained by reading more pages, but they are not
+official MDocAgent reproduction settings.
+
 Model roles are fixed:
 
 - DeepSeek-V3 (`deepseek-ai/DeepSeek-V3`) is evaluation-only.

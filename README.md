@@ -113,9 +113,20 @@ python scripts/predict.py --config-name <dataset> run-name=<run-name> dataset.to
 
 ## Evaluation
 
-1. Add your OpenAI API key in `config/model/openai.yaml`.
+The recommended evaluation judge is `config/model/deepseekv3.yaml`, which uses
+`deepseek-ai/DeepSeek-V3`. `config/model/openai.yaml` is kept only as a legacy
+fallback / original MDocAgent compatibility config.
 
-2. Run the evaluation (make sure `<run-name>` matches your inference run):
+Model roles for the current MDocNexus integration work:
+
+- Evaluation / judge only: `deepseek-ai/DeepSeek-V3`
+- Text-only processing: `Qwen/Qwen3-8B`
+- Multimodal / VLM inference: `Qwen/Qwen3-VL-8B-Instruct`
+
+DeepSeek-V3 must not be used by Stage 2/3/4, the MDocAgent adapter, reranking,
+or graph selection.
+
+Run the evaluation (make sure `<run-name>` matches your inference run):
     ```bash
     python scripts/eval.py --config-name <dataset> run-name=<run-name>
     ```
