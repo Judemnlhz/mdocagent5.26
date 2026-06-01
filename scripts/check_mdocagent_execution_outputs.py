@@ -324,11 +324,10 @@ def answer_text_difference_warning(run_reports: list[dict[str, Any]], repo: Path
     }
 
 
-def collect_hard_failures(checks: dict[str, Any]) -> list[dict[str, Any]]:
+def collect_hard_failures(checks: dict[str, Any], phase_name: str) -> list[dict[str, Any]]:
     hard_check_names = [
         "prediction_outputs_exist",
         "evaluation_outputs_exist",
-        "retrieval_input_equivalent",
         "top_k_consistent",
         "model_config_hash_consistent",
         "page_budget_consistent",
@@ -336,6 +335,8 @@ def collect_hard_failures(checks: dict[str, Any]) -> list[dict[str, Any]]:
         "adapter_manifest_policy",
         "public_leakage",
     ]
+    if phase_name == "phase_1_small_gate":
+        hard_check_names.append("retrieval_input_equivalent")
     failures = []
     for name in hard_check_names:
         check = checks.get(name)
@@ -539,6 +540,24 @@ def score_by_run_name(run_reports: list[dict[str, Any]]) -> dict[str, float | No
     return {run["run_name"]: run["binary_correctness"]["average"] for run in run_reports}
 
 
+def add_cross_phase_scores(scores: dict[str, float | None], output_dir: Path, phase_name: str) -> dict[str, float | None]:
+    enriched = dict(scores)
+    run_tags_dir = output_dir.parent
+    if phase_name in {"phase_2_small_artifact", "phase_3_small_graph"}:
+        phase1_report = run_tags_dir / "small_gate" / "execution_gate_report.json"
+        if phase1_report.is_file():
+            phase1 = load_json(phase1_report)
+            enriched.setdefault("mdocagent_top4_official_reproduction", phase1.get("mdocagent_top4_score"))
+            enriched.setdefault("top4_original_only", phase1.get("original_only_score"))
+    if phase_name == "phase_3_small_graph":
+        phase2_report = run_tags_dir / "small_artifact" / "execution_gate_report.json"
+        if phase2_report.is_file():
+            phase2 = load_json(phase2_report)
+            enriched.setdefault("top4_artifact_only", phase2.get("artifact_only_score"))
+            enriched.setdefault("top4_original_plus_artifact", phase2.get("original_plus_artifact_score"))
+    return enriched
+
+
 def score_delta(scores: dict[str, float | None], left: str, right: str) -> float | None:
     if scores.get(left) is None or scores.get(right) is None:
         return None
@@ -646,10 +665,17 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             if value:
                 leakage_paths.append(repo / str(value))
 
+    phase_name = infer_phase_name(args, requested_runs)
+    retrieval_input_equivalent = (
+        compare_retrieval_inputs(rows, repo)
+        if phase_name == "phase_1_small_gate"
+        else {"pass": True, "skipped": True, "reason": f"{phase_name} compares ablation outputs, not identical retrieval inputs"}
+    )
+
     checks: dict[str, Any] = {
         "prediction_outputs_exist": {"pass": all(run["prediction_output_exists"] for run in run_reports)},
         "evaluation_outputs_exist": {"pass": all(run["evaluation_output_exists"] for run in run_reports)},
-        "retrieval_input_equivalent": compare_retrieval_inputs(rows, repo),
+        "retrieval_input_equivalent": retrieval_input_equivalent,
         "top_k_consistent": {"pass": len(top_k_values) == 1, "values": sorted(top_k_values)},
         "model_config_hash_consistent": {"pass": len(model_hashes) == 1, "values": sorted(model_hashes)},
         "page_budget_consistent": {"pass": len(top_k_values) == 1 and next(iter(top_k_values)) == 4 if top_k_values else False},
@@ -679,9 +705,8 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         "run_name_resume_path_pollution": {"detected": False},
         "api_nondeterminism_possible": True,
     }
-    scores = score_by_run_name(run_reports)
-    phase_name = infer_phase_name(args, requested_runs)
-    hard_failures = collect_hard_failures(checks)
+    scores = add_cross_phase_scores(score_by_run_name(run_reports), output_dir, phase_name)
+    hard_failures = collect_hard_failures(checks, phase_name)
     soft_warnings = collect_soft_warnings(run_reports, repo, binary_delta, args.max_binary_delta)
     hard_passed = not hard_failures
     decision = phase_decision(phase_name, hard_passed, scores)
