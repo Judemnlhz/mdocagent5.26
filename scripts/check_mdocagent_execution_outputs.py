@@ -171,6 +171,15 @@ def binary_correctness(eval_path: Path | None) -> dict[str, Any]:
     }
 
 
+def load_public_json(public_path_value: str | None, repo: Path) -> Any | None:
+    if not public_path_value:
+        return None
+    path = repo / public_path_value
+    if not path.is_file():
+        return None
+    return load_json(path)
+
+
 def build_run_report(row: dict[str, Any], repo: Path, results_root: Path) -> dict[str, Any]:
     run_name = str(row["run_name"])
     execution_run_name = str(row.get("execution_run_name") or run_name)
@@ -197,6 +206,7 @@ def build_run_report(row: dict[str, Any], repo: Path, results_root: Path) -> dic
         "prediction_output_exists": prediction_path is not None,
         "evaluation_output_exists": eval_path is not None,
         "binary_correctness": binary_correctness(eval_path),
+        "answer_key": f"ans_{execution_run_name}",
         "prediction_command": row.get("prediction_command"),
         "evaluation_command": row.get("evaluation_command"),
     }
@@ -230,12 +240,152 @@ def check_manifest_policy(summary_rows: list[dict[str, Any]], repo: Path) -> dic
     }
 
 
+def scan_public_leakage(paths: list[Path]) -> dict[str, Any]:
+    patterns = {
+        "api_key": "api_key",
+        "raw_response": "raw_response",
+        "raw_output": "raw_output",
+        "data_image": "data:image",
+        "file_uri": "file://",
+        "home_path": "/home/",
+        "secret": "secret",
+        "token": "token",
+        "sk_prefix": "sk-",
+    }
+    hits: list[dict[str, Any]] = []
+    for path in paths:
+        if path is None or not path.is_file():
+            continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        for name, pattern in patterns.items():
+            if pattern in text:
+                hits.append({"path": str(path), "pattern": name})
+    return {"pass": not hits, "hits": hits}
+
+
+def prediction_failure_stats(run_reports: list[dict[str, Any]], repo: Path) -> list[dict[str, Any]]:
+    stats = []
+    for run in run_reports:
+        records = load_public_json(run.get("prediction_output_path"), repo)
+        answer_key = run.get("answer_key")
+        total = len(records) if isinstance(records, list) else 0
+        failed = 0
+        if isinstance(records, list):
+            failed = sum(
+                1
+                for record in records
+                if not isinstance(record, dict) or record.get(answer_key) is None
+            )
+        rate = (failed / total) if total else None
+        stats.append(
+            {
+                "run_name": run["run_name"],
+                "execution_run_name": run["execution_run_name"],
+                "total": total,
+                "failed": failed,
+                "failure_rate": rate,
+            }
+        )
+    return stats
+
+
+def answer_text_difference_warning(run_reports: list[dict[str, Any]], repo: Path) -> dict[str, Any] | None:
+    if len(run_reports) < 2:
+        return None
+    left, right = run_reports[0], run_reports[1]
+    left_pred = load_public_json(left.get("prediction_output_path"), repo)
+    right_pred = load_public_json(right.get("prediction_output_path"), repo)
+    left_eval = load_public_json(left.get("evaluation_output_path"), repo)
+    right_eval = load_public_json(right.get("evaluation_output_path"), repo)
+    if not all(isinstance(value, list) for value in [left_pred, right_pred, left_eval, right_eval]):
+        return None
+    limit = min(len(left_pred), len(right_pred), len(left_eval), len(right_eval))
+    text_diff_binary_same = 0
+    examples: list[dict[str, Any]] = []
+    for index in range(limit):
+        left_answer = left_pred[index].get(left.get("answer_key")) if isinstance(left_pred[index], dict) else None
+        right_answer = right_pred[index].get(right.get("answer_key")) if isinstance(right_pred[index], dict) else None
+        left_binary = left_eval[index].get("binary_correctness") if isinstance(left_eval[index], dict) else None
+        right_binary = right_eval[index].get("binary_correctness") if isinstance(right_eval[index], dict) else None
+        if left_answer != right_answer and left_binary == right_binary:
+            text_diff_binary_same += 1
+            if len(examples) < 5:
+                examples.append({"index": index, "binary_correctness": left_binary})
+    if text_diff_binary_same == 0:
+        return None
+    return {
+        "type": "answer_text_diff_binary_same",
+        "message": "Answer text differs while binary correctness is unchanged.",
+        "count": text_diff_binary_same,
+        "examples": examples,
+    }
+
+
+def collect_hard_failures(checks: dict[str, Any]) -> list[dict[str, Any]]:
+    hard_check_names = [
+        "prediction_outputs_exist",
+        "evaluation_outputs_exist",
+        "retrieval_input_equivalent",
+        "top_k_consistent",
+        "model_config_hash_consistent",
+        "page_budget_consistent",
+        "evaluation_judge_consistent",
+        "adapter_manifest_policy",
+        "public_leakage",
+    ]
+    failures = []
+    for name in hard_check_names:
+        check = checks.get(name)
+        if isinstance(check, dict) and check.get("pass") is False:
+            failures.append({"check": name, "detail": check})
+    return failures
+
+
+def collect_soft_warnings(
+    run_reports: list[dict[str, Any]],
+    repo: Path,
+    binary_delta: float | None,
+    max_binary_delta: float,
+) -> list[dict[str, Any]]:
+    warnings: list[dict[str, Any]] = []
+    answer_warning = answer_text_difference_warning(run_reports, repo)
+    if answer_warning:
+        warnings.append(answer_warning)
+    if binary_delta is not None and binary_delta > 0:
+        warnings.append(
+            {
+                "type": "binary_correctness_delta",
+                "message": "Binary correctness differs while retrieval/model/top_k/eval configuration may still be consistent.",
+                "delta": binary_delta,
+                "max_binary_delta_reference": max_binary_delta,
+            }
+        )
+    failure_stats = prediction_failure_stats(run_reports, repo)
+    nonzero = [item for item in failure_stats if item["failed"] > 0]
+    if nonzero:
+        rates = [item["failure_rate"] or 0 for item in failure_stats]
+        warnings.append(
+            {
+                "type": "api_failures_or_timeouts",
+                "message": "Some prediction records have missing answers; inspect logs for API failures or timeouts.",
+                "failure_stats": failure_stats,
+                "max_failure_rate_gap": max(rates) - min(rates) if rates else None,
+            }
+        )
+    return warnings
+
+
 def build_failure_analysis(report: dict[str, Any]) -> str:
     checks = report["checks"]
     lines = [
         "# MDocAgent Execution Gate Failure Analysis",
         "",
         f"Status: {report['status']}",
+        f"Hard failures: {len(report.get('hard_failures', []))}",
+        f"Soft warnings: {len(report.get('soft_warnings', []))}",
         "",
         f"- retrieval input consistent: {checks['retrieval_input_equivalent']['pass']}",
         f"- top_k consistent: {checks['top_k_consistent']['pass']}",
@@ -258,6 +408,8 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
         f"Phase: {report.get('phase_name')}",
         f"Gate passed: {report.get('gate_passed')}",
         f"Recommended next phase: {report.get('recommended_next_phase')}",
+        f"Hard failures: {len(report.get('hard_failures', []))}",
+        f"Soft warnings: {len(report.get('soft_warnings', []))}",
         "",
         "| check | pass |",
         "| --- | --- |",
@@ -280,6 +432,14 @@ def write_markdown_report(path: Path, report: dict[str, Any]) -> None:
                 score="null" if score is None else f"{score:.6f}",
             )
         )
+    if report.get("hard_failures"):
+        lines.extend(["", "## Hard Failures", ""])
+        for failure in report["hard_failures"]:
+            lines.append(f"- {failure['check']}")
+    if report.get("soft_warnings"):
+        lines.extend(["", "## Soft Warnings", ""])
+        for warning in report["soft_warnings"]:
+            lines.append(f"- {warning.get('type')}: {warning.get('message')}")
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -347,7 +507,7 @@ def phase_decision(phase_name: str, hard_passed: bool, scores: dict[str, float |
     delta_graph = score_delta(scores, "top4_graph_context", "top4_original_plus_artifact")
 
     if not hard_passed:
-        reasons.append("hard execution or consistency check failed")
+        reasons.append("one or more hard failure checks failed")
         return {
             "gate_passed": False,
             "recommended_next_phase": "stop",
@@ -413,6 +573,17 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         binary_delta = abs(binary_values[0] - binary_values[1])
     record_slices = {run.get("record_slice") for run in run_reports}
     max_records_values = {run.get("max_records") for run in run_reports}
+    leakage_paths = []
+    for row in rows:
+        for key in ["compatible_retrieval_path", "adapter_manifest_path", "compatibility_report_path"]:
+            value = row.get(key)
+            if value:
+                leakage_paths.append(repo / str(value))
+    for run in run_reports:
+        for key in ["prediction_output_path", "evaluation_output_path"]:
+            value = run.get(key)
+            if value:
+                leakage_paths.append(repo / str(value))
 
     checks: dict[str, Any] = {
         "prediction_outputs_exist": {"pass": all(run["prediction_output_exists"] for run in run_reports)},
@@ -443,16 +614,19 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             "expected": args.max_records,
         },
         "adapter_manifest_policy": check_manifest_policy(summary_rows, repo),
+        "public_leakage": scan_public_leakage(leakage_paths),
         "run_name_resume_path_pollution": {"detected": False},
         "api_nondeterminism_possible": True,
     }
-    hard_passed = all(check.get("pass", True) for check in checks.values() if isinstance(check, dict))
     scores = score_by_run_name(run_reports)
     phase_name = infer_phase_name(args, requested_runs)
+    hard_failures = collect_hard_failures(checks)
+    soft_warnings = collect_soft_warnings(run_reports, repo, binary_delta, args.max_binary_delta)
+    hard_passed = not hard_failures
     decision = phase_decision(phase_name, hard_passed, scores)
     status = "pass" if decision["gate_passed"] else "fail"
     report = {
-        "schema_version": "mdocagent_execution_gate_v1",
+        "schema_version": "mdocagent_execution_gate_v2",
         "status": status,
         "phase_name": phase_name,
         "runs_completed": [run["run_name"] for run in run_reports if run["prediction_output_exists"] and run["evaluation_output_exists"]],
@@ -469,6 +643,8 @@ def run_check(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         "delta_artifact_plus_vs_original_only": score_delta(scores, "top4_original_plus_artifact", "top4_original_only"),
         "delta_graph_vs_artifact_plus": score_delta(scores, "top4_graph_context", "top4_original_plus_artifact"),
         "failure_reasons": decision["failure_reasons"],
+        "hard_failures": hard_failures,
+        "soft_warnings": soft_warnings,
         "recommended_next_phase": decision["recommended_next_phase"],
         "diagnostic_only": decision["diagnostic_only"],
         "summary_path": public_path(summary_path, repo),
