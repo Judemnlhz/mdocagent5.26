@@ -198,28 +198,38 @@ def rerank_pages_with_artifacts(
             output.append(truncate_original_record(clean_record, top_k, mode=mode, lambda_weight=lambda_weight))
             continue
 
-        doc_id = str(clean_record.get("doc_id") or "")
-        original_scores, original_order = original_page_scores(clean_record)
-        doc_artifact_pages = set(artifacts_by_page.get(doc_id, {}).keys())
-        candidate_pages = sorted(set(original_order) | doc_artifact_pages)
-        if not candidate_pages:
+        if not retrieval_page_keys(clean_record):
             output.append(truncate_original_record(clean_record, top_k, mode=mode, lambda_weight=lambda_weight))
             continue
 
-        artifact_scores = artifact_page_scores(str(clean_record.get("question") or ""), doc_id, candidate_pages, artifacts_by_page)
-        scored_pages: list[tuple[int, float, float, float]] = []
-        for page_index in candidate_pages:
-            original_score = float(original_scores.get(page_index, 0.0))
-            artifact_score = float(artifact_scores.get(page_index, 0.0))
-            final_score = artifact_score if mode == "artifact_only" else lambda_weight * original_score + (1.0 - lambda_weight) * artifact_score
-            scored_pages.append((int(page_index), round(final_score, 8), round(original_score, 8), round(artifact_score, 8)))
-        scored_pages.sort(key=lambda item: (-item[1], doc_id, item[0]))
-        selected = scored_pages[:top_k]
+        branch_selections, has_positive_artifact_signal = rerank_record_branches_with_artifacts(
+            clean_record,
+            artifacts_by_page,
+            top_k=top_k,
+            mode=mode,
+            lambda_weight=lambda_weight,
+        )
+        if not has_positive_artifact_signal:
+            output.append(
+                truncate_original_record(
+                    clean_record,
+                    top_k,
+                    mode=mode,
+                    lambda_weight=lambda_weight,
+                    extra_meta={
+                        "fallback_mode": "original_only",
+                        "fallback_reason": "no_positive_anchored_artifact_score",
+                        "anchored_artifact_rerank_applied": False,
+                        "preserved_retrieval_branches": True,
+                    },
+                )
+            )
+            continue
         output.append(
-            apply_selected_pages(
+            apply_branch_selected_pages(
                 clean_record,
-                selected_pages=[page for page, _, _, _ in selected],
-                selected_scores=[score for _, score, _, _ in selected],
+                branch_selections=branch_selections,
+                top_k=top_k,
                 meta={
                     "mode": mode,
                     "top_k": top_k,
@@ -230,6 +240,9 @@ def rerank_pages_with_artifacts(
                     "used_debug_edges": False,
                     "used_semantic_edges": False,
                     "model_role": "none_deterministic",
+                    "anchored_artifact_rerank_applied": True,
+                    "preserved_retrieval_branches": True,
+                    "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
                 },
             )
         )
@@ -432,6 +445,7 @@ def truncate_original_record(
     *,
     mode: str,
     lambda_weight: float = DEFAULT_LAMBDA_WEIGHT,
+    extra_meta: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     top_k = validate_top_k(top_k)
     output = {key: value for key, value in record.items() if not is_retrieval_page_key(key) and not is_retrieval_score_key(key)}
@@ -446,7 +460,7 @@ def truncate_original_record(
         if not scores:
             scores = [round(1.0 / float(rank + 1), 8) for rank in range(len(pages))]
         output[score_key] = scores
-    output["_nexus_meta"] = {
+    meta = {
         "mode": mode,
         "top_k": top_k,
         "lambda_weight": validate_lambda(lambda_weight),
@@ -457,6 +471,9 @@ def truncate_original_record(
         "used_semantic_edges": False,
         "model_role": "none_deterministic",
     }
+    if extra_meta:
+        meta.update(sanitize_public_value(dict(extra_meta)))
+    output["_nexus_meta"] = meta
     assert_no_forbidden_public_fields(output)
     return output
 
@@ -480,6 +497,106 @@ def apply_selected_pages(
     output["_nexus_meta"] = sanitize_public_value(dict(meta))
     assert_no_forbidden_public_fields(output)
     return output
+
+
+def apply_branch_selected_pages(
+    record: Mapping[str, Any],
+    *,
+    branch_selections: Mapping[str, tuple[list[int], list[float]]],
+    top_k: int,
+    meta: Mapping[str, Any],
+) -> dict[str, Any]:
+    output = {key: value for key, value in record.items() if not is_retrieval_page_key(key) and not is_retrieval_score_key(key)}
+    page_keys = retrieval_page_keys(record) or default_retrieval_page_keys()
+    for key in page_keys:
+        if key in branch_selections:
+            pages, scores = branch_selections[key]
+        else:
+            pages = parse_page_list(record.get(key, []), key)[:top_k]
+            scores = parse_score_list(record.get(f"{key}_score", []), f"{key}_score")[: len(pages)]
+        output[key] = [int(page) for page in pages[:top_k]]
+        clean_scores = [round(float(score), 8) for score in scores[: len(output[key])]]
+        while len(clean_scores) < len(output[key]):
+            clean_scores.append(round(1.0 / float(len(clean_scores) + 1), 8))
+        output[f"{key}_score"] = clean_scores
+    output["_nexus_meta"] = sanitize_public_value(dict(meta))
+    assert_no_forbidden_public_fields(output)
+    return output
+
+
+def rerank_record_branches_with_artifacts(
+    record: Mapping[str, Any],
+    artifacts_by_page: Mapping[str, Mapping[int, list[dict[str, Any]]]],
+    *,
+    top_k: int,
+    mode: str,
+    lambda_weight: float,
+) -> tuple[dict[str, tuple[list[int], list[float]]], bool]:
+    doc_id = str(record.get("doc_id") or "")
+    question = str(record.get("question") or "")
+    branch_selections: dict[str, tuple[list[int], list[float]]] = {}
+    has_positive_artifact_signal = False
+    for key in retrieval_page_keys(record):
+        original_scores, original_order = branch_page_scores(record, key)
+        if not original_order:
+            branch_selections[key] = ([], [])
+            continue
+        artifact_scores = anchored_artifact_page_scores(question, doc_id, original_order, artifacts_by_page)
+        branch_has_positive = any(float(score) > 0.0 for score in artifact_scores.values())
+        has_positive_artifact_signal = has_positive_artifact_signal or branch_has_positive
+        if not branch_has_positive:
+            pages = original_order[:top_k]
+            branch_selections[key] = (pages, [original_scores.get(page, 0.0) for page in pages])
+            continue
+        scored_pages: list[tuple[int, float, float, float, int]] = []
+        first_rank = {page: rank for rank, page in enumerate(original_order)}
+        for page_index in original_order:
+            original_score = float(original_scores.get(page_index, 0.0))
+            artifact_score = float(artifact_scores.get(page_index, 0.0))
+            final_score = (
+                artifact_score
+                if mode == "artifact_only"
+                else lambda_weight * original_score + (1.0 - lambda_weight) * artifact_score
+            )
+            scored_pages.append(
+                (
+                    int(page_index),
+                    round(final_score, 8),
+                    round(original_score, 8),
+                    round(artifact_score, 8),
+                    first_rank.get(page_index, len(first_rank)),
+                )
+            )
+        scored_pages.sort(key=lambda item: (-item[1], item[4], item[0]))
+        selected = scored_pages[:top_k]
+        branch_selections[key] = ([page for page, _, _, _, _ in selected], [score for _, score, _, _, _ in selected])
+    return branch_selections, has_positive_artifact_signal
+
+
+def branch_page_scores(record: Mapping[str, Any], key: str) -> tuple[dict[int, float], list[int]]:
+    pages = parse_page_list(record.get(key, []), key)
+    scores = parse_score_list(record.get(f"{key}_score", []), f"{key}_score")
+    first_rank: dict[int, int] = {}
+    observed: dict[int, float] = {}
+    any_explicit_score = False
+    for rank, page_index in enumerate(pages):
+        if page_index not in first_rank:
+            first_rank[page_index] = rank
+        if rank < len(scores):
+            score = float(scores[rank])
+            any_explicit_score = True
+        else:
+            score = 1.0 / float(rank + 1)
+        observed[page_index] = max(float(observed.get(page_index, float("-inf"))), score)
+    if not observed:
+        return {}, []
+    if any_explicit_score:
+        max_abs = max(abs(score) for score in observed.values()) or 1.0
+        normalized = {page: round(max(0.0, score / max_abs), 8) for page, score in observed.items()}
+    else:
+        normalized = {page: round(1.0 / float(first_rank[page] + 1), 8) for page in observed}
+    ordered = sorted(first_rank, key=lambda page: first_rank[page])
+    return normalized, ordered
 
 
 def original_page_scores(record: Mapping[str, Any]) -> tuple[dict[int, float], list[int]]:
@@ -541,6 +658,89 @@ def artifact_page_scores(
     if max_score <= 0.0:
         return {page: 0.0 for page in pages}
     return {page: round(float(score) / max_score, 8) for page, score in raw_page_scores.items()}
+
+
+def anchored_artifact_page_scores(
+    question: str,
+    doc_id: str,
+    candidate_pages: Iterable[int],
+    artifacts_by_page: Mapping[str, Mapping[int, list[dict[str, Any]]]],
+) -> dict[int, float]:
+    pages = sorted({int(page) for page in candidate_pages})
+    if not pages:
+        return {}
+    artifacts: list[dict[str, Any]] = []
+    artifact_weights: list[float] = []
+    page_for_artifact: list[int] = []
+    doc_pages = artifacts_by_page.get(doc_id, {})
+    for page_index in pages:
+        for artifact in doc_pages.get(page_index, []):
+            weight = artifact_anchor_locator_weight(artifact)
+            if weight <= 0.0:
+                continue
+            artifacts.append(artifact)
+            artifact_weights.append(weight)
+            page_for_artifact.append(page_index)
+    if not artifacts:
+        return {page: 0.0 for page in pages}
+    query_tokens = tokenize(question)
+    document_tokens = [tokenize(artifact_retrieval_text(artifact)) for artifact in artifacts]
+    artifact_scores = bm25_scores(query_tokens, document_tokens)
+    raw_page_scores: dict[int, float] = {page: 0.0 for page in pages}
+    for page_index, score, weight in zip(page_for_artifact, artifact_scores, artifact_weights):
+        raw_page_scores[page_index] = max(raw_page_scores.get(page_index, 0.0), float(score) * float(weight))
+    max_score = max(raw_page_scores.values(), default=0.0)
+    if max_score <= 0.0:
+        return {page: 0.0 for page in pages}
+    return {page: round(float(score) / max_score, 8) for page, score in raw_page_scores.items()}
+
+
+def artifact_anchor_locator_weight(artifact: Mapping[str, Any]) -> float:
+    if not has_valid_source_anchor(artifact):
+        return 0.0
+    if has_weak_locator_signal(artifact):
+        return 0.25
+    return 1.0
+
+
+def has_valid_source_anchor(artifact: Mapping[str, Any]) -> bool:
+    anchors = artifact.get("source_anchors")
+    if not isinstance(anchors, list):
+        return False
+    for anchor in anchors:
+        if not isinstance(anchor, Mapping):
+            continue
+        if anchor.get("source_id") not in (None, ""):
+            return True
+        if anchor.get("anchor_type") not in (None, ""):
+            return True
+        if anchor.get("bbox") not in (None, "", [], {}):
+            return True
+        if anchor.get("page_index") not in (None, "") or anchor.get("page_id") not in (None, ""):
+            return True
+    return False
+
+
+def has_weak_locator_signal(artifact: Mapping[str, Any]) -> bool:
+    values = []
+    for key in ("locators", "source_anchors"):
+        value = artifact.get(key)
+        if isinstance(value, list):
+            values.extend(value)
+    for value in values:
+        if not isinstance(value, Mapping):
+            continue
+        status = str(value.get("status") or value.get("validation_status") or value.get("quality") or "").lower()
+        if status in {"weak", "invalid", "missing", "unresolved", "failed", "low_confidence"}:
+            return True
+        confidence = value.get("confidence")
+        if confidence not in (None, ""):
+            try:
+                if float(confidence) < 0.5:
+                    return True
+            except (TypeError, ValueError):
+                pass
+    return False
 
 
 def load_formal_graph(graph_dir: str | Path) -> dict[str, Any]:
@@ -889,9 +1089,9 @@ def formula_for_mode(mode: str) -> str:
     if mode == "original_only":
         return "original_retrieval_order"
     if mode == "artifact_only":
-        return "artifact_score=max_bm25(question,page_artifacts)"
+        return "branch_preserving_artifact_score=max_bm25(question,anchored_page_artifacts); fallback=original_only_when_no_positive_anchor_score"
     if mode == "original_plus_artifact":
-        return "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score"
+        return "branch_preserving_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; fallback=original_only_when_no_positive_anchor_score"
     if mode == "graph_context":
         return "formal_edges_only_graph_expansion_then_top_k_selection"
     return "unknown"

@@ -1,0 +1,264 @@
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/mdocagent_top1_official_reproduction.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/mdocagent_top4_official_reproduction.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/top4_original_only.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/top4_artifact_only.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/top4_original_plus_artifact.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/reranked_records/top4_graph_context.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowTextModel
+Parallel prediction with num_workers=3, total=30, pending=30
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+  0%|          | 0/30 [00:00<?, ?it/s]Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+[2026-06-01 10:25:25,999][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:25:33,333][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:25:34,783][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:11,470][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:11,525][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:12,956][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:39,625][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:45,322][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:46,222][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:50,174][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+  3%|▎         | 1/30 [01:55<55:42, 115.24s/it][2026-06-01 10:26:52,748][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:26:54,735][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+  7%|▋         | 2/30 [01:59<23:23, 50.14s/it] [2026-06-01 10:27:02,680][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:09,264][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:15,181][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:23,769][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:30,481][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:37,255][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:37,557][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 10%|█         | 3/30 [02:42<21:03, 46.80s/it][2026-06-01 10:27:47,019][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:27:57,579][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:28:29,304][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:28:38,068][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:28:38,717][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 13%|█▎        | 4/30 [03:43<22:44, 52.47s/it][2026-06-01 10:28:47,229][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:28:54,393][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:30:53,650][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:31:15,158][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:31:15,967][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 17%|█▋        | 5/30 [06:21<37:36, 90.25s/it][2026-06-01 10:31:25,985][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:31:37,484][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:35:09,766][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:35:23,063][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:35:24,102][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 20%|██        | 6/30 [10:29<57:34, 143.93s/it][2026-06-01 10:35:31,711][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:37:57,701][openai._base_client][INFO] - Retrying request to /chat/completions in 0.490521 seconds
+[2026-06-01 10:38:17,688][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:44:18,966][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:44:19,336][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 23%|██▎       | 7/30 [19:24<1:44:12, 271.86s/it][2026-06-01 10:44:27,694][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:44:37,241][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:45:31,836][openai._base_client][INFO] - Retrying request to /chat/completions in 0.438811 seconds
+[2026-06-01 10:45:40,254][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:46:06,456][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:46:27,672][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:46:35,349][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 27%|██▋       | 8/30 [21:40<1:23:49, 228.61s/it][2026-06-01 10:46:49,308][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:09,727][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:19,818][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:29,454][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:30,159][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 30%|███       | 9/30 [22:35<1:00:59, 174.28s/it][2026-06-01 10:47:41,751][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:55,514][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:47:58,384][openai._base_client][INFO] - Retrying request to /chat/completions in 0.867033 seconds
+[2026-06-01 10:48:29,808][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:48:38,611][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:48:39,228][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 33%|███▎      | 10/30 [23:44<47:16, 141.80s/it] Save 10 newly processed results to ./results/MMLongBench/top4_graph_context__small_graph/2026-06-01-10-24.json.
+[2026-06-01 10:48:49,423][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:48:56,680][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:10,435][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:18,638][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:19,099][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 37%|███▋      | 11/30 [25:24<40:50, 128.97s/it][2026-06-01 10:50:24,384][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:30,727][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:41,935][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:50:57,357][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:07,457][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:14,063][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 40%|████      | 12/30 [26:19<31:56, 106.45s/it][2026-06-01 10:51:28,115][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:39,313][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:39,336][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:39,760][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 43%|████▎     | 13/30 [26:44<23:13, 81.99s/it] [2026-06-01 10:51:51,769][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:51:57,334][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:00,941][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:09,607][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:10,606][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 47%|████▋     | 14/30 [27:15<17:44, 66.54s/it][2026-06-01 10:52:14,284][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:16,542][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:18,448][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:20,818][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:21,012][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 50%|█████     | 15/30 [27:26<12:24, 49.62s/it][2026-06-01 10:52:26,386][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:29,506][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:50,632][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:51,033][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:52:58,297][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:00,307][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 53%|█████▎    | 16/30 [28:05<10:51, 46.51s/it][2026-06-01 10:53:02,601][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:03,363][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 57%|█████▋    | 17/30 [28:08<07:14, 33.45s/it][2026-06-01 10:53:05,422][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:10,671][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:17,977][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:23,185][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:32,713][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:35,469][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:53:39,793][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:00,385][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:06,462][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 60%|██████    | 18/30 [29:11<08:28, 42.36s/it][2026-06-01 10:54:11,474][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 63%|██████▎   | 19/30 [29:16<05:42, 31.14s/it][2026-06-01 10:54:20,892][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:27,157][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:29,892][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:36,901][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:54:56,378][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:01,770][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:04,385][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:06,268][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 67%|██████▋   | 20/30 [30:11<06:22, 38.25s/it]Save 20 newly processed results to ./results/MMLongBench/top4_graph_context__small_graph/2026-06-01-10-24.json.
+[2026-06-01 10:55:09,672][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:10,083][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 70%|███████   | 21/30 [30:15<04:11, 27.91s/it][2026-06-01 10:55:14,785][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:20,911][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:22,125][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:29,449][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:45,022][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:52,558][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:55:52,880][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 73%|███████▎  | 22/30 [30:57<04:19, 32.38s/it][2026-06-01 10:55:55,641][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:56:01,278][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:56:05,514][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:56:08,378][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:56:09,207][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 77%|███████▋  | 23/30 [31:14<03:12, 27.56s/it][2026-06-01 10:56:17,571][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:56:22,528][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:00,917][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:17,178][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:17,891][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 80%|████████  | 24/30 [32:22<03:59, 39.90s/it][2026-06-01 10:57:30,254][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:37,857][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:49,711][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:57:59,195][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+Prediction failed on attempt 1/5: Request timed out.
+[2026-06-01 10:57:59,520][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 83%|████████▎ | 25/30 [33:04<03:22, 40.42s/it][2026-06-01 10:58:05,684][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:14,412][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:21,045][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:21,501][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:28,219][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:28,596][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 87%|████████▋ | 26/30 [33:33<02:28, 37.02s/it][2026-06-01 10:58:36,779][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:39,089][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:58:45,197][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:07,574][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:13,946][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:14,848][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 90%|█████████ | 27/30 [34:19<01:59, 39.79s/it][2026-06-01 10:59:25,605][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:32,131][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:50,831][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:56,679][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 10:59:57,527][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 93%|█████████▎| 28/30 [35:02<01:21, 40.65s/it][2026-06-01 11:03:05,544][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 11:03:22,396][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 11:03:23,598][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+ 97%|█████████▋| 29/30 [38:28<01:30, 90.28s/it][2026-06-01 11:03:40,586][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 11:03:49,190][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-06-01 11:03:49,859][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+100%|██████████| 30/30 [38:54<00:00, 71.08s/it]100%|██████████| 30/30 [38:54<00:00, 77.83s/it]
+Save 30 newly processed results to ./results/MMLongBench/top4_graph_context__small_graph/2026-06-01-10-24.json.
+Save final results to ./results/MMLongBench/top4_graph_context__small_graph/2026-06-01-10-24.json.
+{
+  "cost_log_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/cost_log.json",
+  "max_records": null,
+  "num_failed_runs": 0,
+  "num_records": 30,
+  "num_runs": 6,
+  "prepare_only": false,
+  "record_slice": "0:30",
+  "run_tag": "small_graph",
+  "selected_runs": [
+    "top4_graph_context"
+  ],
+  "status": "executed_or_attempted",
+  "summary_md_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/summary.md",
+  "summary_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph/summary.json"
+}

@@ -1,0 +1,3 @@
+- run-name=mdocagent_top4_official_reproduction__small_gate_60_90
+- dataset.top_k=4
+- dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/mdocagent_top4_official_reproduction.json

@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/top4_graph_context__small_graph/2026-06-01-10-24.json
+Average Binary Correctness: 0.400

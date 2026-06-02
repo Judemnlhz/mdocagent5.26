@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/mmlb-MDocAgent-top4/2026-05-19-14-19.json
+Average Binary Correctness: 0.493

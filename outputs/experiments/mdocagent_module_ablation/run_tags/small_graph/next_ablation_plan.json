@@ -1,0 +1,15 @@
+{
+  "allowed_next_runs": [],
+  "blocked_until_positive_signal": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact",
+    "top4_graph_context"
+  ],
+  "commands": [],
+  "do_not_run_automatically": true,
+  "next_run_tag": null,
+  "purpose": "No automatic next phase is recommended; inspect the gate report.",
+  "recommended_next_phase": "mark_graph_context_diagnostic_only",
+  "source_run_tag": "small_graph",
+  "status": "ready_after_gate_pass"
+}

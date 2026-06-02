@@ -1,0 +1,1202 @@
+[
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      80,
+      81,
+      62,
+      11
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.984818,
+      0.9005117,
+      0.50480691
+    ],
+    "question": "What is the color of the zone Mali in the map used to demonstrate GeoShapes using SPARQL and OSM?",
+    "text-top-10-question": [
+      80,
+      81,
+      62,
+      11
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.984818,
+      0.9005117,
+      0.50480691
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      88,
+      107,
+      9,
+      0
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.94970948,
+      0.89189189,
+      0.81776062
+    ],
+    "question": "Which example notebook does module 3 use to show how to create an interactive map?",
+    "text-top-10-question": [
+      88,
+      107,
+      9,
+      0
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.94970948,
+      0.89189189,
+      0.81776062
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      0,
+      15,
+      46,
+      50
+    ],
+    "image-top-10-question_score": [
+      0.98000967,
+      0.97748602,
+      0.97580278,
+      0.84501506
+    ],
+    "question": "How many distinct Netherlands location images does this slide use as examples?",
+    "text-top-10-question": [
+      0,
+      15,
+      46,
+      50
+    ],
+    "text-top-10-question_score": [
+      0.98000967,
+      0.97748602,
+      0.97580278,
+      0.84501506
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "image-top-10-question_score": [
+      0.03420727,
+      0.03420727,
+      0.03420727,
+      0.03420727
+    ],
+    "question": "How many more millions of dollars was the median exit valuation in the USA compared to Europe at the time of the presentation?",
+    "text-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "text-top-10-question_score": [
+      0.03420727,
+      0.03420727,
+      0.03420727,
+      0.03420727
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.09384349,
+      0.09384349,
+      0.09384349,
+      0.09384349
+    ],
+    "question": "Which was greater at the time of the presentation, Europe IPO index value or US IPO index value?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.09384349,
+      0.09384349,
+      0.09384349,
+      0.09384349
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.1360075,
+      0.1360075,
+      0.1360075,
+      0.1360075
+    ],
+    "question": "How many pages include charts whose horizontal-axis are set as year (like 2024)?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.1360075,
+      0.1360075,
+      0.1360075,
+      0.1360075
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.18211527,
+      0.18211527,
+      0.18211527,
+      0.18211527
+    ],
+    "question": "How many human quotes are provided with source in this document?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.18211527,
+      0.18211527,
+      0.18211527,
+      0.18211527
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "image-top-10-question_score": [
+      0.12559555,
+      0.12559555,
+      0.12559555,
+      0.12559555
+    ],
+    "question": "Which two magazines' opinions are selected to illustrate the situation of German venture capital?",
+    "text-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "text-top-10-question_score": [
+      0.12559555,
+      0.12559555,
+      0.12559555,
+      0.12559555
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.97657744,
+      0.14801773,
+      0.14801773,
+      0.14801773
+    ],
+    "question": "Which newspaper's opinions are selected to illustrate the situation of Spain venture capital?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.97657744,
+      0.14801773,
+      0.14801773,
+      0.14801773
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.11511124,
+      0.11511124,
+      0.11511124,
+      0.11511124
+    ],
+    "question": "In the slides, how many charts compare between ONLY US and Europe?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.11511124,
+      0.11511124,
+      0.11511124,
+      0.11511124
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.23760767,
+      0.23760767,
+      0.23760767,
+      0.23760767
+    ],
+    "question": "In the slides, which chart compares between China and Japan?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.23760767,
+      0.23760767,
+      0.23760767,
+      0.23760767
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "image-top-10-question_score": [
+      0.01214693,
+      0.01214693,
+      0.01214693,
+      0.01214693
+    ],
+    "question": "On the chart showing average exit cap, there is one point that US, Europe, and China have the same average exit cap value. What is this value in USD million? Give me an integer",
+    "text-top-10-question": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "text-top-10-question_score": [
+      0.01214693,
+      0.01214693,
+      0.01214693,
+      0.01214693
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.12431089,
+      0.12431089,
+      0.12431089,
+      0.12431089
+    ],
+    "question": "According to the chart \"Levels of Analytics\", what are the four business analystics activities?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.12431089,
+      0.12431089,
+      0.12431089,
+      0.12431089
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.20163091,
+      0.20163091,
+      0.20163091,
+      0.20163091
+    ],
+    "question": "According to the chart \"Levels of Analytics\", what are the four business cooperation activities?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.20163091,
+      0.20163091,
+      0.20163091,
+      0.20163091
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.14065576,
+      0.14065576,
+      0.14065576,
+      0.14065576
+    ],
+    "question": "According to the flowchart \"Analytics Value Chain\", what comes between Reporting and Action?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.14065576,
+      0.14065576,
+      0.14065576,
+      0.14065576
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.12880818,
+      0.12880818,
+      0.12880818,
+      0.12880818
+    ],
+    "question": "What are the examples the slides show \"what does not make you data-driven\"",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.12880818,
+      0.12880818,
+      0.12880818,
+      0.12880818
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.1804088,
+      0.1804088,
+      0.1804088,
+      0.1804088
+    ],
+    "question": "Which Youtube does the slides use to show the consequce of blindly following data?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.1804088,
+      0.1804088,
+      0.1804088,
+      0.1804088
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.93865607,
+      0.10539976,
+      0.10539976,
+      0.10539976
+    ],
+    "question": "Which Youtube does the slides use to show the consequce of having a weak data leadership?",
+    "text-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.93865607,
+      0.10539976,
+      0.10539976,
+      0.10539976
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.20983632,
+      0.20983632,
+      0.20983632,
+      0.20983632
+    ],
+    "question": "How many hand drawn cartoons are included in the slides to illustrate the idea?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.20983632,
+      0.20983632,
+      0.20983632,
+      0.20983632
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.96148034,
+      0.16167028,
+      0.16167028,
+      0.16167028
+    ],
+    "question": "According to the slides, what are the things that a data-driven person has?",
+    "text-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.96148034,
+      0.16167028,
+      0.16167028,
+      0.16167028
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.22679433,
+      0.22679433,
+      0.22679433,
+      0.22679433
+    ],
+    "question": "In the cartoon in page 25, what does the hippo represent?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.22679433,
+      0.22679433,
+      0.22679433,
+      0.22679433
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.28780885,
+      0.28780885,
+      0.28780885,
+      0.28780885
+    ],
+    "question": "In the cartoon in page 25, what does the elephant represent?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.28780885,
+      0.28780885,
+      0.28780885,
+      0.28780885
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.09557516,
+      0.09557516,
+      0.09557516,
+      0.09557516
+    ],
+    "question": "Regarding the global iOS breakdown, what percentage of the pie chart was iOS 9?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.09557516,
+      0.09557516,
+      0.09557516,
+      0.09557516
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.80439488,
+      0.09968192,
+      0.09968192,
+      0.09968192
+    ],
+    "question": "Between Java and WP, how large is the difference in percentage of their global developers mindshare?",
+    "text-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.80439488,
+      0.09968192,
+      0.09968192,
+      0.09968192
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "image-top-10-question_score": [
+      0.90159203,
+      0.89254043,
+      0.09868513,
+      0.09868513
+    ],
+    "question": "In 2014, which one has more mobile apps globally, Apple App store or Google Play store? How many Apps does it have in million?",
+    "text-top-10-question": [
+      2,
+      3,
+      0,
+      1
+    ],
+    "text-top-10-question_score": [
+      0.90159203,
+      0.89254043,
+      0.09868513,
+      0.09868513
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      2,
+      1,
+      3,
+      0
+    ],
+    "image-top-10-question_score": [
+      0.92437527,
+      0.9195482,
+      0.91796642,
+      0.04347559
+    ],
+    "question": "Which APP on APPOTA platform is top 10 Vietnam Android App, but not top 10 Vietnam iOS App?",
+    "text-top-10-question": [
+      2,
+      1,
+      3,
+      0
+    ],
+    "text-top-10-question_score": [
+      0.92437527,
+      0.9195482,
+      0.91796642,
+      0.04347559
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      2,
+      0,
+      1
+    ],
+    "image-top-10-question_score": [
+      0.95503369,
+      0.94903195,
+      0.05213863,
+      0.05213863
+    ],
+    "question": "Which APP on APPOTA platform ranks 15th as Vietnam Android App?",
+    "text-top-10-question": [
+      3,
+      2,
+      0,
+      1
+    ],
+    "text-top-10-question_score": [
+      0.95503369,
+      0.94903195,
+      0.05213863,
+      0.05213863
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.9143783,
+      0.04659187,
+      0.04659187,
+      0.04659187
+    ],
+    "question": "In Q3 2015, what is the approximate range of cost in 1 day (dollar) of a mobile incentive platform in Vietnam for installing? Answer with a list of two number for boundary, for example [3000, 4000]",
+    "text-top-10-question": [
+      3,
+      0,
+      1,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.9143783,
+      0.04659187,
+      0.04659187,
+      0.04659187
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.9325776,
+      0.02602144,
+      0.02602144,
+      0.02602144
+    ],
+    "question": "As of Q3 2015, are there more active Instagram users in Vietnam, or are there more fans for Appota's fan page? Directly answer 'Instagram' or 'Appota'.",
+    "text-top-10-question": [
+      1,
+      0,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.9325776,
+      0.02602144,
+      0.02602144,
+      0.02602144
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.01859453,
+      0.01859453,
+      0.01859453,
+      0.01859453
+    ],
+    "question": "As of Q3 2015, is vietnam's adoption rate of iOS 9 higher or lower than a global average rate? What is the difference in percentage?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.01859453,
+      0.01859453,
+      0.01859453,
+      0.01859453
+    ]
+  }
+]

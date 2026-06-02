@@ -1,0 +1,19 @@
+{
+  "allowed_next_runs": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact"
+  ],
+  "blocked_until_positive_signal": [
+    "top4_graph_context"
+  ],
+  "commands": [
+    "python3 scripts/run_mdocagent_module_ablation.py --execute-predict --runs top4_artifact_only,top4_original_plus_artifact --record-slice 0:30 --run-tag small_artifact --confirm-run-api",
+    "python3 scripts/run_mdocagent_module_ablation.py --execute-eval --runs top4_artifact_only,top4_original_plus_artifact --record-slice 0:30 --run-tag small_artifact --confirm-run-eval"
+  ],
+  "do_not_run_automatically": true,
+  "next_run_tag": "small_artifact",
+  "purpose": "Run the small artifact ablation only; graph_context remains gated on positive artifact signal.",
+  "recommended_next_phase": "phase_2_small_artifact",
+  "source_run_tag": "small_gate",
+  "status": "ready_after_gate_pass"
+}

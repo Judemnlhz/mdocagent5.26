@@ -1,0 +1,6 @@
+[2026-05-17 09:00:03,089][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-05-17 09:00:10,036][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-05-17 09:10:10,270][openai._base_client][INFO] - Retrying request to /chat/completions in 0.484805 seconds
+[2026-05-17 09:20:10,902][openai._base_client][INFO] - Retrying request to /chat/completions in 0.958620 seconds
+[2026-05-17 09:30:28,591][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+[2026-05-17 09:30:42,674][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"

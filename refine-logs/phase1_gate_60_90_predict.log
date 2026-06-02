@@ -1,0 +1,723 @@
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/mdocagent_top1_official_reproduction.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/mdocagent_top4_official_reproduction.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowTextModel
+Parallel prediction with num_workers=3, total=30, pending=30
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+  0%|          | 0/30 [00:00<?, ?it/s]Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+[2026-06-02 02:23:09,131][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:09,136][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:09,174][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:10,811][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:10,815][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:10,830][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:13,492][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:13,563][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:13,616][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:17,879][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:18,136][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:18,144][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:26,253][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+  3%|▎         | 1/30 [00:18<08:45, 18.13s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:26,763][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+  7%|▋         | 2/30 [00:18<03:37,  7.76s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:26,791][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:27,106][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:27,202][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:27,383][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:28,542][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:28,618][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:28,793][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:30,993][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:31,007][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:31,140][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:35,558][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:35,663][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:36,045][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:44,001][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 13%|█▎        | 4/30 [00:35<03:35,  8.30s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:44,154][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 17%|█▋        | 5/30 [00:36<02:24,  5.78s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:44,487][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:44,670][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 20%|██        | 6/30 [00:36<01:39,  4.17s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:44,679][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:45,124][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:45,847][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:46,250][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:46,550][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:48,248][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:48,663][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:48,976][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:52,639][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:53,379][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:23:53,422][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:01,058][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 23%|██▎       | 7/30 [00:52<03:01,  7.89s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:01,501][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:01,868][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 27%|██▋       | 8/30 [00:53<02:06,  5.74s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:01,935][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:02,408][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:02,448][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:02,927][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:03,903][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:03,911][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:05,316][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:06,390][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:06,441][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:09,786][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:10,822][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:10,965][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:18,281][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 33%|███▎      | 10/30 [01:10<02:17,  6.89s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 10 newly processed results to ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate_60_90/2026-06-02-02-23.json.
+[2026-06-02 02:24:18,738][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:19,364][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 37%|███▋      | 11/30 [01:11<01:43,  5.44s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:19,458][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:19,843][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:20,026][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:20,136][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:21,237][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:21,527][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:22,520][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:23,638][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:23,914][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:26,905][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:28,088][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:28,310][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:35,310][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 43%|████▎     | 13/30 [01:27<01:50,  6.49s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:35,686][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:36,495][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 47%|████▋     | 14/30 [01:28<01:24,  5.28s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:36,662][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 50%|█████     | 15/30 [01:28<01:00,  4.02s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:37,080][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:37,156][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:37,194][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:38,513][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:38,607][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:39,623][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:40,893][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:41,087][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:44,068][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:45,341][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:45,529][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:52,435][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 53%|█████▎    | 16/30 [01:44<01:39,  7.08s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:52,838][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:53,721][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 57%|█████▋    | 17/30 [01:45<01:11,  5.51s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:54,204][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 60%|██████    | 18/30 [01:46<00:49,  4.11s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:54,229][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:54,548][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:54,562][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:55,702][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:55,946][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:57,069][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:58,099][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:24:58,320][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:01,450][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:02,545][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:02,720][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:09,851][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 63%|██████▎   | 19/30 [02:01<01:21,  7.40s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:10,310][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:11,002][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 67%|██████▋   | 20/30 [02:02<00:55,  5.59s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 20 newly processed results to ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate_60_90/2026-06-02-02-23.json.
+[2026-06-02 02:25:11,139][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 70%|███████   | 21/30 [02:03<00:35,  3.99s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:11,427][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:11,440][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:11,726][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:12,861][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:13,003][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:14,145][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:15,222][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:15,401][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:18,555][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:19,641][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:19,794][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:26,945][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 73%|███████▎  | 22/30 [02:18<00:59,  7.47s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:27,366][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:28,068][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 77%|███████▋  | 23/30 [02:19<00:39,  5.59s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:28,176][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 80%|████████  | 24/30 [02:20<00:23,  3.96s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:28,488][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:28,687][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:28,740][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:29,850][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:30,115][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:31,124][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:32,185][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:32,577][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:35,478][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:36,630][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:36,984][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:43,837][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 83%|████████▎ | 25/30 [02:35<00:37,  7.45s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:44,212][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:44,978][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 87%|████████▋ | 26/30 [02:36<00:22,  5.57s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:45,559][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 90%|█████████ | 27/30 [02:37<00:12,  4.07s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:45,570][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:45,679][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:45,933][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:46,988][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:47,289][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:48,053][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:49,395][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:49,647][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:52,412][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:53,773][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:25:53,980][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:00,852][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 93%|█████████▎| 28/30 [02:52<00:14,  7.43s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:02,164][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 97%|█████████▋| 29/30 [02:54<00:05,  5.60s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:02,344][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+100%|██████████| 30/30 [02:54<00:00,  3.98s/it]100%|██████████| 30/30 [02:54<00:00,  5.81s/it]
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 30 newly processed results to ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate_60_90/2026-06-02-02-23.json.
+Save final results to ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate_60_90/2026-06-02-02-23.json.
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/top4_original_only.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowTextModel
+Parallel prediction with num_workers=3, total=30, pending=30
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+Create model:  SiliconFlowVisionModel
+  0%|          | 0/30 [00:00<?, ?it/s]Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+Create model:  SiliconFlowTextModel
+[2026-06-02 02:26:08,295][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:08,315][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:08,765][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:09,831][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:09,887][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:10,223][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:12,393][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:12,407][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:12,632][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:16,931][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:16,948][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:17,054][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:25,458][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+  3%|▎         | 1/30 [00:18<08:46, 18.15s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:25,606][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+  7%|▋         | 2/30 [00:18<03:31,  7.56s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:25,651][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:25,870][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:26,109][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:26,139][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:27,297][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:27,544][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:28,108][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:29,709][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:30,167][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:30,516][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:34,157][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:34,576][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:34,949][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:42,643][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 13%|█▎        | 4/30 [00:35<03:32,  8.16s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:43,081][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 17%|█▋        | 5/30 [00:35<02:24,  5.77s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:43,210][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:43,390][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 20%|██        | 6/30 [00:36<01:38,  4.10s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:43,569][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:43,864][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:44,632][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:45,125][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:45,248][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:47,076][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:47,534][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:47,858][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:51,532][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:51,896][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:52,335][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:26:59,936][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 23%|██▎       | 7/30 [00:52<03:01,  7.89s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:00,311][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 27%|██▋       | 8/30 [00:53<02:03,  5.61s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:00,538][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:00,760][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:00,856][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 30%|███       | 9/30 [00:53<01:25,  4.08s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:01,239][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:01,878][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:02,145][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:02,737][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:04,235][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:04,598][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:05,120][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:08,660][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:08,960][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:09,529][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:17,081][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 33%|███▎      | 10/30 [01:09<02:34,  7.75s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 10 newly processed results to ./results/MMLongBench/top4_original_only__small_gate_60_90/2026-06-02-02-26.json.
+[2026-06-02 02:27:17,365][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 37%|███▋      | 11/30 [01:10<01:44,  5.50s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:17,604][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:17,750][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:17,946][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 40%|████      | 12/30 [01:10<01:12,  4.02s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:18,350][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:19,087][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:19,121][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:19,752][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:21,581][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:21,608][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:22,197][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:26,108][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:26,114][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:26,574][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:34,639][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 43%|████▎     | 13/30 [01:27<02:13,  7.84s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:34,736][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:35,017][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 50%|█████     | 15/30 [01:27<01:04,  4.30s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:35,110][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:35,229][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:35,425][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:36,551][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:36,634][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:36,817][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:39,059][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:39,212][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:39,223][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:43,523][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:43,724][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:43,777][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:51,959][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 53%|█████▎    | 16/30 [01:44<01:44,  7.43s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:52,204][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 57%|█████▋    | 17/30 [01:44<01:12,  5.55s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:52,265][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:52,446][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:52,743][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:52,773][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:53,910][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:54,257][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:54,311][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:56,411][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:56,702][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:27:56,789][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:00,823][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:01,168][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:01,261][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:09,233][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 63%|██████▎   | 19/30 [02:01<01:15,  6.82s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:09,584][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 67%|██████▋   | 20/30 [02:02<00:53,  5.31s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 20 newly processed results to ./results/MMLongBench/top4_original_only__small_gate_60_90/2026-06-02-02-26.json.
+[2026-06-02 02:28:09,813][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 70%|███████   | 21/30 [02:02<00:36,  4.03s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:09,822][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:10,228][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:11,325][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:11,531][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:11,736][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:12,857][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:13,919][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:14,154][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:15,185][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:18,313][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:18,605][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:19,541][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:26,779][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 73%|███████▎  | 22/30 [02:19<00:59,  7.44s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:27,015][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 77%|███████▋  | 23/30 [02:19<00:38,  5.47s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:27,199][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:27,406][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:27,937][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 80%|████████  | 24/30 [02:20<00:25,  4.19s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:28,299][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:28,574][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:28,837][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:29,689][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:30,926][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:31,128][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:32,059][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:35,279][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:35,549][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:36,431][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:43,664][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 83%|████████▎ | 25/30 [02:36<00:37,  7.50s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:43,933][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 87%|████████▋ | 26/30 [02:36<00:21,  5.40s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:44,096][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:44,309][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:44,783][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 90%|█████████ | 27/30 [02:37<00:12,  4.06s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:45,166][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 1/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:45,477][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:45,715][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:46,514][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 2/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:47,854][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:48,073][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:48,909][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 3/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:52,219][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:52,558][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:28:53,270][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+Prediction failed on attempt 4/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:29:00,663][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 93%|█████████▎| 28/30 [02:53<00:15,  7.55s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:29:00,956][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+ 97%|█████████▋| 29/30 [02:53<00:05,  5.40s/it]Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+[2026-06-02 02:29:01,642][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+100%|██████████| 30/30 [02:54<00:00,  4.00s/it]100%|██████████| 30/30 [02:54<00:00,  5.81s/it]
+Prediction failed on attempt 5/5: Error code: 401 - Api key is invalid
+Save 30 newly processed results to ./results/MMLongBench/top4_original_only__small_gate_60_90/2026-06-02-02-26.json.
+Save final results to ./results/MMLongBench/top4_original_only__small_gate_60_90/2026-06-02-02-26.json.
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/top4_artifact_only.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/top4_original_plus_artifact.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/reranked_records/top4_graph_context.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 30,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}
+{
+  "cost_log_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/cost_log.json",
+  "max_records": null,
+  "num_failed_runs": 0,
+  "num_records": 30,
+  "num_runs": 6,
+  "prepare_only": false,
+  "record_slice": "60:90",
+  "run_tag": "small_gate_60_90",
+  "selected_runs": [
+    "mdocagent_top4_official_reproduction",
+    "top4_original_only"
+  ],
+  "status": "executed_or_attempted",
+  "summary_md_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/summary.md",
+  "summary_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_60_90/summary.json"
+}

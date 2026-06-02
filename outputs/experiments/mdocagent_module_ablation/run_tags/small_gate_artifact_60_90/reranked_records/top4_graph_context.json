@@ -1,0 +1,1202 @@
+[
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "image-top-10-question_score": [
+      0.02220257,
+      0.02220257,
+      0.02220257,
+      0.02220257
+    ],
+    "question": "As of Q3 2015, is vietnam's adoption rate of iOS 7 higher or lower than a global average rate? What is the difference in percentage?",
+    "text-top-10-question": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "text-top-10-question_score": [
+      0.02220257,
+      0.02220257,
+      0.02220257,
+      0.02220257
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      3,
+      2,
+      1,
+      0
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.94979391,
+      0.94139384,
+      0.10670992
+    ],
+    "question": "Which news appear in both Vietnam mobile news and APPOTA news?",
+    "text-top-10-question": [
+      3,
+      2,
+      1,
+      0
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.94979391,
+      0.94139384,
+      0.10670992
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      3,
+      11,
+      12,
+      8
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.97019719,
+      0.93658535,
+      0.62409198
+    ],
+    "question": "In figure 1, which relation arrows do not point to specific leaf nodes?",
+    "text-top-10-question": [
+      3,
+      11,
+      12,
+      8
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.97019719,
+      0.93658535,
+      0.62409198
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      7,
+      4,
+      21,
+      20
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.93942352,
+      0.5471764,
+      0.52189021
+    ],
+    "question": "In figure 5, what is the color of the line that has no intersection with any other line?",
+    "text-top-10-question": [
+      7,
+      4,
+      21,
+      20
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.93942352,
+      0.5471764,
+      0.52189021
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      6,
+      4,
+      7,
+      20
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.76004728,
+      0.75017406,
+      0.67966903
+    ],
+    "question": "How many tables include \"F1\" as a metric?",
+    "text-top-10-question": [
+      6,
+      4,
+      7,
+      20
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.76004728,
+      0.75017406,
+      0.67966903
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      7,
+      6,
+      8,
+      5
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.96079939,
+      0.86625673,
+      0.81091468
+    ],
+    "question": "From the paper, which temperature gives ChatGPT the highest alignment score?",
+    "text-top-10-question": [
+      7,
+      6,
+      8,
+      5
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.96079939,
+      0.86625673,
+      0.81091468
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      2,
+      1,
+      11,
+      9
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.96886107,
+      0.95817006,
+      0.93711474
+    ],
+    "question": "For dataset construction, which step takes the most word to describe than the others. ",
+    "text-top-10-question": [
+      2,
+      1,
+      11,
+      9
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.96886107,
+      0.95817006,
+      0.93711474
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      1,
+      4,
+      7,
+      3
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.92982481,
+      0.91724853,
+      0.89715444
+    ],
+    "question": "According to author's definition on conscious incompetence, when can a sentence map to both [NA] and a list of sub-graph knowledge?",
+    "text-top-10-question": [
+      1,
+      4,
+      7,
+      3
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.92982481,
+      0.91724853,
+      0.89715444
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2310.05634v2.pdf",
+    "image-top-10-question": [
+      1,
+      4,
+      7,
+      3
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.93653267,
+      0.92373908,
+      0.89037318
+    ],
+    "question": "According to author's definition on conscious incompetence, when can a sentence map to either [NA] or a list of sub-graph knowledge?",
+    "text-top-10-question": [
+      1,
+      4,
+      7,
+      3
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.93653267,
+      0.92373908,
+      0.89037318
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      17,
+      6,
+      21,
+      3
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.91823137,
+      0.89158086,
+      0.86129618
+    ],
+    "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+    "text-top-10-question": [
+      17,
+      6,
+      21,
+      3
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.91823137,
+      0.89158086,
+      0.86129618
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      21,
+      1,
+      4,
+      8
+    ],
+    "image-top-10-question_score": [
+      0.96063297,
+      0.92247898,
+      0.91625957,
+      0.56399878
+    ],
+    "question": "What are the horizontal and vertical axis of Figure 3 respectively?",
+    "text-top-10-question": [
+      21,
+      1,
+      4,
+      8
+    ],
+    "text-top-10-question_score": [
+      0.96063297,
+      0.92247898,
+      0.91625957,
+      0.56399878
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      17,
+      2,
+      3,
+      1
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.87728782,
+      0.8767536,
+      0.87370624
+    ],
+    "question": "Based on \"PSEUDOCODE FOR RETRIEVAL METHODS\", which algorithm has more number of lines? (Give the algorithm name)",
+    "text-top-10-question": [
+      17,
+      2,
+      3,
+      1
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.87728782,
+      0.8767536,
+      0.87370624
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      3,
+      1,
+      4,
+      15
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.99545187,
+      0.9214653,
+      0.87375368
+    ],
+    "question": "In Figure 1's demonstration, what are the color of the nodes that appear in more than one clusters?",
+    "text-top-10-question": [
+      3,
+      1,
+      4,
+      15
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.99545187,
+      0.9214653,
+      0.87375368
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      1,
+      4,
+      21,
+      5
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.93025981,
+      0.86090025,
+      0.51172067
+    ],
+    "question": "In Figure 1's demonstration, what are the color of the nodes that appear in all three clusters? Enumerate all of them them in a list (return an empty list if no such colors).",
+    "text-top-10-question": [
+      1,
+      4,
+      21,
+      5
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.93025981,
+      0.86090025,
+      0.51172067
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      3,
+      2,
+      8,
+      1
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.98966162,
+      0.91255333,
+      0.86915647
+    ],
+    "question": "What model is the clustering algorithm of this paper based on, and what presents a challenge to it?",
+    "text-top-10-question": [
+      3,
+      2,
+      8,
+      1
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.98966162,
+      0.91255333,
+      0.86915647
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2401.18059v1.pdf",
+    "image-top-10-question": [
+      3,
+      4,
+      17,
+      2
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.92364842,
+      0.91454025,
+      0.79754425
+    ],
+    "question": "Write down the pseudo code from appendix that corresponds to step 5 of the tree traversal method",
+    "text-top-10-question": [
+      3,
+      4,
+      17,
+      2
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.92364842,
+      0.91454025,
+      0.79754425
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      1,
+      7,
+      18,
+      17
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.78560403,
+      0.45852711,
+      0.32918987
+    ],
+    "question": "In the figure that has a tree shape, what is the name of the branch that has the least leafs?",
+    "text-top-10-question": [
+      1,
+      7,
+      18,
+      17
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.78560403,
+      0.45852711,
+      0.32918987
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      3,
+      1,
+      10,
+      15
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.99043201,
+      0.96920657,
+      0.96676911
+    ],
+    "question": "In figure 3, how many distinct icons are used?",
+    "text-top-10-question": [
+      3,
+      1,
+      10,
+      15
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.99043201,
+      0.96920657,
+      0.96676911
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      7,
+      5,
+      6,
+      3
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.97574589,
+      0.95055046,
+      0.9203154
+    ],
+    "question": "What is the paper's full title that proposes the method that has a retrieval granularity of phrase?",
+    "text-top-10-question": [
+      7,
+      5,
+      6,
+      3
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.97574589,
+      0.95055046,
+      0.9203154
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      5,
+      16,
+      0,
+      7
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.94991294,
+      0.94781986,
+      0.80444612
+    ],
+    "question": "What is the paper that proposes the method that has a retrieval granularity of phrase and augmentation stage of tuning?",
+    "text-top-10-question": [
+      5,
+      16,
+      0,
+      7
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.94991294,
+      0.94781986,
+      0.80444612
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      12,
+      5,
+      1,
+      11
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.99037034,
+      0.87235772,
+      0.75894309
+    ],
+    "question": "According to table II, which are the datasets that has exactly three methods?",
+    "text-top-10-question": [
+      12,
+      5,
+      1,
+      11
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.99037034,
+      0.87235772,
+      0.75894309
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      1,
+      10,
+      0,
+      9
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.85773196,
+      0.85605385,
+      0.83368084
+    ],
+    "question": "Which subsection does the section \"AUGMENTATION PROCESS IN RAG\" include?",
+    "text-top-10-question": [
+      1,
+      10,
+      0,
+      9
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.85773196,
+      0.85605385,
+      0.83368084
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2312.10997v5.pdf",
+    "image-top-10-question": [
+      9,
+      6,
+      8,
+      4
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.67545941,
+      0.67092096,
+      0.6633249
+    ],
+    "question": "Which method integrates knowledge into white-box models via directive fine-tuning?",
+    "text-top-10-question": [
+      9,
+      6,
+      8,
+      4
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.67545941,
+      0.67092096,
+      0.6633249
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      40,
+      37,
+      36,
+      12
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.98131598,
+      0.93927467,
+      0.89755981
+    ],
+    "question": "What is the time on the gallery screenshot when demostrating how to set galley watch faces?",
+    "text-top-10-question": [
+      40,
+      37,
+      36,
+      12
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.98131598,
+      0.93927467,
+      0.89755981
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      22,
+      20,
+      34,
+      33
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.80839082,
+      0.75353982,
+      0.73362832
+    ],
+    "question": "What is the color on the watch that shows the aerobic zone?",
+    "text-top-10-question": [
+      22,
+      20,
+      34,
+      33
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.80839082,
+      0.75353982,
+      0.73362832
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      15,
+      14,
+      20,
+      9
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.98452475,
+      0.95130824,
+      0.94327209
+    ],
+    "question": "What are the colors of the icons that the users touch to move the app up and remove the app respectively?",
+    "text-top-10-question": [
+      15,
+      14,
+      20,
+      9
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.98452475,
+      0.95130824,
+      0.94327209
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      14,
+      15,
+      2,
+      12
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.97328456,
+      0.77731175,
+      0.71970172
+    ],
+    "question": "What is the color of the icons that the users touch to move the app down?",
+    "text-top-10-question": [
+      14,
+      15,
+      2,
+      12
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.97328456,
+      0.77731175,
+      0.71970172
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      11,
+      18,
+      17,
+      20
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.90901771,
+      0.89452496,
+      0.86956522
+    ],
+    "question": "How many distinct button functions are there during a workout?",
+    "text-top-10-question": [
+      11,
+      18,
+      17,
+      20
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.90901771,
+      0.89452496,
+      0.86956522
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "honor_watch_gs_pro.pdf",
+    "image-top-10-question": [
+      23,
+      24,
+      22,
+      35
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.9852602,
+      0.94941702,
+      0.57470298
+    ],
+    "question": "If \"--\" is displayed as the resting heart rate reading, what kind of environment should the user stay in?",
+    "text-top-10-question": [
+      23,
+      24,
+      22,
+      35
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.9852602,
+      0.94941702,
+      0.57470298
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "nova_y70.pdf",
+    "image-top-10-question": [
+      7,
+      1,
+      44,
+      4
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.98736715,
+      0.93306381,
+      0.8740272
+    ],
+    "question": "How many distinct notification and status icons are displayed in the guidebook?",
+    "text-top-10-question": [
+      7,
+      1,
+      44,
+      4
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.98736715,
+      0.93306381,
+      0.8740272
+    ]
+  }
+]

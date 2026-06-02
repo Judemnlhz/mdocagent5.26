@@ -1,0 +1,19 @@
+{
+  "completed_api_calls": 0,
+  "estimated_api_calls": 30,
+  "failed_api_calls": 0,
+  "max_records": null,
+  "num_records": 30,
+  "record_slice": "30:60",
+  "run_tag": "small_graph_30_60",
+  "runs": [
+    {
+      "completed_api_calls": 0,
+      "estimated_api_calls": 30,
+      "execution_run_name": "top4_graph_context__small_graph_30_60",
+      "failed_api_calls": 0,
+      "run_name": "top4_graph_context"
+    }
+  ],
+  "schema_version": "mdocagent_cost_log_v1"
+}

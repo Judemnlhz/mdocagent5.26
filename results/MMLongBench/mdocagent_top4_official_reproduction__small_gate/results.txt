@@ -1,0 +1,7 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate/2026-06-01-05-10.json
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate/2026-06-01-05-10.json
+Average Binary Correctness: 0.533

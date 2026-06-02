@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/mdocagent_top4_official_reproduction__small_gate_30_60/2026-06-01-11-43.json
+Average Binary Correctness: 0.567

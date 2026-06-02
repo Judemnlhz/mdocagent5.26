@@ -1,0 +1,812 @@
+[
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      80
+    ],
+    "image-top-10-question_score": [
+      23.70956039428711
+    ],
+    "question": "What is the color of the zone Mali in the map used to demonstrate GeoShapes using SPARQL and OSM?",
+    "text-top-10-question": [
+      81
+    ],
+    "text-top-10-question_score": [
+      17.65625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      106
+    ],
+    "image-top-10-question_score": [
+      19.93941879272461
+    ],
+    "question": "Which example notebook does module 3 use to show how to create an interactive map?",
+    "text-top-10-question": [
+      88
+    ],
+    "text-top-10-question_score": [
+      20.234375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      111
+    ],
+    "image-top-10-question_score": [
+      16.068500518798828
+    ],
+    "question": "How many distinct Netherlands location images does this slide use as examples?",
+    "text-top-10-question": [
+      46
+    ],
+    "text-top-10-question_score": [
+      15.6796875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      5
+    ],
+    "image-top-10-question_score": [
+      26.864036560058594
+    ],
+    "question": "How many more millions of dollars was the median exit valuation in the USA compared to Europe at the time of the presentation?",
+    "text-top-10-question": [
+      32
+    ],
+    "text-top-10-question_score": [
+      0.9189453125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      22.456771850585938
+    ],
+    "question": "Which was greater at the time of the presentation, Europe IPO index value or US IPO index value?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.107421875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      22.560222625732422
+    ],
+    "question": "How many pages include charts whose horizontal-axis are set as year (like 2024)?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.068359375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      33
+    ],
+    "image-top-10-question_score": [
+      14.295976638793945
+    ],
+    "question": "How many human quotes are provided with source in this document?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.603515625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      30
+    ],
+    "image-top-10-question_score": [
+      18.412277221679688
+    ],
+    "question": "Which two magazines' opinions are selected to illustrate the situation of German venture capital?",
+    "text-top-10-question": [
+      32
+    ],
+    "text-top-10-question_score": [
+      2.3125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      39
+    ],
+    "image-top-10-question_score": [
+      17.087797164916992
+    ],
+    "question": "Which newspaper's opinions are selected to illustrate the situation of Spain venture capital?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.529296875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      17
+    ],
+    "image-top-10-question_score": [
+      17.561138153076172
+    ],
+    "question": "In the slides, how many charts compare between ONLY US and Europe?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.021484375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      25
+    ],
+    "image-top-10-question_score": [
+      16.02891731262207
+    ],
+    "question": "In the slides, which chart compares between China and Japan?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.80859375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+    "image-top-10-question": [
+      25
+    ],
+    "image-top-10-question_score": [
+      39.293460845947266
+    ],
+    "question": "On the chart showing average exit cap, there is one point that US, Europe, and China have the same average exit cap value. What is this value in USD million? Give me an integer",
+    "text-top-10-question": [
+      32
+    ],
+    "text-top-10-question_score": [
+      0.477294921875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      11
+    ],
+    "image-top-10-question_score": [
+      23.001806259155273
+    ],
+    "question": "According to the chart \"Levels of Analytics\", what are the four business analystics activities?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.859375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      11
+    ],
+    "image-top-10-question_score": [
+      20.09008026123047
+    ],
+    "question": "According to the chart \"Levels of Analytics\", what are the four business cooperation activities?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      4.05078125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      12
+    ],
+    "image-top-10-question_score": [
+      21.509183883666992
+    ],
+    "question": "According to the flowchart \"Analytics Value Chain\", what comes between Reporting and Action?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.025390625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      19.575498580932617
+    ],
+    "question": "What are the examples the slides show \"what does not make you data-driven\"",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.521484375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      48
+    ],
+    "image-top-10-question_score": [
+      17.25681495666504
+    ],
+    "question": "Which Youtube does the slides use to show the consequce of blindly following data?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.11328125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      44
+    ],
+    "image-top-10-question_score": [
+      18.8178653717041
+    ],
+    "question": "Which Youtube does the slides use to show the consequce of having a weak data leadership?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      1.9833984375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      24
+    ],
+    "image-top-10-question_score": [
+      15.767498016357422
+    ],
+    "question": "How many hand drawn cartoons are included in the slides to illustrate the idea?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.30859375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      57
+    ],
+    "image-top-10-question_score": [
+      20.561717987060547
+    ],
+    "question": "According to the slides, what are the things that a data-driven person has?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.32421875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      24
+    ],
+    "image-top-10-question_score": [
+      19.376724243164062
+    ],
+    "question": "In the cartoon in page 25, what does the hippo represent?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      4.39453125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      15
+    ],
+    "image-top-10-question_score": [
+      17.996971130371094
+    ],
+    "question": "In the cartoon in page 25, what does the elephant represent?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      5.1796875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      6
+    ],
+    "image-top-10-question_score": [
+      22.25424575805664
+    ],
+    "question": "Regarding the global iOS breakdown, what percentage of the pie chart was iOS 9?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.126953125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      8
+    ],
+    "image-top-10-question_score": [
+      22.17992401123047
+    ],
+    "question": "Between Java and WP, how large is the difference in percentage of their global developers mindshare?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.2109375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      9
+    ],
+    "image-top-10-question_score": [
+      37.188194274902344
+    ],
+    "question": "In 2014, which one has more mobile apps globally, Apple App store or Google Play store? How many Apps does it have in million?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      3.669921875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      28
+    ],
+    "image-top-10-question_score": [
+      29.537944793701172
+    ],
+    "question": "Which APP on APPOTA platform is top 10 Vietnam Android App, but not top 10 Vietnam iOS App?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      1.2841796875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      29
+    ],
+    "image-top-10-question_score": [
+      21.07137680053711
+    ],
+    "question": "Which APP on APPOTA platform ranks 15th as Vietnam Android App?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      1.0986328125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      25
+    ],
+    "image-top-10-question_score": [
+      48.836647033691406
+    ],
+    "question": "In Q3 2015, what is the approximate range of cost in 1 day (dollar) of a mobile incentive platform in Vietnam for installing? Answer with a list of two number for boundary, for example [3000, 4000]",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      2.275390625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      32
+    ],
+    "image-top-10-question_score": [
+      42.6706428527832
+    ],
+    "question": "As of Q3 2015, are there more active Instagram users in Vietnam, or are there more fans for Appota's fan page? Directly answer 'Instagram' or 'Appota'.",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      1.1103515625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      14
+    ],
+    "image-top-10-question_score": [
+      37.20957946777344
+    ],
+    "question": "As of Q3 2015, is vietnam's adoption rate of iOS 9 higher or lower than a global average rate? What is the difference in percentage?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      0.69189453125
+    ]
+  }
+]

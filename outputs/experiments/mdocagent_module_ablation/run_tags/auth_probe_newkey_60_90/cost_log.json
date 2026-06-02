@@ -1,0 +1,19 @@
+{
+  "completed_api_calls": 5,
+  "estimated_api_calls": 5,
+  "failed_api_calls": 0,
+  "max_records": null,
+  "num_records": 1,
+  "record_slice": "60:61",
+  "run_tag": "auth_probe_newkey_60_90",
+  "runs": [
+    {
+      "completed_api_calls": 5,
+      "estimated_api_calls": 5,
+      "execution_run_name": "mdocagent_top4_official_reproduction__auth_probe_newkey_60_90",
+      "failed_api_calls": 0,
+      "run_name": "mdocagent_top4_official_reproduction"
+    }
+  ],
+  "schema_version": "mdocagent_cost_log_v1"
+}

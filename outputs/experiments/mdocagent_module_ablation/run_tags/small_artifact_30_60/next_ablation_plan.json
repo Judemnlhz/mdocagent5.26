@@ -1,0 +1,16 @@
+{
+  "allowed_next_runs": [
+    "top4_graph_context"
+  ],
+  "blocked_until_positive_signal": [],
+  "commands": [
+    "python3 scripts/run_mdocagent_module_ablation.py --execute-predict --runs top4_graph_context --record-slice 30:60 --run-tag small_graph --confirm-run-api",
+    "python3 scripts/run_mdocagent_module_ablation.py --execute-eval --runs top4_graph_context --record-slice 30:60 --run-tag small_graph --confirm-run-eval"
+  ],
+  "do_not_run_automatically": true,
+  "next_run_tag": "small_graph",
+  "purpose": "Run the small graph_context diagnostic after original_plus_artifact showed positive signal.",
+  "recommended_next_phase": "phase_3_small_graph",
+  "source_run_tag": "small_artifact_30_60",
+  "status": "ready_after_gate_pass"
+}

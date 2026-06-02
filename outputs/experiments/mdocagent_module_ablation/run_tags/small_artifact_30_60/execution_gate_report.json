@@ -1,0 +1,228 @@
+{
+  "artifact_only_score": 0.23333333333333334,
+  "checks": {
+    "adapter_manifest_policy": {
+      "deepseek_in_adapter_manifests": [],
+      "pass": true,
+      "policy_violations": []
+    },
+    "api_nondeterminism_possible": true,
+    "binary_correctness_delta_recorded": {
+      "api_nondeterminism_note": "prediction text differences are not treated as hard failures",
+      "delta": 0.3,
+      "max_allowed_delta": 0.05
+    },
+    "evaluation_command_shape_consistent": {
+      "pass": true
+    },
+    "evaluation_judge_consistent": {
+      "pass": true,
+      "values": [
+        "deepseek-ai/DeepSeek-V3"
+      ]
+    },
+    "evaluation_outputs_exist": {
+      "pass": true
+    },
+    "max_records_consistent": {
+      "expected": null,
+      "pass": true,
+      "values": [
+        "None"
+      ]
+    },
+    "model_config_hash_consistent": {
+      "pass": true,
+      "values": [
+        "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9"
+      ]
+    },
+    "page_budget_consistent": {
+      "pass": true
+    },
+    "prediction_command_shape_consistent": {
+      "pass": false
+    },
+    "prediction_outputs_exist": {
+      "pass": true
+    },
+    "public_leakage": {
+      "hits": [],
+      "pass": true
+    },
+    "record_slice_consistent": {
+      "expected": "30:60",
+      "pass": true,
+      "values": [
+        "30:60"
+      ]
+    },
+    "retrieval_input_equivalent": {
+      "pass": true,
+      "reason": "phase_2_small_artifact compares ablation outputs, not identical retrieval inputs",
+      "skipped": true
+    },
+    "run_name_resume_path_pollution": {
+      "detected": false
+    },
+    "top_k_consistent": {
+      "pass": true,
+      "values": [
+        4
+      ]
+    }
+  },
+  "delta_artifact_plus_vs_original_only": 0.033333333333333326,
+  "delta_graph_vs_artifact_plus": null,
+  "delta_original_only_vs_top4": -0.06666666666666665,
+  "diagnostic_only": false,
+  "failure_reasons": [],
+  "forbidden_runs_not_executed_by_this_check": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact",
+    "top4_graph_context"
+  ],
+  "gate_passed": true,
+  "graph_context_score": null,
+  "hard_failures": [],
+  "max_records": null,
+  "mdocagent_top4_score": 0.5666666666666667,
+  "original_only_score": 0.5,
+  "original_plus_artifact_score": 0.5333333333333333,
+  "phase_name": "phase_2_small_artifact",
+  "recommended_next_phase": "phase_3_small_graph",
+  "record_slice": "30:60",
+  "run_tag": "small_artifact_30_60",
+  "runs": [
+    {
+      "answer_key": "ans_top4_artifact_only__small_artifact_30_60",
+      "binary_correctness": {
+        "available": true,
+        "average": 0.23333333333333334,
+        "num_records": 30,
+        "num_scored": 30
+      },
+      "compatibility_report_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/compatibility/top4_artifact_only.compatibility_report.json",
+      "compatibility_status": "pass",
+      "compatible_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/reranked_records/top4_artifact_only.json",
+      "eval_model_id": "deepseek-ai/DeepSeek-V3",
+      "evaluation_command": [
+        "python3",
+        "scripts/eval.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_artifact_only__small_artifact_30_60"
+      ],
+      "evaluation_output_exists": true,
+      "evaluation_output_path": "results/MMLongBench/top4_artifact_only__small_artifact_30_60/2026-06-01-12-29_results.json",
+      "execution_run_name": "top4_artifact_only__small_artifact_30_60",
+      "max_records": null,
+      "model_config_hash": "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9",
+      "prediction_command": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_artifact_only__small_artifact_30_60",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/reranked_records/top4_artifact_only.json",
+        "+runtime.resume_path=results/MMLongBench/top4_artifact_only__small_artifact_30_60/2026-06-01-12-29.json"
+      ],
+      "prediction_output_exists": true,
+      "prediction_output_path": "results/MMLongBench/top4_artifact_only__small_artifact_30_60/2026-06-01-12-29.json",
+      "record_slice": "30:60",
+      "run_name": "top4_artifact_only",
+      "run_tag": "small_artifact_30_60",
+      "temperature": null,
+      "top_k": 4
+    },
+    {
+      "answer_key": "ans_top4_original_plus_artifact__small_artifact_30_60",
+      "binary_correctness": {
+        "available": true,
+        "average": 0.5333333333333333,
+        "num_records": 30,
+        "num_scored": 30
+      },
+      "compatibility_report_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/compatibility/top4_original_plus_artifact.compatibility_report.json",
+      "compatibility_status": "pass",
+      "compatible_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/reranked_records/top4_original_plus_artifact.json",
+      "eval_model_id": "deepseek-ai/DeepSeek-V3",
+      "evaluation_command": [
+        "python3",
+        "scripts/eval.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_plus_artifact__small_artifact_30_60"
+      ],
+      "evaluation_output_exists": true,
+      "evaluation_output_path": "results/MMLongBench/top4_original_plus_artifact__small_artifact_30_60/2026-06-01-12-43_results.json",
+      "execution_run_name": "top4_original_plus_artifact__small_artifact_30_60",
+      "max_records": null,
+      "model_config_hash": "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9",
+      "prediction_command": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_plus_artifact__small_artifact_30_60",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/reranked_records/top4_original_plus_artifact.json",
+        "+runtime.resume_path=results/MMLongBench/top4_original_plus_artifact__small_artifact_30_60/2026-06-01-12-43.json"
+      ],
+      "prediction_output_exists": true,
+      "prediction_output_path": "results/MMLongBench/top4_original_plus_artifact__small_artifact_30_60/2026-06-01-12-43.json",
+      "record_slice": "30:60",
+      "run_name": "top4_original_plus_artifact",
+      "run_tag": "small_artifact_30_60",
+      "temperature": null,
+      "top_k": 4
+    }
+  ],
+  "runs_completed": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact"
+  ],
+  "runs_requested": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact"
+  ],
+  "schema_version": "mdocagent_execution_gate_v2",
+  "soft_warnings": [
+    {
+      "count": 13,
+      "examples": [
+        {
+          "binary_correctness": 0,
+          "index": 0
+        },
+        {
+          "binary_correctness": 1,
+          "index": 3
+        },
+        {
+          "binary_correctness": 0,
+          "index": 5
+        },
+        {
+          "binary_correctness": 0,
+          "index": 7
+        },
+        {
+          "binary_correctness": 0,
+          "index": 9
+        }
+      ],
+      "message": "Answer text differs while binary correctness is unchanged.",
+      "type": "answer_text_diff_binary_same"
+    },
+    {
+      "delta": 0.3,
+      "max_binary_delta_reference": 0.05,
+      "message": "Binary correctness differs while retrieval/model/top_k/eval configuration may still be consistent.",
+      "type": "binary_correctness_delta"
+    }
+  ],
+  "status": "pass",
+  "summary_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_30_60/summary.json"
+}

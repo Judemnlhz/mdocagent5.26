@@ -1,0 +1,8 @@
+[2026-05-15 07:44:44,889][faiss._loader][INFO] - Loading faiss with AVX512 support.
+[2026-05-15 07:44:44,889][faiss._loader][INFO] - Could not load library with AVX512 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx512'")
+[2026-05-15 07:44:44,889][faiss._loader][INFO] - Loading faiss with AVX2 support.
+[2026-05-15 07:44:44,890][faiss._loader][INFO] - Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'")
+[2026-05-15 07:44:44,890][faiss._loader][INFO] - Loading faiss.
+[2026-05-15 07:44:44,920][faiss._loader][INFO] - Successfully loaded faiss.

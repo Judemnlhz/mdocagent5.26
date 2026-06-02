@@ -1,0 +1,40 @@
+{
+  "completed_api_calls": 0,
+  "estimated_api_calls": 0,
+  "failed_api_calls": 0,
+  "max_records": null,
+  "num_records": 30,
+  "record_slice": "60:90",
+  "run_tag": "small_gate_artifact_60_90",
+  "runs": [
+    {
+      "completed_api_calls": 0,
+      "estimated_api_calls": 0,
+      "execution_run_name": "mdocagent_top4_official_reproduction__small_gate_artifact_60_90",
+      "failed_api_calls": 0,
+      "run_name": "mdocagent_top4_official_reproduction"
+    },
+    {
+      "completed_api_calls": 0,
+      "estimated_api_calls": 0,
+      "execution_run_name": "top4_original_only__small_gate_artifact_60_90",
+      "failed_api_calls": 0,
+      "run_name": "top4_original_only"
+    },
+    {
+      "completed_api_calls": 0,
+      "estimated_api_calls": 0,
+      "execution_run_name": "top4_artifact_only__small_gate_artifact_60_90",
+      "failed_api_calls": 0,
+      "run_name": "top4_artifact_only"
+    },
+    {
+      "completed_api_calls": 0,
+      "estimated_api_calls": 0,
+      "execution_run_name": "top4_original_plus_artifact__small_gate_artifact_60_90",
+      "failed_api_calls": 0,
+      "run_name": "top4_original_plus_artifact"
+    }
+  ],
+  "schema_version": "mdocagent_cost_log_v1"
+}

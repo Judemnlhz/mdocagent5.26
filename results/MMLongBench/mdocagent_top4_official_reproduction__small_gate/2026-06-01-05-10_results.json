@@ -1,0 +1,1232 @@
+[
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            16,
+            4,
+            12,
+            2
+        ],
+        "image-top-10-question_score": [
+            25.596973419189453,
+            25.290542602539062,
+            25.176393508911133,
+            24.78738021850586
+        ],
+        "question": "According to the report, how do 5% of the Latinos see economic upward mobility for their children?",
+        "text-top-10-question": [
+            4,
+            4,
+            12,
+            2
+        ],
+        "text-top-10-question_score": [
+            25.625,
+            24.390625,
+            24.046875,
+            21.953125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "5% of Latinos expect their children will be less well off financially than they themselves are now, meaning they do not see economic upward mobility for their children.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            18,
+            4,
+            20,
+            19
+        ],
+        "image-top-10-question_score": [
+            29.63095474243164,
+            29.5169677734375,
+            29.26742172241211,
+            29.226497650146484
+        ],
+        "question": "According to the report, which one is greater in population in the survey? Foreign born Latinos, or the Latinos interviewed by cellphone?",
+        "text-top-10-question": [
+            18,
+            18,
+            20,
+            18
+        ],
+        "text-top-10-question_score": [
+            20.609375,
+            19.3125,
+            19.234375,
+            18.9375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The Latinos interviewed by cellphone are greater in population in the survey.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            3,
+            12,
+            5,
+            13
+        ],
+        "image-top-10-question_score": [
+            29.46030044555664,
+            29.05186653137207,
+            28.927583694458008,
+            28.705867767333984
+        ],
+        "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+        "text-top-10-question": [
+            9,
+            9,
+            13,
+            13
+        ],
+        "text-top-10-question_score": [
+            22.296875,
+            22.203125,
+            22.03125,
+            21.96875
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Hispanics aged 18-29",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            17,
+            22,
+            21,
+            1
+        ],
+        "image-top-10-question_score": [
+            22.08108901977539,
+            21.980012893676758,
+            21.929994583129883,
+            21.902515411376953
+        ],
+        "question": "Among all 12 references in this report, how many are from its own research center?",
+        "text-top-10-question": [
+            18,
+            2,
+            17,
+            21
+        ],
+        "text-top-10-question_score": [
+            14.15625,
+            13.9140625,
+            13.1640625,
+            12.5234375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "5",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            12,
+            3,
+            8,
+            13
+        ],
+        "image-top-10-question_score": [
+            35.405029296875,
+            35.22467803955078,
+            35.162513732910156,
+            35.01292037963867
+        ],
+        "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+        "text-top-10-question": [
+            9,
+            18,
+            22,
+            19
+        ],
+        "text-top-10-question_score": [
+            22.203125,
+            22.0,
+            21.328125,
+            21.25
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": 3,
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            15,
+            3,
+            7,
+            12
+        ],
+        "image-top-10-question_score": [
+            35.265174865722656,
+            33.155277252197266,
+            32.661354064941406,
+            32.496986389160156
+        ],
+        "question": "According to this report, among the Hispanics shaped by four current personal financial situation, which situation involves the highest percentage that expects their future financial situation to get a lot worse?",
+        "text-top-10-question": [
+            15,
+            13,
+            15,
+            7
+        ],
+        "text-top-10-question_score": [
+            32.28125,
+            28.34375,
+            28.15625,
+            27.78125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Poor financial condition",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "image-top-10-question": [
+            10,
+            11,
+            6,
+            5
+        ],
+        "image-top-10-question_score": [
+            47.01951599121094,
+            45.45671081542969,
+            44.67535400390625,
+            44.380950927734375
+        ],
+        "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich group is this, and what is the percentage droped?",
+        "text-top-10-question": [
+            11,
+            10,
+            10,
+            5
+        ],
+        "text-top-10-question_score": [
+            29.140625,
+            28.359375,
+            27.6875,
+            23.9375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "White households",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            3,
+            4,
+            2,
+            20
+        ],
+        "image-top-10-question_score": [
+            28.62554168701172,
+            28.281909942626953,
+            27.67138671875,
+            27.664674758911133
+        ],
+        "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+        "text-top-10-question": [
+            20,
+            3,
+            13,
+            3
+        ],
+        "text-top-10-question_score": [
+            20.3125,
+            18.46875,
+            18.265625,
+            18.15625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "59% of Democrats voted in the 2018 midterm election, but the percentage of the entire population that voted is not provided in the text, so a direct comparison to the overall population cannot be made.",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            4,
+            3,
+            2,
+            20
+        ],
+        "image-top-10-question_score": [
+            28.477432250976562,
+            28.24610710144043,
+            27.795448303222656,
+            27.79129981994629
+        ],
+        "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2024?",
+        "text-top-10-question": [
+            4,
+            20,
+            15,
+            3
+        ],
+        "text-top-10-question_score": [
+            17.390625,
+            17.328125,
+            15.8828125,
+            15.8515625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "There is no data available for the 2024 election in the provided sources. The most recent data is from the 2018 Pew Research Center survey, which reported that 59% of Democrats voted in the 2018 midterm elections. Since the question specifically asks about the 2024 election, and no 2024 data is included in the text or images, the answer cannot be determined from the given materials.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            5,
+            6,
+            3,
+            20
+        ],
+        "image-top-10-question_score": [
+            36.667945861816406,
+            35.444358825683594,
+            33.43860626220703,
+            32.045284271240234
+        ],
+        "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+        "text-top-10-question": [
+            6,
+            5,
+            5,
+            3
+        ],
+        "text-top-10-question_score": [
+            22.140625,
+            20.125,
+            19.5,
+            18.453125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Clinton",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            21,
+            4,
+            19,
+            2
+        ],
+        "image-top-10-question_score": [
+            30.829830169677734,
+            28.888195037841797,
+            28.846534729003906,
+            28.519001007080078
+        ],
+        "question": "According to this report, which group is greater in population in 2018? Republican who are hispanic, or no leans who are male?",
+        "text-top-10-question": [
+            21,
+            20,
+            15,
+            4
+        ],
+        "text-top-10-question_score": [
+            18.71875,
+            16.53125,
+            16.390625,
+            16.359375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "It is not possible to determine which group is larger based on the provided data. The table only gives percentages within each political group (e.g., percentage of Republicans who are Hispanic, percentage of 'No Lean' individuals who are male), not the total population sizes of those groups. Without knowing the absolute number of Republicans or 'No Lean' individuals, an accurate comparison of absolute population sizes cannot be made.",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            18,
+            9,
+            21,
+            10
+        ],
+        "image-top-10-question_score": [
+            20.61956024169922,
+            20.43244171142578,
+            20.33539390563965,
+            20.304840087890625
+        ],
+        "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+        "text-top-10-question": [
+            18,
+            16,
+            18,
+            4
+        ],
+        "text-top-10-question_score": [
+            17.609375,
+            17.03125,
+            16.53125,
+            16.5
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "There are no charts that exclusively provide no opinions from the 'no lean' group. The two charts mentioned\u2014'Independents who do not lean toward a party are more likely to have unfavorable views of both parties' and 'GOP leaners, Republicans differ on fairness of U.S. economic system'\u2014both include data for the 'no lean' group, but they also present data for other groups and focus on opinions held by the 'no lean' group, not the absence of opinions.",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "Independents-Report.pdf",
+        "image-top-10-question": [
+            19,
+            17,
+            2,
+            15
+        ],
+        "image-top-10-question_score": [
+            22.399229049682617,
+            22.23907470703125,
+            22.206890106201172,
+            21.954376220703125
+        ],
+        "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+        "text-top-10-question": [
+            21,
+            17,
+            2,
+            17
+        ],
+        "text-top-10-question_score": [
+            20.3125,
+            20.25,
+            16.828125,
+            16.78125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": 3,
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            1,
+            10,
+            7,
+            0
+        ],
+        "image-top-10-question_score": [
+            14.836372375488281,
+            13.007589340209961,
+            12.094616889953613,
+            12.001049041748047
+        ],
+        "question": "Where was Gestalt psychology concieved?",
+        "text-top-10-question": [
+            1,
+            10,
+            7,
+            2
+        ],
+        "text-top-10-question_score": [
+            20.4375,
+            14.5546875,
+            13.6953125,
+            13.5859375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Gestalt psychology was conceived in the Berlin School of Experimental Psychology.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            13,
+            6,
+            4,
+            11
+        ],
+        "image-top-10-question_score": [
+            27.044687271118164,
+            23.404342651367188,
+            23.110883712768555,
+            22.715187072753906
+        ],
+        "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+        "text-top-10-question": [
+            7,
+            2,
+            1,
+            0
+        ],
+        "text-top-10-question_score": [
+            5.234375,
+            5.21875,
+            5.16796875,
+            4.8203125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "21%",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            9,
+            8,
+            5,
+            14
+        ],
+        "image-top-10-question_score": [
+            27.712907791137695,
+            22.342601776123047,
+            21.067333221435547,
+            21.01706886291504
+        ],
+        "question": "What range does red color represents in approximate distance from the Mississippi River in the chart that tracks the West NIle Virus in Europe?",
+        "text-top-10-question": [
+            1,
+            2,
+            10,
+            7
+        ],
+        "text-top-10-question_score": [
+            6.79296875,
+            5.1015625,
+            4.83203125,
+            4.2734375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The red color in the \"Tracking the West Nile Virus\" map represents the distance range of 0 - 375 miles from the Mississippi River.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            10,
+            1,
+            7,
+            2
+        ],
+        "image-top-10-question_score": [
+            17.629234313964844,
+            16.990318298339844,
+            16.03301239013672,
+            15.901117324829102
+        ],
+        "question": "How does this document define the law of good gestalt?",
+        "text-top-10-question": [
+            10,
+            1,
+            7,
+            2
+        ],
+        "text-top-10-question_score": [
+            21.8125,
+            16.09375,
+            13.0859375,
+            12.9765625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The Law of Good Gestalt states that elements of objects are perceptually grouped together when they form a regular, simple, and orderly pattern. This law reflects the mind's tendency to eliminate complexity and unfamiliarity to perceive reality in its simplest form, thereby creating meaning through global regularity rather than detailed spatial relations. It emphasizes conciseness as a foundational principle of Gestalt theory, where perception prioritizes the whole over its individual parts, as illustrated by visual examples such as incomplete shapes being mentally completed into coherent wholes.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            13,
+            14,
+            6,
+            11
+        ],
+        "image-top-10-question_score": [
+            25.959901809692383,
+            21.889005661010742,
+            21.792089462280273,
+            21.596561431884766
+        ],
+        "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+        "text-top-10-question": [
+            2,
+            10,
+            1,
+            7
+        ],
+        "text-top-10-question_score": [
+            5.19140625,
+            4.81640625,
+            4.59765625,
+            4.5
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "With family and friends",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            12,
+            11,
+            4,
+            5
+        ],
+        "image-top-10-question_score": [
+            23.288103103637695,
+            16.117618560791016,
+            15.573063850402832,
+            15.010272979736328
+        ],
+        "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+        "text-top-10-question": [
+            1,
+            2,
+            10,
+            7
+        ],
+        "text-top-10-question_score": [
+            6.671875,
+            6.12890625,
+            6.04296875,
+            4.90234375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Asia",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "image-top-10-question": [
+            7,
+            10,
+            2,
+            1
+        ],
+        "image-top-10-question_score": [
+            21.685684204101562,
+            20.58320426940918,
+            20.413318634033203,
+            20.359375
+        ],
+        "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+        "text-top-10-question": [
+            7,
+            2,
+            1,
+            10
+        ],
+        "text-top-10-question_score": [
+            20.546875,
+            15.6796875,
+            15.28125,
+            13.5625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The slide illustrates the closure aspect of the Gestalt Principle of Visual Perception using a dashed-line circle and a dashed-line square, both of which are incomplete but perceived by the viewer as whole shapes due to the brain's tendency to fill in visual gaps.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            16,
+            14,
+            18,
+            8
+        ],
+        "image-top-10-question_score": [
+            13.007980346679688,
+            12.426036834716797,
+            12.379387855529785,
+            12.240118026733398
+        ],
+        "question": "What does the map in the report shows?",
+        "text-top-10-question": [
+            2,
+            14,
+            5,
+            0
+        ],
+        "text-top-10-question_score": [
+            9.015625,
+            8.65625,
+            7.88671875,
+            7.59375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The Centres of Indian Space Programme",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            8,
+            2,
+            18,
+            11
+        ],
+        "image-top-10-question_score": [
+            13.181499481201172,
+            13.033834457397461,
+            13.008465766906738,
+            12.911617279052734
+        ],
+        "question": "What year is the report for?",
+        "text-top-10-question": [
+            2,
+            2,
+            8,
+            6
+        ],
+        "text-top-10-question_score": [
+            13.578125,
+            9.3828125,
+            8.84375,
+            8.7265625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "2015-2016",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            5,
+            12,
+            4,
+            14
+        ],
+        "image-top-10-question_score": [
+            16.091981887817383,
+            16.091949462890625,
+            16.0487003326416,
+            15.842977523803711
+        ],
+        "question": "What are the uses of Indian remote sensing satellite constellation?",
+        "text-top-10-question": [
+            5,
+            14,
+            7,
+            5
+        ],
+        "text-top-10-question_score": [
+            25.09375,
+            20.109375,
+            19.46875,
+            18.09375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The Indian Remote Sensing Satellite constellation is used for a wide range of applications including agricultural monitoring (crops inventory and drought monitoring), environmental monitoring (forest fire, landslide, and earthquake monitoring), water resource management (groundwater mapping and glacial lake/water body monitoring), socio-economic development (sericulture), disaster management (search and rescue, flood monitoring, Nepal Earthquake response, Phutkal River landslide dam), infrastructure planning (aerial photography, mapping, surveys), and tele-education/telemedicine services. These applications are supported through the National Natural Resources Management System (NNRMS) and are utilized at national, state, and local levels.",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            17,
+            18,
+            8,
+            19
+        ],
+        "image-top-10-question_score": [
+            15.818851470947266,
+            15.348129272460938,
+            14.3150634765625,
+            12.578765869140625
+        ],
+        "question": "What is NARL stand for in this document?",
+        "text-top-10-question": [
+            18,
+            18,
+            8,
+            10
+        ],
+        "text-top-10-question_score": [
+            21.84375,
+            16.828125,
+            13.234375,
+            9.40625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "National Atmospheric Research Laboratory",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            2,
+            1,
+            5,
+            4
+        ],
+        "image-top-10-question_score": [
+            37.40540313720703,
+            37.32961654663086,
+            37.2463493347168,
+            36.590450286865234
+        ],
+        "question": "Of the four missions of Indian Space Program's space mission from 2012 to 2017, which mission includes the launch of least number of satellites?",
+        "text-top-10-question": [
+            2,
+            2,
+            4,
+            5
+        ],
+        "text-top-10-question_score": [
+            24.078125,
+            21.53125,
+            21.125,
+            21.0625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The 2012-13 mission launched the fewest satellites, with a total of 3: RISAT-1, SARAL, and GSAT-10.",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            8,
+            17,
+            0,
+            18
+        ],
+        "image-top-10-question_score": [
+            17.870588302612305,
+            17.153045654296875,
+            17.007125854492188,
+            16.769378662109375
+        ],
+        "question": "How many organisations does this report introduce in detail (at least one paragraph) ?",
+        "text-top-10-question": [
+            15,
+            0,
+            8,
+            7
+        ],
+        "text-top-10-question_score": [
+            12.09375,
+            12.0234375,
+            9.8671875,
+            9.5
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "six",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "image-top-10-question": [
+            0,
+            19,
+            8,
+            17
+        ],
+        "image-top-10-question_score": [
+            13.028973579406738,
+            12.982307434082031,
+            12.942108154296875,
+            12.68303108215332
+        ],
+        "question": "How many exterior photos of organisations does this report provide?",
+        "text-top-10-question": [
+            0,
+            5,
+            6,
+            8
+        ],
+        "text-top-10-question_score": [
+            11.7421875,
+            11.140625,
+            9.9375,
+            9.78125
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "0",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "image-top-10-question": [
+            4,
+            10,
+            47,
+            3
+        ],
+        "image-top-10-question_score": [
+            15.641765594482422,
+            15.333776473999023,
+            15.252279281616211,
+            15.136153221130371
+        ],
+        "question": "What is the title of module 1?",
+        "text-top-10-question": [
+            10,
+            47,
+            88,
+            48
+        ],
+        "text-top-10-question_score": [
+            21.34375,
+            16.34375,
+            15.71875,
+            14.2734375
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "Basic flat & layered maps",
+        "binary_correctness": 1
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "image-top-10-question": [
+            32,
+            18,
+            22,
+            25
+        ],
+        "image-top-10-question_score": [
+            24.559797286987305,
+            24.441476821899414,
+            24.25444793701172,
+            24.210769653320312
+        ],
+        "question": "What is the web address in the orange box in page 47 that gives the Wiki Query Service code?",
+        "text-top-10-question": [
+            25,
+            26,
+            27,
+            24
+        ],
+        "text-top-10-question_score": [
+            11.578125,
+            11.578125,
+            11.578125,
+            11.2265625
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": "The web address in the orange box on page 47 that provides the Wiki Query Service code is https://w.wiki/6eq.",
+        "binary_correctness": 0
+    },
+    {
+        "_nexus_meta": {
+            "formula": "original_retrieval_order",
+            "lambda_weight": 0.5,
+            "mode": "original_only",
+            "model_role": "none_deterministic",
+            "no_gold_fields_used": true,
+            "same_page_budget_as_baseline": true,
+            "top_k": 4,
+            "used_debug_edges": false,
+            "used_semantic_edges": false
+        },
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "image-top-10-question": [
+            100,
+            99,
+            97,
+            104
+        ],
+        "image-top-10-question_score": [
+            27.518962860107422,
+            27.517610549926758,
+            27.08283805847168,
+            26.897903442382812
+        ],
+        "question": "What is the sum of the files size of the 2 files with the smallest file size in the table on page 98?",
+        "text-top-10-question": [
+            102,
+            110,
+            72,
+            62
+        ],
+        "text-top-10-question_score": [
+            10.875,
+            9.1875,
+            8.4296875,
+            8.2421875
+        ],
+        "ans_mdocagent_top4_official_reproduction__small_gate": 9259,
+        "binary_correctness": 1
+    }
+]

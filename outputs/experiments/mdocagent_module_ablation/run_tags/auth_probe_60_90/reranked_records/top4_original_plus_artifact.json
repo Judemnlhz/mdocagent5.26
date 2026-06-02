@@ -1,0 +1,41 @@
+[
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+    "image-top-10-question": [
+      14,
+      6,
+      15,
+      5
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49797838,
+      0.48033523,
+      0.45141051
+    ],
+    "question": "As of Q3 2015, is vietnam's adoption rate of iOS 7 higher or lower than a global average rate? What is the difference in percentage?",
+    "text-top-10-question": [
+      14,
+      6,
+      15,
+      5
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49797838,
+      0.48033523,
+      0.45141051
+    ]
+  }
+]

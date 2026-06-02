@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/top4_artifact_only__small_artifact_30_60/2026-06-01-12-29.json
+Average Binary Correctness: 0.233

@@ -71,6 +71,29 @@ class MDocAgentAdapterTests(unittest.TestCase):
             self.assertEqual(canonical_json_hash(artifact_a), canonical_json_hash(artifact_b))
             self.assertEqual(canonical_json_hash(hybrid_a), canonical_json_hash(hybrid_b))
 
+    def test_artifact_rerank_falls_back_without_anchored_positive_signal(self) -> None:
+        records = load_mdocagent_retrieval_records_from_value(sample_record())
+        artifacts = load_artifacts_by_page_from_lines(unanchored_artifact_lines())
+
+        adapted = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
+
+        self.assertEqual(adapted[0]["text-top-10-question"], [2, 1, 3, 0])
+        self.assertEqual(adapted[0]["image-top-10-question"], [3, 2, 1, 0])
+        self.assertFalse(adapted[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
+        self.assertEqual(adapted[0]["_nexus_meta"]["fallback_reason"], "no_positive_anchored_artifact_score")
+
+    def test_artifact_rerank_preserves_text_and_image_branches(self) -> None:
+        records = load_mdocagent_retrieval_records_from_value(branch_diversity_record())
+        artifacts = load_artifacts_by_page_from_lines(anchored_branch_artifact_lines())
+
+        adapted = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
+
+        self.assertEqual(adapted[0]["text-top-10-question"][0], 1)
+        self.assertEqual(adapted[0]["image-top-10-question"], [3, 2, 0, 4])
+        self.assertNotEqual(adapted[0]["text-top-10-question"], adapted[0]["image-top-10-question"])
+        self.assertTrue(adapted[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
+        self.assertTrue(adapted[0]["_nexus_meta"]["preserved_retrieval_branches"])
+
     def test_lambda_weight_manifest_and_top4_budget(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)
@@ -226,12 +249,56 @@ def sample_record() -> dict[str, object]:
 
 def artifact_lines() -> str:
     rows = [
-        {"doc_id": "doc.pdf", "page_index": 1, "artifact_id": "a1", "artifact_type": "text_span", "content": "alpha overview"},
-        {"doc_id": "doc.pdf", "page_index": 2, "artifact_id": "a2", "artifact_type": "text_span", "content": "beta notes"},
-        {"doc_id": "doc.pdf", "page_index": 3, "artifact_id": "a3", "artifact_type": "caption", "content": "alpha chart"},
-        {"doc_id": "doc.pdf", "page_index": 4, "artifact_id": "a4", "artifact_type": "table", "content": "alpha revenue revenue"},
+        anchored_artifact(1, "a1", "text_span", "alpha overview"),
+        anchored_artifact(2, "a2", "text_span", "beta notes"),
+        anchored_artifact(3, "a3", "caption", "alpha chart"),
+        anchored_artifact(4, "a4", "table", "alpha revenue revenue"),
     ]
     return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
+def unanchored_artifact_lines() -> str:
+    rows = [
+        {"doc_id": "doc.pdf", "page_index": 1, "artifact_id": "a1", "artifact_type": "text_span", "content": "alpha revenue revenue"},
+        {"doc_id": "doc.pdf", "page_index": 3, "artifact_id": "a3", "artifact_type": "caption", "content": "alpha chart"},
+    ]
+    return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
+def branch_diversity_record() -> dict[str, object]:
+    return {
+        "doc_id": "doc.pdf",
+        "question": "Which page discusses alpha revenue?",
+        "text-top-10-question": [2, 1, 0, 4],
+        "text-top-10-question_score": [1.0, 0.95, 0.5, 0.1],
+        "image-top-10-question": [3, 2, 0, 4],
+        "image-top-10-question_score": [1.0, 0.8, 0.5, 0.1],
+    }
+
+
+def anchored_branch_artifact_lines() -> str:
+    rows = [
+        anchored_artifact(1, "a1", "table", "alpha revenue revenue revenue"),
+        anchored_artifact(9, "a9", "table", "alpha revenue revenue revenue"),
+    ]
+    return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
+def anchored_artifact(page_index: int, artifact_id: str, artifact_type: str, content: str) -> dict[str, object]:
+    return {
+        "doc_id": "doc.pdf",
+        "page_index": page_index,
+        "artifact_id": artifact_id,
+        "artifact_type": artifact_type,
+        "content": content,
+        "source_anchors": [
+            {
+                "anchor_type": "text_span",
+                "source_id": f"p{page_index:03d}_text",
+                "page_index": page_index,
+            }
+        ],
+    }
 
 
 def load_mdocagent_retrieval_records_from_value(record: dict[str, object]) -> list[dict[str, object]]:

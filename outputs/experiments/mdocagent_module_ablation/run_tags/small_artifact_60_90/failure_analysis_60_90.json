@@ -1,0 +1,5286 @@
+{
+  "added_artifact_type_counts": {},
+  "artifact_score_diagnostics": {
+    "both_right|has_nonzero_artifact_score=False": 11,
+    "both_wrong|has_nonzero_artifact_score=False": 15,
+    "right_to_wrong|has_nonzero_artifact_score=False": 3,
+    "wrong_to_right|has_nonzero_artifact_score=False": 1
+  },
+  "buckets": {
+    "both_right": 11,
+    "both_wrong": 15,
+    "right_to_wrong": 3,
+    "wrong_to_right": 1
+  },
+  "coverage_diagnostics": {
+    "both_right|added_has_any_artifact|False": 11,
+    "both_right|plus_has_any_artifact|False": 11,
+    "both_wrong|added_has_any_artifact|False": 15,
+    "both_wrong|plus_has_any_artifact|False": 15,
+    "right_to_wrong|added_has_any_artifact|False": 3,
+    "right_to_wrong|plus_has_any_artifact|False": 3,
+    "wrong_to_right|added_has_any_artifact|False": 1,
+    "wrong_to_right|plus_has_any_artifact|False": 1
+  },
+  "delta_plus_vs_original": -0.06666666666666665,
+  "gold_diagnostics": {
+    "both_right|gold_dropped_any|True": 1,
+    "both_right|orig_any|False": 4,
+    "both_right|orig_any|True": 7,
+    "both_right|plus_any|False": 5,
+    "both_right|plus_any|True": 6,
+    "both_wrong|gold_dropped_any|True": 1,
+    "both_wrong|orig_any|False": 3,
+    "both_wrong|orig_any|True": 8,
+    "both_wrong|plus_any|False": 4,
+    "both_wrong|plus_any|True": 7,
+    "right_to_wrong|gold_dropped_any|True": 1,
+    "right_to_wrong|orig_any|False": 2,
+    "right_to_wrong|orig_any|True": 1,
+    "right_to_wrong|plus_any|False": 3,
+    "wrong_to_right|gold_dropped_any|True": 1,
+    "wrong_to_right|orig_any|True": 1,
+    "wrong_to_right|plus_any|False": 1
+  },
+  "loss_reason_counts": {
+    "gold_page_dropped": 1,
+    "no_nonzero_artifact_score_for_doc_candidates": 3,
+    "page_order_only_changed": 1,
+    "page_selection_changed": 3,
+    "page_set_changed": 2,
+    "plus_pages_no_artifacts": 3,
+    "text_branch_changed": 3,
+    "text_image_branches_collapsed": 3
+  },
+  "page_changed_by_bucket": {
+    "both_right|changed=False": 2,
+    "both_right|changed=True": 9,
+    "both_wrong|changed=False": 3,
+    "both_wrong|changed=True": 12,
+    "right_to_wrong|changed=True": 3,
+    "wrong_to_right|changed=True": 1
+  },
+  "rows": [
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "Not enough information is provided to determine Vietnam's iOS 7 adoption rate compared to the global average.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "global_index": 60,
+      "gold_pages": [],
+      "has_nonzero_artifact_score": false,
+      "local_index": 0,
+      "original_answer": "11 percentage points higher than the global average.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          14,
+          6,
+          15,
+          5
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": null,
+      "original_gold_any": null,
+      "original_pages": [
+        14,
+        6,
+        15,
+        5,
+        0,
+        1,
+        2,
+        3
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.01110129,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.02220257,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.01110129,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.02220257,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.01110129,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.02220257,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.01110129,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.02220257,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45141051,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.90282101,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49797838,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99595676,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 14
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48033523,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96067046,
+          "page": 15
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "Vietnam's iOS 7 adoption rate in Q3 2015 was 19%, while the global adoption rate for iOS 7 (included in the 'Earlier' category) was 8%. Therefore, Vietnam's adoption rate was significantly higher than the global average.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          14,
+          6,
+          15,
+          5
+        ],
+        "text-top-10-question": [
+          14,
+          6,
+          15,
+          5
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": null,
+      "plus_gold_any": null,
+      "plus_pages": [
+        14,
+        6,
+        15,
+        5
+      ],
+      "question": "As of Q3 2015, is vietnam's adoption rate of iOS 7 higher or lower than a global average rate? What is the difference in percentage?",
+      "unchanged_pages": [
+        14,
+        6,
+        15,
+        5
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "There is no information available to determine which news appears in both 'Vietnam mobile news' and 'APPOTA news'.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        0,
+        1,
+        2
+      ],
+      "global_index": 61,
+      "gold_pages": [
+        1,
+        3,
+        3,
+        1
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 1,
+      "original_answer": "There is no news item that appears in both the \"Vietnam mobile news\" section and the \"APPOTA NEWS\" section.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          3,
+          12,
+          31,
+          32
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        3,
+        12,
+        31,
+        32,
+        0,
+        1,
+        2
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.05335496,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.10670992,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47069692,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.94139384,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47489696,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.94979391,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49380522,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98761044,
+          "page": 12
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48475978,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96951957,
+          "page": 31
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48388686,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96777373,
+          "page": 32
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "There is no news item that appears in both the \"Vietnam mobile news\" section and the \"APPOTA NEWS\" section.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          12,
+          31,
+          32
+        ],
+        "text-top-10-question": [
+          3,
+          12,
+          31,
+          32
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        3,
+        12,
+        31,
+        32
+      ],
+      "question": "Which news appear in both Vietnam mobile news and APPOTA news?",
+      "unchanged_pages": [
+        3,
+        12,
+        31,
+        32
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "The relation arrows that do not point to specific leaf nodes are \"movement\" and \"place of birth\".",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 62,
+      "gold_pages": [
+        1
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 2,
+      "original_answer": "It is impossible to determine which relation arrows do not point to specific leaf nodes because Figure 1 is not provided and no visual information is available to analyze.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          3,
+          11,
+          1,
+          12
+        ],
+        "text-top-10-question": [
+          11,
+          12,
+          3,
+          3
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        3,
+        11,
+        1,
+        12
+      ],
+      "page_changed": false,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48302293,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96604586,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4850986,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97019719,
+          "page": 11
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46829267,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93658535,
+          "page": 12
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "It is impossible to answer the question as Figure 1 is not provided and no visual information is available to analyze relation arrows or leaf nodes.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          11,
+          1,
+          12
+        ],
+        "text-top-10-question": [
+          3,
+          11,
+          1,
+          12
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": true,
+      "plus_gold_any": true,
+      "plus_pages": [
+        3,
+        11,
+        1,
+        12
+      ],
+      "question": "In figure 1, which relation arrows do not point to specific leaf nodes?",
+      "unchanged_pages": [
+        3,
+        11,
+        1,
+        12
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "The question cannot be answered because 'Figure 5' is not present in the provided materials; only 'Figure 1' is available, which does not contain any line or color information relevant to the query.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_right",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        21,
+        20
+      ],
+      "global_index": 63,
+      "gold_pages": [
+        8
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 3,
+      "original_answer": "red",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          7,
+          3,
+          5,
+          4
+        ],
+        "text-top-10-question": [
+          7,
+          21,
+          20,
+          7
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        7,
+        3,
+        5,
+        4,
+        21,
+        20
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47713065,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95426129,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46971176,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93942352,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47043658,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.94087315,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.26094511,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.52189021,
+          "page": 20
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.2735882,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.5471764,
+          "page": 21
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "red",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          7,
+          3,
+          5,
+          4
+        ],
+        "text-top-10-question": [
+          7,
+          3,
+          5,
+          4
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        7,
+        3,
+        5,
+        4
+      ],
+      "question": "In figure 5, what is the color of the line that has no intersection with any other line?",
+      "unchanged_pages": [
+        7,
+        3,
+        5,
+        4
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "text-top-10-question": [
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "artifact_only_answer": 0,
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "bucket": "right_to_wrong",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 64,
+      "gold_pages": [
+        7,
+        9
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 4,
+      "original_answer": 3,
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          6,
+          8,
+          4,
+          2
+        ],
+        "text-top-10-question": [
+          6,
+          6,
+          6,
+          4
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        6,
+        8,
+        4,
+        2
+      ],
+      "page_changed": true,
+      "page_order_only_changed": true,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.37760487,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.75520973,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.38002364,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.76004728,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.37823552,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.75647103,
+          "page": 8
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": 2,
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          6,
+          4,
+          8,
+          2
+        ],
+        "text-top-10-question": [
+          6,
+          4,
+          8,
+          2
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        6,
+        4,
+        8,
+        2
+      ],
+      "question": "How many tables include \"F1\" as a metric?",
+      "unchanged_pages": [
+        6,
+        4,
+        8,
+        2
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [
+        5
+      ],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "text-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ]
+      },
+      "artifact_only_answer": "The paper does not provide alignment scores for ChatGPT at the tested temperatures (0.1, 0.5, and 0.9), so it is not possible to determine which temperature yields the highest alignment score based on the given information.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "bucket": "both_right",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        9
+      ],
+      "global_index": 65,
+      "gold_pages": [
+        7
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 5,
+      "original_answer": "0.1",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          7,
+          6,
+          8,
+          9
+        ],
+        "text-top-10-question": [
+          7,
+          6,
+          7,
+          6
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        7,
+        6,
+        8,
+        9
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.40545734,
+          "in_original": false,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.81091468,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4803997,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96079939,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43312837,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.86625673,
+          "page": 8
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.35650836,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.71301673,
+          "page": 9
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "0.1",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          7,
+          6,
+          8,
+          5
+        ],
+        "text-top-10-question": [
+          7,
+          6,
+          8,
+          5
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": true,
+      "plus_gold_any": true,
+      "plus_pages": [
+        7,
+        6,
+        8,
+        5
+      ],
+      "question": "From the paper, which temperature gives ChatGPT the highest alignment score?",
+      "unchanged_pages": [
+        7,
+        6,
+        8
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "Evolutionary Question Generation",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "bucket": "both_right",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 66,
+      "gold_pages": [
+        1,
+        2,
+        1,
+        3
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 6,
+      "original_answer": "Evolutionary Question Generation",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          2,
+          1,
+          11,
+          12
+        ],
+        "text-top-10-question": [
+          2,
+          2,
+          11,
+          1
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        2,
+        1,
+        11,
+        12
+      ],
+      "page_changed": false,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48443053,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96886107,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47908503,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95817006,
+          "page": 11
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47861522,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95723045,
+          "page": 12
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "Evolutionary Question Generation",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          2,
+          1,
+          11,
+          12
+        ],
+        "text-top-10-question": [
+          2,
+          1,
+          11,
+          12
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        2,
+        1,
+        11,
+        12
+      ],
+      "question": "For dataset construction, which step takes the most word to describe than the others. ",
+      "unchanged_pages": [
+        2,
+        1,
+        11,
+        12
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "A sentence can map to both [NA] and a list of sub-graph knowledge if it can be partially verified by the knowledge graph G.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_right",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        3
+      ],
+      "global_index": 67,
+      "gold_pages": [
+        2,
+        3
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 7,
+      "original_answer": "A sentence can map to both [NA] and a list of sub-graph knowledge if it includes some knowledge that needs to be verified but is absent from the knowledge graph G, while still being partially supported by available sub-graph knowledge that is present in G.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          1,
+          4,
+          7,
+          5
+        ],
+        "text-top-10-question": [
+          1,
+          4,
+          1,
+          3
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        1,
+        4,
+        7,
+        5,
+        3
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.44857722,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.89715444,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4649124,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.92982481,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45577257,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91154514,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45862426,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91724853,
+          "page": 7
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "A sentence can map to both [NA] and a list of sub-graph knowledge if it includes some knowledge that requires verification but is absent in the knowledge graph G.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          1,
+          4,
+          7,
+          5
+        ],
+        "text-top-10-question": [
+          1,
+          4,
+          7,
+          5
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        1,
+        4,
+        7,
+        5
+      ],
+      "question": "According to author's definition on conscious incompetence, when can a sentence map to both [NA] and a list of sub-graph knowledge?",
+      "unchanged_pages": [
+        1,
+        4,
+        7,
+        5
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "A sentence maps to either `[NA]` or a list of sub-graph knowledge under the 'Conscious Incompetence' setting when the knowledge required to verify the sentence is absent from the provided knowledge graph (KG). If the sentence requires information not present in the KG, it is marked as `[NA]` to signal the knowledge gap. If the sentence can be partially verified by the KG (e.g., facts like birthplace or occupation are present), it maps to a list of sub-graphs that support it. This is explicitly defined in the paper's 'Setting of Conscious Incompetence' and 'Task Formulation' sections, and reinforced in the 'Evaluation of Dataset Quality' section, where `[NA]` is used to indicate intentional omissions in the KG for evaluation purposes.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2310.05634v2.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 68,
+      "gold_pages": [],
+      "has_nonzero_artifact_score": false,
+      "local_index": 8,
+      "original_answer": "A sentence can map to both [NA] and a list of sub-graph knowledge if it contains information that is partially supported by the knowledge graph (sub-graph knowledge) but also includes claims that require knowledge absent from the graph ([NA]).",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          1,
+          4,
+          7,
+          6
+        ],
+        "text-top-10-question": [
+          1,
+          4,
+          1,
+          4
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": null,
+      "original_gold_any": null,
+      "original_pages": [
+        1,
+        4,
+        7,
+        6
+      ],
+      "page_changed": false,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46826633,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93653267,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45610702,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91221405,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46186954,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.92373908,
+          "page": 7
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "A sentence can map to either `[NA]` or a list of sub-graph knowledge under the 'Conscious Incompetence' setting. It maps to `[NA]` if it requires knowledge absent from the knowledge graph `G` and needs verification. It can map to both `[NA]` and a list of sub-graph knowledge if the sentence is partially supported by available knowledge in `G` (via sub-graph triplets) while other parts require knowledge not present in `G`. This allows the system to acknowledge knowledge gaps while still attributing verifiable information.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          1,
+          4,
+          7,
+          6
+        ],
+        "text-top-10-question": [
+          1,
+          4,
+          7,
+          6
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": null,
+      "plus_gold_any": null,
+      "plus_pages": [
+        1,
+        4,
+        7,
+        6
+      ],
+      "question": "According to author's definition on conscious incompetence, when can a sentence map to either [NA] or a list of sub-graph knowledge?",
+      "unchanged_pages": [
+        1,
+        4,
+        7,
+        6
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [
+        3
+      ],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "text-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ]
+      },
+      "artifact_only_answer": "nodes 2 and 3",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        1
+      ],
+      "global_index": 69,
+      "gold_pages": [
+        7
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 9,
+      "original_answer": "The nodes retrieved by RAPTOR for both questions are nodes 16, 17, 18, 19, 20, 21, and 22, as these are the only nodes highlighted with both a purple and a blue border in Figure 4, indicating selection for both 'What is the central theme of the story?' and 'How did Cinderella find a happy ending?'",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          21,
+          6,
+          1,
+          17
+        ],
+        "text-top-10-question": [
+          17,
+          6,
+          21,
+          21
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        21,
+        6,
+        1,
+        17
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.38460629,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.76921258,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43064809,
+          "in_original": false,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.86129618,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45911568,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91823137,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 17
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.44579043,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.89158086,
+          "page": 21
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "The nodes retrieved by RAPTOR for both questions are 16, 17, 18, 19, 20, 21, and 22.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          17,
+          6,
+          21,
+          3
+        ],
+        "text-top-10-question": [
+          17,
+          6,
+          21,
+          3
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        17,
+        6,
+        21,
+        3
+      ],
+      "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+      "unchanged_pages": [
+        17,
+        6,
+        21
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          4,
+          5,
+          6
+        ],
+        "text-top-10-question": [
+          1,
+          4,
+          5,
+          6
+        ]
+      },
+      "artifact_only_answer": "The horizontal axis (X-axis) is labeled 'Context Length', representing the number of tokens in the retrieved context, and the vertical axis (Y-axis) is labeled 'F1', representing the performance metric (F1 score) of the retrieval methods being compared.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "bucket": "right_to_wrong",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        1,
+        4,
+        8
+      ],
+      "global_index": 70,
+      "gold_pages": [
+        6
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 10,
+      "original_answer": "The horizontal axis (x-axis) represents Context Length, ranging from 0 to 2500, while the vertical axis (y-axis) represents Performance, specifically the F1 score, ranging from 0 to 100. This is consistent across all agents, with the Text Agent and General Agent confirming the performance metrics include accuracy or BLEU/ROUGE/METEOR scores, and the Image Agent directly identifying the y-axis label as 'F1'.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          15,
+          5,
+          14,
+          21
+        ],
+        "text-top-10-question": [
+          1,
+          21,
+          4,
+          8
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        15,
+        5,
+        14,
+        21,
+        1,
+        4,
+        8
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46123949,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.92247898,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45812979,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.91625957,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49918301,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99836601,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.28199939,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.56399878,
+          "page": 8
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48615529,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97231059,
+          "page": 14
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 15
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48031649,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96063297,
+          "page": 21
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "The horizontal axis is 'Context Length' and the vertical axis is 'Accuracy'.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          15,
+          5,
+          14,
+          21
+        ],
+        "text-top-10-question": [
+          15,
+          5,
+          14,
+          21
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        15,
+        5,
+        14,
+        21
+      ],
+      "question": "What are the horizontal and vertical axis of Figure 3 respectively?",
+      "unchanged_pages": [
+        15,
+        5,
+        14,
+        21
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "tree traversal",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "right_to_wrong",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        1,
+        3
+      ],
+      "global_index": 71,
+      "gold_pages": [
+        1,
+        8,
+        1,
+        9
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 11,
+      "original_answer": "Collapsed Tree Algorithm",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          17,
+          0,
+          18,
+          2
+        ],
+        "text-top-10-question": [
+          17,
+          1,
+          3,
+          1
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        17,
+        0,
+        18,
+        2,
+        1,
+        3
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4413091,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.88261821,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43685312,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.87370624,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43864391,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.87728782,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4383768,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.8767536,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 17
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4400643,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.8801286,
+          "page": 18
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "Algorithm 2",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          17,
+          0,
+          18,
+          2
+        ],
+        "text-top-10-question": [
+          17,
+          0,
+          18,
+          2
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        17,
+        0,
+        18,
+        2
+      ],
+      "question": "Based on \"PSEUDOCODE FOR RETRIEVAL METHODS\", which algorithm has more number of lines? (Give the algorithm name)",
+      "unchanged_pages": [
+        17,
+        0,
+        18,
+        2
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "The nodes that appear in more than one cluster are colored light blue.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        15
+      ],
+      "global_index": 72,
+      "gold_pages": [
+        2
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 12,
+      "original_answer": "blue",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          3,
+          1,
+          2,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          15,
+          4,
+          3
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        3,
+        1,
+        2,
+        4,
+        15
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49772594,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99545187,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48100138,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96200276,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46073265,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.9214653,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43687684,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.87375368,
+          "page": 15
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "blue",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          1,
+          2,
+          4
+        ],
+        "text-top-10-question": [
+          3,
+          1,
+          2,
+          4
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": true,
+      "plus_gold_any": true,
+      "plus_pages": [
+        3,
+        1,
+        2,
+        4
+      ],
+      "question": "In Figure 1's demonstration, what are the color of the nodes that appear in more than one clusters?",
+      "unchanged_pages": [
+        3,
+        1,
+        2,
+        4
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "There are no nodes that appear in all three clusters, as the diagram only shows two clusters at the top level and does not depict a third cluster.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "bucket": "both_right",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        21
+      ],
+      "global_index": 73,
+      "gold_pages": [
+        2
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 13,
+      "original_answer": [],
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          2,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          21,
+          21,
+          4
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        1,
+        3,
+        2,
+        4,
+        21
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4801693,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.9603386,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49986749,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99973499,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46512991,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93025981,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43045013,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.86090025,
+          "page": 21
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": [],
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          2,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          3,
+          2,
+          4
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": true,
+      "plus_gold_any": true,
+      "plus_pages": [
+        1,
+        3,
+        2,
+        4
+      ],
+      "question": "In Figure 1's demonstration, what are the color of the nodes that appear in all three clusters? Enumerate all of them them in a list (return an empty list if no such colors).",
+      "unchanged_pages": [
+        1,
+        3,
+        2,
+        4
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "The clustering algorithm is based on Gaussian Mixture Models (GMMs), and the primary challenge it faces is the high dimensionality of the vector embeddings, which can cause distance metrics to behave poorly in high-dimensional spaces. To address this, the authors use Uniform Manifold Approximation and Projection (UMAP) for dimensionality reduction before applying GMMs.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_right",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 74,
+      "gold_pages": [
+        3,
+        4
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 14,
+      "original_answer": "The clustering algorithm is based on Gaussian Mixture Models (GMMs), and the primary challenge is the high dimensionality of vector embeddings, which can cause distance metrics to behave poorly in high-dimensional spaces. To address this, the paper employs Uniform Manifold Approximation and Projection (UMAP) for dimensionality reduction. Additionally, while the Gaussian assumption may not perfectly match the sparse and skewed distribution of text data, empirical results suggest it remains effective for the task.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          3,
+          2,
+          15,
+          8
+        ],
+        "text-top-10-question": [
+          2,
+          3,
+          2,
+          3
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        3,
+        2,
+        15,
+        8
+      ],
+      "page_changed": false,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49483081,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98966162,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45627667,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91255333,
+          "page": 8
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46773287,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93546575,
+          "page": 15
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "The clustering algorithm in the paper is based on Gaussian Mixture Models (GMMs). The primary challenge it faces is the high dimensionality of vector embeddings, which can cause distance metrics to behave poorly in high-dimensional spaces (the 'curse of dimensionality'). To mitigate this, the authors use UMAP for dimensionality reduction. Additionally, the Gaussian assumption in GMMs may not perfectly fit the sparse and skewed distribution of text data, though empirical results show it remains effective for their use case. The system’s computational efficiency, demonstrated by linear scaling of build time with document length, supports the viability of GMMs for large-scale text clustering.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          2,
+          15,
+          8
+        ],
+        "text-top-10-question": [
+          3,
+          2,
+          15,
+          8
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        3,
+        2,
+        15,
+        8
+      ],
+      "question": "What model is the clustering algorithm of this paper based on, and what presents a challenge to it?",
+      "unchanged_pages": [
+        3,
+        2,
+        15,
+        8
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "The pseudo code for Step 5 of the tree traversal method recursively processes d layers to produce sets S1, S2, ..., Sd. For each layer i (from 1 to d), it selects the top-k nodes based on cosine similarity to the query embedding, then transitions to their child nodes for the next layer. The process begins with an initial set of nodes (typically root or S1) and iteratively refines the selection across layers. While the exact pseudocode is in Appendix F of the paper, the core logic is: for each layer, compute similarities, select top-k, and propagate to children. This is consistent across all agent responses, with the Text Agent providing the most detailed reconstruction.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2401.18059v1.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 75,
+      "gold_pages": [
+        4,
+        5,
+        1,
+        8
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 15,
+      "original_answer": "The pseudocode for step 5 of the tree traversal method is implemented within the loop structure of the `TRAVERSE_TREE` algorithm, iterating over each layer from 0 to `tree.num_layers - 1` (i.e., `d` layers). For each layer, it computes the cosine similarity between the query and each node in the current set `S_current`, selects the top-k nodes with the highest scores, and updates `S_current` to this new set for the next iteration. The core pseudocode is:\n\n```python\nfor layer in range(tree.num_layers):\n    top_k = []\n    for node in S_current:\n        score = dot_product(query, node)\n        top_k.append((node, score))\n    S_layer = sorted(top_k)[:k].nodes\n    S_current = S_layer\n```\n\nThis process recursively generates sets $ S_1, S_2, \\dots, S_d $, as described in the text.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          4,
+          17,
+          3,
+          18
+        ],
+        "text-top-10-question": [
+          3,
+          3,
+          17,
+          4
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        4,
+        17,
+        3,
+        18
+      ],
+      "page_changed": true,
+      "page_order_only_changed": true,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46182421,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.92364842,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45727013,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91454025,
+          "page": 17
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.44746665,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.89493331,
+          "page": 18
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "The pseudo code for step 5 of the tree traversal method is:\n\n```python\nfor layer in range(tree.num_layers):\n    topk = []\n    for node in S_current:\n        score = dot_product(query, node)\n        topk.append((node, score))\n    S_layer = sorted(topk)[:k].nodes  # Select top-k nodes by cosine similarity\n    S_current = S_layer  # Update current layer to the next layer's top-k nodes\n```\n\nThis loop iteratively processes each layer of the tree, selecting the top-k nodes based on cosine similarity to the query embedding and propagating the search to deeper layers. The recursion is implicit in the repeated iteration over layers, ensuring the algorithm traverses the tree depth-wise to collect context from all levels.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          4,
+          17,
+          18
+        ],
+        "text-top-10-question": [
+          3,
+          4,
+          17,
+          18
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        3,
+        4,
+        17,
+        18
+      ],
+      "question": "Write down the pseudo code from appendix that corresponds to step 5 of the tree traversal method",
+      "unchanged_pages": [
+        3,
+        4,
+        17,
+        18
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "Naive RAG",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        18
+      ],
+      "global_index": 76,
+      "gold_pages": [
+        2
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 16,
+      "original_answer": "Naive RAG",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          1,
+          6,
+          7,
+          3
+        ],
+        "text-top-10-question": [
+          18,
+          7,
+          1,
+          7
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        1,
+        6,
+        7,
+        3,
+        18
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.39141685,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.7828337,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.39359376,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.78718753,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.39280202,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.78560403,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.22926356,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.45852711,
+          "page": 18
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "Inference",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          1,
+          6,
+          7,
+          3
+        ],
+        "text-top-10-question": [
+          1,
+          6,
+          7,
+          3
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        1,
+        6,
+        7,
+        3
+      ],
+      "question": "In the figure that has a tree shape, what is the name of the branch that has the least leafs?",
+      "unchanged_pages": [
+        1,
+        6,
+        7,
+        3
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "10",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        15
+      ],
+      "global_index": 77,
+      "gold_pages": [
+        4
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 17,
+      "original_answer": "12",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          3,
+          1,
+          0,
+          10
+        ],
+        "text-top-10-question": [
+          15,
+          1,
+          10,
+          1
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        3,
+        1,
+        0,
+        10,
+        15
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48501795,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97003589,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49521601,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99043201,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48460328,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.96920657,
+          "page": 10
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48338455,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.96676911,
+          "page": 15
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "12",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          3,
+          1,
+          0,
+          10
+        ],
+        "text-top-10-question": [
+          3,
+          1,
+          0,
+          10
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        3,
+        1,
+        0,
+        10
+      ],
+      "question": "In figure 3, how many distinct icons are used?",
+      "unchanged_pages": [
+        3,
+        1,
+        0,
+        10
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "text-top-10-question": [
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "artifact_only_answer": "CoG",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        3
+      ],
+      "global_index": 78,
+      "gold_pages": [
+        6,
+        1,
+        7
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 18,
+      "original_answer": "DenseX",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          7,
+          5,
+          8,
+          6
+        ],
+        "text-top-10-question": [
+          7,
+          5,
+          6,
+          3
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        7,
+        5,
+        8,
+        6,
+        3
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4601577,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.9203154,
+          "page": 3
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48787295,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97574589,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47527523,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95055046,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4785152,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95703041,
+          "page": 8
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "DenseX",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          7,
+          5,
+          8,
+          6
+        ],
+        "text-top-10-question": [
+          7,
+          5,
+          8,
+          6
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        7,
+        5,
+        8,
+        6
+      ],
+      "question": "What is the paper's full title that proposes the method that has a retrieval granularity of phrase?",
+      "unchanged_pages": [
+        7,
+        5,
+        8,
+        6
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          3,
+          4
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          3,
+          4
+        ]
+      },
+      "artifact_only_answer": "The provided text and image from the survey paper do not mention any specific paper that proposes a method with a retrieval granularity of 'phrase' and an augmentation stage of 'tuning'. While the survey discusses RAG paradigms and their components, it does not reference a particular paper matching these exact technical criteria.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        0,
+        1,
+        3,
+        4
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        7,
+        16,
+        0
+      ],
+      "global_index": 79,
+      "gold_pages": [],
+      "has_nonzero_artifact_score": false,
+      "local_index": 19,
+      "original_answer": "EAR [31]",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          5,
+          6,
+          17,
+          9
+        ],
+        "text-top-10-question": [
+          5,
+          7,
+          16,
+          0
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": null,
+      "original_gold_any": null,
+      "original_pages": [
+        5,
+        6,
+        17,
+        9,
+        7,
+        16,
+        0
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47390993,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.94781986,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49869877,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99739755,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.40222306,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.80444612,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48948552,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97897105,
+          "page": 9
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47495647,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.94991294,
+          "page": 16
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49803436,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99606873,
+          "page": 17
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "CoG [29]",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          5,
+          6,
+          17,
+          9
+        ],
+        "text-top-10-question": [
+          5,
+          6,
+          17,
+          9
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": null,
+      "plus_gold_any": null,
+      "plus_pages": [
+        5,
+        6,
+        17,
+        9
+      ],
+      "question": "What is the paper that proposes the method that has a retrieval granularity of phrase and augmentation stage of tuning?",
+      "unchanged_pages": [
+        5,
+        6,
+        17,
+        9
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          5,
+          6
+        ],
+        "text-top-10-question": [
+          1,
+          3,
+          5,
+          6
+        ]
+      },
+      "artifact_only_answer": "The question refers to 'Table II', which does not exist in the provided document. The only table available is 'TABLE I: SUMMARY OF RAG METHODS', which does not contain any datasets associated with exactly three methods. Therefore, the query cannot be answered as posed.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        3,
+        5,
+        6
+      ],
+      "bucket": "wrong_to_right",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        1,
+        11
+      ],
+      "global_index": 80,
+      "gold_pages": [
+        1,
+        3
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 20,
+      "original_answer": "None of the agents provided a consistent or correct answer. The General Agent incorrectly listed HotpotQA, 2WikiMultiHopQA, and MuSiQue as having exactly three methods, but these are multi-hop datasets and not necessarily the ones with exactly three methods as per the table. The Text Agent listed PopQA, MS MARCO, and SST-2, which may be correct based on their own interpretation, but without access to the actual Table II, this cannot be verified. The Image Agent listed TriviaQA, WebQ, and MS MARCO, which are single-hop datasets. Since the question requires identifying datasets with exactly three methods from Table II, and no agent provided a universally consistent or verifiable answer, no final decision can be made with confidence. Therefore, the correct response is that no consensus or reliable answer exists based on the provided information.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          5,
+          12,
+          13,
+          14
+        ],
+        "text-top-10-question": [
+          12,
+          1,
+          5,
+          11
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        5,
+        12,
+        13,
+        14,
+        1,
+        11
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43617886,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.87235772,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49518517,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.99037034,
+          "page": 5
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.37947155,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.75894309,
+          "page": 11
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 12
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45171876,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.90343752,
+          "page": 13
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.44982623,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.89965245,
+          "page": 14
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "PopQA, MS MARCO, and SST-2",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          12,
+          5,
+          13,
+          14
+        ],
+        "text-top-10-question": [
+          12,
+          5,
+          13,
+          14
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        12,
+        5,
+        13,
+        14
+      ],
+      "question": "According to table II, which are the datasets that has exactly three methods?",
+      "unchanged_pages": [
+        12,
+        5,
+        13,
+        14
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "text-top-10-question": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "artifact_only_answer": "Section V",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bucket": "both_right",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        4
+      ],
+      "global_index": 81,
+      "gold_pages": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 21,
+      "original_answer": "The section 'AUGMENTATION PROCESS IN RAG' includes the subsections: Iterative Retrieval, Recursive Retrieval, and Adaptive Retrieval.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          1,
+          0,
+          9,
+          4
+        ],
+        "text-top-10-question": [
+          1,
+          10,
+          0,
+          9
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": true,
+      "original_gold_any": true,
+      "original_pages": [
+        1,
+        0,
+        9,
+        4,
+        10
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.42802693,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.85605385,
+          "page": 0
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.40687629,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.81375258,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.41684042,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.83368084,
+          "page": 9
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.42886598,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.85773196,
+          "page": 10
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "The section 'AUGMENTATION PROCESS IN RAG' includes the subsections: Iterative Retrieval, Recursive Retrieval, and Adaptive Retrieval. These three types of retrieval augmentation processes are explicitly mentioned in the text and visually summarized in Figure 5.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          1,
+          10,
+          0,
+          9
+        ],
+        "text-top-10-question": [
+          1,
+          10,
+          0,
+          9
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": true,
+      "plus_gold_any": true,
+      "plus_pages": [
+        1,
+        10,
+        0,
+        9
+      ],
+      "question": "Which subsection does the section \"AUGMENTATION PROCESS IN RAG\" include?",
+      "unchanged_pages": [
+        1,
+        10,
+        0,
+        9
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          2,
+          4,
+          6
+        ],
+        "text-top-10-question": [
+          1,
+          2,
+          4,
+          6
+        ]
+      },
+      "artifact_only_answer": "RAG (Retrieval-Augmented Generation)",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "2312.10997v5.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [],
+      "global_index": 82,
+      "gold_pages": [
+        9,
+        1,
+        0
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 22,
+      "original_answer": "The method that integrates knowledge into white-box models via directive fine-tuning is RAG (Retrieval-Augmented Generation), as described in reference [75].",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          9,
+          6,
+          8,
+          4
+        ],
+        "text-top-10-question": [
+          9,
+          6,
+          9,
+          8
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        9,
+        6,
+        8,
+        4
+      ],
+      "page_changed": false,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.33166245,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.6633249,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.3377297,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.67545941,
+          "page": 6
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.33546048,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.67092096,
+          "page": 8
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 9
+        }
+      ],
+      "page_set_changed": false,
+      "plus_answer": "Modular RAG",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          9,
+          6,
+          8,
+          4
+        ],
+        "text-top-10-question": [
+          9,
+          6,
+          8,
+          4
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        9,
+        6,
+        8,
+        4
+      ],
+      "question": "Which method integrates knowledge into white-box models via directive fine-tuning?",
+      "unchanged_pages": [
+        9,
+        6,
+        8,
+        4
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          3,
+          12,
+          13,
+          32
+        ],
+        "text-top-10-question": [
+          3,
+          12,
+          13,
+          32
+        ]
+      },
+      "artifact_only_answer": "The time on a gallery screenshot demonstrating how to set gallery watch faces cannot be determined from the provided information, as no such screenshot or visual content is included in the text.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        3,
+        12,
+        13,
+        32
+      ],
+      "bucket": "both_right",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        12
+      ],
+      "global_index": 83,
+      "gold_pages": [
+        3,
+        9,
+        4,
+        0,
+        4,
+        1
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 23,
+      "original_answer": "10:08 AM",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          40,
+          37,
+          38,
+          39
+        ],
+        "text-top-10-question": [
+          37,
+          12,
+          37,
+          40
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        40,
+        37,
+        38,
+        39,
+        12
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4487799,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.89755981,
+          "page": 12
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49065799,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98131598,
+          "page": 37
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47795013,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95590027,
+          "page": 38
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47723544,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95447088,
+          "page": 39
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 40
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "10:08 AM",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          40,
+          37,
+          38,
+          39
+        ],
+        "text-top-10-question": [
+          40,
+          37,
+          38,
+          39
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        40,
+        37,
+        38,
+        39
+      ],
+      "question": "What is the time on the gallery screenshot when demostrating how to set galley watch faces?",
+      "unchanged_pages": [
+        40,
+        37,
+        38,
+        39
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          17,
+          18,
+          19
+        ],
+        "text-top-10-question": [
+          2,
+          17,
+          18,
+          19
+        ]
+      },
+      "artifact_only_answer": "The color used to indicate the aerobic zone on the HONOR Watch GS Pro cannot be determined from the provided text, image, or answers.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        17,
+        18,
+        19
+      ],
+      "bucket": "both_right",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        34
+      ],
+      "global_index": 84,
+      "gold_pages": [
+        2,
+        3
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 24,
+      "original_answer": "yellow",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          22,
+          2,
+          26,
+          21
+        ],
+        "text-top-10-question": [
+          22,
+          22,
+          34,
+          22
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        22,
+        2,
+        26,
+        21,
+        34
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45214163,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.90428326,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.40935523,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.81871046,
+          "page": 21
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 22
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4236149,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.84722981,
+          "page": 26
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.37676991,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.75353982,
+          "page": 34
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "yellow",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          22,
+          2,
+          26,
+          21
+        ],
+        "text-top-10-question": [
+          22,
+          2,
+          26,
+          21
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        22,
+        2,
+        26,
+        21
+      ],
+      "question": "What is the color on the watch that shows the aerobic zone?",
+      "unchanged_pages": [
+        22,
+        2,
+        26,
+        21
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          9,
+          10,
+          12
+        ],
+        "text-top-10-question": [
+          2,
+          9,
+          10,
+          12
+        ]
+      },
+      "artifact_only_answer": "The document does not specify the colors of icons for moving or removing apps.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        9,
+        10,
+        12
+      ],
+      "bucket": "both_right",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        20
+      ],
+      "global_index": 85,
+      "gold_pages": [
+        1,
+        6
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 25,
+      "original_answer": "The icon to move an app up is a gray upward arrow, and the icon to remove an app is a red circle with a line through it.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          15,
+          14,
+          33,
+          10
+        ],
+        "text-top-10-question": [
+          14,
+          15,
+          20,
+          20
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        15,
+        14,
+        33,
+        10,
+        20
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47742982,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.95485965,
+          "page": 10
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49226237,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98452475,
+          "page": 14
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 15
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47565412,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.95130824,
+          "page": 20
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48992402,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97984805,
+          "page": 33
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "Move app up: gray upward arrow; Remove app: red circle with a line through it",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          15,
+          14,
+          33,
+          10
+        ],
+        "text-top-10-question": [
+          15,
+          14,
+          33,
+          10
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        15,
+        14,
+        33,
+        10
+      ],
+      "question": "What are the colors of the icons that the users touch to move the app up and remove the app respectively?",
+      "unchanged_pages": [
+        15,
+        14,
+        33,
+        10
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          11,
+          12,
+          14
+        ],
+        "text-top-10-question": [
+          2,
+          11,
+          12,
+          14
+        ]
+      },
+      "artifact_only_answer": "The document does not specify the color of icons used to move apps or interact with gestures.",
+      "artifact_only_correct": true,
+      "artifact_only_pages": [
+        2,
+        11,
+        12,
+        14
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        2,
+        15,
+        12
+      ],
+      "global_index": 86,
+      "gold_pages": [],
+      "has_nonzero_artifact_score": false,
+      "local_index": 26,
+      "original_answer": "black",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          14,
+          33,
+          30,
+          26
+        ],
+        "text-top-10-question": [
+          2,
+          14,
+          15,
+          12
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": null,
+      "original_gold_any": null,
+      "original_pages": [
+        14,
+        33,
+        30,
+        26,
+        2,
+        15,
+        12
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.38865587,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.77731175,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.35985086,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.71970172,
+          "page": 12
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 14
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48664228,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.97328456,
+          "page": 15
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.48700068,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.97400136,
+          "page": 26
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4937926,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.9875852,
+          "page": 30
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49486634,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98973269,
+          "page": 33
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "black and white",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          14,
+          33,
+          30,
+          26
+        ],
+        "text-top-10-question": [
+          14,
+          33,
+          30,
+          26
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": null,
+      "plus_gold_any": null,
+      "plus_pages": [
+        14,
+        33,
+        30,
+        26
+      ],
+      "question": "What is the color of the icons that the users touch to move the app down?",
+      "unchanged_pages": [
+        14,
+        33,
+        30,
+        26
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [
+        20
+      ],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          10,
+          11,
+          12
+        ],
+        "text-top-10-question": [
+          2,
+          10,
+          11,
+          12
+        ]
+      },
+      "artifact_only_answer": "6",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        10,
+        11,
+        12
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        2,
+        22
+      ],
+      "global_index": 87,
+      "gold_pages": [
+        1,
+        2,
+        1,
+        3
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 27,
+      "original_answer": 6,
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          11,
+          2,
+          18,
+          22
+        ],
+        "text-top-10-question": [
+          11,
+          18,
+          17,
+          17
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        11,
+        2,
+        18,
+        22,
+        17
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.41294234,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.82588469,
+          "page": 2
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 11
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.44726248,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.89452496,
+          "page": 17
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45450885,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.90901771,
+          "page": 18
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.43478261,
+          "in_original": false,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.86956522,
+          "page": 20
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.40166934,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.80333868,
+          "page": 22
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "6",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          11,
+          18,
+          17,
+          20
+        ],
+        "text-top-10-question": [
+          11,
+          18,
+          17,
+          20
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        11,
+        18,
+        17,
+        20
+      ],
+      "question": "How many distinct button functions are there during a workout?",
+      "unchanged_pages": [
+        11,
+        18,
+        17
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          2,
+          17,
+          18,
+          19
+        ],
+        "text-top-10-question": [
+          2,
+          17,
+          18,
+          19
+        ]
+      },
+      "artifact_only_answer": "The document does not provide information about the meaning of \"--\" for resting heart rate or any environmental requirements related to this reading. Therefore, it is not possible to determine the appropriate environment based on the provided text or image.",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        2,
+        17,
+        18,
+        19
+      ],
+      "bucket": "both_right",
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        35
+      ],
+      "global_index": 88,
+      "gold_pages": [
+        2,
+        0,
+        2,
+        1
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 28,
+      "original_answer": "Measure your resting heart rate in a quiet and relaxed environment when you are awake, ideally immediately after waking up in the morning, to ensure accuracy. If \"--\" is displayed, it means the watch could not measure the heart rate, and re-measuring under these optimal conditions should resolve the issue.",
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          23,
+          24,
+          22,
+          21
+        ],
+        "text-top-10-question": [
+          23,
+          24,
+          23,
+          35
+        ]
+      },
+      "original_correct": true,
+      "original_gold_all": false,
+      "original_gold_any": false,
+      "original_pages": [
+        23,
+        24,
+        22,
+        21,
+        35
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45822259,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91644517,
+          "page": 21
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.47470851,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.94941702,
+          "page": 22
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 23
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4926301,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.9852602,
+          "page": 24
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.28735149,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.57470298,
+          "page": 35
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": "If '--' is displayed as the resting heart rate reading, it indicates the watch was unable to measure it. To ensure an accurate measurement, the user should measure their resting heart rate in a quiet and relaxed environment when awake, ideally immediately after waking up in the morning.",
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          23,
+          24,
+          22,
+          21
+        ],
+        "text-top-10-question": [
+          23,
+          24,
+          22,
+          21
+        ]
+      },
+      "plus_correct": true,
+      "plus_gold_all": false,
+      "plus_gold_any": false,
+      "plus_pages": [
+        23,
+        24,
+        22,
+        21
+      ],
+      "question": "If \"--\" is displayed as the resting heart rate reading, what kind of environment should the user stay in?",
+      "unchanged_pages": [
+        23,
+        24,
+        22,
+        21
+      ]
+    },
+    {
+      "added_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "added_pages": [],
+      "artifact_by_key": {
+        "image-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ],
+        "text-top-10-question": [
+          1,
+          3,
+          4,
+          5
+        ]
+      },
+      "artifact_only_answer": "0",
+      "artifact_only_correct": false,
+      "artifact_only_pages": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "bucket": "both_wrong",
+      "doc_id": "nova_y70.pdf",
+      "dropped_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "dropped_pages": [
+        4
+      ],
+      "global_index": 89,
+      "gold_pages": [
+        8,
+        9
+      ],
+      "has_nonzero_artifact_score": false,
+      "local_index": 29,
+      "original_answer": 25,
+      "original_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "original_by_key": {
+        "image-top-10-question": [
+          7,
+          1,
+          44,
+          8
+        ],
+        "text-top-10-question": [
+          7,
+          1,
+          4,
+          7
+        ]
+      },
+      "original_correct": false,
+      "original_gold_all": false,
+      "original_gold_any": true,
+      "original_pages": [
+        7,
+        1,
+        44,
+        8,
+        4
+      ],
+      "page_changed": true,
+      "page_order_only_changed": false,
+      "page_score_diagnostics": [
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.49368357,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.98736715,
+          "page": 1
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.4370136,
+          "in_original": true,
+          "in_plus": false,
+          "num_artifacts": 0,
+          "original_score": 0.8740272,
+          "page": 4
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.5,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 1.0,
+          "page": 7
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.45545562,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.91091124,
+          "page": 8
+        },
+        {
+          "artifact_score": 0.0,
+          "final_score": 0.46653191,
+          "in_original": true,
+          "in_plus": true,
+          "num_artifacts": 0,
+          "original_score": 0.93306381,
+          "page": 44
+        }
+      ],
+      "page_set_changed": true,
+      "plus_answer": 24,
+      "plus_artifact_summary": {
+        "anchor_types": {},
+        "artifact_types": {},
+        "modalities": {},
+        "num_artifacts": 0,
+        "pages_with_artifacts": []
+      },
+      "plus_by_key": {
+        "image-top-10-question": [
+          7,
+          1,
+          44,
+          8
+        ],
+        "text-top-10-question": [
+          7,
+          1,
+          44,
+          8
+        ]
+      },
+      "plus_correct": false,
+      "plus_gold_all": false,
+      "plus_gold_any": true,
+      "plus_pages": [
+        7,
+        1,
+        44,
+        8
+      ],
+      "question": "How many distinct notification and status icons are displayed in the guidebook?",
+      "unchanged_pages": [
+        7,
+        1,
+        44,
+        8
+      ]
+    }
+  ],
+  "scores": {
+    "artifact_only": 0.26666666666666666,
+    "original_only": 0.4666666666666667,
+    "original_plus_artifact": 0.4
+  },
+  "slice": "60:90",
+  "win_reason_counts": {
+    "no_nonzero_artifact_score_for_doc_candidates": 1,
+    "page_selection_changed": 1,
+    "page_set_changed": 1
+  }
+}

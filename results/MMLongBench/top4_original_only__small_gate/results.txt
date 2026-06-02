@@ -1,0 +1,7 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/top4_original_only__small_gate/2026-06-01-05-36.json
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/top4_original_only__small_gate/2026-06-01-05-36.json
+Average Binary Correctness: 0.500

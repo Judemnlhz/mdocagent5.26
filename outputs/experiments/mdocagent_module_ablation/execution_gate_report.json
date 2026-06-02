@@ -1,0 +1,146 @@
+{
+  "checks": {
+    "adapter_manifest_policy": {
+      "deepseek_in_adapter_manifests": [],
+      "pass": true,
+      "policy_violations": []
+    },
+    "api_nondeterminism_possible": true,
+    "binary_correctness_large_delta": {
+      "delta": null,
+      "max_allowed_delta": 0.05,
+      "pass": false
+    },
+    "evaluation_command_shape_consistent": {
+      "pass": true
+    },
+    "evaluation_judge_consistent": {
+      "pass": true,
+      "values": [
+        "deepseek-ai/DeepSeek-V3"
+      ]
+    },
+    "evaluation_outputs_exist": {
+      "pass": false
+    },
+    "model_config_hash_consistent": {
+      "pass": true,
+      "values": [
+        "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9"
+      ]
+    },
+    "page_budget_consistent": {
+      "pass": true
+    },
+    "prediction_command_shape_consistent": {
+      "pass": true
+    },
+    "prediction_outputs_exist": {
+      "pass": false
+    },
+    "retrieval_input_equivalent": {
+      "fields_checked": [
+        "text-top-10-question",
+        "image-top-10-question"
+      ],
+      "mismatch_count": 0,
+      "mismatch_examples": [],
+      "num_records": 1073,
+      "pass": true,
+      "top_k": 4
+    },
+    "run_name_resume_path_pollution": {
+      "detected": false
+    },
+    "top_k_consistent": {
+      "pass": true,
+      "values": [
+        4
+      ]
+    }
+  },
+  "forbidden_runs_not_executed_by_this_check": [
+    "top4_artifact_only",
+    "top4_original_plus_artifact",
+    "top4_graph_context"
+  ],
+  "runs": [
+    {
+      "binary_correctness": {
+        "available": false,
+        "average": null,
+        "num_records": 0,
+        "num_scored": 0
+      },
+      "compatibility_report_path": "outputs/experiments/mdocagent_module_ablation/compatibility/mdocagent_top4_official_reproduction.compatibility_report.json",
+      "compatibility_status": "pass",
+      "compatible_retrieval_path": "outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json",
+      "eval_model_id": "deepseek-ai/DeepSeek-V3",
+      "evaluation_command": [
+        "python3",
+        "scripts/eval.py",
+        "--config-name",
+        "mmlb",
+        "run-name=mdocagent_top4_official_reproduction"
+      ],
+      "evaluation_output_exists": false,
+      "evaluation_output_path": null,
+      "model_config_hash": "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9",
+      "prediction_command": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=mdocagent_top4_official_reproduction",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/reranked_records/mdocagent_top4_official_reproduction.json"
+      ],
+      "prediction_output_exists": false,
+      "prediction_output_path": null,
+      "run_name": "mdocagent_top4_official_reproduction",
+      "top_k": 4
+    },
+    {
+      "binary_correctness": {
+        "available": false,
+        "average": null,
+        "num_records": 0,
+        "num_scored": 0
+      },
+      "compatibility_report_path": "outputs/experiments/mdocagent_module_ablation/compatibility/top4_original_only.compatibility_report.json",
+      "compatibility_status": "pass",
+      "compatible_retrieval_path": "outputs/experiments/mdocagent_module_ablation/reranked_records/top4_original_only.json",
+      "eval_model_id": "deepseek-ai/DeepSeek-V3",
+      "evaluation_command": [
+        "python3",
+        "scripts/eval.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_only"
+      ],
+      "evaluation_output_exists": false,
+      "evaluation_output_path": null,
+      "model_config_hash": "6189862ee85ae6d9c632f78a64358ed713c706cbc87498198f1b2e0c39b27ac9",
+      "prediction_command": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_only",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/reranked_records/top4_original_only.json"
+      ],
+      "prediction_output_exists": false,
+      "prediction_output_path": null,
+      "run_name": "top4_original_only",
+      "top_k": 4
+    }
+  ],
+  "runs_requested": [
+    "mdocagent_top4_official_reproduction",
+    "top4_original_only"
+  ],
+  "schema_version": "mdocagent_execution_gate_v1",
+  "status": "fail",
+  "summary_path": "outputs/experiments/mdocagent_module_ablation/summary.json"
+}

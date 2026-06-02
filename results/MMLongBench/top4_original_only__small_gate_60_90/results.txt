@@ -1,0 +1,4 @@
+
+Evaluation Results Summary:
+Result file: ./results/MMLongBench/top4_original_only__small_gate_60_90/2026-06-02-03-01.json
+Average Binary Correctness: 0.467

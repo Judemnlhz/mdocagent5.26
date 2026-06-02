@@ -1,0 +1,1172 @@
+[
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      4,
+      16,
+      12,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49945314,
+      0.49124671,
+      0.4836562
+    ],
+    "question": "According to the report, how do 5% of the Latinos see economic upward mobility for their children?",
+    "text-top-10-question": [
+      4,
+      16,
+      12,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49945314,
+      0.49124671,
+      0.4836562
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      18,
+      4,
+      20,
+      19
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49807655,
+      0.49386566,
+      0.49317509
+    ],
+    "question": "According to the report, which one is greater in population in the survey? Foreign born Latinos, or the Latinos interviewed by cellphone?",
+    "text-top-10-question": [
+      18,
+      4,
+      20,
+      19
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49807655,
+      0.49386566,
+      0.49317509
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      3,
+      12,
+      5,
+      13
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49306806,
+      0.49095873,
+      0.48719577
+    ],
+    "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+    "text-top-10-question": [
+      3,
+      12,
+      5,
+      13
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49306806,
+      0.49095873,
+      0.48719577
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      17,
+      22,
+      21,
+      1
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49771125,
+      0.49657864,
+      0.49595641
+    ],
+    "question": "Among all 12 references in this report, how many are from its own research center?",
+    "text-top-10-question": [
+      17,
+      22,
+      21,
+      1
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49771125,
+      0.49657864,
+      0.49595641
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      12,
+      3,
+      8,
+      13
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49745303,
+      0.49657513,
+      0.49446252
+    ],
+    "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+    "text-top-10-question": [
+      12,
+      3,
+      8,
+      13
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49745303,
+      0.49657513,
+      0.49446252
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      15,
+      3,
+      7,
+      12
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.47008525,
+      0.46308226,
+      0.46075181
+    ],
+    "question": "According to this report, among the Hispanics shaped by four current personal financial situation, which situation involves the highest percentage that expects their future financial situation to get a lot worse?",
+    "text-top-10-question": [
+      15,
+      3,
+      7,
+      12
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.47008525,
+      0.46308226,
+      0.46075181
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+    "image-top-10-question": [
+      10,
+      11,
+      6,
+      5
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.48338131,
+      0.47507246,
+      0.47194181
+    ],
+    "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich group is this, and what is the percentage droped?",
+    "text-top-10-question": [
+      10,
+      11,
+      6,
+      5
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.48338131,
+      0.47507246,
+      0.47194181
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      3,
+      4,
+      2,
+      20
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49399781,
+      0.48333385,
+      0.48321662
+    ],
+    "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+    "text-top-10-question": [
+      3,
+      4,
+      2,
+      20
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49399781,
+      0.48333385,
+      0.48321662
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      4,
+      3,
+      2,
+      20
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49593845,
+      0.48802589,
+      0.48795305
+    ],
+    "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2024?",
+    "text-top-10-question": [
+      4,
+      3,
+      2,
+      20
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49593845,
+      0.48802589,
+      0.48795305
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      5,
+      6,
+      3,
+      20
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.4833153,
+      0.45596508,
+      0.4369659
+    ],
+    "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+    "text-top-10-question": [
+      5,
+      6,
+      3,
+      20
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.4833153,
+      0.45596508,
+      0.4369659
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      21,
+      4,
+      19,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.46851044,
+      0.4678348,
+      0.46252284
+    ],
+    "question": "According to this report, which group is greater in population in 2018? Republican who are hispanic, or no leans who are male?",
+    "text-top-10-question": [
+      21,
+      4,
+      19,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.46851044,
+      0.4678348,
+      0.46252284
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      18,
+      9,
+      21,
+      10
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.4954626,
+      0.4931093,
+      0.49236841
+    ],
+    "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+    "text-top-10-question": [
+      18,
+      9,
+      21,
+      10
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.4954626,
+      0.4931093,
+      0.49236841
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "Independents-Report.pdf",
+    "image-top-10-question": [
+      19,
+      17,
+      2,
+      15
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.496425,
+      0.49570657,
+      0.49006991
+    ],
+    "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+    "text-top-10-question": [
+      19,
+      17,
+      2,
+      15
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.496425,
+      0.49570657,
+      0.49006991
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      1,
+      10,
+      7,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.35607798,
+      0.33505352,
+      0.33237767
+    ],
+    "question": "Where was Gestalt psychology concieved?",
+    "text-top-10-question": [
+      1,
+      10,
+      7,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.35607798,
+      0.33505352,
+      0.33237767
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      1,
+      0,
+      13,
+      6
+    ],
+    "image-top-10-question_score": [
+      0.59554499,
+      0.58911755,
+      0.5,
+      0.4326976
+    ],
+    "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+    "text-top-10-question": [
+      1,
+      0,
+      13,
+      6
+    ],
+    "text-top-10-question_score": [
+      0.59554499,
+      0.58911755,
+      0.5,
+      0.4326976
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      9,
+      8,
+      5,
+      14
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.40310822,
+      0.38009965,
+      0.37919277
+    ],
+    "question": "What range does red color represents in approximate distance from the Mississippi River in the chart that tracks the West NIle Virus in Europe?",
+    "text-top-10-question": [
+      9,
+      8,
+      5,
+      14
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.40310822,
+      0.38009965,
+      0.37919277
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      10,
+      1,
+      7,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.38946288,
+      0.36751891,
+      0.36449552
+    ],
+    "question": "How does this document define the law of good gestalt?",
+    "text-top-10-question": [
+      10,
+      1,
+      7,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.38946288,
+      0.36751891,
+      0.36449552
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      13,
+      14,
+      6,
+      11
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.42159262,
+      0.41972596,
+      0.41596
+    ],
+    "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+    "text-top-10-question": [
+      13,
+      14,
+      6,
+      11
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.42159262,
+      0.41972596,
+      0.41596
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      12,
+      11,
+      4,
+      5
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.34604833,
+      0.33435664,
+      0.32227342
+    ],
+    "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+    "text-top-10-question": [
+      12,
+      11,
+      4,
+      5
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.34604833,
+      0.33435664,
+      0.32227342
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      1,
+      0,
+      7,
+      10
+    ],
+    "image-top-10-question_score": [
+      0.9694197,
+      0.83095828,
+      0.5,
+      0.47458047
+    ],
+    "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+    "text-top-10-question": [
+      1,
+      0,
+      7,
+      10
+    ],
+    "text-top-10-question_score": [
+      0.9694197,
+      0.83095828,
+      0.5,
+      0.47458047
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      16,
+      14,
+      18,
+      8
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.47763129,
+      0.4758382,
+      0.47048495
+    ],
+    "question": "What does the map in the report shows?",
+    "text-top-10-question": [
+      16,
+      14,
+      18,
+      8
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.47763129,
+      0.4758382,
+      0.47048495
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      2,
+      8,
+      18,
+      11
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.48539468,
+      0.4790229,
+      0.47545656
+    ],
+    "question": "What year is the report for?",
+    "text-top-10-question": [
+      2,
+      8,
+      18,
+      11
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.48539468,
+      0.4790229,
+      0.47545656
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      5,
+      14,
+      7,
+      9
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.40068493,
+      0.3879203,
+      0.35554172
+    ],
+    "question": "What are the uses of Indian remote sensing satellite constellation?",
+    "text-top-10-question": [
+      5,
+      14,
+      7,
+      9
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.40068493,
+      0.3879203,
+      0.35554172
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      18,
+      17,
+      8,
+      19
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.36209102,
+      0.32766955,
+      0.28792597
+    ],
+    "question": "What is NARL stand for in this document?",
+    "text-top-10-question": [
+      18,
+      17,
+      8,
+      19
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.36209102,
+      0.32766955,
+      0.28792597
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      2,
+      1,
+      5,
+      4
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49898696,
+      0.49787392,
+      0.48910648
+    ],
+    "question": "Of the four missions of Indian Space Program's space mission from 2012 to 2017, which mission includes the launch of least number of satellites?",
+    "text-top-10-question": [
+      2,
+      1,
+      5,
+      4
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49898696,
+      0.49787392,
+      0.48910648
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      8,
+      17,
+      0,
+      18
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.47992392,
+      0.47584124,
+      0.46918933
+    ],
+    "question": "How many organisations does this report introduce in detail (at least one paragraph) ?",
+    "text-top-10-question": [
+      8,
+      17,
+      0,
+      18
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.47992392,
+      0.47584124,
+      0.46918933
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+    "image-top-10-question": [
+      0,
+      19,
+      8,
+      17
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.49820914,
+      0.49666645,
+      0.48672411
+    ],
+    "question": "How many exterior photos of organisations does this report provide?",
+    "text-top-10-question": [
+      0,
+      19,
+      8,
+      17
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.49820914,
+      0.49666645,
+      0.48672411
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      10,
+      47,
+      88,
+      4
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.3828697,
+      0.3682284,
+      0.36642496
+    ],
+    "question": "What is the title of module 1?",
+    "text-top-10-question": [
+      10,
+      47,
+      88,
+      4
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.3828697,
+      0.3682284,
+      0.36642496
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      32,
+      18
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.5,
+      0.5,
+      0.49759117
+    ],
+    "question": "What is the web address in the orange box in page 47 that gives the Wiki Query Service code?",
+    "text-top-10-question": [
+      0,
+      1,
+      32,
+      18
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.5,
+      0.5,
+      0.49759117
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*normalized_artifact_score",
+      "lambda_weight": 0.5,
+      "mode": "original_plus_artifact",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+    "image-top-10-question": [
+      0,
+      1,
+      100,
+      99
+    ],
+    "image-top-10-question_score": [
+      0.5,
+      0.5,
+      0.5,
+      0.49997543
+    ],
+    "question": "What is the sum of the files size of the 2 files with the smallest file size in the table on page 98?",
+    "text-top-10-question": [
+      0,
+      1,
+      100,
+      99
+    ],
+    "text-top-10-question_score": [
+      0.5,
+      0.5,
+      0.5,
+      0.49997543
+    ]
+  }
+]
