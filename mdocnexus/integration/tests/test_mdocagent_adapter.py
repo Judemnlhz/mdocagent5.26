@@ -88,11 +88,43 @@ class MDocAgentAdapterTests(unittest.TestCase):
 
         adapted = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
 
-        self.assertEqual(adapted[0]["text-top-10-question"][0], 1)
+        self.assertEqual(adapted[0]["text-top-10-question"][0], 2)
+        self.assertIn(1, adapted[0]["text-top-10-question"][1:])
         self.assertEqual(adapted[0]["image-top-10-question"], [3, 2, 0, 4])
         self.assertNotEqual(adapted[0]["text-top-10-question"], adapted[0]["image-top-10-question"])
         self.assertTrue(adapted[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
         self.assertTrue(adapted[0]["_nexus_meta"]["preserved_retrieval_branches"])
+
+    def test_original_plus_artifact_does_not_expand_beyond_original_top_k(self) -> None:
+        records = load_mdocagent_retrieval_records_from_value(top_k_expansion_record())
+        artifacts = load_artifacts_by_page_from_lines(top_k_expansion_artifact_lines())
+
+        hybrid = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
+        artifact_only = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="artifact_only")
+
+        self.assertEqual(hybrid[0]["text-top-10-question"], [0, 1, 2, 3])
+        self.assertFalse(hybrid[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
+        self.assertEqual(hybrid[0]["_nexus_meta"]["fallback_reason"], "no_positive_anchored_artifact_score")
+        self.assertIn(9, artifact_only[0]["text-top-10-question"])
+
+    def test_original_plus_artifact_preserves_branch_top1(self) -> None:
+        records = load_mdocagent_retrieval_records_from_value(top1_preservation_record())
+        artifacts = load_artifacts_by_page_from_lines(top1_preservation_artifact_lines())
+
+        hybrid = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
+
+        self.assertEqual(hybrid[0]["text-top-10-question"][0], 0)
+        self.assertIn(1, hybrid[0]["text-top-10-question"][1:])
+        self.assertTrue(hybrid[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
+
+    def test_mock_or_unstructured_artifacts_do_not_drive_rerank(self) -> None:
+        records = load_mdocagent_retrieval_records_from_value(branch_diversity_record())
+        artifacts = load_artifacts_by_page_from_lines(mock_and_unstructured_artifact_lines())
+
+        hybrid = rerank_pages_with_artifacts(records, artifacts, top_k=4, mode="original_plus_artifact")
+
+        self.assertEqual(hybrid[0]["text-top-10-question"], [2, 1, 0, 4])
+        self.assertFalse(hybrid[0]["_nexus_meta"]["anchored_artifact_rerank_applied"])
 
     def test_lambda_weight_manifest_and_top4_budget(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -284,6 +316,50 @@ def anchored_branch_artifact_lines() -> str:
     return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
 
 
+def top_k_expansion_record() -> dict[str, object]:
+    return {
+        "doc_id": "doc.pdf",
+        "question": "Which page discusses alpha revenue?",
+        "text-top-10-question": [0, 1, 2, 3, 9],
+        "text-top-10-question_score": [1.0, 0.9, 0.8, 0.7, 0.1],
+        "image-top-10-question": [0, 1, 2, 3],
+        "image-top-10-question_score": [1.0, 0.9, 0.8, 0.7],
+    }
+
+
+def top_k_expansion_artifact_lines() -> str:
+    rows = [
+        anchored_artifact(9, "a9", "table", "alpha revenue revenue revenue revenue"),
+    ]
+    return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
+def top1_preservation_record() -> dict[str, object]:
+    return {
+        "doc_id": "doc.pdf",
+        "question": "Which page discusses alpha revenue?",
+        "text-top-10-question": [0, 1, 2, 3],
+        "text-top-10-question_score": [1.0, 0.95, 0.9, 0.85],
+        "image-top-10-question": [0, 1, 2, 3],
+        "image-top-10-question_score": [1.0, 0.95, 0.9, 0.85],
+    }
+
+
+def top1_preservation_artifact_lines() -> str:
+    rows = [
+        anchored_artifact(1, "a1", "table", "alpha revenue revenue revenue revenue"),
+    ]
+    return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
+def mock_and_unstructured_artifact_lines() -> str:
+    rows = [
+        anchored_artifact(1, "a1", "table", "Mock table candidate anchored to a text block."),
+        anchored_artifact(1, "a2", "text_span", "alpha revenue revenue revenue revenue"),
+    ]
+    return "\n".join(json.dumps(row, sort_keys=True) for row in rows) + "\n"
+
+
 def anchored_artifact(page_index: int, artifact_id: str, artifact_type: str, content: str) -> dict[str, object]:
     return {
         "doc_id": "doc.pdf",
@@ -291,6 +367,24 @@ def anchored_artifact(page_index: int, artifact_id: str, artifact_type: str, con
         "artifact_id": artifact_id,
         "artifact_type": artifact_type,
         "content": content,
+        "locators": [
+            {
+                "locator_kind": "source_block",
+                "block_id": f"p{page_index:03d}_text",
+                "source_id": f"p{page_index:03d}_text",
+            },
+            {
+                "locator_kind": "text_offset",
+                "block_id": f"p{page_index:03d}_text",
+                "char_start": 0,
+                "char_end": max(len(content), 1),
+            },
+        ],
+        "source_anchored": True,
+        "element_locatable": True,
+        "proof_trace_eligible": True,
+        "status": "anchored",
+        "validation_status": "anchored",
         "source_anchors": [
             {
                 "anchor_type": "text_span",

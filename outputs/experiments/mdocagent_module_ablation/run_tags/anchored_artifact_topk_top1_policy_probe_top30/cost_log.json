@@ -1,0 +1,19 @@
+{
+  "completed_api_calls": 150,
+  "estimated_api_calls": 180,
+  "failed_api_calls": 0,
+  "max_records": null,
+  "num_records": 30,
+  "record_slice": null,
+  "run_tag": "anchored_artifact_topk_top1_policy_probe_top30",
+  "runs": [
+    {
+      "completed_api_calls": 150,
+      "estimated_api_calls": 180,
+      "execution_run_name": "top4_original_plus_artifact__anchored_artifact_topk_top1_policy_probe_top30",
+      "failed_api_calls": 0,
+      "run_name": "top4_original_plus_artifact"
+    }
+  ],
+  "schema_version": "mdocagent_cost_log_v1"
+}

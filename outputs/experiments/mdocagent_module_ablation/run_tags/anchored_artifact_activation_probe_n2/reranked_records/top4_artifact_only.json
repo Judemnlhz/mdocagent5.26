@@ -1,0 +1,86 @@
+[
+  {
+    "_nexus_meta": {
+      "anchored_artifact_rerank_applied": true,
+      "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
+      "formula": "branch_preserving_artifact_score=max_bm25(question,anchored_page_artifacts); fallback=original_only_when_no_positive_anchor_score",
+      "lambda_weight": 0.5,
+      "mode": "artifact_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "preserved_retrieval_branches": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      13,
+      6,
+      4,
+      11
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.8653952,
+      0.85454431,
+      0.8399131
+    ],
+    "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+    "text-top-10-question": [
+      1,
+      0,
+      7,
+      2
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "anchored_artifact_rerank_applied": true,
+      "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
+      "formula": "branch_preserving_artifact_score=max_bm25(question,anchored_page_artifacts); fallback=original_only_when_no_positive_anchor_score",
+      "lambda_weight": 0.5,
+      "mode": "artifact_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "preserved_retrieval_branches": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      1,
+      0,
+      7,
+      10
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+    "text-top-10-question": [
+      1,
+      0,
+      7,
+      2
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      1.0,
+      0.0,
+      0.0
+    ]
+  }
+]

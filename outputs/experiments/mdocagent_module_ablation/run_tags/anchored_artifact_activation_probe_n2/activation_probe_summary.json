@@ -1,0 +1,174 @@
+{
+  "schema_version": "anchored_artifact_activation_probe_v1",
+  "run_tag": "anchored_artifact_activation_probe_n2",
+  "record_ids": [
+    14,
+    19
+  ],
+  "num_probe_records": 2,
+  "full_scan_total_records": 1073,
+  "full_scan_activated_count": 2,
+  "full_scan_activation_rate": 0.001863932898415657,
+  "full_scan_activated_and_changed_count": 2,
+  "accuracy": {
+    "top4_original_only": 1,
+    "top4_original_plus_artifact": 1,
+    "top4_artifact_only": 0.5
+  },
+  "help_hurt_neutral_vs_original": {
+    "help": 0,
+    "hurt": 0,
+    "neutral": 2
+  },
+  "interpretation": {
+    "safety_gate": "passed on previous 60:90 fallback check; no artifact activation there",
+    "effectiveness_gate": "not established statistically; current artifact coverage yields only 2 activated records out of 1073",
+    "full_ablation_recommendation": "do not run full artifact ablation as an effectiveness claim until artifact activation coverage is increased or an activation-rich subset of adequate size is available"
+  },
+  "per_record": [
+    {
+      "record_index": 14,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "original_answer": "21%",
+      "original_plus_artifact_answer": "21%",
+      "artifact_only_answer": "21%",
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            0
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            2
+          ]
+        }
+      },
+      "artifact_only_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            0
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            2
+          ]
+        }
+      },
+      "original_plus_meta": {
+        "anchored_artifact_rerank_applied": true,
+        "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
+        "formula": "branch_preserving_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; fallback=original_only_when_no_positive_anchor_score",
+        "lambda_weight": 0.5,
+        "mode": "original_plus_artifact",
+        "model_role": "none_deterministic",
+        "no_gold_fields_used": true,
+        "preserved_retrieval_branches": true,
+        "same_page_budget_as_baseline": true,
+        "top_k": 4,
+        "used_debug_edges": false,
+        "used_semantic_edges": false
+      }
+    },
+    {
+      "record_index": 19,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "original_answer": "The slide illustrates the closure aspect of the Gestalt Principle of Visual Perception using a dashed-line circle and a dashed-line square. These incomplete shapes demonstrate how our perception naturally fills in the missing parts to perceive them as complete objects.",
+      "original_plus_artifact_answer": "The closure aspect of the Gestalt Principle of Visual Perception is illustrated using broken shapes — specifically, a circle and a square — that are incomplete but are perceived by the human mind as whole by filling in the visual gaps.",
+      "artifact_only_answer": "The slide illustrates the Gestalt Principle of Closure using a broken circle and a broken square. These incomplete shapes are perceived by the viewer as whole, demonstrating how the human mind fills in visual gaps to perceive complete forms.",
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            7,
+            10,
+            2,
+            1
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            10
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            10
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            2
+          ]
+        }
+      },
+      "artifact_only_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            7,
+            10,
+            2,
+            1
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            10
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            10
+          ],
+          "variant": [
+            1,
+            0,
+            7,
+            2
+          ]
+        }
+      },
+      "original_plus_meta": {
+        "anchored_artifact_rerank_applied": true,
+        "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
+        "formula": "branch_preserving_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; fallback=original_only_when_no_positive_anchor_score",
+        "lambda_weight": 0.5,
+        "mode": "original_plus_artifact",
+        "model_role": "none_deterministic",
+        "no_gold_fields_used": true,
+        "preserved_retrieval_branches": true,
+        "same_page_budget_as_baseline": true,
+        "top_k": 4,
+        "used_debug_edges": false,
+        "used_semantic_edges": false
+      }
+    }
+  ]
+}

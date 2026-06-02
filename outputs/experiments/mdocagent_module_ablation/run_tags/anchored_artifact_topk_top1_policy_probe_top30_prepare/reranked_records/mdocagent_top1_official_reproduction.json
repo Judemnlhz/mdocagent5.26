@@ -1,0 +1,812 @@
+[
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      13
+    ],
+    "image-top-10-question_score": [
+      27.044687271118164
+    ],
+    "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+    "text-top-10-question": [
+      7
+    ],
+    "text-top-10-question_score": [
+      5.234375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      7
+    ],
+    "image-top-10-question_score": [
+      21.685684204101562
+    ],
+    "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+    "text-top-10-question": [
+      7
+    ],
+    "text-top-10-question_score": [
+      20.546875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2024.ug.eprospectus.pdf",
+    "image-top-10-question": [
+      24
+    ],
+    "image-top-10-question_score": [
+      20.279922485351562
+    ],
+    "question": "Which groups of applicants have the lastest end of application period according to this brochure?",
+    "text-top-10-question": [
+      24
+    ],
+    "text-top-10-question_score": [
+      14.703125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2024.ug.eprospectus.pdf",
+    "image-top-10-question": [
+      2
+    ],
+    "image-top-10-question_score": [
+      33.11781311035156
+    ],
+    "question": "Among the top 10 reasons why NTU smart campus is for you, which is the reason that does not include any person in the corresponding figure?",
+    "text-top-10-question": [
+      1
+    ],
+    "text-top-10-question_score": [
+      25.078125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2024.ug.eprospectus.pdf",
+    "image-top-10-question": [
+      5
+    ],
+    "image-top-10-question_score": [
+      21.80217742919922
+    ],
+    "question": "Which colleges/schools/institutes from NTU use year 3 students as cover page student model?",
+    "text-top-10-question": [
+      16
+    ],
+    "text-top-10-question_score": [
+      17.15625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      7
+    ],
+    "image-top-10-question_score": [
+      28.24574851989746
+    ],
+    "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot TACREV dataset?",
+    "text-top-10-question": [
+      8
+    ],
+    "text-top-10-question_score": [
+      19.40625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      8
+    ],
+    "image-top-10-question_score": [
+      28.5129337310791
+    ],
+    "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot CONLL03 dataset?",
+    "text-top-10-question": [
+      7
+    ],
+    "text-top-10-question_score": [
+      18.6875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      4
+    ],
+    "image-top-10-question_score": [
+      19.212522506713867
+    ],
+    "question": "Repeat the instructions corresponding to the settings shown in red box of Figure 3 (left).",
+    "text-top-10-question": [
+      2
+    ],
+    "text-top-10-question_score": [
+      14.671875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      14
+    ],
+    "image-top-10-question_score": [
+      21.132217407226562
+    ],
+    "question": "How many datasets are used for experiments of this paper in all? Give me an integer.",
+    "text-top-10-question": [
+      14
+    ],
+    "text-top-10-question_score": [
+      16.5625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      5
+    ],
+    "image-top-10-question_score": [
+      25.20963478088379
+    ],
+    "question": "Tell me the prompt template used for label 'Contact.Meet' in filter-then-rerank method of this work. ",
+    "text-top-10-question": [
+      5
+    ],
+    "text-top-10-question_score": [
+      16.5
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      4
+    ],
+    "image-top-10-question_score": [
+      25.855331420898438
+    ],
+    "question": "Tell me the prompt template used for label 'Contact.Meet' in purely LLM-based method of this work. ",
+    "text-top-10-question": [
+      2
+    ],
+    "text-top-10-question_score": [
+      15.40625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "2303.08559v2.pdf",
+    "image-top-10-question": [
+      14
+    ],
+    "image-top-10-question_score": [
+      25.651409149169922
+    ],
+    "question": "If I drop the green module shown in Figure 6,  what is the absolute percentage drop on 100-shot TACREV setting?",
+    "text-top-10-question": [
+      8
+    ],
+    "text-top-10-question_score": [
+      14.8828125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      2
+    ],
+    "image-top-10-question_score": [
+      36.36189270019531
+    ],
+    "question": "Among the adults conducted the survey on April 25 - May 1 2018, how many adults rated Trump's government ethical standards as poor? ",
+    "text-top-10-question": [
+      3
+    ],
+    "text-top-10-question_score": [
+      23.546875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      2
+    ],
+    "image-top-10-question_score": [
+      36.11048126220703
+    ],
+    "question": "Among the adults conducted the survey on April 25 - May 1 2022, how many adults rated Trump's government ethical standards as poor? ",
+    "text-top-10-question": [
+      3
+    ],
+    "text-top-10-question_score": [
+      22.75
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      4
+    ],
+    "image-top-10-question_score": [
+      61.21051025390625
+    ],
+    "question": "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of Donald Trump's govenment? Please write the answer in the list format and with alphabetical order, e.g., [\"A\",\"B\"]",
+    "text-top-10-question": [
+      4
+    ],
+    "text-top-10-question_score": [
+      40.8125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      4
+    ],
+    "image-top-10-question_score": [
+      59.3962516784668
+    ],
+    "question": "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of  Joe Biden's govenment? Please write the answer in the list format and with alphabetical order, e.g., [\"A\",\"B\"]",
+    "text-top-10-question": [
+      4
+    ],
+    "text-top-10-question_score": [
+      36.375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      51.115257263183594
+    ],
+    "question": "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about congressional elections in their state very closely in the survey of U.S. adults conducted from April 25 to May 1, 2018?",
+    "text-top-10-question": [
+      12
+    ],
+    "text-top-10-question_score": [
+      43.3125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      51.07889175415039
+    ],
+    "question": "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about congressional elections in their state very closely in the survey of U.S. adults conducted from April 25 to May 1, 2022?",
+    "text-top-10-question": [
+      12
+    ],
+    "text-top-10-question_score": [
+      42.125
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      13
+    ],
+    "image-top-10-question_score": [
+      53.40475845336914
+    ],
+    "question": "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and high ethical standards and closely follow congressional elections in their district in the survey of U.S. adults conducted April 25 - May 1, 2018?",
+    "text-top-10-question": [
+      13
+    ],
+    "text-top-10-question_score": [
+      47.09375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      13
+    ],
+    "image-top-10-question_score": [
+      50.288475036621094
+    ],
+    "question": "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and high ethical standards and closely follow congressional elections in their district in the survey of Chinese adults conducted April 25 - May 1, 2018?",
+    "text-top-10-question": [
+      13
+    ],
+    "text-top-10-question_score": [
+      43.34375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      9
+    ],
+    "image-top-10-question_score": [
+      63.300052642822266
+    ],
+    "question": "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 2018, was handling his job in the survey of U.S. adults conducted April 25-May 1, 2018? Please write the answer in float format",
+    "text-top-10-question": [
+      9
+    ],
+    "text-top-10-question_score": [
+      44.0625
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      9
+    ],
+    "image-top-10-question_score": [
+      55.07146453857422
+    ],
+    "question": "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 2018, was handling his job in the survey of Chinese adults conducted April 25-May 1, 2018?",
+    "text-top-10-question": [
+      9
+    ],
+    "text-top-10-question_score": [
+      36.59375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      44.761375427246094
+    ],
+    "question": "How many Demoncratic people in the survey of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high ethical standards'?",
+    "text-top-10-question": [
+      11
+    ],
+    "text-top-10-question_score": [
+      28.1875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "05-03-18-political-release.pdf",
+    "image-top-10-question": [
+      10
+    ],
+    "image-top-10-question_score": [
+      44.70452880859375
+    ],
+    "question": "How many non-partisan people in the survey  of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high ethical standards'?",
+    "text-top-10-question": [
+      11
+    ],
+    "text-top-10-question_score": [
+      30.109375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      1
+    ],
+    "image-top-10-question_score": [
+      18.371904373168945
+    ],
+    "question": "Who is the commanding officer in the first figure on the second page?",
+    "text-top-10-question": [
+      11
+    ],
+    "text-top-10-question_score": [
+      14.5859375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      1
+    ],
+    "image-top-10-question_score": [
+      15.618205070495605
+    ],
+    "question": "Who is the commanding officer at the last page?",
+    "text-top-10-question": [
+      6
+    ],
+    "text-top-10-question_score": [
+      14.46875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      0
+    ],
+    "image-top-10-question_score": [
+      27.455211639404297
+    ],
+    "question": "Who Visited the U.S. Naval Medical Research centre on November 29, 2012 in the document?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      21.5
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      0
+    ],
+    "image-top-10-question_score": [
+      25.247594833374023
+    ],
+    "question": "Who Visited the U.S. Naval Medical Research centre on November 29, 2020?",
+    "text-top-10-question": [
+      0
+    ],
+    "text-top-10-question_score": [
+      20.921875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      6
+    ],
+    "image-top-10-question_score": [
+      31.939603805541992
+    ],
+    "question": "With whom did the NAMRU-3 team visit Monrovia, Liberia, in November 2012? Enumerate their names within a list.",
+    "text-top-10-question": [
+      6
+    ],
+    "text-top-10-question_score": [
+      21.96875
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+    "image-top-10-question": [
+      14
+    ],
+    "image-top-10-question_score": [
+      26.263559341430664
+    ],
+    "question": "Among all the pictures, in which page the picture contains the most number of people? Give me the page no. as an integer.",
+    "text-top-10-question": [
+      5
+    ],
+    "text-top-10-question_score": [
+      8.5
+    ]
+  }
+]

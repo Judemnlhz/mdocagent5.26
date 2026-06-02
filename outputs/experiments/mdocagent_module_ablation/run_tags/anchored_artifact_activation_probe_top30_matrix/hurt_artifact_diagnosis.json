@@ -1,0 +1,2474 @@
+[
+  {
+    "record_index": 187,
+    "doc_id": "2303.08559v2.pdf",
+    "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot CONLL03 dataset?",
+    "branches": {
+      "image-top-10-question": {
+        "original_pages": [
+          8,
+          7,
+          5,
+          16
+        ],
+        "original_plus_pages": [
+          8,
+          7,
+          5,
+          16
+        ],
+        "original_norm_scores": {
+          "8": 1.0,
+          "7": 0.99762606,
+          "5": 0.98611458,
+          "16": 0.95686792,
+          "20": 0.94827536,
+          "6": 0.93866441,
+          "14": 0.93429429,
+          "19": 0.92187184,
+          "0": 0.92040177,
+          "18": 0.91886742
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "8": [
+            {
+              "artifact_id": "2303.08559v2_p008_p008_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Table 3: Overall results of LLM-based ICL methods, SLM-based supervised methods, and our proposed filter-then- rerank (SLM+LLM) methods. The best results are in bold face and the second best are underlined. All results except InstructGPT an",
+              "raw_bm25": 8.652441776461231,
+              "weighted_bm25": 8.652441776461231
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_section_008_0005_0005",
+              "artifact_type": "section_header",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "section_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Table 3: Overall results of LLM-based ICL methods, SLM-based supervised methods, and our proposed filter-then-",
+              "raw_bm25": 6.616579468286635,
+              "weighted_bm25": 6.616579468286635
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_caption_008_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_fig_008_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p008_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_fig_008_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p008_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "7": [
+            {
+              "artifact_id": "2303.08559v2_p007_section_007_0005_0005",
+              "artifact_type": "section_header",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "section_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Filter",
+              "raw_bm25": 1.9531676087963188,
+              "weighted_bm25": 1.9531676087963188
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_p007_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Filter The sentence implies that Laura Silsby is associated with the city of Meridian in the state of Idaho, and does not provide information about her birthplace. So Laura Silsby lives in the city Meridian. Answer: (b) Demonstration The la",
+              "raw_bm25": 1.4189151266089466,
+              "weighted_bm25": 1.4189151266089466
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_caption_007_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_fig_007_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p007_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_fig_007_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p007_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "14": [
+            {
+              "artifact_id": "2303.08559v2_p014_caption_014_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p014_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p014_fig_014_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p014_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p014_fig_014_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p014_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p014_p014_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p014_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p014_p014_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p014_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Table 6: Statistics of nine datasets used. Note that the #mentions for event detection tasks refers to the number of trigger words, while the #mentions for event argument extraction tasks refers to the number of arguments. Named Entity Reco",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      },
+      "text-top-10-question": {
+        "original_pages": [
+          7,
+          8,
+          8,
+          7
+        ],
+        "original_plus_pages": [
+          8,
+          7,
+          16,
+          6
+        ],
+        "original_norm_scores": {
+          "7": 1.0,
+          "8": 0.93896321,
+          "16": 0.909699,
+          "6": 0.88963211,
+          "20": 0.86454849
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "7": [
+            {
+              "artifact_id": "2303.08559v2_p007_section_007_0005_0005",
+              "artifact_type": "section_header",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "section_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Filter",
+              "raw_bm25": 1.536683866318443,
+              "weighted_bm25": 1.536683866318443
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_p007_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Filter The sentence implies that Laura Silsby is associated with the city of Meridian in the state of Idaho, and does not provide information about her birthplace. So Laura Silsby lives in the city Meridian. Answer: (b) Demonstration The la",
+              "raw_bm25": 1.1157322185838956,
+              "weighted_bm25": 1.1157322185838956
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_caption_007_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p007_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_fig_007_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p007_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p007_fig_007_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p007_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "8": [
+            {
+              "artifact_id": "2303.08559v2_p008_p008_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Table 3: Overall results of LLM-based ICL methods, SLM-based supervised methods, and our proposed filter-then- rerank (SLM+LLM) methods. The best results are in bold face and the second best are underlined. All results except InstructGPT an",
+              "raw_bm25": 7.24181418306921,
+              "weighted_bm25": 7.24181418306921
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_section_008_0005_0005",
+              "artifact_type": "section_header",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "section_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Table 3: Overall results of LLM-based ICL methods, SLM-based supervised methods, and our proposed filter-then-",
+              "raw_bm25": 5.466181150937567,
+              "weighted_bm25": 5.466181150937567
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_caption_008_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p008_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_fig_008_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p008_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "2303.08559v2_p008_fig_008_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p008_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "answers": {
+      "original_answer": "The performance for the 50-shot CONLL03 dataset is not provided in the visible tables.",
+      "original_plus_artifact_answer": "77.2",
+      "artifact_only_answer": "77.2"
+    }
+  },
+  {
+    "record_index": 207,
+    "doc_id": "05-03-18-political-release.pdf",
+    "question": "Among the adults conducted the survey on April 25 - May 1 2022, how many adults rated Trump's government ethical standards as poor? ",
+    "branches": {
+      "image-top-10-question": {
+        "original_pages": [
+          2,
+          7,
+          3,
+          8
+        ],
+        "original_plus_pages": [
+          2,
+          10,
+          3,
+          7
+        ],
+        "original_norm_scores": {
+          "2": 1.0,
+          "7": 0.98559688,
+          "3": 0.96157317,
+          "8": 0.94675933,
+          "10": 0.92983766,
+          "9": 0.92503961,
+          "4": 0.90752678,
+          "5": 0.90665303,
+          "11": 0.90132806,
+          "6": 0.89453448
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 6.355527882789466,
+              "weighted_bm25": 6.355527882789466
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "3": [
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "2 PEW RESEARCH CENTER www.pewresearch.org Poor Not good Good Excellent 36 7 61 9 19 2 Total Rep/Lean Rep Dem/Lean Dem 39 58 75 22 12 86 poor. On these views partisans are deeply divided, with three-quarters of Republicans (75%) giving the a",
+              "raw_bm25": 3.0548839617847627,
+              "weighted_bm25": 3.0548839617847627
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_caption_003_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "10": [
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "9 PEW RESEARCH CENTER www.pewresearch.org 50 41 48 50 42 42 Republican Party Democratic Party Has good policy ideas Has high ethical standards Is too extreme The public has similar views of the Republican and Democratic parties in assessmen",
+              "raw_bm25": 4.176633592333385,
+              "weighted_bm25": 4.176633592333385
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_caption_010_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      },
+      "text-top-10-question": {
+        "original_pages": [
+          3,
+          7,
+          8,
+          2
+        ],
+        "original_plus_pages": [
+          2,
+          3,
+          7,
+          8
+        ],
+        "original_norm_scores": {
+          "3": 1.0,
+          "7": 0.97458791,
+          "8": 0.9739011,
+          "2": 0.90384615,
+          "6": 0.83585165,
+          "11": 0.82005495,
+          "9": 0.81868132,
+          "4": 0.81456044
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "3": [
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "2 PEW RESEARCH CENTER www.pewresearch.org Poor Not good Good Excellent 36 7 61 9 19 2 Total Rep/Lean Rep Dem/Lean Dem 39 58 75 22 12 86 poor. On these views partisans are deeply divided, with three-quarters of Republicans (75%) giving the a",
+              "raw_bm25": 2.672464257687288,
+              "weighted_bm25": 2.672464257687288
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_caption_003_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 5.569910185440079,
+              "weighted_bm25": 5.569910185440079
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "answers": {
+      "original_answer": "The information is not available in the image.",
+      "original_plus_artifact_answer": "Approximately 540 adults rated Trump's government ethical standards as poor.",
+      "artifact_only_answer": "541"
+    }
+  },
+  {
+    "record_index": 211,
+    "doc_id": "05-03-18-political-release.pdf",
+    "question": "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about congressional elections in their state very closely in the survey of U.S. adults conducted from April 25 to May 1, 2022?",
+    "branches": {
+      "image-top-10-question": {
+        "original_pages": [
+          10,
+          2,
+          12,
+          3
+        ],
+        "original_plus_pages": [
+          10,
+          2,
+          3,
+          12
+        ],
+        "original_norm_scores": {
+          "10": 1.0,
+          "2": 0.98267681,
+          "12": 0.96472449,
+          "3": 0.96003928,
+          "7": 0.95544497,
+          "11": 0.95540957,
+          "4": 0.92770902,
+          "8": 0.91822517,
+          "6": 0.91597641,
+          "5": 0.9155667
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "10": [
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "9 PEW RESEARCH CENTER www.pewresearch.org 50 41 48 50 42 42 Republican Party Democratic Party Has good policy ideas Has high ethical standards Is too extreme The public has similar views of the Republican and Democratic parties in assessmen",
+              "raw_bm25": 15.414667876148867,
+              "weighted_bm25": 15.414667876148867
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_caption_010_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 6.355527882789465,
+              "weighted_bm25": 6.355527882789465
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "3": [
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "2 PEW RESEARCH CENTER www.pewresearch.org Poor Not good Good Excellent 36 7 61 9 19 2 Total Rep/Lean Rep Dem/Lean Dem 39 58 75 22 12 86 poor. On these views partisans are deeply divided, with three-quarters of Republicans (75%) giving the a",
+              "raw_bm25": 4.452125343017219,
+              "weighted_bm25": 4.452125343017219
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_caption_003_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      },
+      "text-top-10-question": {
+        "original_pages": [
+          12,
+          7,
+          3,
+          11
+        ],
+        "original_plus_pages": [
+          10,
+          2,
+          3,
+          12
+        ],
+        "original_norm_scores": {
+          "12": 1.0,
+          "7": 0.92507418,
+          "3": 0.90578635,
+          "11": 0.89391691,
+          "10": 0.87759644,
+          "2": 0.8694362,
+          "8": 0.86721068,
+          "4": 0.86275964,
+          "13": 0.83827893,
+          "6": 0.83308605
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "3": [
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "2 PEW RESEARCH CENTER www.pewresearch.org Poor Not good Good Excellent 36 7 61 9 19 2 Total Rep/Lean Rep Dem/Lean Dem 39 58 75 22 12 86 poor. On these views partisans are deeply divided, with three-quarters of Republicans (75%) giving the a",
+              "raw_bm25": 4.452125343017219,
+              "weighted_bm25": 4.452125343017219
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_caption_003_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "10": [
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "9 PEW RESEARCH CENTER www.pewresearch.org 50 41 48 50 42 42 Republican Party Democratic Party Has good policy ideas Has high ethical standards Is too extreme The public has similar views of the Republican and Democratic parties in assessmen",
+              "raw_bm25": 15.414667876148867,
+              "weighted_bm25": 15.414667876148867
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_caption_010_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 6.355527882789465,
+              "weighted_bm25": 6.355527882789465
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "answers": {
+      "original_answer": "The survey data is from 2018, not 2022. Based on the available data, the Democratic Party has the highest total percentage (50% for good policy ideas + 42% for high ethical standards = 92%) compared to the Republican Party (50% + 41% = 91%). However, the specific percentage of Democratic Party members who followed congressional election news very closely is not provided in the materials. Therefore, while the Democratic Party has the highest total percentage for the two metrics, the question about news-following behavior cannot be fully answered with the given data.",
+      "original_plus_artifact_answer": "The Democratic Party has the highest total percentage (92%) for good policy ideas and high ethical standards, and 18% of Democrats followed the news about congressional elections very closely.",
+      "artifact_only_answer": "The Democratic Party has the highest total percentage (92%) for good policy ideas and high ethical standards combined. 18% of Democrats and Democratic leaners followed the news about congressional elections very closely. Note: The survey referenced is from April 25 to May 1, 2018, not 2022."
+    }
+  },
+  {
+    "record_index": 214,
+    "doc_id": "05-03-18-political-release.pdf",
+    "question": "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 2018, was handling his job in the survey of U.S. adults conducted April 25-May 1, 2018? Please write the answer in float format",
+    "branches": {
+      "image-top-10-question": {
+        "original_pages": [
+          9,
+          2,
+          7,
+          5
+        ],
+        "original_plus_pages": [
+          2,
+          9,
+          7,
+          5
+        ],
+        "original_norm_scores": {
+          "9": 1.0,
+          "2": 0.94901803,
+          "7": 0.92248246,
+          "5": 0.918382,
+          "6": 0.90917364,
+          "4": 0.90690549,
+          "10": 0.90032036,
+          "3": 0.89110615,
+          "12": 0.88748545,
+          "11": 0.88284387
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 10.26953011059904,
+              "weighted_bm25": 10.26953011059904
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "10": [
+            {
+              "artifact_id": "05-03-18-political-release_p010_caption_010_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_fig_010_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p010_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p010_p010_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p010_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "9 PEW RESEARCH CENTER www.pewresearch.org 50 41 48 50 42 42 Republican Party Democratic Party Has good policy ideas Has high ethical standards Is too extreme The public has similar views of the Republican and Democratic parties in assessmen",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ],
+          "3": [
+            {
+              "artifact_id": "05-03-18-political-release_p003_caption_003_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_fig_003_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p003_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p003_p003_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p003_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "2 PEW RESEARCH CENTER www.pewresearch.org Poor Not good Good Excellent 36 7 61 9 19 2 Total Rep/Lean Rep Dem/Lean Dem 39 58 75 22 12 86 poor. On these views partisans are deeply divided, with three-quarters of Republicans (75%) giving the a",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      },
+      "text-top-10-question": {
+        "original_pages": [
+          9,
+          6,
+          4,
+          12
+        ],
+        "original_plus_pages": [
+          2,
+          9,
+          6,
+          4
+        ],
+        "original_norm_scores": {
+          "9": 1.0,
+          "6": 0.83971631,
+          "4": 0.82056738,
+          "12": 0.81702128,
+          "7": 0.80141844,
+          "5": 0.7964539,
+          "2": 0.7858156,
+          "15": 0.78297872,
+          "8": 0.78014184
+        },
+        "top_artifacts_by_original_candidate_page": {
+          "2": [
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+              "artifact_type": "text_span",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about Don't like No or almost no A few Many, not all All or nearly all A majority of ",
+              "raw_bm25": 6.800472644084832,
+              "weighted_bm25": 6.800472644084832
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+              "artifact_type": "caption",
+              "modality": "text",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "text_block"
+              ],
+              "source_ids": [
+                "p002_text_0000"
+              ],
+              "locator_kinds": [
+                "source_block",
+                "caption_block",
+                "text_offset"
+              ],
+              "weight": 1.0,
+              "content": "Mock caption candidate anchored to a text block.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+              "artifact_type": "visual_region",
+              "modality": "layout",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual region candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+              "artifact_type": "figure",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock figure candidate anchored to the page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            },
+            {
+              "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+              "artifact_type": "visual_observation",
+              "modality": "image",
+              "validation_status": "anchored",
+              "status": "anchored",
+              "element_locatable": null,
+              "anchor_types": [
+                "full_page_image"
+              ],
+              "source_ids": [
+                "p002_full_page_image"
+              ],
+              "locator_kinds": [
+                "full_page_anchor"
+              ],
+              "weight": 1.0,
+              "content": "Mock visual observation anchored to the full page image.",
+              "raw_bm25": 0.0,
+              "weighted_bm25": 0.0
+            }
+          ]
+        }
+      }
+    },
+    "answers": {
+      "original_answer": "7.0",
+      "original_plus_artifact_answer": 0.0,
+      "artifact_only_answer": 7.0
+    }
+  }
+]

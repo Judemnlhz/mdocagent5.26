@@ -1,0 +1,184 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 150,
+    "text_block": 300
+  },
+  "artifact_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "artifact_type_counts": {
+    "caption": 50,
+    "figure": 50,
+    "numeric_fact": 50,
+    "section_header": 50,
+    "table": 50,
+    "table_cell": 50,
+    "text_span": 50,
+    "visual_observation": 50,
+    "visual_region": 50
+  },
+  "eligible_artifact_type_counts": {},
+  "eligible_artifacts": 0,
+  "eligible_docs": 0,
+  "eligible_locator_kind_counts": {},
+  "eligible_pages": 0,
+  "eligible_rate": 0.0,
+  "examples_by_reason": {
+    "mock_or_placeholder_content": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0003",
+        "artifact_type": "figure",
+        "content_preview": "Mock figure candidate anchored to the page image.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_caption_002_0006_0006",
+        "artifact_type": "caption",
+        "content_preview": "Mock caption candidate anchored to a text block.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "caption_block",
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0007",
+        "artifact_type": "numeric_fact",
+        "content_preview": "Mock numeric fact candidate anchored to a text block: 24.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_table_002_0001_0008",
+        "artifact_type": "table",
+        "content_preview": "Mock table candidate anchored to a text block.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_table_002_0001_r000_c000_0009",
+        "artifact_type": "table_cell",
+        "content_preview": "Mock table cell candidate anchored to a text block.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 2
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_p002_full_page_image_0001",
+        "artifact_type": "visual_observation",
+        "content_preview": "Mock visual observation anchored to the full page image.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_fig_002_0001_0002",
+        "artifact_type": "visual_region",
+        "content_preview": "Mock visual region candidate anchored to the page image.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_p002_text_0000_0004",
+        "artifact_type": "text_span",
+        "content_preview": "PEW RESEARCH CENTER www.pewresearch.org 24 21 33 45 22 18 19 15 May 2018 Aug 2017 66 33 57 41 19 16 26 25 54 58 May 2018 Aug 2017 Like Have mixed feelings about",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "05-03-18-political-release_p002_section_002_0005_0005",
+        "artifact_type": "section_header",
+        "content_preview": "PEW RESEARCH CENTER",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "section_block",
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 2
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "05-03-18-political-release_p003_p003_full_page_image_0001",
+        "artifact_type": "visual_observation",
+        "content_preview": "Mock visual observation anchored to the full page image.",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 3
+      }
+    ]
+  },
+  "locator_kind_counts": {
+    "caption_block": 50,
+    "full_page_anchor": 150,
+    "section_block": 50,
+    "source_block": 300,
+    "table_cell": 50,
+    "text_offset": 300
+  },
+  "no_gold_fields_used": true,
+  "reason_counts": {
+    "mock_or_placeholder_content": 250,
+    "unstructured_artifact_type": 200
+  },
+  "schema_version": "artifact_rerank_eligibility_audit_v1",
+  "total_artifacts": 450
+}

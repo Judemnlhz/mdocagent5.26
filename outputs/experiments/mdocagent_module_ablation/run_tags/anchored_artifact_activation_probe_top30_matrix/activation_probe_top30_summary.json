@@ -1,0 +1,1367 @@
+{
+  "schema_version": "anchored_artifact_activation_probe_v2",
+  "run_tag": "anchored_artifact_activation_probe_top30_matrix",
+  "artifact_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "record_ids": [
+    14,
+    19,
+    99,
+    100,
+    103,
+    186,
+    187,
+    188,
+    189,
+    190,
+    191,
+    192,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    230,
+    231,
+    232,
+    233,
+    234,
+    236
+  ],
+  "num_probe_records": 30,
+  "source_full_scan_total_records": 1073,
+  "source_full_scan_activated_count": 99,
+  "source_full_scan_activated_and_changed_count": 93,
+  "probe_activated_count": 30,
+  "probe_changed_count": 30,
+  "accuracy": {
+    "top4_original_only": 0.5,
+    "top4_original_plus_artifact": 0.43333333333333335,
+    "top4_artifact_only": 0.4
+  },
+  "delta_original_plus_vs_original": -0.06666666666666665,
+  "delta_artifact_only_vs_original": -0.09999999999999998,
+  "help_hurt_neutral_vs_original": {
+    "help": 2,
+    "hurt": 4,
+    "neutral": 24
+  },
+  "artifact_only_help_hurt_neutral_vs_original": {
+    "artifact_only_help_vs_original": 1,
+    "artifact_only_hurt_vs_original": 4,
+    "artifact_only_neutral_vs_original": 25
+  },
+  "paths": {
+    "top4_original_only": {
+      "result_path": "results/MMLongBench/top4_original_only__anchored_artifact_activation_probe_top30_matrix/2026-06-02-05-30_results.json",
+      "prediction_path": "results/MMLongBench/top4_original_only__anchored_artifact_activation_probe_top30_matrix/2026-06-02-05-30.json"
+    },
+    "top4_original_plus_artifact": {
+      "result_path": "results/MMLongBench/top4_original_plus_artifact__anchored_artifact_activation_probe_top30_matrix/2026-06-02-07-33_results.json",
+      "prediction_path": "results/MMLongBench/top4_original_plus_artifact__anchored_artifact_activation_probe_top30_matrix/2026-06-02-07-33.json"
+    },
+    "top4_artifact_only": {
+      "result_path": "results/MMLongBench/top4_artifact_only__anchored_artifact_activation_probe_top30_matrix/2026-06-02-07-01_results.json",
+      "prediction_path": "results/MMLongBench/top4_artifact_only__anchored_artifact_activation_probe_top30_matrix/2026-06-02-07-01.json"
+    }
+  },
+  "effectiveness_gate": {
+    "passed": false,
+    "criterion": "original_plus_artifact must improve activated-subset accuracy over original_only without introducing hurts",
+    "note": "This is an activation-rich subset, not a full-dataset estimate."
+  },
+  "recommendation": "Do not run paper-facing full artifact ablation as a positive claim unless this gate is judged sufficient or repeated on another activation-rich sample; current top30 shows whether the richer artifacts have a true positive signal.",
+  "per_record": [
+    {
+      "record_index": 14,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "21%",
+      "original_plus_artifact_answer": "21%",
+      "artifact_only_answer": "21%",
+      "original_plus_changed_branch_count": 1,
+      "artifact_only_changed_branch_count": 1,
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            0
+          ],
+          "variant": [
+            1,
+            7,
+            10,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 19,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "help",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The closure aspect of the Gestalt Principle of Visual Perception is illustrated using a broken circle and a broken square, both represented with dashed lines that are not fully closed. Our perception fills in the gaps to perceive them as complete, whole shapes.",
+      "original_plus_artifact_answer": "The slide illustrates the closure aspect of the Gestalt Principle of Visual Perception using a dashed-line circle and a dashed-line square. These incomplete shapes demonstrate how the human mind perceives them as whole by filling in the visual gaps.",
+      "artifact_only_answer": "The slide uses incomplete shapes, specifically a dashed circle and a dashed square, to illustrate the closure aspect of the Gestalt Principle of Visual Perception, demonstrating how our perception fills in missing visual gaps to perceive them as whole forms.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            7,
+            10,
+            2,
+            1
+          ],
+          "variant": [
+            7,
+            1,
+            10,
+            2
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            7,
+            2,
+            1,
+            10
+          ],
+          "variant": [
+            7,
+            1,
+            10,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 99,
+      "doc_id": "2024.ug.eprospectus.pdf",
+      "question": "Which groups of applicants have the lastest end of application period according to this brochure?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The applicant groups with the latest end of the application period are Singapore-Cambridge GCE 'A' Level and International Baccalaureate (IB) Diploma applicants, both ending on 19 Mar 2024.",
+      "original_plus_artifact_answer": "The applicant groups with the latest end of the application period are Singapore-Cambridge GCE 'A' Level Applicants and International Baccalaureate (IB) Diploma Applicants, both ending on 19 Mar 2024.",
+      "artifact_only_answer": "The applicant groups with the latest end of the application period are Singapore-Cambridge GCE 'A' Level and International Baccalaureate (IB) Diploma applicants, both ending on 19 Mar 2024.",
+      "original_plus_changed_branch_count": 1,
+      "artifact_only_changed_branch_count": 1,
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            24,
+            24,
+            24,
+            24
+          ],
+          "variant": [
+            24,
+            23,
+            25,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 100,
+      "doc_id": "2024.ug.eprospectus.pdf",
+      "question": "Among the top 10 reasons why NTU smart campus is for you, which is the reason that does not include any person in the corresponding figure?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Most Beautiful Campus",
+      "original_plus_artifact_answer": "Most Beautiful Campus",
+      "artifact_only_answer": "Most Beautiful Campus",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            2,
+            20,
+            5,
+            18
+          ],
+          "variant": [
+            1,
+            2,
+            20,
+            5
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            1,
+            2,
+            20,
+            20
+          ],
+          "variant": [
+            1,
+            2,
+            20,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 103,
+      "doc_id": "2024.ug.eprospectus.pdf",
+      "question": "Which colleges/schools/institutes from NTU use year 3 students as cover page student model?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "None of the NTU colleges/schools/institutes explicitly mentioned in the provided text or images use Year 3 students as cover page student models. The only student models identified are Nick Erwin Chia Zhiyang (Year 4, Renaissance Engineering Programme) and Gladys Phua Min (Year 2, Communication Studies). While the text mentions that the Renaissance Engineering Programme includes Year 3 students as part of its structure, it does not state that a Year 3 student is used as the cover model for the College of Engineering. No Year 3 student is explicitly featured as a cover model in either the text or images.",
+      "original_plus_artifact_answer": "No NTU college/school/institute uses a Year 3 student as a cover page model based on the provided images. The only student model explicitly labeled as Year 3 in the text (Stella Chua Zhi Yun, Mechanical Engineering, Year 3) is not confirmed by the images, which show a Year 2 student (Gladys Phua Min) and a Year 4 student (Nick Erwin Chia Zhiyang).",
+      "artifact_only_answer": "Nanyang Business School (NBS) and the College of Engineering use Year 3 students (Wang Shi Lin Nicole and Stella Chua Zhi Yun, respectively) as cover page student models.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            5,
+            6,
+            24,
+            23
+          ],
+          "variant": [
+            24,
+            5,
+            6,
+            23
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            16,
+            9,
+            12,
+            1
+          ],
+          "variant": [
+            1,
+            24,
+            16,
+            9
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 186,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot TACREV dataset?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "74.8",
+      "original_plus_artifact_answer": "74.8",
+      "artifact_only_answer": "74.8",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            7,
+            8,
+            14,
+            20
+          ],
+          "variant": [
+            8,
+            7,
+            14,
+            20
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            8,
+            7,
+            8,
+            8
+          ],
+          "variant": [
+            8,
+            7,
+            20,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 187,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot CONLL03 dataset?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "hurt",
+      "artifact_only_outcome_vs_original": "hurt",
+      "original_answer": "The performance for the 50-shot CONLL03 dataset is not provided in the visible tables.",
+      "original_plus_artifact_answer": "77.2",
+      "artifact_only_answer": "77.2",
+      "original_plus_changed_branch_count": 1,
+      "artifact_only_changed_branch_count": 1,
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            7,
+            8,
+            8,
+            7
+          ],
+          "variant": [
+            8,
+            7,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 188,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "Repeat the instructions corresponding to the settings shown in red box of Figure 3 (left).",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The exact instructions for the six variants (I0 through I5) are detailed in Appendix E.2-E.5, as referenced in the text. The main text only provides a general description of the instruction format, stating that each instruction includes (1) a task description and (2) a list of possible entity types (e.g., building-hotel). The Image Agent’s response repeats identical, incomplete instructions for all variants, which appears to be an error or truncation. The Text Agent correctly identifies that the full details are in the appendix and that the main text does not contain the specific prompts. Therefore, the most accurate and reliable answer is that the instructions are located in Appendix E.2-E.5.",
+      "original_plus_artifact_answer": "The instructions corresponding to the settings shown in the red box of Figure 3 (left) are the different instruction formats used in the experiment: Fine-tuning, FSLS, UIE, ChatGPT, CODEX, InstructGPT, LLaMA (13B), and Vicuna (13B).",
+      "artifact_only_answer": "The instructions in the red box of Figure 3 (left) correspond to the prompt format for the '1-shot' setting in the Named Entity Recognition (NER) task, specifically instructing to 'Identify the entities then locate each entity in sentence. The possible entity types are building-hotel, ...'. This instruction is part of the prompt sensitivity analysis for the 20-shot FewNERD dataset, where variations I0–I5 were tested, but the exact content of each variant is not fully detailed in the text. The standard instruction format (as in Figure 1) includes both task description and label enumeration, and the image provides the specific instruction for the '1-shot' setting.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            4,
+            3,
+            2,
+            17
+          ],
+          "variant": [
+            7,
+            4,
+            3,
+            2
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            2,
+            2,
+            3,
+            4
+          ],
+          "variant": [
+            2,
+            3,
+            4,
+            18
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 189,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "How many datasets are used for experiments of this paper in all? Give me an integer.",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "9",
+      "original_plus_artifact_answer": "9",
+      "artifact_only_answer": "9",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            14,
+            3,
+            6,
+            13
+          ],
+          "variant": [
+            14,
+            8,
+            3,
+            6
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            14,
+            14,
+            1,
+            3
+          ],
+          "variant": [
+            14,
+            1,
+            3,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 190,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "Tell me the prompt template used for label 'Contact.Meet' in filter-then-rerank method of this work. ",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The specific prompt template for the label 'Contact.Meet' is not provided in the given text or images. The paper describes a general 'filter-then-rerank' paradigm using pre-defined templates to convert IE tasks into multi-choice questions, but does not detail individual label templates such as 'Contact.Meet'. Further details would require consulting the appendices (e.g., Appendix G.1 or G.2) or supplementary materials not included in the provided content.",
+      "original_plus_artifact_answer": "The specific prompt template for the label 'Contact.Meet' is not listed in the provided text or images.",
+      "artifact_only_answer": "The specific prompt template for the label 'Contact.Meet' is not provided in the given text or images. The document references prompt templates for other labels in Tables 19, 20, and 21 for datasets like FewNERD, TACREV, and ACE05, but does not include any details for 'Contact.Meet'.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            5,
+            7,
+            20,
+            8
+          ],
+          "variant": [
+            8,
+            7,
+            5,
+            20
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            5,
+            6,
+            5,
+            7
+          ],
+          "variant": [
+            7,
+            5,
+            6,
+            20
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 191,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "Tell me the prompt template used for label 'Contact.Meet' in purely LLM-based method of this work. ",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "No specific prompt template is provided for the label 'Contact.Meet' in the document.",
+      "original_plus_artifact_answer": "The paper does not provide a specific prompt template for the label 'Contact.Meet'. While it describes a general textual template for tasks like Named Entity Recognition (e.g., 'Sentence: [S], Entities: ([type1], [entity1]), ([type2], [entity2])...'), it does not detail a custom or label-specific template for 'Contact.Meet' in the purely LLM-based method. The label 'Contact.Meet' is valid for Event Argument Extraction (EAE) tasks (as seen in Table 6), but no unique prompt format is specified for it in the provided text or images.",
+      "artifact_only_answer": "Sentence: [S], Events: ([type1], [event1]), ([type2], [event2])...",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            4,
+            3,
+            18,
+            2
+          ],
+          "variant": [
+            14,
+            4,
+            3,
+            18
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            2,
+            2,
+            3,
+            5
+          ],
+          "variant": [
+            2,
+            3,
+            5,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 192,
+      "doc_id": "2303.08559v2.pdf",
+      "question": "If I drop the green module shown in Figure 6,  what is the absolute percentage drop on 100-shot TACREV setting?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "2.8",
+      "original_plus_artifact_answer": "1.0%",
+      "artifact_only_answer": "2.1%",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            14,
+            15,
+            4,
+            7
+          ],
+          "variant": [
+            14,
+            7,
+            8,
+            15
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            8,
+            8,
+            6,
+            8
+          ],
+          "variant": [
+            14,
+            8,
+            7,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 206,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "Among the adults conducted the survey on April 25 - May 1 2018, how many adults rated Trump's government ethical standards as poor? ",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": 541,
+      "original_plus_artifact_answer": 541,
+      "artifact_only_answer": 541,
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            2,
+            7,
+            3,
+            8
+          ],
+          "variant": [
+            2,
+            10,
+            3,
+            7
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            3,
+            8,
+            7,
+            2
+          ],
+          "variant": [
+            2,
+            3,
+            8,
+            7
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 207,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "Among the adults conducted the survey on April 25 - May 1 2022, how many adults rated Trump's government ethical standards as poor? ",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "hurt",
+      "artifact_only_outcome_vs_original": "hurt",
+      "original_answer": "The information is not available in the image.",
+      "original_plus_artifact_answer": "Approximately 540 adults rated Trump's government ethical standards as poor.",
+      "artifact_only_answer": "541",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            2,
+            7,
+            3,
+            8
+          ],
+          "variant": [
+            2,
+            10,
+            3,
+            7
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            3,
+            7,
+            8,
+            2
+          ],
+          "variant": [
+            2,
+            3,
+            7,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 208,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of Donald Trump's govenment? Please write the answer in the list format and with alphabetical order, e.g., [\"A\",\"B\"]",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Negotiate favorable trade agreements with other countries",
+      "original_plus_artifact_answer": "Make good decisions about immigration policy",
+      "artifact_only_answer": [
+        "Handle an international crisis",
+        "Make good decisions about economic policy",
+        "Negotiate favorable trade agreements with other countries",
+        "Work effectively with Congress"
+      ],
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            4,
+            5,
+            2,
+            9
+          ],
+          "variant": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            4,
+            5,
+            4,
+            3
+          ],
+          "variant": [
+            2,
+            4,
+            3,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 209,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of  Joe Biden's govenment? Please write the answer in the list format and with alphabetical order, e.g., [\"A\",\"B\"]",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The provided materials contain no information about public confidence in Joe Biden's government, as they exclusively focus on Donald Trump.",
+      "original_plus_artifact_answer": "None",
+      "artifact_only_answer": "None",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            4,
+            5,
+            2,
+            9
+          ],
+          "variant": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            4,
+            12,
+            5,
+            3
+          ],
+          "variant": [
+            2,
+            4,
+            3,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 210,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about congressional elections in their state very closely in the survey of U.S. adults conducted from April 25 to May 1, 2018?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "19%",
+      "original_plus_artifact_answer": "52%",
+      "artifact_only_answer": "The Democratic Party has the highest total percentage (92%) of good policy ideas and high ethical standards. The text states that 52% of Democrats and Democratic leaners followed the news very or fairly closely, but does not specify the exact percentage who followed it very closely. Therefore, the exact percentage of Democrats who followed the news very closely cannot be determined from the provided information.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            10,
+            2,
+            12,
+            3
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            12
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            12,
+            7,
+            3,
+            11
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 211,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about congressional elections in their state very closely in the survey of U.S. adults conducted from April 25 to May 1, 2022?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "hurt",
+      "artifact_only_outcome_vs_original": "hurt",
+      "original_answer": "The survey data is from 2018, not 2022. Based on the available data, the Democratic Party has the highest total percentage (50% for good policy ideas + 42% for high ethical standards = 92%) compared to the Republican Party (50% + 41% = 91%). However, the specific percentage of Democratic Party members who followed congressional election news very closely is not provided in the materials. Therefore, while the Democratic Party has the highest total percentage for the two metrics, the question about news-following behavior cannot be fully answered with the given data.",
+      "original_plus_artifact_answer": "The Democratic Party has the highest total percentage (92%) for good policy ideas and high ethical standards, and 18% of Democrats followed the news about congressional elections very closely.",
+      "artifact_only_answer": "The Democratic Party has the highest total percentage (92%) for good policy ideas and high ethical standards combined. 18% of Democrats and Democratic leaners followed the news about congressional elections very closely. Note: The survey referenced is from April 25 to May 1, 2018, not 2022.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            10,
+            2,
+            12,
+            3
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            12
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            12,
+            7,
+            3,
+            11
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 212,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and high ethical standards and closely follow congressional elections in their district in the survey of U.S. adults conducted April 25 - May 1, 2018?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "The Democratic Party has the higher total percentage of good policy ideas and high ethical standards (42% for good policy ideas and 42% for high ethical standards vs. 50% for good policy ideas and 41% for high ethical standards for the GOP, resulting in a tie on policy but a slight edge for Democrats on ethics). Among registered voters, 48% support or lean toward the Democratic candidate. Of those, 52% closely follow congressional elections. Therefore, the percentage of registered voters who support or lean toward the Democratic candidate AND closely follow congressional elections is 48% × 52% = 24.96%, which rounds to 25%.",
+      "original_plus_artifact_answer": "48%",
+      "artifact_only_answer": "The Democratic Party has the higher total percentage (92%) compared to the Republican Party (91%) when combining public views on good policy ideas and high ethical standards. Additionally, 48% of registered voters support or lean toward the Democratic candidate.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            13,
+            10,
+            2,
+            3
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            13
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            13,
+            12,
+            11,
+            2
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 213,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and high ethical standards and closely follow congressional elections in their district in the survey of Chinese adults conducted April 25 - May 1, 2018?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "hurt",
+      "original_answer": "The question cannot be answered based on the provided data, as the survey was conducted among U.S. adults, not Chinese adults. There is no data available for Chinese adults in the provided materials.",
+      "original_plus_artifact_answer": "The question contains a factual error: the survey was conducted among U.S. adults, not Chinese adults. Based on the available data, the Democratic Party has a higher total percentage (42% for high ethical standards, tied at 50% for good policy ideas) compared to the Republican Party (41% for high ethical standards, tied at 50% for good policy ideas). However, the provided data does not include information about who 'closely follow congressional elections,' so that part of the question cannot be answered. The only quantifiable answer from the data is that 48% of registered voters support or lean toward the Democratic Party’s candidate for Congress in their district.",
+      "artifact_only_answer": "The Democratic Party has the higher total percentage of good policy ideas and high ethical standards (92%) compared to the Republican Party (91%). 48% of registered voters support or lean toward the Democratic Party’s candidate.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            13,
+            10,
+            2,
+            3
+          ],
+          "variant": [
+            10,
+            2,
+            3,
+            13
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            13,
+            12,
+            11,
+            3
+          ],
+          "variant": [
+            10,
+            3,
+            2,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 214,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 2018, was handling his job in the survey of U.S. adults conducted April 25-May 1, 2018? Please write the answer in float format",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "hurt",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "7.0",
+      "original_plus_artifact_answer": 0.0,
+      "artifact_only_answer": 7.0,
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            9,
+            2,
+            7,
+            5
+          ],
+          "variant": [
+            2,
+            9,
+            7,
+            5
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            9,
+            6,
+            4,
+            12
+          ],
+          "variant": [
+            2,
+            9,
+            6,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 215,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 2018, was handling his job in the survey of Chinese adults conducted April 25-May 1, 2018?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "help",
+      "original_answer": "7 percentage points",
+      "original_plus_artifact_answer": "6 percentage points",
+      "artifact_only_answer": "The question is based on a false premise: the provided data is from a Pew Research Center survey of U.S. adults, not Chinese adults. Therefore, there is no valid data to calculate a percentage gap between age groups for 'strongly disapprove' among Chinese adults. The images and text confirm the survey is U.S.-focused. As such, the question cannot be answered as stated.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            9,
+            2,
+            5,
+            6
+          ],
+          "variant": [
+            2,
+            9,
+            5,
+            6
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            9,
+            6,
+            5,
+            4
+          ],
+          "variant": [
+            2,
+            9,
+            6,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 216,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "How many Demoncratic people in the survey of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high ethical standards'?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "18%",
+      "original_plus_artifact_answer": "18%",
+      "artifact_only_answer": "The survey data referenced in the materials is from April 25–May 1, 2018, not 2019. Based on that data, 18% of Democratic respondents said neither party has 'high ethical standards'. The question’s reference to 2019 is incorrect, and no 2019 survey data is available.",
+      "original_plus_changed_branch_count": 1,
+      "artifact_only_changed_branch_count": 1,
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            11,
+            3,
+            8,
+            10
+          ],
+          "variant": [
+            10,
+            2,
+            11,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 217,
+      "doc_id": "05-03-18-political-release.pdf",
+      "question": "How many non-partisan people in the survey  of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high ethical standards'?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "34% of independents in the April 25–May 1, 2018 survey said neither the Republican Party nor the Democratic Party has 'high ethical standards.'",
+      "original_plus_artifact_answer": "34% of independents (non-partisan individuals) in the April 25–May 1, 2018 survey said neither the Republican Party nor the Democratic Party has 'high ethical standards'.",
+      "artifact_only_answer": "34% of independents said neither party has high ethical standards, based on the 2018 survey (April 25–May 1, 2018). The survey date in the question (2019) is incorrect.",
+      "original_plus_changed_branch_count": 1,
+      "artifact_only_changed_branch_count": 1,
+      "original_plus_changed_pages": {
+        "text-top-10-question": {
+          "original": [
+            11,
+            3,
+            10,
+            10
+          ],
+          "variant": [
+            10,
+            2,
+            11,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 230,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "Who is the commanding officer in the first figure on the second page?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Capt. John W. Sanders III, CAPT, MC, USN",
+      "original_plus_artifact_answer": "John W. Sanders III, CAPT, MC, USN",
+      "artifact_only_answer": "Capt. John W. Sanders III, CAPT, MC, USN",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            1,
+            0,
+            11,
+            6
+          ],
+          "variant": [
+            1,
+            0,
+            6,
+            11
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            11,
+            6,
+            1,
+            0
+          ],
+          "variant": [
+            1,
+            6,
+            0,
+            11
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 231,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "Who is the commanding officer at the last page?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Steven M. Wechsler, CAPT, MC, USN",
+      "original_plus_artifact_answer": "Capt. John W. Sanders III",
+      "artifact_only_answer": "Capt. John W. Sanders III, CAPT, MC, USN",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            1,
+            0,
+            11,
+            6
+          ],
+          "variant": [
+            1,
+            0,
+            6,
+            11
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            6,
+            11,
+            1,
+            11
+          ],
+          "variant": [
+            1,
+            6,
+            0,
+            11
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 232,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "Who Visited the U.S. Naval Medical Research centre on November 29, 2012 in the document?",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Rear Adm. (Ret.) Tim Ziemer, the U.S. Global Malaria Coordinator, President's Malaria Initiative",
+      "original_plus_artifact_answer": "Rear Adm. (Ret.) Tim Ziemer, the U.S. Global Malaria Coordinator for the President's Malaria Initiative, visited the U.S. Naval Medical Research Center (NMRC) on November 29, 2012, to brief on malaria vaccine research and tour the facility.",
+      "artifact_only_answer": "Rear Adm. (Ret.) Tim Ziemer, the U.S. Global Malaria Coordinator for the President's Malaria Initiative, visited the U.S. Naval Medical Research Center (NMRC) on November 29, 2012.",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            0,
+            14,
+            3,
+            6
+          ],
+          "variant": [
+            6,
+            0,
+            14,
+            3
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            0,
+            0,
+            7,
+            11
+          ],
+          "variant": [
+            0,
+            7,
+            11,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 233,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "Who Visited the U.S. Naval Medical Research centre on November 29, 2020?",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "help",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "No one visited the U.S. Naval Medical Research Center on November 29, 2020, as the visit occurred on November 29, 2012. The visitor was Rear Adm. (Ret.) Tim Ziemer, the U.S. Global Malaria Coordinator for the President’s Malaria Initiative.",
+      "original_plus_artifact_answer": "The provided text does not mention anyone visiting the U.S. Naval Medical Research Center on November 29, 2020. The only visit recorded is by Rear Adm. (Ret.) Tim Ziemer on November 29, 2012.",
+      "artifact_only_answer": "Rear Adm. (Ret.) Tim Ziemer",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            0,
+            14,
+            3,
+            6
+          ],
+          "variant": [
+            6,
+            0,
+            14,
+            3
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            0,
+            0,
+            7,
+            11
+          ],
+          "variant": [
+            0,
+            7,
+            11,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 234,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "With whom did the NAMRU-3 team visit Monrovia, Liberia, in November 2012? Enumerate their names within a list.",
+      "original_correct": 1,
+      "original_plus_artifact_correct": 1,
+      "artifact_only_correct": 1,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": "Dr. Walter Gwenigale, Dr. Fatorma Bolay, U.S. Marine Col. Vernon Graham",
+      "original_plus_artifact_answer": "Dr. Walter Gwenigale, Dr. Fatorma Bolay, and U.S. Marine Col. Vernon Graham",
+      "artifact_only_answer": "Dr. Walter T. Gwenigale, Dr. Fatorma Bolay, Col. Vernon Graham",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            6,
+            2,
+            13,
+            5
+          ],
+          "variant": [
+            6,
+            0,
+            2,
+            13
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            6,
+            6,
+            6,
+            6
+          ],
+          "variant": [
+            6,
+            0,
+            2,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "record_index": 236,
+      "doc_id": "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "question": "Among all the pictures, in which page the picture contains the most number of people? Give me the page no. as an integer.",
+      "original_correct": 0,
+      "original_plus_artifact_correct": 0,
+      "artifact_only_correct": 0,
+      "outcome_vs_original": "neutral",
+      "artifact_only_outcome_vs_original": "neutral",
+      "original_answer": 6,
+      "original_plus_artifact_answer": "5",
+      "artifact_only_answer": "7",
+      "original_plus_changed_branch_count": 2,
+      "artifact_only_changed_branch_count": 2,
+      "original_plus_changed_pages": {
+        "image-top-10-question": {
+          "original": [
+            14,
+            5,
+            11,
+            13
+          ],
+          "variant": [
+            0,
+            6,
+            14,
+            5
+          ]
+        },
+        "text-top-10-question": {
+          "original": [
+            5,
+            5,
+            4,
+            3
+          ],
+          "variant": [
+            0,
+            5,
+            4,
+            3
+          ]
+        }
+      }
+    }
+  ]
+}

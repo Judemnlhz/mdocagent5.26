@@ -1,0 +1,82 @@
+[
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      1,
+      0,
+      7,
+      2
+    ],
+    "image-top-10-question_score": [
+      0.41556251,
+      0.31242648,
+      0.19354541,
+      0.19296766
+    ],
+    "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+    "text-top-10-question": [
+      1,
+      0,
+      7,
+      2
+    ],
+    "text-top-10-question_score": [
+      0.41556251,
+      0.31242648,
+      0.19354541,
+      0.19296766
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "expansion_mode": "page_neighborhood",
+      "formal_edges_path": "edges.jsonl",
+      "formula": "formal_edges_only_graph_expansion_then_top_k_selection",
+      "mode": "graph_context",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 4,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      7,
+      10,
+      0,
+      2
+    ],
+    "image-top-10-question_score": [
+      1.0,
+      0.94916093,
+      0.9480135,
+      0.94132693
+    ],
+    "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+    "text-top-10-question": [
+      7,
+      10,
+      0,
+      2
+    ],
+    "text-top-10-question_score": [
+      1.0,
+      0.94916093,
+      0.9480135,
+      0.94132693
+    ]
+  }
+]

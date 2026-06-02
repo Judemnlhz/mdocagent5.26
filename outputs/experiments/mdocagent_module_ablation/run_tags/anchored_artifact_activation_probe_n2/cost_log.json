@@ -1,0 +1,33 @@
+{
+  "completed_api_calls": 30,
+  "estimated_api_calls": 36,
+  "failed_api_calls": 0,
+  "max_records": null,
+  "num_records": 2,
+  "record_slice": null,
+  "run_tag": "anchored_artifact_activation_probe_n2",
+  "runs": [
+    {
+      "completed_api_calls": 10,
+      "estimated_api_calls": 12,
+      "execution_run_name": "top4_original_only__anchored_artifact_activation_probe_n2",
+      "failed_api_calls": 0,
+      "run_name": "top4_original_only"
+    },
+    {
+      "completed_api_calls": 10,
+      "estimated_api_calls": 12,
+      "execution_run_name": "top4_artifact_only__anchored_artifact_activation_probe_n2",
+      "failed_api_calls": 0,
+      "run_name": "top4_artifact_only"
+    },
+    {
+      "completed_api_calls": 10,
+      "estimated_api_calls": 12,
+      "execution_run_name": "top4_original_plus_artifact__anchored_artifact_activation_probe_n2",
+      "failed_api_calls": 0,
+      "run_name": "top4_original_plus_artifact"
+    }
+  ],
+  "schema_version": "mdocagent_cost_log_v1"
+}

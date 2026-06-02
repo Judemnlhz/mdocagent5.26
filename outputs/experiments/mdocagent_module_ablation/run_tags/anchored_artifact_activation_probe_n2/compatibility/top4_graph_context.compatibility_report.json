@@ -1,0 +1,13 @@
+{
+  "forbidden_fields_found": [],
+  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/anchored_artifact_activation_probe_n2/reranked_records/top4_graph_context.json",
+  "loader_compatible": true,
+  "loader_errors": [],
+  "missing_required_fields": [],
+  "num_records": 2,
+  "status": "pass",
+  "top_k_checked": [
+    1,
+    4
+  ]
+}

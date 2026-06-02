@@ -1,0 +1,17 @@
+{
+  "total_records": 1073,
+  "activated_count": 2,
+  "activated_rate": 0.001863932898415657,
+  "activated_and_original_plus_changed_count": 2,
+  "artifact_only_changed_among_activated": 2,
+  "record_ids_top50_path": "outputs/experiments/mdocagent_module_ablation/record_ids/activation_rich_top50.txt",
+  "record_ids_top30_path": "outputs/experiments/mdocagent_module_ablation/record_ids/activation_rich_top30.txt",
+  "selected_top50_ids": [
+    14,
+    19
+  ],
+  "selected_top30_ids": [
+    14,
+    19
+  ]
+}

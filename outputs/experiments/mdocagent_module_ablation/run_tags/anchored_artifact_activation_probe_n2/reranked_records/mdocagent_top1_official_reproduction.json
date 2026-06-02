@@ -1,0 +1,56 @@
+[
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      13
+    ],
+    "image-top-10-question_score": [
+      27.044687271118164
+    ],
+    "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+    "text-top-10-question": [
+      7
+    ],
+    "text-top-10-question_score": [
+      5.234375
+    ]
+  },
+  {
+    "_nexus_meta": {
+      "formula": "original_retrieval_order",
+      "lambda_weight": 0.5,
+      "mode": "original_only",
+      "model_role": "none_deterministic",
+      "no_gold_fields_used": true,
+      "same_page_budget_as_baseline": true,
+      "top_k": 1,
+      "used_debug_edges": false,
+      "used_semantic_edges": false
+    },
+    "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+    "image-top-10-question": [
+      7
+    ],
+    "image-top-10-question_score": [
+      21.685684204101562
+    ],
+    "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+    "text-top-10-question": [
+      7
+    ],
+    "text-top-10-question_score": [
+      20.546875
+    ]
+  }
+]

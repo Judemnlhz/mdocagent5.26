@@ -98,6 +98,31 @@ STOPWORDS = {
     "with",
 }
 
+STRUCTURED_RERANK_ARTIFACT_TYPES = {
+    "numeric_fact",
+    "table",
+    "table_cell",
+    "figure",
+    "caption",
+}
+STRONG_LOCATOR_KINDS = {
+    "bbox",
+    "table_cell",
+    "figure_region",
+    "caption_block",
+    "text_offset",
+    "source_block",
+}
+WEAK_LOCATOR_KINDS = {"full_page_anchor"}
+MOCK_OR_PLACEHOLDER_PATTERNS = (
+    "mock ",
+    "mocked ",
+    "placeholder ",
+    "generic ",
+    "candidate anchored to",
+    "anchored to the full page image",
+)
+
 SEMANTIC_EDGE_TYPES = {
     "supports",
     "contradicts",
@@ -242,7 +267,7 @@ def rerank_pages_with_artifacts(
                     "model_role": "none_deterministic",
                     "anchored_artifact_rerank_applied": True,
                     "preserved_retrieval_branches": True,
-                    "artifact_signal_policy": "positive_score_and_valid_source_anchor_required",
+                    "artifact_signal_policy": "positive_score_and_valid_source_anchor_required_with_original_top_k_candidate_pool_and_branch_top1_preserved",
                 },
             )
         )
@@ -418,9 +443,12 @@ def sanitize_artifact_record(record: Mapping[str, Any]) -> dict[str, Any]:
         "page_id",
         "page_index",
         "provenance",
+        "source_anchored",
         "source_anchors",
         "status",
         "validation_status",
+        "element_locatable",
+        "proof_trace_eligible",
     }
     clean: dict[str, Any] = {}
     for key in sorted(allowed_keys):
@@ -541,7 +569,8 @@ def rerank_record_branches_with_artifacts(
         if not original_order:
             branch_selections[key] = ([], [])
             continue
-        artifact_scores = anchored_artifact_page_scores(question, doc_id, original_order, artifacts_by_page)
+        candidate_order = original_order[:top_k] if mode == "original_plus_artifact" else original_order
+        artifact_scores = anchored_artifact_page_scores(question, doc_id, candidate_order, artifacts_by_page)
         branch_has_positive = any(float(score) > 0.0 for score in artifact_scores.values())
         has_positive_artifact_signal = has_positive_artifact_signal or branch_has_positive
         if not branch_has_positive:
@@ -549,8 +578,9 @@ def rerank_record_branches_with_artifacts(
             branch_selections[key] = (pages, [original_scores.get(page, 0.0) for page in pages])
             continue
         scored_pages: list[tuple[int, float, float, float, int]] = []
+        scored_by_page: dict[int, tuple[int, float, float, float, int]] = {}
         first_rank = {page: rank for rank, page in enumerate(original_order)}
-        for page_index in original_order:
+        for page_index in candidate_order:
             original_score = float(original_scores.get(page_index, 0.0))
             artifact_score = float(artifact_scores.get(page_index, 0.0))
             final_score = (
@@ -567,8 +597,23 @@ def rerank_record_branches_with_artifacts(
                     first_rank.get(page_index, len(first_rank)),
                 )
             )
+            scored_by_page[int(page_index)] = scored_pages[-1]
         scored_pages.sort(key=lambda item: (-item[1], item[4], item[0]))
-        selected = scored_pages[:top_k]
+        if mode == "original_plus_artifact" and candidate_order:
+            protected_page = int(candidate_order[0])
+            protected_item = scored_by_page.get(
+                protected_page,
+                (
+                    protected_page,
+                    round(float(original_scores.get(protected_page, 0.0)), 8),
+                    round(float(original_scores.get(protected_page, 0.0)), 8),
+                    round(float(artifact_scores.get(protected_page, 0.0)), 8),
+                    0,
+                ),
+            )
+            selected = [protected_item] + [item for item in scored_pages if item[0] != protected_page][: max(top_k - 1, 0)]
+        else:
+            selected = scored_pages[:top_k]
         branch_selections[key] = ([page for page, _, _, _, _ in selected], [score for _, score, _, _, _ in selected])
     return branch_selections, has_positive_artifact_signal
 
@@ -696,11 +741,28 @@ def anchored_artifact_page_scores(
 
 
 def artifact_anchor_locator_weight(artifact: Mapping[str, Any]) -> float:
-    if not has_valid_source_anchor(artifact):
+    if artifact_rerank_eligibility_reason(artifact) != "eligible":
         return 0.0
     if has_weak_locator_signal(artifact):
         return 0.25
     return 1.0
+
+
+def artifact_rerank_eligibility_reason(artifact: Mapping[str, Any]) -> str:
+    artifact_type = str(artifact.get("artifact_type") or "").lower()
+    if artifact_type not in STRUCTURED_RERANK_ARTIFACT_TYPES:
+        return "unstructured_artifact_type"
+    if has_mock_or_placeholder_content(artifact):
+        return "mock_or_placeholder_content"
+    if not has_valid_source_anchor(artifact):
+        return "missing_valid_source_anchor"
+    if has_full_page_only_locator(artifact):
+        return "full_page_only_locator"
+    if not has_strong_locator_signal(artifact):
+        return "missing_strong_locator"
+    if artifact.get("element_locatable") is False or artifact.get("proof_trace_eligible") is False:
+        return "not_element_locatable_or_proof_trace_ineligible"
+    return "eligible"
 
 
 def has_valid_source_anchor(artifact: Mapping[str, Any]) -> bool:
@@ -721,7 +783,66 @@ def has_valid_source_anchor(artifact: Mapping[str, Any]) -> bool:
     return False
 
 
+def has_mock_or_placeholder_content(artifact: Mapping[str, Any]) -> bool:
+    content = " ".join(str(artifact.get("content") or "").strip().lower().split())
+    if not content:
+        return True
+    return any(pattern in content for pattern in MOCK_OR_PLACEHOLDER_PATTERNS)
+
+
+def has_full_page_only_locator(artifact: Mapping[str, Any]) -> bool:
+    locator_kinds = artifact_locator_kinds(artifact)
+    anchor_types = artifact_anchor_types(artifact)
+    has_full_page = "full_page_anchor" in locator_kinds or "full_page_image" in anchor_types
+    has_strong_non_full_page = bool((locator_kinds - WEAK_LOCATOR_KINDS) & STRONG_LOCATOR_KINDS)
+    return bool(has_full_page and not has_strong_non_full_page)
+
+
+def has_strong_locator_signal(artifact: Mapping[str, Any]) -> bool:
+    locator_kinds = artifact_locator_kinds(artifact)
+    if (locator_kinds - WEAK_LOCATOR_KINDS) & STRONG_LOCATOR_KINDS:
+        return True
+    anchors = artifact.get("source_anchors")
+    if isinstance(anchors, list):
+        for anchor in anchors:
+            if not isinstance(anchor, Mapping):
+                continue
+            if anchor.get("bbox") not in (None, "", [], {}):
+                return True
+            if str(anchor.get("anchor_type") or "") in {"table_cell", "figure_region"}:
+                return True
+    return False
+
+
+def artifact_locator_kinds(artifact: Mapping[str, Any]) -> set[str]:
+    kinds: set[str] = set()
+    locators = artifact.get("locators")
+    if isinstance(locators, list):
+        for locator in locators:
+            if not isinstance(locator, Mapping):
+                continue
+            kind = str(locator.get("locator_kind") or locator.get("kind") or "").lower()
+            if kind:
+                kinds.add(kind)
+    return kinds
+
+
+def artifact_anchor_types(artifact: Mapping[str, Any]) -> set[str]:
+    anchor_types: set[str] = set()
+    anchors = artifact.get("source_anchors")
+    if isinstance(anchors, list):
+        for anchor in anchors:
+            if not isinstance(anchor, Mapping):
+                continue
+            anchor_type = str(anchor.get("anchor_type") or "").lower()
+            if anchor_type:
+                anchor_types.add(anchor_type)
+    return anchor_types
+
+
 def has_weak_locator_signal(artifact: Mapping[str, Any]) -> bool:
+    if has_full_page_only_locator(artifact):
+        return True
     values = []
     for key in ("locators", "source_anchors"):
         value = artifact.get(key)
@@ -1091,7 +1212,7 @@ def formula_for_mode(mode: str) -> str:
     if mode == "artifact_only":
         return "branch_preserving_artifact_score=max_bm25(question,anchored_page_artifacts); fallback=original_only_when_no_positive_anchor_score"
     if mode == "original_plus_artifact":
-        return "branch_preserving_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; fallback=original_only_when_no_positive_anchor_score"
+        return "branch_preserving_topk_constrained_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; candidate_pool=original_branch_top_k; preserve_branch_top1=true; fallback=original_only_when_no_positive_anchor_score"
     if mode == "graph_context":
         return "formal_edges_only_graph_expansion_then_top_k_selection"
     return "unknown"

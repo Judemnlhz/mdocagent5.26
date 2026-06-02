@@ -1,0 +1,49 @@
+{
+  "schema_version": "strong_artifact_method_gate_v1",
+  "artifact_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "strong_eligibility_policy": {
+    "allowed_artifact_types": [
+      "numeric_fact",
+      "table",
+      "table_cell",
+      "figure",
+      "caption"
+    ],
+    "requires_non_mock_content": true,
+    "requires_valid_source_anchor": true,
+    "requires_non_full_page_strong_locator": true,
+    "requires_element_locatable_and_proof_trace_not_false": true
+  },
+  "quality_audit": {
+    "total_artifacts": 450,
+    "eligible_artifacts": 0,
+    "eligible_rate": 0.0,
+    "reason_counts": {
+      "mock_or_placeholder_content": 250,
+      "unstructured_artifact_type": 200
+    }
+  },
+  "activation_scan": {
+    "total_records": 1073,
+    "activated_count": 0,
+    "changed_count": 0,
+    "activated_ids": [],
+    "changed_ids": [],
+    "conclusion": "held_out_activation_rich_subset_unavailable"
+  },
+  "held_out_activation_rich_subset": {
+    "available": false,
+    "reason_unavailable": "no strong eligible artifacts activated any retrieval records"
+  },
+  "effectiveness_experiment": {
+    "run": false,
+    "reason": "Do not run QA/eval when strong eligibility produces zero activated records; it would only repeat original_only fallback."
+  },
+  "method_conclusion": "Current Stage 2 outputs are not sufficient for a positive artifact-aware retrieval method because structured candidates are mock/placeholders and all strong-eligible activation is zero.",
+  "next_required_work": [
+    "Replace dry-run/mock Stage 2 artifact compiler with real structured extraction for table_cell, numeric_fact, table, figure, and caption artifacts.",
+    "Emit non-mock normalized_content with table/cell/metric fields where available.",
+    "Require locators such as table_cell, bbox, figure_region, caption_block, or text_offset tied to source anchors.",
+    "Re-run eligibility audit until eligible_artifacts > 0 and held-out activated records are available."
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "artifact_path": "outputs/experiments/matrix/retrieval_topk_scope_topk4_hybrid_full_hybrid_page_neighborhood/stage2_doc_coverage/artifacts.jsonl",
+  "total_records": 1073,
+  "activated_count": 99,
+  "activated_and_changed_count": 93,
+  "selected_count": 30,
+  "record_ids_file": "outputs/experiments/mdocagent_module_ablation/record_ids/activation_rich_matrix_top30.txt",
+  "selected_ids": [
+    14,
+    19,
+    99,
+    100,
+    103,
+    186,
+    187,
+    188,
+    189,
+    190,
+    191,
+    192,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    230,
+    231,
+    232,
+    233,
+    234,
+    236
+  ],
+  "first_activated": [
+    [
+      13,
+      false,
+      false,
+      "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "Where was Gestalt psychology concieved?"
+    ],
+    [
+      14,
+      true,
+      true,
+      "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "According to the chart on page 14 how much time was spent with family and friends in 2010?"
+    ],
+    [
+      16,
+      false,
+      false,
+      "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "How does this document define the law of good gestalt?"
+    ],
+    [
+      19,
+      true,
+      true,
+      "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?"
+    ],
+    [
+      99,
+      true,
+      true,
+      "2024.ug.eprospectus.pdf",
+      "Which groups of applicants have the lastest end of application period according to this brochure?"
+    ],
+    [
+      100,
+      true,
+      true,
+      "2024.ug.eprospectus.pdf",
+      "Among the top 10 reasons why NTU smart campus is for you, which is the reason that does not include any person in the corresponding figure?"
+    ],
+    [
+      103,
+      true,
+      true,
+      "2024.ug.eprospectus.pdf",
+      "Which colleges/schools/institutes from NTU use year 3 students as cover page student model?"
+    ],
+    [
+      186,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot TACREV dataset?"
+    ],
+    [
+      187,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot CONLL03 dataset?"
+    ],
+    [
+      188,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "Repeat the instructions corresponding to the settings shown in red box of Figure 3 (left)."
+    ],
+    [
+      189,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "How many datasets are used for experiments of this paper in all? Give me an integer."
+    ],
+    [
+      190,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "Tell me the prompt template used for label 'Contact.Meet' in filter-then-rerank method of this work. "
+    ],
+    [
+      191,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "Tell me the prompt template used for label 'Contact.Meet' in purely LLM-based method of this work. "
+    ],
+    [
+      192,
+      true,
+      true,
+      "2303.08559v2.pdf",
+      "If I drop the green module shown in Figure 6,  what is the absolute percentage drop on 100-shot TACREV setting?"
+    ],
+    [
+      206,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "Among the adults conducted the survey on April 25 - May 1 2018, how many adults rated Trump's government ethical standards as poor? "
+    ],
+    [
+      207,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "Among the adults conducted the survey on April 25 - May 1 2022, how many adults rated Trump's government ethical standards as poor? "
+    ],
+    [
+      208,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of D"
+    ],
+    [
+      209,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "According to the survey on April 25 - May 1, 2018, what are the domains with the highest percentage that adults are very confident and not at all confident of  "
+    ],
+    [
+      210,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about "
+    ],
+    [
+      211,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What percentage of the party that holds the highest total percentage of good policy ideas and high ethical standards reported that they followed the news about "
+    ],
+    [
+      212,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and hi"
+    ],
+    [
+      213,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What is the percentage of registered voters who support or lean toward the candidate from the party with the higher total percentage of good policy ideas and hi"
+    ],
+    [
+      214,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 20"
+    ],
+    [
+      215,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "What is the percentage gap between the youngest age group and the oldest age group that strongly disapproves of the way the president, who started his job in 20"
+    ],
+    [
+      216,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "How many Demoncratic people in the survey of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high e"
+    ],
+    [
+      217,
+      true,
+      true,
+      "05-03-18-political-release.pdf",
+      "How many non-partisan people in the survey  of U.S. adults conducted April 25- May 1, 2019 said neither the Republican Party nor the Democratic Party  has ‘high"
+    ],
+    [
+      230,
+      true,
+      true,
+      "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "Who is the commanding officer in the first figure on the second page?"
+    ],
+    [
+      231,
+      true,
+      true,
+      "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "Who is the commanding officer at the last page?"
+    ],
+    [
+      232,
+      true,
+      true,
+      "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "Who Visited the U.S. Naval Medical Research centre on November 29, 2012 in the document?"
+    ],
+    [
+      233,
+      true,
+      true,
+      "0b85477387a9d0cc33fca0f4becaa0e5.pdf",
+      "Who Visited the U.S. Naval Medical Research centre on November 29, 2020?"
+    ]
+  ]
+}
