@@ -1,0 +1,18 @@
+{
+  "decision": "pass_public_safe_ocr_only",
+  "forbidden_term_hits": {},
+  "function_block": "_build_deterministic_numeric_fact_artifacts through numeric helpers",
+  "notes": [
+    "Fallback is gated to document_generic mode.",
+    "Fallback reads OCR page_text and page layout locator only.",
+    "selected_page is used for doc_id/page_index identity, not question or answer fields.",
+    "No activation, QA, graph, or rerank tuning is performed by this audit."
+  ],
+  "reads_question_answer_gold_evidence": false,
+  "requires_document_generic": true,
+  "schema_version": "r031_fallback_boundary_audit_v2",
+  "scope": "R030 deterministic OCR numeric fallback only",
+  "uses_layout_locator": true,
+  "uses_page_text": true,
+  "uses_selected_page_identity": true
+}

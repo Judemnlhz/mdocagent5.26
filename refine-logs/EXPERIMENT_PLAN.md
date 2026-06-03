@@ -447,3 +447,42 @@ Current R030 reports:
 
 - `outputs/stage2_structured_incremental/r028_20_to_30/r030_atomic_quality_replay_3/atomic_quality_report.md`
 - `outputs/stage2_structured_incremental/r028_20_to_30/r030_atomic_quality_replay_3/eligibility_audit.md`
+
+### 2026-06-03 R031 Bounded Activation Scan Review
+
+R031 is diagnostic only. It does not run QA, graph expansion, rerank tuning, or an effectiveness gate. It temporarily constructs `cumulative20 + R030 repaired 3 pages` and keeps the result outside cumulative artifacts.
+
+Boundary audit:
+
+- R030 deterministic OCR numeric fallback passes the public-safe boundary check.
+- It is gated to document-generic Stage 2 mode.
+- It reads `page_text` OCR and layout locators only.
+- It uses `selected_page` only for `doc_id` / `page_index` identity.
+- It does not read question, answer, gold fields, evidence pages, evidence sources, or binary correctness.
+
+R031 ran two activation-scan views:
+
+1. `merged_all`: all artifacts from the temporary `cumulative20 + R030` store.
+2. `atomic_only`: only artifacts passing the new atomic strong eligibility taxonomy.
+
+Results:
+
+| View | Activated | Eligible held-out | Changed artifact_only | Changed original_plus | Strong pages | Max doc share | Max page share |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| merged_all | 36 | 36 | 42 | 29 | 11 | 0.2222 | 0.1944 |
+| atomic_only | 6 | 6 | 6 | 4 | 2 | 0.5000 | 0.5000 |
+
+Interpretation:
+
+- The merged-all store appears to reach the nominal activation threshold, but it still includes non-atomic eligible artifacts such as broad/table descriptor artifacts from the earlier cumulative run.
+- The stricter atomic-only view shows that genuinely structured numeric evidence is still limited to 2 pages and only activates 6 records.
+- Therefore R031 does not justify repaired 20 -> 30 expansion, activation-rich held-out construction, or QA/effectiveness evaluation.
+
+Decision: continue Stage 2 coverage/quality repair. The next repair should expand atomic numeric coverage across more pages/documents before rerunning activation diagnostics. Do not run R032 limited effectiveness gate yet.
+
+Current R031 reports:
+
+- `outputs/stage2_structured_incremental/r031_activation_scan_review/r031_activation_scan_review_report.md`
+- `outputs/stage2_structured_incremental/r031_activation_scan_review/fallback_boundary_audit.md`
+- `outputs/stage2_structured_incremental/r031_activation_scan_review/atomic_only/eligibility_audit.md`
+- `outputs/stage2_structured_incremental/r031_activation_scan_review/activation_scan_atomic/real_structured_activation_scan_report.md`
