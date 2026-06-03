@@ -1,0 +1,296 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 1,
+    "text_block": 137
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r037_budgeted_targeted_coverage/stage2_delta/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 135,
+    "schema_valid_but_semantically_weak": 1,
+    "weak_locator": 1
+  },
+  "artifact_type_counts": {
+    "numeric_fact": 69,
+    "section_header": 2,
+    "table": 1,
+    "table_cell": 66
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 69,
+    "table_cell": 66
+  },
+  "atomic_eligible_pages": 10,
+  "atomic_strong_eligible_artifacts": 135,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "numeric_fact": 69,
+    "table_cell": 66
+  },
+  "eligible_artifacts": 135,
+  "eligible_docs": 7,
+  "eligible_locator_kind_counts": {
+    "source_block": 135,
+    "table_cell": 130,
+    "text_offset": 135
+  },
+  "eligible_pages": 10,
+  "eligible_pages_with_atomic_artifact": 10,
+  "eligible_rate": 0.9782608695652174,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "WA WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "WA WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "AK UT: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_004",
+        "artifact_type": "numeric_fact",
+        "content_preview": "AK UT: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_005",
+        "artifact_type": "table_cell",
+        "content_preview": "HI WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ],
+    "schema_valid_but_semantically_weak": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "section_header",
+        "content_preview": "Enrollment Planning Service Western Region",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 8
+      }
+    ],
+    "weak_locator": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "section_header",
+        "content_preview": "Enrollment Planning Service Western Region",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 8
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "WA WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "WA WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "AK UT: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_004",
+        "artifact_type": "numeric_fact",
+        "content_preview": "AK UT: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_005",
+        "artifact_type": "table_cell",
+        "content_preview": "HI WY: 1",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ],
+    "not_element_locatable_or_proof_trace_ineligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "The following is the strategic plan schedule of meetings:",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 10
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "section_header",
+        "content_preview": "Enrollment Planning Service Western Region",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0000",
+        "artifact_type": "section_header",
+        "content_preview": "CASH FLOWS FROM OPERATING ACTIVITIES",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 39
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "full_page_anchor": 1,
+    "source_block": 137,
+    "table_cell": 130,
+    "text_offset": 137
+  },
+  "missing_numeric_fact_count": 0,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 69,
+  "reason_counts": {
+    "eligible": 135,
+    "not_element_locatable_or_proof_trace_ineligible": 1,
+    "unstructured_artifact_type": 2
+  },
+  "schema_valid_but_semantically_weak_count": 1,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 135,
+  "table_cell_count": 66,
+  "total_artifacts": 138,
+  "weak_locator_count": 1
+}

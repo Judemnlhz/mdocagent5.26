@@ -31,11 +31,14 @@ def main() -> None:
     args = parse_args()
     excluded_pages = load_excluded_pages(args.exclude_subset)
     records = read_records(args.records)
+    target_record_ids = load_target_record_ids(args.target_unactivated_from_scan, args.exclude_record_ids_file, records)
     candidates = score_candidates(
         records=records,
         extract_root=Path(args.extract_root),
         retrieval_topk=int(args.retrieval_topk),
         excluded_pages=excluded_pages,
+        target_record_ids=target_record_ids,
+        atomicizer_max_cells=int(args.atomicizer_max_cells),
     )
     selected = select_rows(
         candidates,
@@ -53,7 +56,11 @@ def main() -> None:
         "max_pages": int(args.max_pages),
         "max_pages_per_doc": int(args.max_pages_per_doc),
         "retrieval_topk": int(args.retrieval_topk),
+        "atomicizer_max_cells": int(args.atomicizer_max_cells),
         "exclude_subset": str(args.exclude_subset) if args.exclude_subset else None,
+        "target_unactivated_from_scan": str(args.target_unactivated_from_scan) if args.target_unactivated_from_scan else None,
+        "exclude_record_ids_file": str(args.exclude_record_ids_file) if args.exclude_record_ids_file else None,
+        "num_target_record_ids": len(target_record_ids) if target_record_ids is not None else None,
         "num_excluded_pages": len(excluded_pages),
         "num_candidates": len(candidates),
         "num_selected_docs": len(selected),
@@ -89,6 +96,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-pages", type=int, default=10)
     parser.add_argument("--max-pages-per-doc", type=int, default=2)
     parser.add_argument("--retrieval-topk", type=int, default=10)
+    parser.add_argument("--atomicizer-max-cells", type=int, default=8)
+    parser.add_argument("--target-unactivated-from-scan", default=None)
+    parser.add_argument("--exclude-record-ids-file", default=None)
     parser.add_argument("--selection-source", default="r035_generic_atomic_coverage_probe")
     return parser.parse_args()
 
@@ -99,10 +109,15 @@ def score_candidates(
     extract_root: Path,
     retrieval_topk: int,
     excluded_pages: set[tuple[str, int]],
+    target_record_ids: set[int] | None,
+    atomicizer_max_cells: int,
 ) -> list[dict[str, Any]]:
     best: dict[tuple[str, int], dict[str, Any]] = {}
     for record_index, record in enumerate(records):
         if not isinstance(record, dict):
+            continue
+        record_id = int(record.get("record_index", record_index) or record_index)
+        if target_record_ids is not None and record_id not in target_record_ids:
             continue
         doc_id = str(record.get("doc_id") or "")
         if not doc_id:
@@ -124,7 +139,7 @@ def score_candidates(
                 selected_page={"doc_id": doc_id, "page_index": int(page_index)},
                 page_input=page_input,
                 existing_artifacts=[],
-                max_cells=12,
+                max_cells=atomicizer_max_cells,
             )
             type_counts = Counter(str(artifact.get("artifact_type") or "") for artifact in artifacts)
             atomic_pair_count = min(type_counts.get("table_cell", 0), type_counts.get("numeric_fact", 0))
@@ -134,7 +149,9 @@ def score_candidates(
             row = {
                 "doc_id": doc_id,
                 "page_index": int(page_index),
-                "record_index": int(record.get("record_index", record_index) or record_index),
+                "record_index": record_id,
+                "target_record_ids": [record_id],
+                "target_record_count": 1,
                 "score": round(score, 6),
                 "retrieval_score": round(float(retrieval_score), 6),
                 "offline_table_cell_count": int(type_counts.get("table_cell", 0)),
@@ -142,9 +159,19 @@ def score_candidates(
                 "offline_atomic_pair_count": int(atomic_pair_count),
                 "selection_reasons": ["generic_atomicizer_offline_table_numeric_signal"],
             }
-            if key not in best or row["score"] > best[key]["score"]:
+            if target_record_ids is not None:
+                row["selection_reasons"].append("target_unactivated_record_candidate")
+            if key in best:
+                existing = best[key]
+                target_ids = sorted({*existing.get("target_record_ids", []), record_id})
+                existing["target_record_ids"] = target_ids
+                existing["target_record_count"] = len(target_ids)
+                existing["retrieval_score"] = round(float(existing["retrieval_score"]) + float(retrieval_score), 6)
+                existing["score"] = round(float(existing["offline_atomic_pair_count"]) * 10.0 + float(existing["retrieval_score"]) + len(target_ids) * 2.0, 6)
+                existing["selection_reasons"] = sorted({*existing["selection_reasons"], *row["selection_reasons"]})
+            else:
                 best[key] = row
-    return sorted(best.values(), key=lambda row: (-float(row["score"]), row["doc_id"], int(row["page_index"])))
+    return sorted(best.values(), key=lambda row: (-int(row.get("target_record_count", 1)), -float(row["score"]), row["doc_id"], int(row["page_index"])))
 
 
 def retrieval_pages(record: dict[str, Any], topk: int) -> list[tuple[int, float]]:
@@ -189,6 +216,8 @@ def select_rows(candidates: list[dict[str, Any]], max_pages: int, max_pages_per_
                 "offline_atomic_pair_count": sum(int(row["offline_atomic_pair_count"]) for row in pages),
                 "offline_table_cell_count": sum(int(row["offline_table_cell_count"]) for row in pages),
                 "offline_numeric_fact_count": sum(int(row["offline_numeric_fact_count"]) for row in pages),
+                "target_record_count": sum(int(row.get("target_record_count", 0)) for row in pages),
+                "target_record_ids": sorted({int(record_id) for row in pages for record_id in row.get("target_record_ids", [])}),
             }
         )
     return rows
@@ -220,6 +249,42 @@ def load_excluded_pages(paths: list[str] | None) -> set[tuple[str, int]]:
             except (TypeError, ValueError):
                 continue
     return excluded
+
+
+def load_target_record_ids(scan_path: str | None, exclude_record_ids_file: str | None, records: list[Any]) -> set[int] | None:
+    if scan_path in (None, ""):
+        return None
+
+    activated_ids: set[int] = set()
+    for row in read_records(scan_path):
+        if not isinstance(row, dict):
+            continue
+        try:
+            record_id = int(row.get("record_id", row.get("record_index")))
+        except (TypeError, ValueError):
+            continue
+        if row.get("activated") is True:
+            activated_ids.add(record_id)
+
+    all_ids = {int(row.get("record_index", index) or index) for index, row in enumerate(records) if isinstance(row, dict)}
+    return all_ids - activated_ids - read_record_ids(exclude_record_ids_file)
+
+
+def read_record_ids(path: str | Path | None) -> set[int]:
+    if path in (None, ""):
+        return set()
+    file_path = Path(path)
+    if not file_path.is_file():
+        return set()
+    ids: set[int] = set()
+    for line in file_path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        try:
+            ids.add(int(line.strip()))
+        except ValueError:
+            continue
+    return ids
 
 
 def read_page_text(extract_root: Path, doc_id: str, page_index: int) -> str:
