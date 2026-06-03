@@ -1,0 +1,72 @@
+{
+  "actual_image_payload_kinds": [
+    "none"
+  ],
+  "artifacts_hash": "5cff144b210d7b1e80ece84709e3cc8b49c993a6fd4891f2636896c24f61cb08",
+  "call_log_hash": "2f333a8a0699762dc524bb6ad6c0c631f6adbe66aca83be24e27ca982c56392a",
+  "command_args": {
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": false,
+    "image_payload_mode": "none",
+    "max_docs": 10,
+    "max_pages": 10,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 3,
+    "max_pages_real_cap": 10,
+    "max_pages_total": null,
+    "max_retries": 2,
+    "model_name_recorded": true,
+    "provider": "fake",
+    "provider_mode": "fake",
+    "retrieval_topk": 5,
+    "retrieval_topk_file_used": false,
+    "run_real_trial": false,
+    "save_private_debug": false,
+    "scope_mode": "retrieval_topk_scope",
+    "subset_file_used": true
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "evaluator_model_used": false,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "e1d30215b48d447b922f865bf5d358f586f52c5b",
+  "image_payload_modes": [
+    "none"
+  ],
+  "image_sha256_summary": {
+    "count": 0,
+    "values": []
+  },
+  "image_sha256_values": [],
+  "input_hash_unavailable_reason": "input_file_missing",
+  "model_config_hash": null,
+  "model_config_path": null,
+  "model_id": null,
+  "model_provider": null,
+  "model_role": "none_or_fake",
+  "model_used_for": "stage2_document_generic_fake_or_dry_run",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 90,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 0,
+  "pages_without_image_payload": 10,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v1",
+  "provider_body_redacted": true,
+  "provider_call_count": 10,
+  "provider_modes": [
+    "fake"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "625145dc9dc5badfbbffab0d4fbdd4739b917f1831932a1cc13c25aa499ebf0c",
+  "schema_version": "stage2_artifact_schema_v1"
+}

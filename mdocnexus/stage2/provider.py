@@ -57,9 +57,19 @@ from typing import Optional
 class ProviderError(Exception):
     """Base class for provider adapter failures."""
 
-    def __init__(self, message: str, raw_text: Optional[str] = None) -> None:
+    def __init__(
+        self,
+        message: str,
+        raw_text: Optional[str] = None,
+        parse_failure_type: Optional[str] = None,
+        contains_json_like_block: Optional[bool] = None,
+        schema_missing_fields: Optional[list[str]] = None,
+    ) -> None:
         super().__init__(message)
         self.raw_text = raw_text
+        self.parse_failure_type = parse_failure_type
+        self.contains_json_like_block = contains_json_like_block
+        self.schema_missing_fields = list(schema_missing_fields or [])
 
 
 class ProviderNotConfiguredError(ProviderError):
@@ -244,10 +254,61 @@ def _read_api_key(api_config: ApiRunConfig) -> str:
         return str(direct_api_key)
     api_key = os.environ.get(api_config.api_key_env_var, "")
     if not api_key.strip():
+        api_key = _read_api_key_from_persistent_env(api_config.api_key_env_var)
+    if not api_key.strip():
         raise ProviderNotConfiguredError(
             f"Provider API key environment variable is not set: {api_config.api_key_env_var}"
         )
     return api_key
+
+
+def _read_api_key_from_persistent_env(env_var_name: str) -> str:
+    """Read a provider key from private machine-local env files.
+
+    This is a fallback for non-interactive SSH commands that do not source
+    ~/.bashrc or ~/.profile. It intentionally reads only simple KEY=VALUE or
+    export KEY=VALUE lines and never writes credentials into repo files.
+    """
+
+    for env_path in _persistent_env_paths():
+        value = _read_env_file_value(env_path, env_var_name)
+        if value.strip():
+            return value
+    return ""
+
+
+def _persistent_env_paths() -> list[Path]:
+    paths = [Path.home() / ".config" / "mdocagent" / "stage2.env"]
+    try:
+        paths.append(Path("/etc/environment"))
+    except Exception:
+        pass
+    return paths
+
+
+def _read_env_file_value(path: Path, env_var_name: str) -> str:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return ""
+    prefix = f"{env_var_name}="
+    export_prefix = f"export {env_var_name}="
+    for line in lines:
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#"):
+            continue
+        if stripped.startswith(export_prefix):
+            return _strip_env_value(stripped[len(export_prefix):])
+        if stripped.startswith(prefix):
+            return _strip_env_value(stripped[len(prefix):])
+    return ""
+
+
+def _strip_env_value(value: str) -> str:
+    stripped = value.strip()
+    if len(stripped) >= 2 and stripped[0] == stripped[-1] and stripped[0] in {"'", '"'}:
+        return stripped[1:-1]
+    return stripped
 
 
 def _resolve_chat_completions_url(api_config: ApiRunConfig) -> str:
@@ -268,7 +329,14 @@ def _parse_chat_completion_json(raw_text: str) -> Dict[str, Any]:
     try:
         response_object = json.loads(raw_text)
     except json.JSONDecodeError as exc:
-        raise ProviderResponseFormatError("Provider response was not valid JSON.", raw_text=raw_text) from exc
+        try:
+            return _parse_json_object_from_text(raw_text)
+        except ProviderResponseFormatError:
+            raise _provider_response_format_error(
+                "Provider response was not valid JSON.",
+                raw_text=raw_text,
+                parse_failure_type="http_response_not_json",
+            ) from exc
 
     if isinstance(response_object, dict) and _looks_like_page_artifact_output(response_object):
         return response_object
@@ -277,15 +345,26 @@ def _parse_chat_completion_json(raw_text: str) -> Dict[str, Any]:
     if isinstance(content, dict):
         return content
     if not isinstance(content, str):
-        raise ProviderResponseFormatError("Provider response did not contain JSON text.", raw_text=raw_text)
+        raise _provider_response_format_error(
+            "Provider response did not contain JSON text.",
+            raw_text=raw_text,
+            parse_failure_type="missing_message_content",
+        )
 
-    json_text = _strip_json_fence(content)
     try:
-        parsed = json.loads(json_text)
-    except json.JSONDecodeError as exc:
-        raise ProviderResponseFormatError("Provider message content was not valid JSON.", raw_text=content) from exc
+        parsed = _parse_json_object_from_text(content)
+    except ProviderResponseFormatError as exc:
+        raise _provider_response_format_error(
+            "Provider message content was not valid JSON.",
+            raw_text=content,
+            parse_failure_type="message_content_not_json",
+        ) from exc
     if not isinstance(parsed, dict):
-        raise ProviderResponseFormatError("Provider message JSON was not an object.", raw_text=content)
+        raise _provider_response_format_error(
+            "Provider message JSON was not an object.",
+            raw_text=content,
+            parse_failure_type="message_json_not_object",
+        )
     return parsed
 
 
@@ -328,6 +407,110 @@ def _strip_json_fence(text: str) -> str:
             lines = lines[:-1]
         return "\n".join(lines).strip()
     return stripped
+
+
+def _parse_json_object_from_text(text: str) -> Dict[str, Any]:
+    candidates = [text.strip(), _strip_json_fence(text)]
+    candidates.extend(_extract_fenced_json_candidates(text))
+    candidates.extend(_extract_balanced_json_object_candidates(text))
+    seen: set[str] = set()
+    saw_json_like = False
+    for candidate in candidates:
+        candidate = candidate.strip()
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        saw_json_like = saw_json_like or _contains_json_like_block(candidate)
+        try:
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict):
+            return parsed
+        raise _provider_response_format_error(
+            "Provider JSON text was not an object.",
+            raw_text=text,
+            parse_failure_type="json_not_object",
+        )
+    raise _provider_response_format_error(
+        "Provider text did not contain a parseable JSON object.",
+        raw_text=text,
+        parse_failure_type="json_object_not_found" if saw_json_like else "json_like_block_absent",
+    )
+
+
+def _extract_fenced_json_candidates(text: str) -> list[str]:
+    fence = chr(96) * 3
+    candidates: list[str] = []
+    parts = text.split(fence)
+    for index in range(1, len(parts), 2):
+        block = parts[index].strip()
+        if not block:
+            continue
+        lines = block.splitlines()
+        if lines and lines[0].strip().lower() in {"json", "json_object"}:
+            lines = lines[1:]
+        candidates.append("\n".join(lines).strip())
+    return candidates
+
+
+def _extract_balanced_json_object_candidates(text: str) -> list[str]:
+    candidates: list[str] = []
+    starts = [index for index, char in enumerate(text) if char == "{"]
+    for start in starts:
+        depth = 0
+        in_string = False
+        escaped = False
+        for index in range(start, len(text)):
+            char = text[index]
+            if in_string:
+                if escaped:
+                    escaped = False
+                elif char == "\\":
+                    escaped = True
+                elif char == '"':
+                    in_string = False
+                continue
+            if char == '"':
+                in_string = True
+            elif char == "{":
+                depth += 1
+            elif char == "}":
+                depth -= 1
+                if depth == 0:
+                    candidates.append(text[start:index + 1])
+                    break
+    return candidates
+
+
+def _provider_response_format_error(
+    message: str,
+    raw_text: str,
+    parse_failure_type: str,
+) -> ProviderResponseFormatError:
+    return ProviderResponseFormatError(
+        message,
+        raw_text=raw_text,
+        parse_failure_type=parse_failure_type,
+        contains_json_like_block=_contains_json_like_block(raw_text),
+        schema_missing_fields=_schema_missing_fields(raw_text),
+    )
+
+
+def _contains_json_like_block(text: str) -> bool:
+    stripped = text.strip()
+    return "{" in stripped and "}" in stripped
+
+
+def _schema_missing_fields(text: str) -> list[str]:
+    for candidate in [text.strip(), _strip_json_fence(text), *_extract_fenced_json_candidates(text), *_extract_balanced_json_object_candidates(text)]:
+        try:
+            parsed = json.loads(candidate)
+        except Exception:
+            continue
+        if isinstance(parsed, dict):
+            return [field for field in ("doc_id", "page_index", "artifacts") if field not in parsed]
+    return []
 
 
 def _looks_like_page_artifact_output(value: Dict[str, Any]) -> bool:
@@ -829,7 +1012,10 @@ def build_artifact_compiler_system_prompt() -> str:
             "Do not generate proof_trace.",
             "Do not output verified / answer_supported / proof_used.",
             "If uncertain, write uncertain_or_unreadable.",
-            "Return JSON only.",
+            "Return strict JSON only.",
+            "The first output character must be { and the final output character must be }.",
+            "Do not wrap JSON in markdown fences.",
+            "Do not include explanations, comments, apologies, or prose before or after the JSON object.",
         ]
     )
 
@@ -884,6 +1070,8 @@ def build_artifact_compiler_user_prompt(
         ],
         "rules": [
             "Return exactly one PageArtifactOutput JSON object.",
+            "Output strict RFC8259-style JSON only: one object, no markdown fences, no surrounding prose.",
+            "The first output character must be { and the final output character must be }.",
             "Use only source_id values present in layout_blocks.",
             "Every artifact must have validation_status set to candidate.",
             "Do not generate an answer to the question.",
@@ -935,17 +1123,96 @@ def build_document_generic_artifact_compiler_user_prompt(
         "required_json_schema": schema_dict,
         "layout_blocks": page_input.get("layout_blocks", []),
         "page_text": page_input.get("page_text"),
+        "numeric_evidence_candidates_from_page_text": _extract_numeric_evidence_candidates(page_input.get("page_text")),
         "artifact_coverage_instruction": [
-            "Produce document-generic evidence artifacts for visible or readable page content.",
-            "For text, tables, captions, figures, and numeric values, cite source_anchors from layout_blocks.",
-            "Do not answer any question.",
-            "Do not infer hidden values.",
+            "Produce only high-confidence document-generic evidence artifacts; it is acceptable to return artifacts=[].",
+            "Prefer atomic structured artifacts that can support retrieval: table_cell and numeric_fact first, then caption or figure when readable.",
+            "For readable tables, extract individual cells or metric facts instead of one whole-table blob.",
+            "For pages with tables, financial statements, performance metrics, percentages, totals, fiscal periods, or segment metrics, emit numeric_fact and table_cell artifacts before any table descriptor.",
+            "For each readable numeric table, emit 3 to 8 table_cell or numeric_fact artifacts for salient visible values, percentages, totals, or metric rows.",
+            "Use a table artifact only as a compact table-level descriptor after atomic values have been emitted; a table artifact must never replace numeric_fact or table_cell artifacts.",
+            "If a page has readable numeric values, do not output only a table name, caption, section title, or broad table summary.",
+            "If a table artifact is included, keep content under 120 characters and put detailed values into table_cell or numeric_fact artifacts.",
+            "For a table_cell, normalized_content must include table_id, row_index, column_index, value_text, and any visible row_header or column_header.",
+            "For a numeric_fact, normalized_content must include metric_name, row_label or row_header, column_label or column_header, value_text, unit or percent, normalized_value when possible, date_or_period when visible, source_text, and locator context.",
+            "A numeric_fact without a concrete value_text, metric_name, and row/column/context label is invalid; omit it instead of outputting a broad summary.",
+            "Use numeric_evidence_candidates_from_page_text as the preferred extraction targets when present; convert these snippets into numeric_fact or table_cell artifacts, not text_span artifacts.",
+            "For financial tables with year columns, use the metric name as row_label, the year as column_label, and the amount or percentage as value_text.",
+            "For performance tables with Baseline, Target, and Actual Results columns, use the measurement indicator as metric_name or row_label and emit numeric_fact/table_cell artifacts for Baseline, Target, and Actual Results values.",
+            "For a figure or caption, normalized_content must include figure_id or caption_id and the visible title/caption text when readable.",
+            "When evidence comes from OCR text, put char_start and char_end in normalized_content using the provided layout block text.",
+            "When evidence comes from image/table layout, include normalized_content.locator with locator_kind=bbox and bbox=[x0,y0,x1,y1] only if the element can be localized.",
+            "Also put structured locator fields in locators: table_cell for table_cell artifacts, text_offset for OCR-backed numeric_fact/caption artifacts, figure_region for localized figure artifacts, and caption_block for caption artifacts.",
+            "Each structured artifact must use a non-full-page source anchor whenever a text/table/layout block is available.",
+            "Do not use full_page_image as the only locator for numeric_fact, table, table_cell, or caption artifacts.",
+            "Do not put table_id, row_index, column_index, figure_id, caption_id, char_start, char_end, or bbox as top-level artifact fields; put them in normalized_content or locators.",
+            "Do not answer any question and do not infer hidden values.",
             "If content cannot be localized or read, add uncertain_or_unreadable instead of guessing.",
         ],
+        "structured_artifact_examples": [
+            {
+                "artifact_type": "table_cell",
+                "modality": "table",
+                "content": "Female respondents: 54%",
+                "normalized_content": {
+                    "table_id": "table_001",
+                    "row_index": 2,
+                    "column_index": 3,
+                    "row_header": "Female",
+                    "column_header": "Respondents",
+                    "value_text": "54%"
+                }
+            },
+            {
+                "artifact_type": "numeric_fact",
+                "modality": "numeric",
+                "content": "North America comparable sales declined 7.1%.",
+                "normalized_content": {
+                    "metric_name": "comparable sales",
+                    "row_label": "North America",
+                    "column_label": "decline",
+                    "value_text": "7.1%",
+                    "unit": "percent",
+                    "normalized_value": -7.1,
+                    "date_or_period": "reported period",
+                    "source_text": "North America comparable sales declined 7.1%"
+                }
+            }
+        ],
+        "strong_eligibility_target": {
+            "purpose": "Produce artifacts that can be used by artifact-aware retrieval without fallback.",
+            "preferred_artifact_types": ["table_cell", "numeric_fact", "figure", "caption", "table"],
+            "must_avoid_content_prefixes": ["Mock", "Placeholder", "Generic", "Candidate anchored to"],
+            "required_properties": [
+                "non_empty_visible_page_content",
+                "source_anchors_from_layout_blocks",
+                "provenance.sources_matching_source_anchors",
+                "non_full_page_locator_when_available",
+                "normalized_content.value_text_for_numeric_or_table_cell",
+                "normalized_content.metric_name_row_label_column_label_unit_for_numeric_fact",
+                "locators.table_cell_or_text_offset_or_bbox_or_caption_block_or_figure_region",
+            ],
+            "locator_examples": [
+                {"locator_kind": "table_cell", "table_id": "table_001", "row_index": 2, "column_index": 3},
+                {"locator_kind": "text_offset", "block_id": "p007_text_0002", "char_start": 120, "char_end": 137},
+                {"locator_kind": "caption_block", "caption_id": "caption_001", "block_id": "p007_text_0004"},
+                {"locator_kind": "figure_region", "figure_id": "fig_001", "bbox": [0.12, 0.18, 0.88, 0.62]},
+            ],
+        },
         "rules": [
             "Return exactly one PageArtifactOutput JSON object.",
+            "Output strict RFC8259-style JSON only: one object, no markdown fences, no surrounding prose.",
+            "The first output character must be { and the final output character must be }.",
             "Use only source_id values present in layout_blocks.",
             "Every artifact must have validation_status set to candidate.",
+            "Every artifact must have non-empty content copied or tightly paraphrased from visible/readable page evidence.",
+            "Do not satisfy table evidence with only broad table artifacts when readable cells or numeric values are visible.",
+            "For financial, performance, percentage, metric, or brochure-spec tables, output atomic numeric_fact/table_cell artifacts; broad table summaries alone are invalid.",
+            "Do not output text_span artifacts for numeric candidate snippets when numeric_fact or table_cell can represent the same evidence.",
+            "Do not output table_cell artifacts without normalized_content.value_text.",
+            "If the only candidate artifact would be a table title, caption, or section heading, either output atomic values from the same source block or return artifacts=[].",
+            "Do not create a table artifact whose content is a long OCR dump of many rows.",
+            "Do not output mock, placeholder, generic, or candidate boilerplate content.",
             "Do not include question text, generated answers, gold answers, baseline outputs, or source records.",
             "Do not create supports or contradicts edges.",
             "Do not create proof_trace, verified, answer_supported, or proof_used fields.",
@@ -953,6 +1220,42 @@ def build_document_generic_artifact_compiler_user_prompt(
         ],
     }
     return json.dumps(prompt_payload, ensure_ascii=False, indent=2)
+
+
+def _extract_numeric_evidence_candidates(page_text: Any, max_candidates: int = 18) -> list[Dict[str, Any]]:
+    """Extract public-safe numeric snippets from Stage 2 OCR text for prompt focus."""
+
+    if not isinstance(page_text, str) or not page_text.strip():
+        return []
+    raw_lines = [line.strip() for line in page_text.splitlines()]
+    lines = [line for line in raw_lines if line]
+    candidates: list[Dict[str, Any]] = []
+    seen: set[str] = set()
+    numeric_pattern = re.compile(r"(?:\$|\b\d[\d,]*(?:\.\d+)?\b|%|\(\s*\d)")
+    header_pattern = re.compile(r"\b(year|revenue|sales|profit|income|margin|baseline|target|actual|result|percentage|percent|fiscal|202\d|200\d)\b", re.I)
+    for index, line in enumerate(lines):
+        if not numeric_pattern.search(line):
+            continue
+        window_lines = []
+        for neighbor_index in range(max(0, index - 2), min(len(lines), index + 3)):
+            neighbor = lines[neighbor_index]
+            if neighbor_index == index or header_pattern.search(neighbor) or numeric_pattern.search(neighbor):
+                window_lines.append(neighbor)
+        snippet = " | ".join(window_lines)
+        snippet = " ".join(snippet.split())
+        if not snippet or snippet in seen:
+            continue
+        seen.add(snippet)
+        candidates.append(
+            {
+                "line_index": index,
+                "snippet": snippet[:500],
+                "instruction": "Emit numeric_fact or table_cell artifacts with row_label, column_label, value_text, unit/percent, source_text, and locator.",
+            }
+        )
+        if len(candidates) >= max_candidates:
+            break
+    return candidates
 
 
 def _is_explicit_page_constraint(question_constraints: Dict[str, Any], page_index: int) -> bool:

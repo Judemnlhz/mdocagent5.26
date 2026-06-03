@@ -1,0 +1,87 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 3,
+  "num_pages_attempted": 3,
+  "num_artifacts": 6,
+  "num_valid_artifacts": 6,
+  "num_discarded_artifacts": 0,
+  "schema_valid_rate": 1.0,
+  "anchoring_rate": 1.0,
+  "discard_rate": 0.0,
+  "artifact_type_counts": {
+    "figure": 1,
+    "table": 5
+  },
+  "modality_counts": {
+    "image": 1,
+    "table": 5
+  },
+  "status_counts": {
+    "anchored": 6
+  },
+  "num_source_anchored": 6,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 5,
+  "element_locator_rate": 0.8333333333333334,
+  "num_proof_trace_eligible": 5,
+  "proof_trace_eligible_rate": 0.8333333333333334,
+  "proof_trace_eligible_by_type": {
+    "figure": 1,
+    "table": 4
+  },
+  "locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 2,
+    "source_block": 4,
+    "text_offset": 4
+  },
+  "num_artifacts_without_element_locator": 1,
+  "discard_reason_counts": {},
+  "provider_parse_failure_type_counts": {},
+  "provider_parse_failure_json_like_counts": {},
+  "provider_schema_missing_field_counts": {},
+  "provider_raw_text_length_summary": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "avg": null
+  },
+  "locator_status_counts": {
+    "with_locator": 6
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 6
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 3,
+  "pages_with_image_payload": 3,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 1,
+  "caption_artifact_count": 0,
+  "table_artifact_count": 5,
+  "table_cell_artifact_count": 0,
+  "numeric_fact_count": 0,
+  "visual_region_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 3,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 3,
+  "schema_valid_artifact_count": 6,
+  "anchored_artifact_count": 6,
+  "discarded_artifact_count": 0,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 3,
+  "num_selected_pages": 3,
+  "num_artifacts_per_doc_avg": 2.0,
+  "num_artifacts_per_page_avg": 2.0,
+  "page_selection_source_counts": {
+    "r028_parse_repair_replay_failed_pages_only": 3
+  }
+}

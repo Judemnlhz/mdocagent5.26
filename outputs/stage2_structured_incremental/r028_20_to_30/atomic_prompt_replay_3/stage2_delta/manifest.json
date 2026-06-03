@@ -1,0 +1,81 @@
+{
+  "actual_image_payload_kinds": [
+    "base64_data_url"
+  ],
+  "artifacts_hash": "76179102de7a92aba6aa42ef0b69b4d583cf6f5573adfb65392e692fc76381cc",
+  "call_log_hash": "84459c74429fd1eb721765d3b10c0af371dd29e87a4ae7439c5c8e2af3ea3c06",
+  "command_args": {
+    "allow_real_subset": true,
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": true,
+    "image_payload_mode": "image_url",
+    "max_docs": 3,
+    "max_pages": 3,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 1,
+    "max_pages_real_cap": 3,
+    "max_pages_total": 3,
+    "max_retries": 0,
+    "model_name_recorded": true,
+    "provider": "real",
+    "provider_mode": "real",
+    "retrieval_topk": 5,
+    "retrieval_topk_file_used": false,
+    "run_real_trial": true,
+    "save_private_debug": false,
+    "scope_mode": "doc_first",
+    "subset_file_used": true
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "evaluator_model_used": false,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "e1d30215b48d447b922f865bf5d358f586f52c5b",
+  "image_payload_modes": [
+    "image_url"
+  ],
+  "image_sha256_summary": {
+    "count": 3,
+    "values": [
+      "b1f409b7fac4ea931f2a07eb9996bae35e2361cacf7625117fb54427fd61f934",
+      "dc244c30a4443ecbd74725459ff57e075695cc557da90ebee1472cdde99c2fe2",
+      "fe6a3066c818f6b41e2c1f8647c787ea956e9bbe45bc756c167a60fbc7424d40"
+    ]
+  },
+  "image_sha256_values": [
+    "b1f409b7fac4ea931f2a07eb9996bae35e2361cacf7625117fb54427fd61f934",
+    "dc244c30a4443ecbd74725459ff57e075695cc557da90ebee1472cdde99c2fe2",
+    "fe6a3066c818f6b41e2c1f8647c787ea956e9bbe45bc756c167a60fbc7424d40"
+  ],
+  "input_hash": "49dbec9530c5068a9006c8b5c118eb656de56f8ba4576c3047e9fe9ddc334acd",
+  "model_config_hash": "09394e028c69a669bcb3ad084f3e6d914047bd94b0e0eecdeb614c27695414f0",
+  "model_config_path": "config/model/qwen3vl.yaml",
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+  "model_provider": "models.siliconflow",
+  "model_role": "multimodal_extraction",
+  "model_used_for": "stage2_document_generic_artifact_compilation",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 10,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 3,
+  "pages_without_image_payload": 0,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v2_structured_real_gate_atomic_prompt_probe",
+  "provider_body_redacted": true,
+  "provider_call_count": 3,
+  "provider_modes": [
+    "real"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "845b3e6dad996b2a735cc687d7415ca51192ba4e1e901a777ff91d7270b19316",
+  "schema_version": "stage2_artifact_schema_v1"
+}

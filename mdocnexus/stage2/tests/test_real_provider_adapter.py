@@ -15,12 +15,56 @@ from mdocnexus.stage2.provider import ApiRunConfig
 from mdocnexus.stage2.artifact_pipeline import run_stage2_single_page_real_api_smoke_test
 from mdocnexus.stage2.provider import CompatibleChatJsonProvider
 from mdocnexus.stage2.provider import _build_request_body
+from mdocnexus.stage2.provider import _parse_chat_completion_json
 from mdocnexus.stage2.provider import describe_image_payload
 from mdocnexus.stage2.provider import ProviderNotConfiguredError, ProviderResponseFormatError
 from mdocnexus.stage2.provider import RealApiArtifactCompilerClient
 from scripts.stage2 import validate_real_page_limits, validate_real_trial_args
 
 class RealProviderAdapterTest(unittest.TestCase):
+    def test_parser_repairs_fenced_message_json(self) -> None:
+        raw_response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": "```json\n{\"doc_id\":\"doc.pdf\",\"page_index\":3,\"artifacts\":[]}\n```"
+                    }
+                }
+            ]
+        }
+
+        parsed = _parse_chat_completion_json(json.dumps(raw_response))
+
+        self.assertEqual(parsed["doc_id"], "doc.pdf")
+        self.assertEqual(parsed["page_index"], 3)
+        self.assertEqual(parsed["artifacts"], [])
+
+    def test_parser_repairs_surrounding_text_json(self) -> None:
+        raw_response = {
+            "choices": [
+                {
+                    "message": {
+                        "content": "Here is the JSON object:\n{\"doc_id\":\"doc.pdf\",\"page_index\":4,\"artifacts\":[]}\nDone."
+                    }
+                }
+            ]
+        }
+
+        parsed = _parse_chat_completion_json(json.dumps(raw_response))
+
+        self.assertEqual(parsed["doc_id"], "doc.pdf")
+        self.assertEqual(parsed["page_index"], 4)
+        self.assertEqual(parsed["artifacts"], [])
+
+    def test_parser_taxonomy_records_missing_json_block(self) -> None:
+        raw_response = {"choices": [{"message": {"content": "not json"}}]}
+
+        with self.assertRaises(ProviderResponseFormatError) as ctx:
+            _parse_chat_completion_json(json.dumps(raw_response))
+
+        self.assertEqual(ctx.exception.parse_failure_type, "message_content_not_json")
+        self.assertFalse(ctx.exception.contains_json_like_block)
+
     def test_provider_requires_explicit_run_real_trial(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

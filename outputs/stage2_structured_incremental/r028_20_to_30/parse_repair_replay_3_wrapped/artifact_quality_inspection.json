@@ -1,0 +1,30 @@
+{
+  "decision": "quality_inspect_prompt_repair_needed",
+  "scope": {
+    "no_stage2_expansion": true,
+    "no_qa": true,
+    "no_graph": true,
+    "no_rerank_tuning": true,
+    "not_merged_into_cumulative_artifacts": true
+  },
+  "eligibility": {
+    "total_artifacts": 6,
+    "strong_eligible_artifacts": 5,
+    "eligible_pages": 2,
+    "mock_or_placeholder_content": 0,
+    "full_page_only_locator": 1,
+    "missing_strong_locator": 0
+  },
+  "artifact_type_counts": {
+    "figure": 1,
+    "table": 5
+  },
+  "atomic_artifact_count": 0,
+  "whole_table_blob_count": 4,
+  "content_length_summary": {
+    "min": 29,
+    "max": 557,
+    "avg": 353.1666666666667
+  },
+  "interpretation": "Eligibility is nonzero, but artifacts are mostly broad table/figure objects. Atomic table_cell/numeric_fact coverage is zero, so do not run activation or QA from this replay. Run prompt-only bounded replay on the same failed pages to test atomic extraction."
+}

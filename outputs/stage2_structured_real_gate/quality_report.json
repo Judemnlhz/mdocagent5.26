@@ -1,0 +1,82 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 9,
+  "num_pages_attempted": 10,
+  "num_artifacts": 26,
+  "num_valid_artifacts": 26,
+  "num_discarded_artifacts": 5,
+  "schema_valid_rate": 0.8387096774193549,
+  "anchoring_rate": 0.8387096774193549,
+  "discard_rate": 0.16129032258064516,
+  "artifact_type_counts": {
+    "figure": 2,
+    "table": 5,
+    "text_span": 19
+  },
+  "modality_counts": {
+    "image": 2,
+    "table": 5,
+    "text": 19
+  },
+  "status_counts": {
+    "anchored": 26
+  },
+  "num_source_anchored": 26,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 23,
+  "element_locator_rate": 0.8846153846153846,
+  "num_proof_trace_eligible": 23,
+  "proof_trace_eligible_rate": 0.8846153846153846,
+  "proof_trace_eligible_by_type": {
+    "table": 4,
+    "text_span": 19
+  },
+  "locator_kind_counts": {
+    "full_page_anchor": 2,
+    "source_block": 24,
+    "table_cell": 2,
+    "text_offset": 27
+  },
+  "num_artifacts_without_element_locator": 3,
+  "discard_reason_counts": {
+    "provider_error": 5
+  },
+  "locator_status_counts": {
+    "with_locator": 26
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 26
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 10,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 2,
+  "caption_artifact_count": 0,
+  "table_artifact_count": 5,
+  "table_cell_artifact_count": 0,
+  "numeric_fact_count": 0,
+  "visual_region_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 5,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 5,
+  "provider_call_failed_count": 5,
+  "json_parse_success_count": 5,
+  "schema_valid_artifact_count": 26,
+  "anchored_artifact_count": 26,
+  "discarded_artifact_count": 5,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 9,
+  "num_selected_pages": 10,
+  "num_artifacts_per_doc_avg": 2.888888888888889,
+  "num_artifacts_per_page_avg": 2.6,
+  "page_selection_source_counts": {
+    "structured_real_stage2_small_sample": 10
+  }
+}

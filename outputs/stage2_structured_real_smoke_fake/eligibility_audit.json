@@ -1,0 +1,188 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 30,
+    "text_block": 60
+  },
+  "artifact_path": "outputs/stage2_structured_real_smoke_fake/artifacts.jsonl",
+  "artifact_type_counts": {
+    "caption": 10,
+    "figure": 10,
+    "numeric_fact": 10,
+    "section_header": 10,
+    "table": 10,
+    "table_cell": 10,
+    "text_span": 10,
+    "visual_observation": 10,
+    "visual_region": 10
+  },
+  "eligible_artifact_type_counts": {},
+  "eligible_artifacts": 0,
+  "eligible_docs": 0,
+  "eligible_locator_kind_counts": {},
+  "eligible_pages": 0,
+  "eligible_rate": 0.0,
+  "examples_by_reason": {
+    "mock_or_placeholder_content": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_fig_007_0001_0003",
+        "artifact_type": "figure",
+        "content_preview": "Mock figure candidate anchored to the page image.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_caption_007_0006_0006",
+        "artifact_type": "caption",
+        "content_preview": "Mock caption candidate anchored to a text block.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "caption_block",
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_p007_text_0000_0007",
+        "artifact_type": "numeric_fact",
+        "content_preview": "Mock numeric fact candidate anchored to a text block: 1.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_table_007_0001_0008",
+        "artifact_type": "table",
+        "content_preview": "Mock table candidate anchored to a text block.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_table_007_0001_r000_c000_0009",
+        "artifact_type": "table_cell",
+        "content_preview": "Mock table cell candidate anchored to a text block.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_p007_full_page_image_0001",
+        "artifact_type": "visual_observation",
+        "content_preview": "Mock visual observation anchored to the full page image.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_fig_007_0001_0002",
+        "artifact_type": "visual_region",
+        "content_preview": "Mock visual region candidate anchored to the page image.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_p007_text_0000_0004",
+        "artifact_type": "text_span",
+        "content_preview": "Predicted Program: answer_1 = Question(\"Which state is Emery located in?\") answer_2 = Question(\"Which state is Edison Local School District located in?\") fact_1",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "2023.acl-long.386_p007_section_007_0005_0005",
+        "artifact_type": "section_header",
+        "content_preview": "Predicted Program:",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "section_block",
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "2023.findings-emnlp.248_p006_p006_full_page_image_0001",
+        "artifact_type": "visual_observation",
+        "content_preview": "Mock visual observation anchored to the full page image.",
+        "doc_id": "2023.findings-emnlp.248.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "caption_block": 10,
+    "full_page_anchor": 30,
+    "section_block": 10,
+    "source_block": 60,
+    "table_cell": 10,
+    "text_offset": 60
+  },
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 50,
+  "no_gold_fields_used": true,
+  "reason_counts": {
+    "mock_or_placeholder_content": 50,
+    "unstructured_artifact_type": 40
+  },
+  "schema_version": "artifact_rerank_eligibility_audit_v1",
+  "strong_eligible_artifacts": 0,
+  "total_artifacts": 90
+}

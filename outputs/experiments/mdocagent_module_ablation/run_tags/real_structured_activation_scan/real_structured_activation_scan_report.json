@@ -1,0 +1,71 @@
+{
+  "activated_count": 6,
+  "activated_ids": [
+    633,
+    638,
+    639,
+    640,
+    641,
+    1072
+  ],
+  "artifacts": "outputs/stage2_structured_real_gate/artifacts.jsonl",
+  "changed_count": 6,
+  "changed_ids": [
+    633,
+    634,
+    638,
+    639,
+    640,
+    641
+  ],
+  "concentration": {
+    "activated_by_doc": {
+      "2023.acl-long.386.pdf": 5,
+      "3M_2018_10K.pdf": 1
+    },
+    "activated_by_page": {
+      "2023.acl-long.386.pdf#p007": 5,
+      "3M_2018_10K.pdf#p020": 1
+    },
+    "max_doc_share": 0.8333333333333334,
+    "max_page_share": 0.8333333333333334
+  },
+  "decision": "do_not_run_effectiveness_gate_expand_stage2_coverage",
+  "eligible_for_heldout_count": 6,
+  "excluded_prior_policy_top30_count": 0,
+  "heldout_activation_rich_subset": {
+    "available": false,
+    "max_requested": 50,
+    "min_required": 30,
+    "num_records": 0,
+    "reason_unavailable": "activated records after excluding prior policy top30 are below min-heldout",
+    "record_ids": [],
+    "record_ids_path": null
+  },
+  "input_retrieval": "data/MMLongBench/sample-with-retrieval-results.json",
+  "lambda_weight": 0.5,
+  "no_full_ablation": true,
+  "no_qa_run": true,
+  "no_rerank_tuning": true,
+  "original_plus_changed_count": 6,
+  "original_plus_changed_ids": [
+    633,
+    634,
+    638,
+    639,
+    640,
+    641
+  ],
+  "schema_version": "real_structured_artifact_activation_scan_v1",
+  "strong_eligible_artifact_pages": {
+    "2023.acl-long.386.pdf": [
+      7
+    ],
+    "3M_2018_10K.pdf": [
+      20
+    ]
+  },
+  "strong_eligible_page_count": 2,
+  "top_k": 4,
+  "total_records": 1073
+}

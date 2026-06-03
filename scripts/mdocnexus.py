@@ -21,6 +21,7 @@ SCRIPT_MAP = {
     "run-coverage": ["scripts/run_coverage_experiment.py"],
     "run-matrix": ["scripts/run_experiment_matrix.py"],
     "run-real-smoke-small": ["scripts/run_real_smoke_small.py"],
+    "stage2-real-structured-gate": ["scripts/run_stage2_real_structured_gate.py"],
     "verify": ["scripts/verify_stage2_stage3_stage4_refactor.py"],
 }
 

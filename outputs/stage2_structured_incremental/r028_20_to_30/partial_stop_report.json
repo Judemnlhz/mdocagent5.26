@@ -1,0 +1,75 @@
+{
+  "run_id": "R028",
+  "range": "20_to_30",
+  "decision": "stop_and_inspect_parse_noise",
+  "timestamp_utc": "2026-06-02T13:41:39.353404+00:00",
+  "scope": {
+    "from_size": 20,
+    "to_size": 30,
+    "completed_delta_pages": 6,
+    "remaining_delta_pages_not_run": 4,
+    "no_qa": true,
+    "no_rerank_tuning": true,
+    "no_full_ablation": true,
+    "concentration_metrics_used_for": "external_validity_diagnostic_only"
+  },
+  "parse_gate": {
+    "previous_increment_parse_success_rate": 0.7,
+    "completed_success": 2,
+    "completed_failure": 4,
+    "current_partial_parse_success_rate": 0.3333333333333333,
+    "best_possible_final_parse_success_rate_if_remaining_all_succeed": 0.6,
+    "parse_success_rate_non_decreasing_still_possible": false
+  },
+  "completed_pages": [
+    {
+      "page_id": "2310.09158v1.pdf#p007",
+      "doc_id": "2310.09158v1.pdf",
+      "page_index": 7,
+      "call_succeeded": true,
+      "failure_type": null,
+      "parsed_artifact_count": 5
+    },
+    {
+      "page_id": "2401.18059v1.pdf#p006",
+      "doc_id": "2401.18059v1.pdf",
+      "page_index": 6,
+      "call_succeeded": false,
+      "failure_type": "parse_failure",
+      "parsed_artifact_count": 0
+    },
+    {
+      "page_id": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf#p003",
+      "doc_id": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf",
+      "page_index": 3,
+      "call_succeeded": false,
+      "failure_type": "parse_failure",
+      "parsed_artifact_count": 0
+    },
+    {
+      "page_id": "BESTBUY_2023_10K.pdf#p026",
+      "doc_id": "BESTBUY_2023_10K.pdf",
+      "page_index": 26,
+      "call_succeeded": false,
+      "failure_type": "parse_failure",
+      "parsed_artifact_count": 0
+    },
+    {
+      "page_id": "BESTBUY_2023_10K.pdf#p027",
+      "doc_id": "BESTBUY_2023_10K.pdf",
+      "page_index": 27,
+      "call_succeeded": false,
+      "failure_type": "parse_failure",
+      "parsed_artifact_count": 0
+    },
+    {
+      "page_id": "PIP_Seniors-and-Tech-Use_040314.pdf#p008",
+      "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+      "page_index": 8,
+      "call_succeeded": true,
+      "failure_type": null,
+      "parsed_artifact_count": 6
+    }
+  ],
+  "next_action": "Inspect parse failures/provider response format before any further expansion; do not construct held-out subset or run effectiveness diagnostics from this partial 20_to_30 run."
+}

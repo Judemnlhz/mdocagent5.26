@@ -220,6 +220,24 @@ class ArtifactCompilerInterfaceTest(unittest.TestCase):
         self.assertEqual(artifact["page_index"], 29)
         self.assertEqual(artifact["source_anchors"][0]["page_index"], 29)
 
+    def test_compile_page_wraps_single_artifact_object(self) -> None:
+        page_input = make_page_input(29)
+
+        result = compile_page_with_client(
+            canonical_record=make_canonical_record([29]),
+            page_input=page_input,
+            client=SingleArtifactObjectClient(),
+            schema_dict=build_page_artifact_output_schema_dict(),
+            compiler_metadata={},
+        )
+
+        self.assertEqual(result["validation_issues"], [])
+        self.assertEqual(len(result["valid_artifacts"]), 1)
+        self.assertEqual(result["raw_output"]["doc_id"], "example.pdf")
+        self.assertEqual(result["raw_output"]["page_index"], 29)
+        self.assertEqual(result["raw_output"]["artifacts"][0]["doc_id"], "example.pdf")
+        self.assertEqual(result["raw_output"]["artifacts"][0]["page_index"], 29)
+
     def test_runtime_identity_injection_does_not_allow_invalid_anchor(self) -> None:
         page_input = make_page_input(29)
 
@@ -414,6 +432,11 @@ class WrongIdentityClient(ArtifactCompilerClient):
 
 class WrongIdentityInvalidAnchorClient(WrongIdentityClient):
     source_id = "not_exist"
+
+
+class SingleArtifactObjectClient(WrongIdentityClient):
+    def _build_output(self) -> Dict[str, Any]:
+        return super()._build_output()["artifacts"][0]
 
 
 class WrongIdentityContentClient(WrongIdentityClient):

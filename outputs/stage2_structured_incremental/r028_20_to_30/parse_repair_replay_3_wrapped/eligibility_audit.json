@@ -1,0 +1,131 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 2,
+    "text_block": 4
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r028_20_to_30/parse_repair_replay_3_wrapped/stage2_delta/artifacts.jsonl",
+  "artifact_type_counts": {
+    "figure": 1,
+    "table": 5
+  },
+  "eligible_artifact_type_counts": {
+    "figure": 1,
+    "table": 4
+  },
+  "eligible_artifacts": 5,
+  "eligible_docs": 2,
+  "eligible_locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 1,
+    "source_block": 4,
+    "text_offset": 4
+  },
+  "eligible_pages": 2,
+  "eligible_rate": 0.8333333333333334,
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 4: Querying Process: Illustration of how RAPTOR retrieves information for two questions about the Cinderella story: “What is the central theme of the sto",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "figure_region",
+          "full_page_anchor"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table",
+        "content_preview": "Table 1: NarrativeQA Performance With + Without RAPTOR: Performance comparison of various retrieval methods (SBERT, BM25, DPR) with and without RAPTOR on the Na",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0000",
+        "artifact_type": "table",
+        "content_preview": "International Segment Performance Summary\n2023\n2022\n2021\nRevenue\n$ 3,504\n$ 3,931\n$ 3,969\nRevenue % change\n(10.9)%\n(1.0)%\n12.6%\nComparable sales % change\n(5.4)%\n",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 26
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0001",
+        "artifact_type": "table",
+        "content_preview": "International segment stores open at the end of each of the last three fiscal years were as follows:\n2021\n2022\n2023\nTotal Stores\nat End of\nFiscal Year\nStores\nOp",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 26
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0002",
+        "artifact_type": "table",
+        "content_preview": "Revenue Mix Summary\n2023\n2022\nComputing and Mobile Phones\n45%\n45%\nConsumer Electronics\n30%\n30%\nAppliances\n10%\n10%\nEntertainment\n8%\n8%\nServices\n5%\n5%\nOther\n2%\n2%",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 26
+      }
+    ],
+    "full_page_only_locator": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "Performance Information Table",
+        "doc_id": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 3
+      }
+    ]
+  },
+  "full_page_only_locator": 1,
+  "locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 2,
+    "source_block": 4,
+    "text_offset": 4
+  },
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "reason_counts": {
+    "eligible": 5,
+    "full_page_only_locator": 1
+  },
+  "schema_version": "artifact_rerank_eligibility_audit_v1",
+  "strong_eligible_artifacts": 5,
+  "total_artifacts": 6
+}

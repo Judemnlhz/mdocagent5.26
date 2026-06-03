@@ -49,6 +49,80 @@ source /opt/conda/bin/activate mdocagent
 - `nvidia-smi` reports NVML initialization failure on the remote host. The current MDocAgent path uses API models, but extraction/retrieval/runtime checks should still record GPU status.
 - All API keys must remain in environment variables or private local config, never in manifests or logs.
 
+## 2026-06-02 Pivot: Stage 2 Real Structured Artifact Extraction
+
+The next paper-relevant bottleneck is no longer rerank policy or full ablation. The current strong-artifact gate reports:
+
+- `strong eligible artifacts = 0 / 450` from `outputs/experiments/mdocagent_module_ablation/run_tags/strong_artifact_eligibility_scan_full/strong_artifact_method_gate_summary.json`.
+- `activated records = 0 / 1073`; therefore no held-out activation-rich subset can be built yet.
+- Existing fake structured smoke output still has `mock_or_placeholder_content > 0`, so it cannot support a method claim.
+
+Current priority order is frozen as:
+
+1. Build a 5-10 page real Stage 2 structured subset biased toward tables, charts, numeric facts, percentages, and paper/brochure/report pages.
+2. Compile only real, non-mock structured artifacts: `table_cell`, `numeric_fact`, `figure`, `caption`, and `table`, with `normalized_content` and element locators such as `table_cell`, `text_offset`, `bbox`, `caption_block`, or `figure_region`.
+3. Run eligibility audit only, not QA: require `eligible_artifacts > 0`, `eligible_pages > 0`, `mock_or_placeholder_content = 0`, and low `full_page_only_locator`.
+4. Only after strong eligible artifacts activate retrieval records, build a new held-out activation-rich subset of 30-50 records. Do not reuse the previous policy-tuning top30 as the main validation set.
+5. Only then run the limited effectiveness gate: `top4_original_only`, `top4_original_plus_artifact`, and `artifact_only` diagnostic. Do not run rerank tuning, graph/full ablation, or full QA before Stage 2 passes.
+
+Implemented gate artifacts:
+
+- Runner: `scripts/run_stage2_real_structured_gate.py`.
+- Unified CLI: `python3 scripts/mdocnexus.py stage2-real-structured-gate ...`.
+- Selected subset: `outputs/subsets/stage2_structured_real_gate_subset.jsonl`.
+- Gate report: `outputs/stage2_structured_real_gate/structured_gate_report.json`.
+
+Latest gate result: `stage2_structured_gate_pass`. The gate selected 10 structured pages from 9 documents, made 10 real provider calls, parsed 26 real artifacts, and eligibility audit found 4 strong eligible table artifacts across 2 pages with `mock_or_placeholder_content = 0`.
+
+Decision rule:
+
+- If the rerun still gives `eligible_artifacts = 0`, downgrade the paper direction to a failure-informed framework around artifact coverage and structured extraction limits.
+- If it produces stable strong eligible artifacts, proceed to held-out activation-rich subset construction and only then the limited effectiveness gate.
+
+
+### 2026-06-02 Activation Scan After Real Structured Gate
+
+The real Stage 2 structured gate passed the minimum artifact-quality check, but it does not yet support a 30-50 record held-out effectiveness subset.
+
+Activation scan output:
+
+- Report: `outputs/experiments/mdocagent_module_ablation/run_tags/real_structured_activation_scan/real_structured_activation_scan_report.json`.
+- Strong eligible artifact pages: 2.
+- Activated records: 6 / 1073.
+- Eligible for held-out after excluding prior policy top30: 6.
+- `artifact_only` changed records: 6.
+- `original_plus_artifact` changed records: 6.
+- Concentration: 5 / 6 activated records are from `2023.acl-long.386.pdf#p007`; 1 / 6 is from `3M_2018_10K.pdf#p020`.
+
+Decision: do not run the effectiveness gate yet. The held-out activation-rich subset is unavailable because activated records are below the 30-record minimum and are too concentrated. The next work item is to expand real Stage 2 structured coverage and reduce parse failures before returning to held-out subset construction.
+
+Immediate Stage 2 targets:
+
+- Increase real compiled structured pages beyond the current 10-page smoke, still as a bounded quality run rather than full ablation.
+- Prioritize documents/pages likely to produce `table_cell`, `numeric_fact`, caption, and table artifacts across more documents.
+- Fix provider parse failures observed on 5 / 10 pages, or add a robust JSON repair/parser path that remains public-safe and does not invent artifacts.
+- Re-run eligibility and activation scan; only build held-out subset if `activated_count >= 30` and concentration is acceptable.
+
+### 2026-06-02 R028 Bounded Expansion Outcome
+
+Bounded expansion follows `10 -> 20 -> 30`, and only continues when the stop/go metrics remain clean:
+
+- `parse_success_rate` does not degrade.
+- `strong_eligible_artifacts` increases.
+- `eligible_pages` increases.
+- `activated_count` increases.
+- `mock_or_placeholder_content` remains 0.
+
+R028 `10 -> 20` passed: parse success improved from 0.5 to 0.7, strong eligible artifacts increased from 4 to 21, eligible pages increased from 2 to 9, activated records increased from 6 to 30, and mock/placeholder content stayed 0.
+
+R028 `20 -> 30` was stopped early after 6 / 10 delta pages. The partial run had 2 successes and 4 parse failures, so the current partial parse success rate was 0.333. Even if the 4 remaining pages all succeeded, the final rate could only reach 0.600, below the previous increment's 0.700. Report: `outputs/stage2_structured_incremental/r028_20_to_30/partial_stop_report.md`.
+
+Decision: do not continue expansion, do not construct held-out subset from the partial 20 -> 30 run, and do not run the effectiveness gate. The next action is parse-failure auditing and repair. Concentration metrics remain external-validity diagnostics only and are not used for reranking, scoring, or gold-field selection.
+
+Parse-failure repair outcome: Stage 2 now records provider parse-failure taxonomy without public raw responses: failure type, raw response length/hash, JSON-like block presence, and schema missing fields when inferable. The provider prompt was tightened to require strict JSON only, the parser now extracts fenced JSON and JSON objects surrounded by prose, and the compiler conservatively wraps a single returned artifact object into a PageArtifactOutput container before normal validation. No artifact content is invented; invalid or incomplete artifacts still go through deterministic discard.
+
+Bounded replay on exactly 3 previously failed pages passed the parser repair check: provider_call_success_count=3, json_parse_success_count=3, parse_failure_count=0, num_valid_artifacts=6, num_discarded_artifacts=0. Report: `outputs/stage2_structured_incremental/r028_20_to_30/parse_repair_replay_3_wrapped/parse_repair_replay_report.md`. This replay is not a Stage 2 expansion, is not merged into cumulative artifacts, and is not a QA/held-out/effectiveness result.
+
 ## Claim Map
 
 | Claim | Why It Matters | Minimum Convincing Evidence | Linked Blocks |
@@ -323,3 +397,53 @@ These are not official reproduction rows.
 - [ ] Stage 3 answer smoke is excluded from formal QA.
 - [ ] Larger top-k runs are labeled diagnostic only.
 - [ ] Failure analysis has predefined buckets and no cherry-picked examples.
+
+## R028 Parse Repair and Atomic Artifact Quality Update
+
+R028 bounded expansion remains stopped at the 20 -> 30 partial run. The stop reason is unchanged: after 6 / 10 delta pages, parse success was 2 / 6 and the best possible final success rate could not remain non-decreasing relative to the 10 -> 20 run. Do not expand Stage 2 pages from this branch.
+
+Post-stop repair work is limited to the same failed-page probe and is not merged into cumulative artifacts:
+
+- Parser repair replay on 3 failed pages: parse failures = 0, valid artifacts = 6, discarded artifacts = 0, strong eligible artifacts = 5, eligible pages = 2, mock content = 0. Quality inspection found zero atomic artifacts and mostly broad table/figure blobs.
+- Atomic prompt replay on the same 3 pages: parse failures = 0, valid artifacts = 10, discarded artifacts = 0, strong eligible artifacts = 9, eligible pages = 2, mock content = 0, full-page-only locators = 0, table_cell artifacts = 6, numeric_fact artifacts = 0.
+
+Decision: atomic prompting improves artifact structure but is not stable enough for activation scan or QA. Continue bounded prompt/parser repair on the same probe pages, focusing on numeric_fact extraction and consistent atomic values across financial/table pages. Raw provider responses remain private; public reports contain parsed summaries and hash/length style diagnostics only.
+
+Current reports:
+
+- `outputs/stage2_structured_incremental/r028_20_to_30/parse_repair_replay_3_wrapped/parse_repair_replay_report.md`
+- `outputs/stage2_structured_incremental/r028_20_to_30/parse_repair_replay_3_wrapped/artifact_quality_inspection.md`
+- `outputs/stage2_structured_incremental/r028_20_to_30/atomic_prompt_replay_3/atomic_prompt_quality_report.md`
+
+### 2026-06-03 R030 Same-Page Atomic Quality Repair
+
+R030 keeps the ARIS/refine constraint from R028/R029: bounded repair on the same 3 failed pages only, no Stage 2 expansion, no activation scan, no QA, no graph, no rerank tuning, and replay outputs are not merged into cumulative artifacts.
+
+Implemented repair:
+
+- Added a Stage 2-only artifact quality taxonomy: `atomic_numeric_ok`, `broad_table_only`, `missing_numeric_fact`, `weak_locator`, `caption_or_table_title_only`, and `schema_valid_but_semantically_weak`.
+- Split locator eligibility from atomic evidence eligibility in the eligibility audit. The audit now reports `atomic_strong_eligible_artifacts`, `numeric_fact_count`, `table_cell_count`, `broad_table_only_count`, and `eligible_pages_with_atomic_artifact`.
+- Tightened the document-generic Stage 2 prompt to require numeric/table extraction before compact table descriptors, especially for financial/performance/percentage pages.
+- Added deterministic OCR-text numeric fallback for explicit financial/performance table lines, producing paired `numeric_fact` and `table_cell` artifacts with row label, column label, value, unit, normalized value when possible, and `source_block`/`text_offset` locators.
+- Broad/table-title-only schema-valid artifacts are discarded from the Stage 2 artifact store or excluded from atomic strong eligibility.
+
+Bounded replay result on the same 3 pages:
+
+- parse failures = 0
+- JSON parse successes = 3
+- mock/placeholder content = 0
+- full-page-only locators = 0
+- broad table only = 0, down from 2 in R029
+- table_cell artifacts = 16, up from 6 in R029
+- numeric_fact artifacts = 16, up from 0 in R029
+- strong eligible artifacts = 32
+- atomic strong eligible artifacts = 32, up from 6 under the new taxonomy baseline
+- eligible pages = 2, not decreased
+- eligible pages with atomic artifact = 2, up from 1
+
+Decision: R030 passes the same-page bounded artifact quality gate and upgrades strong eligibility from "can be located" toward "can be used as structured numeric evidence" on this probe. This is still not an activation or QA result. The next step may be an activation scan only after reviewing whether the deterministic OCR fallback should remain enabled for the broader Stage 2 run.
+
+Current R030 reports:
+
+- `outputs/stage2_structured_incremental/r028_20_to_30/r030_atomic_quality_replay_3/atomic_quality_report.md`
+- `outputs/stage2_structured_incremental/r028_20_to_30/r030_atomic_quality_replay_3/eligibility_audit.md`

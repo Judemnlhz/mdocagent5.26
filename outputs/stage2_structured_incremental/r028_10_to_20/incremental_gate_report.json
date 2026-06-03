@@ -1,0 +1,211 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "scripts/build_stage2_structured_subset.py",
+        "--records",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--extract-root",
+        "tmp/MMLongBench",
+        "--output",
+        "outputs/stage2_structured_incremental/r028_10_to_20/subset_delta_10_to_20.jsonl",
+        "--report-json",
+        "outputs/stage2_structured_incremental/r028_10_to_20/subset_delta_10_to_20_report.json",
+        "--max-pages",
+        "10",
+        "--max-pages-per-doc",
+        "2",
+        "--retrieval-topk",
+        "10",
+        "--exclude-subset",
+        "outputs/subsets/stage2_structured_real_gate_subset.jsonl",
+        "--selection-source",
+        "structured_real_stage2_r028_10_to_20_delta"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"output\": \"outputs/stage2_structured_incremental/r028_10_to_20/subset_delta_10_to_20.jsonl\",\n  \"num_selected_docs\": 7,\n  \"num_selected_pages\": 10\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/stage2.py",
+        "doc-compile",
+        "--provider",
+        "real",
+        "--enable-real-api",
+        "--run-real-trial",
+        "--allow-real-subset",
+        "--input",
+        "data/MMLongBench/sample-with-retrieval-results.json",
+        "--subset-file",
+        "outputs/stage2_structured_incremental/r028_10_to_20/subset_delta_10_to_20.jsonl",
+        "--extract-root",
+        "tmp/MMLongBench",
+        "--output-dir",
+        "outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta",
+        "--model-config",
+        "config/model/qwen3vl.yaml",
+        "--model-name",
+        "Qwen/Qwen3-VL-8B-Instruct",
+        "--prompt-version",
+        "artifact_compiler_prompt_v2_structured_real_gate",
+        "--image-payload-mode",
+        "image_url",
+        "--max-pages",
+        "10",
+        "--max-pages-total",
+        "10",
+        "--max-pages-real-cap",
+        "10",
+        "--max-pages-per-call",
+        "1",
+        "--max-docs",
+        "10",
+        "--max-pages-per-doc",
+        "2",
+        "--timeout-seconds",
+        "180",
+        "--max-retries",
+        "2"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": " 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 1052,\n      \"doc_id\": \"BESTBUY_2023_10K.pdf\",\n      \"page_index\": 25,\n      \"num_raw_artifacts\": 0,\n      \"num_valid_artifacts\": 0,\n      \"num_discarded_artifacts\": 1,\n      \"provider_error_type\": \"ProviderResponseFormatError\",\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 1011,\n      \"doc_id\": \"NETFLIX_2015_10K.pdf\",\n      \"page_index\": 20,\n      \"num_raw_artifacts\": 4,\n      \"num_valid_artifacts\": 4,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 1011,\n      \"doc_id\": \"NETFLIX_2015_10K.pdf\",\n      \"page_index\": 23,\n      \"num_raw_artifacts\": 11,\n      \"num_valid_artifacts\": 11,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 1023,\n      \"doc_id\": \"NIKE_2021_10K.pdf\",\n      \"page_index\": 33,\n      \"num_raw_artifacts\": 4,\n      \"num_valid_artifacts\": 4,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 1023,\n      \"doc_id\": \"NIKE_2021_10K.pdf\",\n      \"page_index\": 37,\n      \"num_raw_artifacts\": 0,\n      \"num_valid_artifacts\": 0,\n      \"num_discarded_artifacts\": 1,\n      \"provider_error_type\": \"ProviderResponseFormatError\",\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 111,\n      \"doc_id\": \"PG_2021.03.04_US-Views-on-China_FINAL.pdf\",\n      \"page_index\": 14,\n      \"num_raw_artifacts\": 8,\n      \"num_valid_artifacts\": 8,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 453,\n      \"doc_id\": \"STEPBACK.pdf\",\n      \"page_index\": 4,\n      \"num_raw_artifacts\": 5,\n      \"num_valid_artifacts\": 5,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    },\n    {\n      \"record_index\": 453,\n      \"doc_id\": \"STEPBACK.pdf\",\n      \"page_index\": 5,\n      \"num_raw_artifacts\": 3,\n      \"num_valid_artifacts\": 3,\n      \"num_discarded_artifacts\": 0,\n      \"provider_error_type\": null,\n      \"retry_count\": 0,\n      \"document_generic\": true\n    }\n  ],\n  \"paths\": {\n    \"root\": \"outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta\",\n    \"artifacts\": \"outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta/artifacts.jsonl\",\n    \"discard\": \"outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta/discard.jsonl\",\n    \"quality_report\": \"outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta/quality_report.json\",\n    \"call_log\": \"outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta/call_log.jsonl\"\n  }\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/audit_artifact_rerank_eligibility.py",
+        "--artifacts",
+        "outputs/stage2_structured_incremental/r028_10_to_20/cumulative/artifacts.jsonl",
+        "--output-json",
+        "outputs/stage2_structured_incremental/r028_10_to_20/cumulative/eligibility_audit.json",
+        "--output-md",
+        "outputs/stage2_structured_incremental/r028_10_to_20/cumulative/eligibility_audit.md"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"output_json\": \"outputs/stage2_structured_incremental/r028_10_to_20/cumulative/eligibility_audit.json\",\n  \"eligible_artifacts\": 21\n}\n"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/scan_real_artifact_activation.py",
+        "--artifacts",
+        "outputs/stage2_structured_incremental/r028_10_to_20/cumulative/artifacts.jsonl",
+        "--output-dir",
+        "outputs/stage2_structured_incremental/r028_10_to_20/activation_scan"
+      ],
+      "returncode": 0,
+      "stderr_tail": "",
+      "stdout_tail": "{\n  \"decision\": \"do_not_run_effectiveness_gate_expand_stage2_coverage\",\n  \"activated_count\": 30,\n  \"eligible_for_heldout_count\": 30\n}\n"
+    }
+  ],
+  "current_metrics": {
+    "activated_count": 30,
+    "concentration": {
+      "activated_by_doc": {
+        "2023.acl-long.386.pdf": 5,
+        "2307.09288v2.pdf": 1,
+        "3M_2018_10K.pdf": 1,
+        "NETFLIX_2015_10K.pdf": 6,
+        "NIKE_2021_10K.pdf": 6,
+        "PG_2021.03.04_US-Views-on-China_FINAL.pdf": 3,
+        "STEPBACK.pdf": 8
+      },
+      "activated_by_page": {
+        "2023.acl-long.386.pdf#p007": 5,
+        "2307.09288v2.pdf#p053": 1,
+        "3M_2018_10K.pdf#p020": 1,
+        "NETFLIX_2015_10K.pdf#p020": 2,
+        "NETFLIX_2015_10K.pdf#p023": 4,
+        "NIKE_2021_10K.pdf#p033": 6,
+        "PG_2021.03.04_US-Views-on-China_FINAL.pdf#p014": 3,
+        "STEPBACK.pdf#p004": 7,
+        "STEPBACK.pdf#p005": 5
+      },
+      "effective_num_docs": 5.232558,
+      "effective_num_pages": 6.963855,
+      "max_doc_share": 0.26666666666666666,
+      "max_page_share": 0.23333333333333334,
+      "purpose": "external_validity_diagnostic_only",
+      "used_for_reranking": false,
+      "uses_gold_fields": false
+    },
+    "delta_parse_success_rate": 0.7,
+    "eligible_for_heldout_count": 30,
+    "eligible_pages": 9,
+    "full_page_only_locator": 2,
+    "heldout_available": false,
+    "mock_or_placeholder_content": 0,
+    "num_artifacts": 38,
+    "parse_success_rate": 0.7,
+    "provider_failed": 3,
+    "provider_success": 7,
+    "strong_eligible_artifacts": 21
+  },
+  "delta_pages": 10,
+  "from_size": 10,
+  "gate": {
+    "checks": {
+      "activated_count_increased": true,
+      "eligible_pages_increased": true,
+      "mock_or_placeholder_content_still_zero": true,
+      "parse_success_rate_non_decreasing": true,
+      "strong_eligible_artifacts_increased": true
+    },
+    "decision": "continue_to_next_increment",
+    "metrics_do_not_participate_in_reranking": true,
+    "metrics_do_not_use_gold_fields": true,
+    "reason": "all stop/go metrics passed"
+  },
+  "paths": {
+    "activation_dir": "outputs/stage2_structured_incremental/r028_10_to_20/activation_scan",
+    "cumulative_dir": "outputs/stage2_structured_incremental/r028_10_to_20/cumulative",
+    "delta_dir": "outputs/stage2_structured_incremental/r028_10_to_20/stage2_delta",
+    "delta_subset": "outputs/stage2_structured_incremental/r028_10_to_20/subset_delta_10_to_20.jsonl"
+  },
+  "policy": {
+    "concentration_metrics_external_validity_only": true,
+    "expansion_sequence": [
+      10,
+      20,
+      30,
+      50
+    ],
+    "no_full_ablation": true,
+    "no_qa_run": true,
+    "no_rerank_tuning": true,
+    "stop_go_metrics_only": true,
+    "uses_gold_fields": false
+  },
+  "previous_metrics": {
+    "activated_count": 6,
+    "concentration": {
+      "activated_by_doc": {
+        "2023.acl-long.386.pdf": 5,
+        "3M_2018_10K.pdf": 1
+      },
+      "activated_by_page": {
+        "2023.acl-long.386.pdf#p007": 5,
+        "3M_2018_10K.pdf#p020": 1
+      },
+      "max_doc_share": 0.8333333333333334,
+      "max_page_share": 0.8333333333333334
+    },
+    "eligible_for_heldout_count": 6,
+    "eligible_pages": 2,
+    "full_page_only_locator": 2,
+    "heldout_available": false,
+    "mock_or_placeholder_content": 0,
+    "num_artifacts": 26,
+    "parse_success_rate": 0.5,
+    "provider_failed": 5,
+    "provider_success": 5,
+    "strong_eligible_artifacts": 4
+  },
+  "schema_version": "stage2_structured_incremental_gate_v1",
+  "to_size": 20
+}

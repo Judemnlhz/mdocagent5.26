@@ -1,0 +1,137 @@
+{
+  "constraints": {
+    "max_pages": 10,
+    "no_full_ablation": true,
+    "no_qa_effectiveness_run": true,
+    "no_rerank_tuning": true,
+    "provider_configured": true,
+    "provider_key_env": "SILICONFLOW_API_KEY"
+  },
+  "decision": "stage2_structured_gate_pass",
+  "eligibility_gate": {
+    "artifact_path": "outputs/stage2_structured_real_gate/artifacts.jsonl",
+    "eligible_artifact_type_counts": {
+      "table": 4
+    },
+    "eligible_artifacts": 4,
+    "eligible_docs": 2,
+    "eligible_locator_kind_counts": {
+      "source_block": 4,
+      "table_cell": 2,
+      "text_offset": 4
+    },
+    "eligible_pages": 2,
+    "full_page_only_locator": 2,
+    "mock_or_placeholder_content": 0,
+    "parse_failure_count": 5,
+    "provider_call_failed_count": 5,
+    "provider_call_success_count": 5,
+    "reason_counts": {
+      "eligible": 4,
+      "full_page_only_locator": 2,
+      "not_element_locatable_or_proof_trace_ineligible": 1,
+      "unstructured_artifact_type": 19
+    },
+    "strong_eligible_artifacts": 4
+  },
+  "manifest": {
+    "api_called": null,
+    "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+    "model_role": "multimodal_extraction",
+    "prompt_version": "artifact_compiler_prompt_v2_structured_real_gate",
+    "provider_call_count": 10
+  },
+  "next_step": "Build a new held-out activation-rich subset from records activated by these strong eligible artifacts, excluding prior policy-tuning top30.",
+  "purpose": "Stage 2 real structured artifact extraction quality gate; no rerank, no QA, no full ablation.",
+  "schema_version": "stage2_real_structured_gate_v1",
+  "stage2_quality": {
+    "anchor_failure_count": 0,
+    "anchored_artifact_count": 26,
+    "anchoring_rate": 0.8387096774193549,
+    "artifact_type_counts": {
+      "figure": 2,
+      "table": 5,
+      "text_span": 19
+    },
+    "bbox_locator_counts": {
+      "without_bbox": 26
+    },
+    "blocking_reason_counts": {},
+    "caption_artifact_count": 0,
+    "compile_scope_mode": "doc_first",
+    "discard_rate": 0.16129032258064516,
+    "discard_reason_counts": {
+      "provider_error": 5
+    },
+    "discarded_artifact_count": 5,
+    "document_generic": true,
+    "element_locator_rate": 0.8846153846153846,
+    "empty_response_count": 0,
+    "figure_artifact_count": 2,
+    "image_payload_rate": 1.0,
+    "json_parse_success_count": 5,
+    "locator_kind_counts": {
+      "full_page_anchor": 2,
+      "source_block": 24,
+      "table_cell": 2,
+      "text_offset": 27
+    },
+    "locator_status_counts": {
+      "with_locator": 26
+    },
+    "modality_counts": {
+      "image": 2,
+      "table": 5,
+      "text": 19
+    },
+    "num_artifacts": 26,
+    "num_artifacts_per_doc_avg": 2.888888888888889,
+    "num_artifacts_per_page_avg": 2.6,
+    "num_artifacts_without_element_locator": 3,
+    "num_discarded_artifacts": 5,
+    "num_documents_attempted": 9,
+    "num_element_locatable": 23,
+    "num_pages_attempted": 10,
+    "num_proof_trace_eligible": 23,
+    "num_records": 1073,
+    "num_selected_docs": 9,
+    "num_selected_pages": 10,
+    "num_source_anchored": 26,
+    "num_valid_artifacts": 26,
+    "numeric_fact_count": 0,
+    "page_selection_source_counts": {
+      "structured_real_stage2_small_sample": 10
+    },
+    "pages_attempted": 10,
+    "pages_with_image_payload": 10,
+    "pages_without_image_payload": 0,
+    "parse_failure_count": 5,
+    "proof_trace_eligible_by_type": {
+      "table": 4,
+      "text_span": 19
+    },
+    "proof_trace_eligible_rate": 0.8846153846153846,
+    "provider_call_failed_count": 5,
+    "provider_call_success_count": 5,
+    "schema_failure_count": 0,
+    "schema_valid_artifact_count": 26,
+    "schema_valid_rate": 0.8387096774193549,
+    "source_anchored_rate": 1.0,
+    "status_counts": {
+      "anchored": 26
+    },
+    "storage_format": "artifacts_jsonl",
+    "table_artifact_count": 5,
+    "table_cell_artifact_count": 0,
+    "visual_artifact_count": 0,
+    "visual_region_count": 0
+  },
+  "status": "executed",
+  "subset": {
+    "num_selected_docs": 9,
+    "num_selected_pages": 10,
+    "selection_source": "structured_real_stage2_small_sample",
+    "subset_output": "outputs/subsets/stage2_structured_real_gate_subset.jsonl",
+    "subset_report": "outputs/subsets/stage2_structured_real_gate_subset_report.json"
+  }
+}

@@ -1090,12 +1090,16 @@ def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any
     doc_id = page_input["doc_id"]
     page_index = int(page_input["page_index"])
     page_id = page_id_for(doc_id, page_index)
-    normalized_output = dict(raw_output)
+    normalized_output = (
+        {"artifacts": [dict(raw_output)]}
+        if _looks_like_single_artifact(raw_output)
+        else dict(raw_output)
+    )
     normalized_output["doc_id"] = doc_id
     normalized_output["page_index"] = page_index
     normalized_output["page_id"] = page_id
 
-    artifacts = raw_output.get("artifacts")
+    artifacts = normalized_output.get("artifacts")
     if not isinstance(artifacts, list):
         return normalized_output
 
@@ -1121,6 +1125,10 @@ def _inject_runtime_artifact_identity(raw_output: Any, page_input: Dict[str, Any
         normalized_artifacts.append(normalized_artifact)
     normalized_output["artifacts"] = normalized_artifacts
     return normalized_output
+
+
+def _looks_like_single_artifact(raw_output: Dict[str, Any]) -> bool:
+    return "artifacts" not in raw_output and {"artifact_type", "content"}.issubset(raw_output.keys())
 
 
 def _build_user_prompt_for_compile_mode(

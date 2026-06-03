@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Dict
 
 from mdocnexus.stage2.artifact_pipeline import validate_page_artifact_output
+from mdocnexus.stage2.artifact_quality import classify_artifact_quality, is_atomic_strong_eligible
 from mdocnexus.stage2.logs import (
     issue_to_discard_log_entry,
     write_discard_log_entry,
@@ -199,6 +200,41 @@ class ArtifactSchemaValidationTest(unittest.TestCase):
         self.assertEqual(rows[0]["page_index"], 29)
         self.assertEqual(rows[0]["artifact_id"], "artifact_a")
         self.assertEqual(rows[0]["stage"], "stage2_validation")
+
+    def test_artifact_quality_marks_table_title_only_as_broad(self) -> None:
+        artifact = make_artifact()
+        artifact["artifact_type"] = "table"
+        artifact["modality"] = "table"
+        artifact["content"] = "International Segment Performance Summary"
+        artifact["normalized_content"] = {"table_id": "table_001", "table_title": "International Segment Performance Summary"}
+        artifact["locators"] = [{"locator_kind": "text_offset", "block_id": "p029_full_page_image", "char_start": 0, "char_end": 10}]
+
+        quality = classify_artifact_quality(artifact)
+
+        self.assertTrue(quality["broad_table_only"])
+        self.assertTrue(quality["caption_or_table_title_only"])
+        self.assertTrue(quality["schema_valid_but_semantically_weak"])
+
+    def test_artifact_quality_marks_complete_numeric_fact_as_atomic(self) -> None:
+        artifact = make_artifact()
+        artifact["artifact_type"] = "numeric_fact"
+        artifact["modality"] = "numeric"
+        artifact["content"] = "Revenue 2023: 3,504 USD millions"
+        artifact["normalized_content"] = {
+            "metric_name": "Revenue",
+            "row_label": "Revenue",
+            "column_label": "2023",
+            "value_text": "3,504",
+            "unit": "USD millions",
+            "source_text": "Revenue 2023 3,504",
+        }
+        artifact["locators"] = [{"locator_kind": "text_offset", "block_id": "p029_full_page_image", "char_start": 0, "char_end": 10}]
+
+        quality = classify_artifact_quality(artifact)
+
+        self.assertTrue(quality["atomic_numeric_ok"])
+        self.assertFalse(quality["schema_valid_but_semantically_weak"])
+        self.assertTrue(is_atomic_strong_eligible(artifact, "eligible"))
 
 
 def make_full_page_image_block() -> Dict[str, Any]:

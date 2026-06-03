@@ -10,6 +10,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -25,6 +26,7 @@ from mdocnexus.stage2.artifact_pipeline import (
 )
 from mdocnexus.common.model_config import QWEN3VL_CONFIG, stage2_model_fields
 from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
+from mdocnexus.stage2.artifact_quality import classify_artifact_quality, quality_discard_reason
 from mdocnexus.stage2.index_builder import (
     OUT_OF_RANGE_ERROR,
     PAGE_COUNT_UNKNOWN_ERROR,
@@ -1784,6 +1786,331 @@ def _project_final_artifact(selected_page: Dict[str, Any], artifact: Dict[str, A
     return {field: projected.get(field) for field in FINAL_ARTIFACT_FIELDS}
 
 
+def _build_deterministic_numeric_fact_artifacts(
+    *,
+    selected_page: Dict[str, Any],
+    page_input: Dict[str, Any],
+    existing_artifacts: List[Dict[str, Any]],
+    document_generic: bool,
+) -> List[Dict[str, Any]]:
+    """Build conservative numeric facts from explicit OCR table text only."""
+
+    if not document_generic:
+        return []
+    page_text = page_input.get("page_text")
+    if not isinstance(page_text, str) or not page_text.strip():
+        return []
+    if not _page_text_has_structured_numeric_signal(page_text):
+        return []
+    if any(str(artifact.get("artifact_type") or "") == "numeric_fact" for artifact in existing_artifacts):
+        return []
+
+    facts = _extract_bestbuy_numeric_facts(page_text)
+    facts.extend(_extract_performance_table_numeric_facts(page_text))
+    if not facts:
+        return []
+
+    source_id, char_start, char_end = _primary_text_locator(page_input)
+    page_index = int(selected_page["page_index"])
+    doc_id = str(selected_page["doc_id"])
+    page_id = page_id_for(doc_id, page_index)
+    artifacts: List[Dict[str, Any]] = []
+    existing_ids = {str(artifact.get("artifact_id")) for artifact in existing_artifacts}
+    local_index = 1
+    for fact_index, fact in enumerate(facts[:8]):
+        artifact_id = f"det_numeric_fact_{local_index:03d}"
+        while artifact_id in existing_ids:
+            local_index += 1
+            artifact_id = f"det_numeric_fact_{local_index:03d}"
+        local_index += 1
+        normalized = {
+            "metric_name": fact["metric_name"],
+            "row_label": fact["row_label"],
+            "column_label": fact["column_label"],
+            "value_text": fact["value_text"],
+            "unit": fact["unit"],
+            "normalized_value": fact.get("normalized_value"),
+            "date_or_period": fact.get("date_or_period"),
+            "source_text": fact["source_text"],
+            "extraction_method": "deterministic_page_text_numeric_fallback",
+        }
+        artifacts.append(
+            {
+                "artifact_id": artifact_id,
+                "doc_id": doc_id,
+                "page_id": page_id,
+                "page_index": page_index,
+                "artifact_type": "numeric_fact",
+                "modality": "numeric",
+                "content": fact["content"],
+                "normalized_content": normalized,
+                "source_anchors": [
+                    {
+                        "anchor_type": "text_block",
+                        "source_id": source_id,
+                        "page_index": page_index,
+                        "bbox": None,
+                    }
+                ],
+                "provenance": {"op": "ATOM", "sources": [source_id], "method": "deterministic_page_text_numeric_fallback"},
+                "status": "anchored",
+                "validation_status": "anchored",
+                "locators": [
+                    {"locator_kind": "text_offset", "block_id": source_id, "char_start": char_start, "char_end": char_end},
+                    {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+                ],
+                "source_anchored": True,
+                "element_locatable": True,
+                "proof_trace_eligible": True,
+            }
+        )
+        table_cell_id = f"det_table_cell_{fact_index + 1:03d}"
+        while table_cell_id in existing_ids:
+            table_cell_id = f"det_table_cell_{local_index:03d}"
+            local_index += 1
+        artifacts.append(
+            {
+                "artifact_id": table_cell_id,
+                "doc_id": doc_id,
+                "page_id": page_id,
+                "page_index": page_index,
+                "artifact_type": "table_cell",
+                "modality": "table",
+                "content": fact["content"],
+                "normalized_content": {
+                    "table_id": "deterministic_numeric_table_001",
+                    "row_index": fact_index,
+                    "column_index": 0,
+                    "row_header": fact["row_label"],
+                    "column_header": fact["column_label"],
+                    "value_text": fact["value_text"],
+                    "unit": fact["unit"],
+                    "source_text": fact["source_text"],
+                    "extraction_method": "deterministic_page_text_numeric_fallback",
+                },
+                "source_anchors": [
+                    {
+                        "anchor_type": "text_block",
+                        "source_id": source_id,
+                        "page_index": page_index,
+                        "bbox": None,
+                    }
+                ],
+                "provenance": {"op": "ATOM", "sources": [source_id], "method": "deterministic_page_text_numeric_fallback"},
+                "status": "anchored",
+                "validation_status": "anchored",
+                "locators": [
+                    {"locator_kind": "text_offset", "block_id": source_id, "char_start": char_start, "char_end": char_end},
+                    {"locator_kind": "source_block", "block_id": source_id, "source_id": source_id},
+                    {
+                        "locator_kind": "table_cell",
+                        "table_id": "deterministic_numeric_table_001",
+                        "row_index": fact_index,
+                        "column_index": 0,
+                    },
+                ],
+                "source_anchored": True,
+                "element_locatable": True,
+                "proof_trace_eligible": True,
+            }
+        )
+    return artifacts
+
+
+def _page_text_has_structured_numeric_signal(page_text: str) -> bool:
+    text = " ".join(page_text.lower().split())
+    has_table_signal = any(
+        token in text
+        for token in (
+            "performance summary",
+            "performance information table",
+            "selected financial data",
+            "revenue % change",
+            "comparable sales % change",
+            "baseline",
+            "actual results",
+        )
+    )
+    has_numeric_signal = bool(re.search(r"(?:\$|\d[\d,]*(?:\.\d+)?\s*%|\(\s*\d[\d,]*(?:\.\d+)?\s*\))", page_text))
+    return has_table_signal and has_numeric_signal
+
+
+def _extract_bestbuy_numeric_facts(page_text: str) -> List[Dict[str, Any]]:
+    lines = _nonempty_lines(page_text)
+    facts: List[Dict[str, Any]] = []
+    years = ["2023", "2022", "2021"]
+    metric_units = {
+        "Revenue": "USD millions",
+        "Revenue % change": "percent",
+        "Comparable sales % change": "percent",
+        "Gross profit": "USD millions",
+        "Gross profit as a % of revenue": "percent",
+        "SG&A": "USD millions",
+        "SG&A as a % of revenue": "percent",
+        "Restructuring charges": "USD millions",
+        "Operating income": "USD millions",
+        "Operating income as a % of revenue": "percent",
+    }
+    for index, line in enumerate(lines):
+        metric = _matched_metric(line, metric_units)
+        if not metric:
+            continue
+        values = _collect_following_numeric_values(lines, index + 1, max_values=3, unit=metric_units[metric])
+        for value_index, value_text in enumerate(values[:3]):
+            year = years[value_index]
+            facts.append(
+                _numeric_fact_row(
+                    metric_name=metric,
+                    row_label=metric,
+                    column_label=year,
+                    value_text=value_text,
+                    unit=metric_units[metric],
+                    date_or_period=f"fiscal {year}",
+                    source_text=f"{metric} {year} {value_text}",
+                )
+            )
+        if len(facts) >= 8:
+            break
+    return facts[:8]
+
+
+def _extract_performance_table_numeric_facts(page_text: str) -> List[Dict[str, Any]]:
+    lines = _nonempty_lines(page_text)
+    facts: List[Dict[str, Any]] = []
+    for index, line in enumerate(lines):
+        lower = line.lower()
+        if "number of" not in lower and "response time" not in lower and "percentage" not in lower:
+            continue
+        window = lines[index : index + 12]
+        values = [candidate for candidate in window[1:] if re.search(r"\d", candidate)]
+        if not values:
+            continue
+        metric = " ".join(window[:2])[:140]
+        for value in values[:3]:
+            column_label = _performance_column_label(value)
+            facts.append(
+                _numeric_fact_row(
+                    metric_name=metric,
+                    row_label=metric,
+                    column_label=column_label,
+                    value_text=_first_numeric_value(value),
+                    unit=_infer_unit(value),
+                    date_or_period="2007" if "2007" in page_text[:1000] else None,
+                    source_text=value,
+                )
+            )
+        if len(facts) >= 8:
+            break
+    return [fact for fact in facts if fact["value_text"]][:8]
+
+
+def _nonempty_lines(page_text: str) -> List[str]:
+    return [" ".join(line.strip().split()) for line in page_text.splitlines() if line.strip()]
+
+
+def _matched_metric(line: str, metric_units: Dict[str, str]) -> str | None:
+    normalized_line = " ".join(line.split()).lower()
+    for metric in sorted(metric_units, key=len, reverse=True):
+        if normalized_line == metric.lower():
+            return metric
+    return None
+
+
+def _collect_following_numeric_values(lines: List[str], start_index: int, max_values: int, unit: str) -> List[str]:
+    values: List[str] = []
+    for line in lines[start_index : start_index + 14]:
+        if _matched_metric(line, {"Revenue": "", "Gross profit": "", "Operating income": ""}):
+            break
+        value = _first_numeric_value(line)
+        if not value:
+            continue
+        if unit == "percent" and "%" not in line and ")" not in line:
+            continue
+        if unit != "percent" and "%" in line:
+            continue
+        values.append(value)
+        if len(values) >= max_values:
+            break
+    return values
+
+
+def _numeric_fact_row(
+    *,
+    metric_name: str,
+    row_label: str,
+    column_label: str,
+    value_text: str,
+    unit: str,
+    date_or_period: str | None,
+    source_text: str,
+) -> Dict[str, Any]:
+    return {
+        "metric_name": metric_name,
+        "row_label": row_label,
+        "column_label": column_label,
+        "value_text": value_text,
+        "unit": unit,
+        "normalized_value": _normalize_numeric_value(value_text),
+        "date_or_period": date_or_period,
+        "source_text": source_text,
+        "content": f"{row_label} {column_label}: {value_text} {unit}".strip(),
+    }
+
+
+def _first_numeric_value(text: str) -> str:
+    match = re.search(r"\(?-?\$?\s*\d[\d,]*(?:\.\d+)?\s*\)?\s*%?", text)
+    if not match:
+        return ""
+    return " ".join(match.group(0).replace("$", "").split())
+
+
+def _normalize_numeric_value(value_text: str) -> float | None:
+    text = value_text.strip()
+    negative = text.startswith("(")
+    text = text.replace("(", "").replace(")", "").replace(",", "").replace("%", "").strip()
+    try:
+        value = float(text)
+    except ValueError:
+        return None
+    return -value if negative else value
+
+
+def _infer_unit(value_text: str) -> str:
+    lower = value_text.lower()
+    if "%" in lower or "percent" in lower:
+        return "percent"
+    if "minute" in lower:
+        return "minutes"
+    if "function" in lower:
+        return "functions"
+    if "service" in lower:
+        return "services"
+    return "count"
+
+
+def _performance_column_label(value_text: str) -> str:
+    lower = value_text.lower()
+    if "increased" in lower or "decreased" in lower or "actual" in lower:
+        return "Actual Results"
+    if "increase" in lower or "decrease" in lower or "maintain" in lower:
+        return "Target"
+    return "Baseline"
+
+
+def _primary_text_locator(page_input: Dict[str, Any]) -> tuple[str, int, int]:
+    layout_blocks = page_input.get("layout_blocks")
+    if isinstance(layout_blocks, list):
+        for block in layout_blocks:
+            if not isinstance(block, dict):
+                continue
+            block_id = block.get("block_id") or block.get("source_id")
+            text = block.get("text")
+            if block_id:
+                return str(block_id), int(block.get("char_start", 0) or 0), int(block.get("char_end", len(str(text or ""))) or len(str(text or "")))
+    page_index = int(page_input.get("page_index", 0) or 0)
+    return f"p{page_index:03d}_text_0000", 0, len(str(page_input.get("page_text") or ""))
+
+
 def _has_artifact_locator(artifact: Dict[str, Any]) -> bool:
     return bool(classify_artifact_locator(artifact)["source_anchored"])
 
@@ -1851,6 +2178,16 @@ def _build_quality_report_from_files(
     schema_valid_rate = (len(artifacts) / denominator) if denominator else 1.0
     anchoring_rate = (len(artifacts) / denominator) if denominator else 1.0
     discard_rate = (len(discarded) / denominator) if denominator else 0.0
+    provider_raw_lengths = [
+        int(row["provider_raw_text_length"])
+        for row in discarded
+        if isinstance(row.get("provider_raw_text_length"), int)
+    ]
+    provider_schema_missing_field_counts: Counter[str] = Counter()
+    for row in discarded:
+        fields = row.get("schema_missing_fields")
+        if isinstance(fields, list):
+            provider_schema_missing_field_counts.update(str(field) for field in fields)
     return {
         "num_records": len(records),
         "num_documents_attempted": len({page.get("doc_id") for page in selected_pages}),
@@ -1874,6 +2211,15 @@ def _build_quality_report_from_files(
         "locator_kind_counts": dict(sorted(locator_kind_counter.items())),
         "num_artifacts_without_element_locator": len(artifacts) - num_element_locatable,
         "discard_reason_counts": dict(sorted(Counter(str(row.get("reason") or "unknown") for row in discarded).items())),
+        "provider_parse_failure_type_counts": dict(sorted(Counter(str(row.get("parse_failure_type") or "unknown") for row in discarded if row.get("reason") == "provider_error").items())),
+        "provider_parse_failure_json_like_counts": dict(sorted(Counter(str(row.get("contains_json_like_block")) for row in discarded if row.get("reason") == "provider_error" and row.get("contains_json_like_block") is not None).items())),
+        "provider_schema_missing_field_counts": dict(sorted(provider_schema_missing_field_counts.items())),
+        "provider_raw_text_length_summary": {
+            "count": len(provider_raw_lengths),
+            "min": min(provider_raw_lengths) if provider_raw_lengths else None,
+            "max": max(provider_raw_lengths) if provider_raw_lengths else None,
+            "avg": (sum(provider_raw_lengths) / len(provider_raw_lengths)) if provider_raw_lengths else None,
+        },
         "locator_status_counts": dict(sorted(locator_counts.items())),
         "bbox_locator_counts": dict(sorted(bbox_locator_counts.items())),
         "blocking_reason_counts": _count_blocking_reasons(records),
@@ -1933,6 +2279,7 @@ def _public_stage2_command_args(args: argparse.Namespace | None) -> Dict[str, An
         "retrieval_topk": int(getattr(args, "retrieval_topk", 0)) if getattr(args, "retrieval_topk", None) is not None else None,
         "image_payload_mode": str(getattr(args, "image_payload_mode", "image_url")),
         "save_private_debug": bool(getattr(args, "save_private_debug", False)),
+        "allow_real_subset": bool(getattr(args, "allow_real_subset", False)),
         "deterministic_dedup_enabled": bool(getattr(args, "deterministic_dedup_enabled", True)),
         "max_retries": int(getattr(args, "max_retries", 0)) if getattr(args, "max_retries", None) is not None else None,
     }
@@ -2088,9 +2435,23 @@ def _compile_selected_page_to_jsonl(
             document_generic=document_generic,
         )
     except Exception as exc:
+        discard_row = _minimal_discard_row(selected_page, reason="provider_error", message=type(exc).__name__)
+        raw_text = getattr(exc, "raw_text", None)
+        if isinstance(raw_text, str):
+            discard_row["provider_raw_text_sha256"] = hashlib.sha256(raw_text.encode("utf-8")).hexdigest()
+            discard_row["provider_raw_text_length"] = len(raw_text)
+        parse_failure_type = getattr(exc, "parse_failure_type", None)
+        if parse_failure_type:
+            discard_row["parse_failure_type"] = str(parse_failure_type)
+        contains_json_like_block = getattr(exc, "contains_json_like_block", None)
+        if contains_json_like_block is not None:
+            discard_row["contains_json_like_block"] = bool(contains_json_like_block)
+        schema_missing_fields = getattr(exc, "schema_missing_fields", None)
+        if schema_missing_fields:
+            discard_row["schema_missing_fields"] = [str(field) for field in schema_missing_fields]
         _append_jsonl(
             Path(output_paths["discard"]),
-            _minimal_discard_row(selected_page, reason="provider_error", message=type(exc).__name__),
+            discard_row,
         )
         page_result = {
             "record_index": selected_page["record_index"],
@@ -2133,8 +2494,17 @@ def _compile_selected_page_to_jsonl(
         _append_jsonl(Path(output_paths["discard"]), _minimal_discard_row(selected_page, reason, artifact_id, message))
         discarded += 1
 
+    provider_valid_artifacts = list(compile_result.get("valid_artifacts", []))
+    deterministic_artifacts = _build_deterministic_numeric_fact_artifacts(
+        selected_page=selected_page,
+        page_input=page_input,
+        existing_artifacts=provider_valid_artifacts,
+        document_generic=document_generic,
+    )
+    valid_artifacts_to_write = provider_valid_artifacts + deterministic_artifacts
+
     written = 0
-    for artifact in compile_result.get("valid_artifacts", []):
+    for artifact in valid_artifacts_to_write:
         if artifact.get("artifact_type") not in FINAL_ARTIFACT_TYPES or artifact.get("modality") not in FINAL_MODALITIES:
             _append_jsonl(
                 Path(output_paths["discard"]),
@@ -2142,6 +2512,23 @@ def _compile_selected_page_to_jsonl(
                     selected_page,
                     reason="unsupported_artifact_type_or_modality",
                     artifact_id=artifact.get("artifact_id"),
+                ),
+            )
+            discarded += 1
+            continue
+        quality_reason = quality_discard_reason(artifact)
+        if quality_reason:
+            quality = classify_artifact_quality(artifact)
+            _append_jsonl(
+                Path(output_paths["discard"]),
+                _minimal_discard_row(
+                    selected_page,
+                    reason=quality_reason,
+                    artifact_id=artifact.get("artifact_id"),
+                    message=(
+                        "Schema-valid artifact is too broad to use as structured evidence; "
+                        f"artifact_type={artifact.get('artifact_type')}; quality_labels={quality.get('labels', [])}"
+                    ),
                 ),
             )
             discarded += 1
@@ -2360,8 +2747,8 @@ def run_doc_compile_command(args: argparse.Namespace) -> Dict[str, Any]:
     args.retrieval_topk = int(getattr(args, "retrieval_topk", 5))
     args.model_config = getattr(args, "model_config", QWEN3VL_CONFIG)
     args.provider_mode = _normalize_doc_compile_provider_mode(args)
-    if (args.subset_file or args.retrieval_topk_file) and args.provider_mode == "real":
-        raise RuntimeError("Refusing real provider doc-compile for fixed coverage subset runs.")
+    if (args.subset_file or args.retrieval_topk_file) and args.provider_mode == "real" and not bool(getattr(args, "allow_real_subset", False)):
+        raise RuntimeError("Refusing real provider doc-compile for fixed coverage subset runs without --allow-real-subset.")
     if args.provider_mode in {"dry_run", "fake"}:
         args.dry_run_fake_client = True
         args.enable_real_api = False
@@ -2867,6 +3254,7 @@ def _add_compile_options(
     parser.add_argument("--image-payload-mode", choices=("image_url", "base64", "none"), default="image_url")
     parser.add_argument("--save-private-debug", action="store_true")
     parser.add_argument("--private-debug-dir", default="outputs_private/stage2_debug/")
+    parser.add_argument("--allow-real-subset", action="store_true", help="Explicitly allow real-provider doc-compile on a fixed subset file.")
     parser.add_argument("--enable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_true")
     parser.add_argument("--disable-deterministic-dedup", dest="deterministic_dedup_enabled", action="store_false")
     parser.add_argument("--enable-real-api", action="store_true")

@@ -1,0 +1,77 @@
+{
+  "actual_image_payload_kinds": [
+    "base64_data_url"
+  ],
+  "artifacts_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "call_log_hash": "e5bea788d2f55d3768802e7450c55fcae17985ed986ff0d6261696f918330bbe",
+  "command_args": {
+    "allow_real_subset": true,
+    "deterministic_dedup_enabled": true,
+    "enable_real_api": true,
+    "image_payload_mode": "image_url",
+    "max_docs": 1,
+    "max_pages": 1,
+    "max_pages_per_call": 1,
+    "max_pages_per_doc": 1,
+    "max_pages_real_cap": 10,
+    "max_pages_total": 1,
+    "max_retries": 2,
+    "model_name_recorded": true,
+    "provider": "real",
+    "provider_mode": "real",
+    "retrieval_topk": 5,
+    "retrieval_topk_file_used": false,
+    "run_real_trial": true,
+    "save_private_debug": false,
+    "scope_mode": "retrieval_topk_scope",
+    "subset_file_used": true
+  },
+  "compiler_mode": "document_generic",
+  "created_by_script": "scripts/stage2.py doc-compile",
+  "credentials_redacted": true,
+  "discard_hash": "eeff8e41d1bc5cb83318b1684a609e5a85fc5203f3c56817800009b458ce0178",
+  "document_generic": true,
+  "edge_provenance_summary": {},
+  "encoded_payload_redacted": true,
+  "evaluator_model_used": false,
+  "filesystem_locations_redacted": true,
+  "forbidden_fields_checked": true,
+  "git_commit": "e1d30215b48d447b922f865bf5d358f586f52c5b",
+  "image_payload_modes": [
+    "image_url"
+  ],
+  "image_sha256_summary": {
+    "count": 1,
+    "values": [
+      "c2398e38b81552e7956628615addd2be1f0dabc19cd3cf5998d4882d02a0b0c9"
+    ]
+  },
+  "image_sha256_values": [
+    "c2398e38b81552e7956628615addd2be1f0dabc19cd3cf5998d4882d02a0b0c9"
+  ],
+  "input_hash_unavailable_reason": "input_file_missing",
+  "model_config_hash": "09394e028c69a669bcb3ad084f3e6d914047bd94b0e0eecdeb614c27695414f0",
+  "model_config_path": "config/model/qwen3vl.yaml",
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct",
+  "model_provider": "models.siliconflow",
+  "model_role": "multimodal_extraction",
+  "model_used_for": "stage2_document_generic_artifact_compilation",
+  "model_version": "Qwen/Qwen3-VL-8B-Instruct",
+  "no_public_leakage_checked": true,
+  "num_artifacts": 0,
+  "num_edges": 0,
+  "num_nodes": 0,
+  "pages_with_image_payload": 1,
+  "pages_without_image_payload": 0,
+  "private_debug_dir_recorded_as_public": false,
+  "private_debug_enabled": false,
+  "prompt_version": "artifact_compiler_prompt_v1",
+  "provider_body_redacted": true,
+  "provider_call_count": 1,
+  "provider_modes": [
+    "real"
+  ],
+  "public_provider_outputs_written": false,
+  "quality_report_hash": "2b722baab47ef3fb37554b538be437c67c979cd3edbb95cd4a24ce778026672b",
+  "schema_version": "stage2_artifact_schema_v1"
+}

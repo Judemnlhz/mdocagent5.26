@@ -1,0 +1,132 @@
+{
+  "schema_version": "stage2_structured_subset_v1",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "extract_root": "tmp/MMLongBench",
+  "output": "outputs/subsets/stage2_structured_real_gate_subset.jsonl",
+  "max_pages": 10,
+  "max_pages_per_doc": 3,
+  "num_candidates": 4103,
+  "num_selected_pages": 10,
+  "num_selected_docs": 9,
+  "no_gold_fields_used": true,
+  "selected": [
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "page_indices": [
+        7
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "2023.findings-emnlp.248.pdf",
+      "page_indices": [
+        6
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "page_indices": [
+        6
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "page_indices": [
+        17,
+        20
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "page_indices": [
+        2
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "3M_2018_10K.pdf",
+      "page_indices": [
+        20
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "8e7c4cb542ad160f80fb3d795ada35d8.pdf",
+      "page_indices": [
+        7
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf",
+      "page_indices": [
+        2
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    },
+    {
+      "doc_id": "AMAZON_2017_10K.pdf",
+      "page_indices": [
+        33
+      ],
+      "selection_source": "structured_real_stage2_small_sample",
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ]
+    }
+  ]
+}
