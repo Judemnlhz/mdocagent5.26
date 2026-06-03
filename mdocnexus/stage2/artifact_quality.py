@@ -13,9 +13,9 @@ from typing import Any
 
 
 NUMERIC_RE = re.compile(r"[-+]?\$?\d[\d,]*(?:\.\d+)?\s*(?:%|percent|percentage|bps|bp|million|billion|thousand|m|bn)?", re.I)
-TABLE_TITLE_ONLY_RE = re.compile(r"\b(table|summary|performance|financial|segment|brochure|caption|title)\b", re.I)
-FINANCIAL_TABLE_RE = re.compile(
-    r"\b(financial|performance|revenue|sales|income|margin|segment|operating|fiscal|year|quarter|percent|percentage|metric|amount)\b",
+TITLE_ONLY_RE = re.compile(r"\b(table|summary|overview|caption|title|figure|chart|appendix|contents)\b", re.I)
+BROAD_DESCRIPTOR_RE = re.compile(
+    r"\b(table|summary|overview|contains|lists|shows|presents|describes|reports|includes|data|values|metrics|indicators)\b",
     re.I,
 )
 WEAK_LOCATOR_KINDS = {"full_page_anchor"}
@@ -134,19 +134,38 @@ def _is_caption_or_table_title_only(artifact_type: str, content: str, normalized
     if token_count <= 8:
         return True
     normalized_values = " ".join(_compact_text(value) for value in normalized.values())
-    return token_count <= 14 and bool(TABLE_TITLE_ONLY_RE.search(content + " " + normalized_values))
+    return token_count <= 14 and bool(TITLE_ONLY_RE.search(content + " " + normalized_values))
 
 
 def _is_broad_table_artifact(artifact_type: str, content: str, normalized: Mapping[str, Any], has_numeric_value: bool, title_only: bool) -> bool:
     if artifact_type != "table":
         return False
+    if _has_table_cell_fields(normalized):
+        return False
     normalized_values = " ".join(_compact_text(value) for value in normalized.values())
     text = content + " " + normalized_values
     if title_only:
         return True
-    if not has_numeric_value and FINANCIAL_TABLE_RE.search(text):
+    if not has_numeric_value and BROAD_DESCRIPTOR_RE.search(text):
+        return True
+    if has_numeric_value and not _has_row_or_column_context(normalized):
         return True
     return False
+
+
+def _has_table_cell_fields(normalized: Mapping[str, Any]) -> bool:
+    value = _compact_text(normalized.get("value_text") or normalized.get("value"))
+    row = _compact_text(normalized.get("row_label") or normalized.get("row_header"))
+    column = _compact_text(normalized.get("column_label") or normalized.get("column_header"))
+    return bool(value and row and column)
+
+
+def _has_row_or_column_context(normalized: Mapping[str, Any]) -> bool:
+    return bool(
+        _compact_text(normalized.get("row_label") or normalized.get("row_header"))
+        or _compact_text(normalized.get("column_label") or normalized.get("column_header"))
+        or _compact_text(normalized.get("context"))
+    )
 
 
 def _artifact_locator_kinds(artifact: Mapping[str, Any]) -> set[str]:

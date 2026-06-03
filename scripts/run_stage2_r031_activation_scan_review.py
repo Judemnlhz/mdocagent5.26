@@ -147,7 +147,26 @@ def main() -> None:
 
 def build_fallback_boundary_audit(stage2_path: Path) -> dict[str, Any]:
     code = stage2_path.read_text(encoding="utf-8")
-    start = code.index("def _build_deterministic_numeric_fact_artifacts")
+    marker = "def _build_deterministic_numeric_fact_artifacts"
+    if marker not in code:
+        return {
+            "schema_version": "r031_fallback_boundary_audit_v3",
+            "scope": "Stage 2 default artifact write path",
+            "function_block": None,
+            "uses_page_text": False,
+            "requires_document_generic": False,
+            "uses_layout_locator": False,
+            "uses_selected_page_identity": False,
+            "forbidden_term_hits": {},
+            "reads_question_answer_gold_evidence": False,
+            "decision": "pass_fallback_removed_from_default_stage2_path",
+            "notes": [
+                "The R030 deterministic numeric fallback is no longer present in scripts/stage2.py.",
+                "Stage 2 now writes provider-validated artifacts only in the default path.",
+                "This audit remains diagnostic only and does not run activation, QA, graph, or rerank tuning.",
+            ],
+        }
+    start = code.index(marker)
     end = code.index("def _has_artifact_locator", start)
     block = code[start:end]
     forbidden_terms = ["question", "answer", "gold", "evidence_pages", "evidence_sources", "binary_correctness"]

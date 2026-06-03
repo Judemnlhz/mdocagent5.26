@@ -219,14 +219,14 @@ class ArtifactSchemaValidationTest(unittest.TestCase):
         artifact = make_artifact()
         artifact["artifact_type"] = "numeric_fact"
         artifact["modality"] = "numeric"
-        artifact["content"] = "Revenue 2023: 3,504 USD millions"
+        artifact["content"] = "Treatment group mean response time: 7.1 minutes"
         artifact["normalized_content"] = {
-            "metric_name": "Revenue",
-            "row_label": "Revenue",
-            "column_label": "2023",
-            "value_text": "3,504",
-            "unit": "USD millions",
-            "source_text": "Revenue 2023 3,504",
+            "metric_name": "mean response time",
+            "row_label": "Treatment group",
+            "column_label": "response time",
+            "value_text": "7.1",
+            "unit": "minutes",
+            "source_text": "Treatment group mean response time 7.1 minutes",
         }
         artifact["locators"] = [{"locator_kind": "text_offset", "block_id": "p029_full_page_image", "char_start": 0, "char_end": 10}]
 
@@ -235,6 +235,19 @@ class ArtifactSchemaValidationTest(unittest.TestCase):
         self.assertTrue(quality["atomic_numeric_ok"])
         self.assertFalse(quality["schema_valid_but_semantically_weak"])
         self.assertTrue(is_atomic_strong_eligible(artifact, "eligible"))
+
+    def test_artifact_quality_marks_generic_descriptor_table_as_broad(self) -> None:
+        artifact = make_artifact()
+        artifact["artifact_type"] = "table"
+        artifact["modality"] = "table"
+        artifact["content"] = "Table lists measurements and values by group"
+        artifact["normalized_content"] = {"table_id": "table_001", "table_title": "Measurements by group"}
+        artifact["locators"] = [{"locator_kind": "text_offset", "block_id": "p029_full_page_image", "char_start": 0, "char_end": 10}]
+
+        quality = classify_artifact_quality(artifact)
+
+        self.assertTrue(quality["broad_table_only"])
+        self.assertTrue(quality["schema_valid_but_semantically_weak"])
 
 
 def make_full_page_image_block() -> Dict[str, Any]:
