@@ -1,0 +1,99 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 6,
+  "num_pages_attempted": 10,
+  "num_artifacts": 300,
+  "num_valid_artifacts": 300,
+  "num_discarded_artifacts": 4,
+  "schema_valid_rate": 0.9868421052631579,
+  "anchoring_rate": 0.9868421052631579,
+  "discard_rate": 0.013157894736842105,
+  "artifact_type_counts": {
+    "caption": 1,
+    "figure": 3,
+    "numeric_fact": 120,
+    "table_cell": 149,
+    "text_span": 27
+  },
+  "modality_counts": {
+    "image": 3,
+    "numeric": 120,
+    "table": 149,
+    "text": 28
+  },
+  "status_counts": {
+    "anchored": 300
+  },
+  "num_source_anchored": 300,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 298,
+  "element_locator_rate": 0.9933333333333333,
+  "num_proof_trace_eligible": 298,
+  "proof_trace_eligible_rate": 0.9933333333333333,
+  "proof_trace_eligible_by_type": {
+    "caption": 1,
+    "figure": 2,
+    "numeric_fact": 120,
+    "table_cell": 148,
+    "text_span": 27
+  },
+  "locator_kind_counts": {
+    "caption_block": 1,
+    "figure_region": 2,
+    "full_page_anchor": 2,
+    "source_block": 298,
+    "table_cell": 268,
+    "text_offset": 322
+  },
+  "num_artifacts_without_element_locator": 2,
+  "discard_reason_counts": {
+    "broad_table_only_semantically_weak": 4
+  },
+  "provider_parse_failure_type_counts": {},
+  "provider_parse_failure_json_like_counts": {},
+  "provider_schema_missing_field_counts": {},
+  "provider_raw_text_length_summary": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "avg": null
+  },
+  "locator_status_counts": {
+    "with_locator": 300
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 300
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 10,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 3,
+  "caption_artifact_count": 1,
+  "table_artifact_count": 0,
+  "table_cell_artifact_count": 149,
+  "numeric_fact_count": 120,
+  "visual_region_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 10,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 10,
+  "schema_valid_artifact_count": 300,
+  "anchored_artifact_count": 300,
+  "discarded_artifact_count": 4,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 6,
+  "num_selected_pages": 10,
+  "num_artifacts_per_doc_avg": 50.0,
+  "num_artifacts_per_page_avg": 30.0,
+  "page_selection_source_counts": {
+    "r035_generic_atomic_coverage_probe": 10
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "decision": "pass_fallback_removed_from_default_stage2_path",
+  "forbidden_term_hits": {},
+  "function_block": null,
+  "notes": [
+    "The R030 deterministic numeric fallback is no longer present in scripts/stage2.py.",
+    "Stage 2 now writes provider-validated artifacts only in the default path.",
+    "This audit remains diagnostic only and does not run activation, QA, graph, or rerank tuning."
+  ],
+  "reads_question_answer_gold_evidence": false,
+  "requires_document_generic": false,
+  "schema_version": "r031_fallback_boundary_audit_v3",
+  "scope": "Stage 2 default artifact write path",
+  "uses_layout_locator": false,
+  "uses_page_text": false,
+  "uses_selected_page_identity": false
+}

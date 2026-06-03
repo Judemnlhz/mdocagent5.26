@@ -1,0 +1,623 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 4,
+    "text_block": 360
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r035_atomic_coverage_probe/activation_scan_review/merged_cumulative20_plus_r030/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 259,
+    "broad_table_only": 11,
+    "missing_numeric_fact": 10,
+    "schema_valid_but_semantically_weak": 23,
+    "weak_locator": 2
+  },
+  "artifact_type_counts": {
+    "caption": 3,
+    "figure": 9,
+    "numeric_fact": 120,
+    "section_header": 1,
+    "table": 16,
+    "table_cell": 149,
+    "text_span": 66
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 120,
+    "table_cell": 139
+  },
+  "atomic_eligible_pages": 10,
+  "atomic_strong_eligible_artifacts": 259,
+  "broad_table_only_count": 11,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "caption": 3,
+    "figure": 6,
+    "numeric_fact": 120,
+    "table": 15,
+    "table_cell": 148
+  },
+  "eligible_artifacts": 292,
+  "eligible_docs": 12,
+  "eligible_locator_kind_counts": {
+    "caption_block": 3,
+    "figure_region": 2,
+    "full_page_anchor": 2,
+    "source_block": 290,
+    "table_cell": 272,
+    "text_offset": 290
+  },
+  "eligible_pages": 19,
+  "eligible_pages_with_atomic_artifact": 10,
+  "eligible_rate": 0.8021978021978022,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent Poor: 7",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ],
+    "broad_table_only": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "Business Segments\n(Dollars in millions)\nThree months ended December 31, 2018\nThree months ended December 31, 2017\n2018 vs 2017 % change\nNet Sales % of Total Ope",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table",
+        "content_preview": "Worldwide Sales Change By Business Segment\nThree months ended December 31, 2018\nOrganic local-currency sales Divestitures Translation Total sales change\nIndustr",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_010",
+        "artifact_type": "table",
+        "content_preview": "Table A: Residential Development Capacity and the Impact of Rezonings, by Borough (2003–2007)\n\t\n \n \nChange in\n \nResidential Capacity,  \n% Land Area \nResidential",
+        "doc_id": "8e7c4cb542ad160f80fb3d795ada35d8.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0000",
+        "artifact_type": "table",
+        "content_preview": "Dialogue Turn | Baseline | + GAtt\n2 | 100% | 100%\n4 | 10% | 100%\n6 | 0% | 100%\n20 | 0% | 100%",
+        "doc_id": "2307.09288v2.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 53
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "Table of Contents\nSegment Results\nDomestic Streaming Segment\nAs of/ Year Ended December 31,\nChange\n \n2015\n2014\n2013\n2015 vs. 2014\n2014 vs. 2013\n \n(in thousands,",
+        "doc_id": "NETFLIX_2015_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      }
+    ],
+    "missing_numeric_fact": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "Faster RCNN-DC5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table_cell",
+        "content_preview": "320/16",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table_cell",
+        "content_preview": "166M",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "39.0",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "60.5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ],
+    "schema_valid_but_semantically_weak": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 4: Quantitative comparison of map-based querying strategies. Random selection (dot-lines) can be treated as a highly competitive baseline in cold start b",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 11: Evolution of Llama 2-Chat. We show the evolution after multiple iterations fine-tuning for the win-rate % of Llama 2-Chat compared to ChatGPT. Left: ",
+        "doc_id": "2307.09288v2.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 17
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "Business Segments\n(Dollars in millions)\nThree months ended December 31, 2018\nThree months ended December 31, 2017\n2018 vs 2017 % change\nNet Sales % of Total Ope",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table",
+        "content_preview": "Worldwide Sales Change By Business Segment\nThree months ended December 31, 2018\nOrganic local-currency sales Divestitures Translation Total sales change\nIndustr",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_010",
+        "artifact_type": "table",
+        "content_preview": "Table A: Residential Development Capacity and the Impact of Rezonings, by Borough (2003–2007)\n\t\n \n \nChange in\n \nResidential Capacity,  \n% Land Area \nResidential",
+        "doc_id": "8e7c4cb542ad160f80fb3d795ada35d8.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      }
+    ],
+    "weak_locator": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 4: Quantitative comparison of map-based querying strategies. Random selection (dot-lines) can be treated as a highly competitive baseline in cold start b",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 11: Evolution of Llama 2-Chat. We show the evolution after multiple iterations fine-tuning for the win-rate % of Llama 2-Chat compared to ChatGPT. Left: ",
+        "doc_id": "2307.09288v2.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 17
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table",
+        "content_preview": "Error Type\nProportion (%)\n2-hop\n3-hop\n4-hop\nSyntax error\n0%\n0%\n0%\nSemantic error\n29%\n38%\n77%\nToken\n8%\n20%\n18%\nStructure\n19%\n13%\n57%\nSubtask\n2%\n5%\n2%\nIncorrect e",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table",
+        "content_preview": "Model\nHOVER\nFEVEROUS\n2-hop\n3-hop\n4-hop\nInstructGPT\n- Direct\n56.51\n51.75\n49.68\n60.13\n- ZS-CoT\n50.30\n52.30\n51.58\n54.78\n- CoT\n57.20\n53.66\n51.83\n61.05\n- Self-Ask\n51",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table",
+        "content_preview": "Business Segments\n(Dollars in millions)\nThree months ended December 31, 2018\nThree months ended December 31, 2017\n2018 vs 2017 % change\nNet Sales % of Total Ope",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table",
+        "content_preview": "Worldwide Sales Change By Business Segment\nThree months ended December 31, 2018\nOrganic local-currency sales Divestitures Translation Total sales change\nIndustr",
+        "doc_id": "3M_2018_10K.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 20
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0000",
+        "artifact_type": "table",
+        "content_preview": "Dialogue Turn | Baseline | + GAtt\n2 | 100% | 100%\n4 | 10% | 100%\n6 | 0% | 100%\n20 | 0% | 100%",
+        "doc_id": "2307.09288v2.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 53
+      }
+    ],
+    "full_page_only_locator": [
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 4: Quantitative comparison of map-based querying strategies. Random selection (dot-lines) can be treated as a highly competitive baseline in cold start b",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "full_page_image"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 11: Evolution of Llama 2-Chat. We show the evolution after multiple iterations fine-tuning for the win-rate % of Llama 2-Chat compared to ChatGPT. Left: ",
+        "doc_id": "2307.09288v2.pdf",
+        "locator_kinds": [
+          "full_page_anchor"
+        ],
+        "page_index": 17
+      }
+    ],
+    "not_element_locatable_or_proof_trace_ineligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_010",
+        "artifact_type": "table",
+        "content_preview": "Table A: Residential Development Capacity and the Impact of Rezonings, by Borough (2003–2007)\n\t\n \n \nChange in\n \nResidential Capacity,  \n% Land Area \nResidential",
+        "doc_id": "8e7c4cb542ad160f80fb3d795ada35d8.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Fig. 6: Visualizing decoder attention for every predicted object (images from COCO val set). Predictions are made with DETR-DC5 model. Attention scores are code",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 12
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "Table 4: Effect of loss components on AP. We train two models turning off ℓ1 loss, and GIoU loss, and observe that ℓ1 gives poor results on its own, but when co",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 12
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "text_span",
+        "content_preview": "Claim: Emery, located in the same state as Edison Local School District, is a ghost town. It is near the city that lies close to the Ohio Turnpike, a 241.26 mi ",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "text_span",
+        "content_preview": "Figure 6: An error case from the HOVER 4-hop dataset where the generated reasoning program has an incorrect program structure. The incorrect segment(s) are mark",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "text_span",
+        "content_preview": "Label coverage & diversity. Most active querying strategies have selection bias towards specific classes, thus the class coverage in their selections might be p",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "text_span",
+        "content_preview": "Our proposed active querying strategy, however, is capable of covering 100% classes in most low budget scenarios (≤0.002% of full dataset) by integraing K-means",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "text_span",
+        "content_preview": "Hard-to-contrast data are practical for cold start problem. Figure 4 presents the quantitative comparison of four map-based querying strategies, wherein easy- o",
+        "doc_id": "2210.02442v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "full_page_only_locator": 2,
+  "locator_kind_counts": {
+    "caption_block": 3,
+    "figure_region": 2,
+    "full_page_anchor": 4,
+    "source_block": 360,
+    "table_cell": 272,
+    "text_offset": 360
+  },
+  "missing_numeric_fact_count": 10,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 120,
+  "reason_counts": {
+    "eligible": 292,
+    "full_page_only_locator": 2,
+    "not_element_locatable_or_proof_trace_ineligible": 3,
+    "unstructured_artifact_type": 67
+  },
+  "schema_valid_but_semantically_weak_count": 23,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 292,
+  "table_cell_count": 149,
+  "total_artifacts": 364,
+  "weak_locator_count": 2
+}

@@ -1,0 +1,753 @@
+{
+  "exclude_subset": "['outputs/stage2_structured_incremental/r028_10_to_20/cumulative/subset_cumulative_20.jsonl', 'outputs/stage2_structured_incremental/r028_20_to_30/parse_repair_replay_3/subset_failed_pages.jsonl']",
+  "extract_root": "tmp/MMLongBench",
+  "max_pages": 10,
+  "max_pages_per_doc": 2,
+  "no_gold_fields_used": true,
+  "num_candidates": 2009,
+  "num_excluded_pages": 23,
+  "num_selected_docs": 6,
+  "num_selected_pages": 10,
+  "output": "outputs/stage2_structured_incremental/r035_atomic_coverage_probe/subset_r035_atomic_coverage.jsonl",
+  "records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "retrieval_topk": 10,
+  "schema_version": "r035_atomic_coverage_subset_v1",
+  "selected": [
+    {
+      "doc_id": "05-03-18-political-release.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_indices": [
+        3
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    },
+    {
+      "doc_id": "2005.12872v3.pdf",
+      "offline_atomic_pair_count": 24,
+      "offline_numeric_fact_count": 24,
+      "offline_table_cell_count": 24,
+      "page_indices": [
+        8,
+        12
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    },
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "offline_atomic_pair_count": 24,
+      "offline_numeric_fact_count": 24,
+      "offline_table_cell_count": 24,
+      "page_indices": [
+        1,
+        3
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    },
+    {
+      "doc_id": "2023.findings-emnlp.248.pdf",
+      "offline_atomic_pair_count": 24,
+      "offline_numeric_fact_count": 24,
+      "offline_table_cell_count": 24,
+      "page_indices": [
+        2,
+        13
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 24,
+      "offline_numeric_fact_count": 24,
+      "offline_table_cell_count": 24,
+      "page_indices": [
+        3,
+        4
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    },
+    {
+      "doc_id": "2303.05039v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_indices": [
+        3
+      ],
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ],
+      "selection_source": "r035_generic_atomic_coverage_probe"
+    }
+  ],
+  "selection_policy": "retrieval_topk_pages_ranked_by_generic_atomicizer_offline_count",
+  "selection_source": "r035_generic_atomic_coverage_probe",
+  "top_candidates": [
+    {
+      "doc_id": "05-03-18-political-release.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 206,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2005.12872v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 8,
+      "record_index": 547,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2005.12872v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 12,
+      "record_index": 547,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2005.12872v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 25,
+      "record_index": 545,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 1,
+      "record_index": 633,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 633,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 5,
+      "record_index": 641,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.acl-long.386.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 13,
+      "record_index": 635,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.findings-emnlp.248.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 2,
+      "record_index": 631,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2023.findings-emnlp.248.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 13,
+      "record_index": 629,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 767,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 4,
+      "record_index": 768,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 13,
+      "record_index": 765,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 14,
+      "record_index": 765,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2210.02442v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 23,
+      "record_index": 760,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.05039v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 289,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.05039v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 295,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.08559v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 4,
+      "record_index": 188,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.08559v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 186,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.08559v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 8,
+      "record_index": 186,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2303.08559v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 14,
+      "record_index": 189,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.13186v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 297,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.14160v4.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 966,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.14160v4.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 6,
+      "record_index": 968,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.14160v4.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 969,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.14160v4.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 10,
+      "record_index": 965,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2305.14160v4.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 13,
+      "record_index": 968,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2306.05425v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 4,
+      "record_index": 755,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2306.05425v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 10,
+      "record_index": 754,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2306.05425v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 12,
+      "record_index": 759,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 873,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 48,
+      "record_index": 872,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 49,
+      "record_index": 875,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 51,
+      "record_index": 876,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2307.09288v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 68,
+      "record_index": 877,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2309.17421v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 120,
+      "record_index": 540,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.05634v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 2,
+      "record_index": 66,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.05634v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 6,
+      "record_index": 64,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.05634v2.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 63,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.07609v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 1,
+      "record_index": 282,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.07609v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 5,
+      "record_index": 285,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2310.09158v1.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 6,
+      "record_index": 958,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 3,
+      "record_index": 866,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 9,
+      "record_index": 865,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 14,
+      "record_index": 183,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 20,
+      "record_index": 182,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2311.16502v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 111,
+      "record_index": 185,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2312.04350v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 5,
+      "record_index": 960,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2312.04350v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 6,
+      "record_index": 959,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    },
+    {
+      "doc_id": "2312.04350v3.pdf",
+      "offline_atomic_pair_count": 12,
+      "offline_numeric_fact_count": 12,
+      "offline_table_cell_count": 12,
+      "page_index": 7,
+      "record_index": 959,
+      "retrieval_score": 1.0,
+      "score": 121.0,
+      "selection_reasons": [
+        "generic_atomicizer_offline_table_numeric_signal"
+      ]
+    }
+  ]
+}

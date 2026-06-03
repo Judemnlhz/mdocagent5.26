@@ -1,0 +1,485 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 2,
+    "text_block": 298
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r035_atomic_coverage_probe/stage2_delta/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 259,
+    "missing_numeric_fact": 10,
+    "schema_valid_but_semantically_weak": 10
+  },
+  "artifact_type_counts": {
+    "caption": 1,
+    "figure": 3,
+    "numeric_fact": 120,
+    "table_cell": 149,
+    "text_span": 27
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 120,
+    "table_cell": 139
+  },
+  "atomic_eligible_pages": 10,
+  "atomic_strong_eligible_artifacts": 259,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "caption": 1,
+    "figure": 2,
+    "numeric_fact": 120,
+    "table_cell": 148
+  },
+  "eligible_artifacts": 271,
+  "eligible_docs": 6,
+  "eligible_locator_kind_counts": {
+    "caption_block": 1,
+    "figure_region": 2,
+    "full_page_anchor": 2,
+    "source_block": 269,
+    "table_cell": 268,
+    "text_offset": 269
+  },
+  "eligible_pages": 10,
+  "eligible_pages_with_atomic_artifact": 10,
+  "eligible_rate": 0.9033333333333333,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent Poor: 7",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ],
+    "missing_numeric_fact": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "Faster RCNN-DC5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table_cell",
+        "content_preview": "320/16",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table_cell",
+        "content_preview": "166M",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "39.0",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "60.5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ],
+    "schema_valid_but_semantically_weak": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "Faster RCNN-DC5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table_cell",
+        "content_preview": "320/16",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table_cell",
+        "content_preview": "166M",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "39.0",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "60.5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "Excellent www.pewresearch.org: 36",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "Excellent Poor: 7",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ],
+    "not_element_locatable_or_proof_trace_ineligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Fig. 6: Visualizing decoder attention for every predicted object (images from COCO val set). Predictions are made with DETR-DC5 model. Attention scores are code",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 12
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "Table 4: Effect of loss components on AP. We train two models turning off ℓ1 loss, and GIoU loss, and observe that ℓ1 gives poor results on its own, but when co",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 12
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0000",
+        "artifact_type": "text_span",
+        "content_preview": "Each reasoning step Si ∈ P is an instruction\nin controlled natural language that directs Si to\na function in an auxiliary set of sub-task func-\ntions F availabl",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0001",
+        "artifact_type": "text_span",
+        "content_preview": "Program Execution.\nIn the execution stage, the\nreasoning program P is run by an interpreter to\nderive the veracity label of the claim C. The in-\nterpreter seque",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0002",
+        "artifact_type": "text_span",
+        "content_preview": "Aggregating Reasoning Paths.\nNote that there\nmight be multiple reasoning paths that can reach\nthe final veracity label. Therefore, we generate\na diverse set of ",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0003",
+        "artifact_type": "text_span",
+        "content_preview": "3.3\nReasoning Program Generation\nWe base our program generator on Codex (Chen\net al., 2021), a code-pretrained LLM, which can\nparse natural language into symbol",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_0004",
+        "artifact_type": "text_span",
+        "content_preview": "However, the grammar of a reasoning program\nis different from the grammar of a programming\nlanguage. We take advantage of Codex’s few-shot\ngeneralization abilit",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "caption_block": 1,
+    "figure_region": 2,
+    "full_page_anchor": 2,
+    "source_block": 298,
+    "table_cell": 268,
+    "text_offset": 298
+  },
+  "missing_numeric_fact_count": 10,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 120,
+  "reason_counts": {
+    "eligible": 271,
+    "not_element_locatable_or_proof_trace_ineligible": 2,
+    "unstructured_artifact_type": 27
+  },
+  "schema_valid_but_semantically_weak_count": 10,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 271,
+  "table_cell_count": 149,
+  "total_artifacts": 300,
+  "weak_locator_count": 0
+}
