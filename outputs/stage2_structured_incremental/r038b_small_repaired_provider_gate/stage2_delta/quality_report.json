@@ -1,0 +1,96 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 3,
+  "num_pages_attempted": 3,
+  "num_artifacts": 59,
+  "num_valid_artifacts": 59,
+  "num_discarded_artifacts": 2,
+  "schema_valid_rate": 0.9672131147540983,
+  "anchoring_rate": 0.9672131147540983,
+  "discard_rate": 0.03278688524590164,
+  "artifact_type_counts": {
+    "figure": 1,
+    "numeric_fact": 24,
+    "table": 2,
+    "table_cell": 24,
+    "text_span": 8
+  },
+  "modality_counts": {
+    "image": 1,
+    "numeric": 24,
+    "table": 26,
+    "text": 8
+  },
+  "status_counts": {
+    "anchored": 59
+  },
+  "num_source_anchored": 59,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 59,
+  "element_locator_rate": 1.0,
+  "num_proof_trace_eligible": 59,
+  "proof_trace_eligible_rate": 1.0,
+  "proof_trace_eligible_by_type": {
+    "figure": 1,
+    "numeric_fact": 24,
+    "table": 2,
+    "table_cell": 24,
+    "text_span": 8
+  },
+  "locator_kind_counts": {
+    "source_block": 59,
+    "table_cell": 48,
+    "text_offset": 59
+  },
+  "num_artifacts_without_element_locator": 0,
+  "discard_reason_counts": {
+    "broad_table_only_semantically_weak": 2
+  },
+  "provider_parse_failure_type_counts": {},
+  "provider_parse_failure_json_like_counts": {},
+  "provider_schema_missing_field_counts": {},
+  "provider_raw_text_length_summary": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "avg": null
+  },
+  "locator_status_counts": {
+    "with_locator": 59
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 59
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 3,
+  "pages_with_image_payload": 3,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 1,
+  "caption_artifact_count": 0,
+  "table_artifact_count": 2,
+  "table_cell_artifact_count": 24,
+  "numeric_fact_count": 24,
+  "visual_region_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 3,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 3,
+  "schema_valid_artifact_count": 59,
+  "anchored_artifact_count": 59,
+  "discarded_artifact_count": 2,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 3,
+  "num_selected_pages": 3,
+  "num_artifacts_per_doc_avg": 19.666666666666668,
+  "num_artifacts_per_page_avg": 19.666666666666668,
+  "page_selection_source_counts": {
+    "r038b_small_repaired_provider_gate": 3
+  }
+}
