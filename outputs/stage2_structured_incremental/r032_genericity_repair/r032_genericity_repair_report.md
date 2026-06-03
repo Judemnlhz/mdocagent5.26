@@ -44,3 +44,38 @@ All completed successfully.
 ## Decision
 
 Proceed next with a bounded same-page Stage 2 replay after genericity repair. Do not treat R030 deterministic fallback metrics as generic evidence. Activation scan remains blocked until the generic prompt/parser path produces stable atomic artifacts without probe-specific fallback.
+
+## Same-3 Generic Replay After Fallback Removal
+
+Scope: same 3 failed pages only; no expansion, no activation, no QA, no graph, no rerank tuning. The replay used the generic Stage 2 path after removing probe-specific deterministic fallback.
+
+Decision: `continue_stage2_quality_repair_no_activation`
+
+| Metric | Value |
+|---|---:|
+| `parse_failure_count` | 0 |
+| `json_parse_success_count` | 3 |
+| `valid_artifacts` | 11 |
+| `discarded_artifacts` | 2 |
+| `strong_eligible_artifacts` | 3 |
+| `atomic_strong_eligible_artifacts` | 0 |
+| `eligible_pages` | 2 |
+| `eligible_pages_with_atomic_artifact` | 0 |
+| `mock_or_placeholder_content` | 0 |
+| `full_page_only_locator` | 0 |
+| `table_cell_count` | 0 |
+| `numeric_fact_count` | 0 |
+| `broad_table_only_count` | 0 |
+| `broad_table_only_discarded_count` | 2 |
+
+Checks:
+
+- `parse_failure_still_zero`: True
+- `mock_still_zero`: True
+- `full_page_only_still_zero`: True
+- `table_cell_kept_or_increased`: False
+- `numeric_fact_appeared`: False
+- `broad_table_only_declined`: True
+- `eligible_pages_not_decreased`: True
+
+Interpretation: parse/mock/locator hygiene remained clean, but `numeric_fact_count=0`, `table_cell_count=0`, and `atomic_strong_eligible_artifacts=0`. This means R030 atomic gains were not generic after removing deterministic probe fallback. Activation remains blocked; continue Stage 2 prompt/parser coverage repair before any downstream scan.
