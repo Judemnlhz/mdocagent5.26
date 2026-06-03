@@ -1,0 +1,179 @@
+{
+  "activated_count": 19,
+  "activated_ids": [
+    69,
+    223,
+    224,
+    227,
+    228,
+    456,
+    495,
+    569,
+    575,
+    712,
+    713,
+    718,
+    958,
+    1052,
+    1055,
+    1061,
+    1063,
+    1066,
+    1067
+  ],
+  "artifacts": "outputs/stage2_structured_incremental/r038c_repaired_20_to_30_full_replay_gate/activation_scan_review/atomic_only/artifacts.jsonl",
+  "changed_count": 29,
+  "changed_ids": [
+    69,
+    70,
+    71,
+    72,
+    73,
+    223,
+    224,
+    227,
+    228,
+    454,
+    456,
+    457,
+    458,
+    460,
+    488,
+    489,
+    490,
+    491,
+    569,
+    575,
+    713,
+    715,
+    716,
+    958,
+    1052,
+    1055,
+    1061,
+    1063,
+    1067
+  ],
+  "concentration": {
+    "activated_by_doc": {
+      "2310.09158v1.pdf": 1,
+      "2401.18059v1.pdf": 1,
+      "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf": 3,
+      "BESTBUY_2023_10K.pdf": 6,
+      "PIP_Seniors-and-Tech-Use_040314.pdf": 4,
+      "PS_2018.01.09_STEM_FINAL.pdf": 2,
+      "STEPBACK.pdf": 1,
+      "q1-2023-bilibili-inc-investor-presentation.pdf": 1
+    },
+    "activated_by_page": {
+      "2310.09158v1.pdf#p007": 1,
+      "2401.18059v1.pdf#p006": 1,
+      "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf#p003": 3,
+      "BESTBUY_2023_10K.pdf#p026": 3,
+      "BESTBUY_2023_10K.pdf#p027": 3,
+      "PIP_Seniors-and-Tech-Use_040314.pdf#p008": 4,
+      "PS_2018.01.09_STEM_FINAL.pdf#p028": 2,
+      "STEPBACK.pdf#p007": 1,
+      "q1-2023-bilibili-inc-investor-presentation.pdf#p023": 1
+    },
+    "effective_num_docs": 5.231884,
+    "effective_num_pages": 7.078431,
+    "max_doc_share": 0.3157894736842105,
+    "max_page_share": 0.21052631578947367,
+    "purpose": "external_validity_diagnostic_only",
+    "used_for_reranking": false,
+    "uses_gold_fields": false
+  },
+  "concentration_metrics_used_for_reranking": false,
+  "decision": "do_not_run_effectiveness_gate_expand_stage2_coverage",
+  "eligible_for_heldout_count": 19,
+  "excluded_prior_policy_top30_count": 0,
+  "heldout_activation_rich_subset": {
+    "available": false,
+    "max_requested": 50,
+    "min_required": 30,
+    "num_records": 17,
+    "reason_unavailable": "doc/page capped activated records are below min-heldout",
+    "record_ids": [
+      69,
+      223,
+      224,
+      227,
+      456,
+      495,
+      569,
+      575,
+      712,
+      713,
+      718,
+      958,
+      1052,
+      1055,
+      1061,
+      1063,
+      1066
+    ],
+    "record_ids_path": null,
+    "sampling_policy": {
+      "concentration_metrics_used_for_sampling": false,
+      "max_records_per_doc": 5,
+      "max_records_per_page": 3,
+      "method": "doc_page_capped_sampling"
+    }
+  },
+  "input_retrieval": "data/MMLongBench/sample-with-retrieval-results.json",
+  "lambda_weight": 0.5,
+  "no_full_ablation": true,
+  "no_qa_run": true,
+  "no_rerank_tuning": true,
+  "original_plus_changed_count": 15,
+  "original_plus_changed_ids": [
+    69,
+    223,
+    224,
+    454,
+    456,
+    457,
+    460,
+    575,
+    713,
+    958,
+    1052,
+    1055,
+    1061,
+    1063,
+    1067
+  ],
+  "schema_version": "real_structured_artifact_activation_scan_v1",
+  "strong_eligible_artifact_pages": {
+    "2310.09158v1.pdf": [
+      7
+    ],
+    "2401.18059v1.pdf": [
+      6
+    ],
+    "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf": [
+      3
+    ],
+    "BESTBUY_2023_10K.pdf": [
+      26,
+      27
+    ],
+    "PIP_Seniors-and-Tech-Use_040314.pdf": [
+      8
+    ],
+    "PS_2018.01.09_STEM_FINAL.pdf": [
+      28
+    ],
+    "STEPBACK.pdf": [
+      7
+    ],
+    "q1-2023-bilibili-inc-investor-presentation.pdf": [
+      23
+    ]
+  },
+  "strong_eligible_page_count": 9,
+  "top_k": 4,
+  "total_records": 1073,
+  "uses_gold_fields": false
+}

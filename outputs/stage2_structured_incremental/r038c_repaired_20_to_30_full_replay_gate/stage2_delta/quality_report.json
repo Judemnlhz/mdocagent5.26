@@ -1,0 +1,103 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 9,
+  "num_pages_attempted": 10,
+  "num_artifacts": 155,
+  "num_valid_artifacts": 155,
+  "num_discarded_artifacts": 4,
+  "schema_valid_rate": 0.9748427672955975,
+  "anchoring_rate": 0.9748427672955975,
+  "discard_rate": 0.025157232704402517,
+  "artifact_type_counts": {
+    "caption": 3,
+    "figure": 3,
+    "numeric_fact": 68,
+    "section_header": 1,
+    "table": 2,
+    "table_cell": 67,
+    "text_span": 11
+  },
+  "modality_counts": {
+    "image": 3,
+    "numeric": 67,
+    "table": 69,
+    "text": 16
+  },
+  "status_counts": {
+    "anchored": 155
+  },
+  "num_source_anchored": 155,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 154,
+  "element_locator_rate": 0.9935483870967742,
+  "num_proof_trace_eligible": 154,
+  "proof_trace_eligible_rate": 0.9935483870967742,
+  "proof_trace_eligible_by_type": {
+    "caption": 3,
+    "figure": 2,
+    "numeric_fact": 68,
+    "section_header": 1,
+    "table": 2,
+    "table_cell": 67,
+    "text_span": 11
+  },
+  "locator_kind_counts": {
+    "caption_block": 3,
+    "figure_region": 1,
+    "full_page_anchor": 2,
+    "source_block": 153,
+    "table_cell": 134,
+    "text_offset": 153
+  },
+  "num_artifacts_without_element_locator": 1,
+  "discard_reason_counts": {
+    "broad_table_only_semantically_weak": 4
+  },
+  "provider_parse_failure_type_counts": {},
+  "provider_parse_failure_json_like_counts": {},
+  "provider_schema_missing_field_counts": {},
+  "provider_raw_text_length_summary": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "avg": null
+  },
+  "locator_status_counts": {
+    "with_locator": 155
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 155
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 10,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 3,
+  "caption_artifact_count": 3,
+  "table_artifact_count": 2,
+  "table_cell_artifact_count": 67,
+  "numeric_fact_count": 68,
+  "visual_region_count": 0,
+  "empty_response_count": 1,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 10,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 10,
+  "schema_valid_artifact_count": 155,
+  "anchored_artifact_count": 155,
+  "discarded_artifact_count": 4,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 9,
+  "num_selected_pages": 10,
+  "num_artifacts_per_doc_avg": 17.22222222222222,
+  "num_artifacts_per_page_avg": 15.5,
+  "page_selection_source_counts": {
+    "structured_real_stage2_r028_20_to_30_delta": 10
+  }
+}

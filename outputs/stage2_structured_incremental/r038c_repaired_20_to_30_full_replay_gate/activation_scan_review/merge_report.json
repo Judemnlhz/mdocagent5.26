@@ -1,0 +1,17 @@
+{
+  "atomic_artifact_count": 135,
+  "atomic_artifacts": "outputs/stage2_structured_incremental/r038c_repaired_20_to_30_full_replay_gate/activation_scan_review/atomic_only/artifacts.jsonl",
+  "base_artifact_count": 64,
+  "base_artifacts": "outputs/stage2_structured_incremental/r028_10_to_20/cumulative/artifacts.jsonl",
+  "base_kept_count": 64,
+  "delta_artifact_count": 155,
+  "delta_artifacts": "outputs/stage2_structured_incremental/r038c_repaired_20_to_30_full_replay_gate/stage2_delta/artifacts.jsonl",
+  "delta_page_count": 9,
+  "merged_artifact_count": 219,
+  "merged_artifacts": "outputs/stage2_structured_incremental/r038c_repaired_20_to_30_full_replay_gate/temporary_cumulative20_plus_repaired_delta/artifacts.jsonl",
+  "no_graph": true,
+  "no_qa": true,
+  "no_rerank_tuning": true,
+  "not_merged_into_final_cumulative_artifacts": true,
+  "schema_version": "r038c_temporary_cumulative20_plus_repaired_delta_v1"
+}

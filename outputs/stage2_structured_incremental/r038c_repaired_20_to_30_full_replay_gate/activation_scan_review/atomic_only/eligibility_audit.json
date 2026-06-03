@@ -1,0 +1,213 @@
+{
+  "anchor_type_counts": {
+    "text_block": 135
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r038c_repaired_20_to_30_full_replay_gate/activation_scan_review/atomic_only/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 135
+  },
+  "artifact_type_counts": {
+    "numeric_fact": 68,
+    "table_cell": 67
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 68,
+    "table_cell": 67
+  },
+  "atomic_eligible_pages": 9,
+  "atomic_strong_eligible_artifacts": 135,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "numeric_fact": 68,
+    "table_cell": 67
+  },
+  "eligible_artifacts": 135,
+  "eligible_docs": 8,
+  "eligible_locator_kind_counts": {
+    "source_block": 135,
+    "table_cell": 134,
+    "text_offset": 135
+  },
+  "eligible_pages": 9,
+  "eligible_pages_with_atomic_artifact": 9,
+  "eligible_rate": 1.0,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "vanilla ICL LI (%) ↓: 15.3",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "vanilla ICL LI (%) ↓: 15.3",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_004",
+        "artifact_type": "numeric_fact",
+        "content_preview": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_005",
+        "artifact_type": "table_cell",
+        "content_preview": "CoT w. logical constraints LI (%) ↓: 18.0",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "vanilla ICL LI (%) ↓: 15.3",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "vanilla ICL LI (%) ↓: 15.3",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_004",
+        "artifact_type": "numeric_fact",
+        "content_preview": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_005",
+        "artifact_type": "table_cell",
+        "content_preview": "CoT w. logical constraints LI (%) ↓: 18.0",
+        "doc_id": "2310.09158v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 7
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "source_block": 135,
+    "table_cell": 134,
+    "text_offset": 135
+  },
+  "missing_numeric_fact_count": 0,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 68,
+  "reason_counts": {
+    "eligible": 135
+  },
+  "schema_valid_but_semantically_weak_count": 0,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 135,
+  "table_cell_count": 67,
+  "total_artifacts": 135,
+  "weak_locator_count": 0
+}
