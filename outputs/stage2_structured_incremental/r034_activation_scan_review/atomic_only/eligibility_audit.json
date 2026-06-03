@@ -1,0 +1,213 @@
+{
+  "anchor_type_counts": {
+    "text_block": 78
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r034_activation_scan_review/atomic_only/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 78
+  },
+  "artifact_type_counts": {
+    "numeric_fact": 36,
+    "table_cell": 42
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 36,
+    "table_cell": 42
+  },
+  "atomic_eligible_pages": 3,
+  "atomic_strong_eligible_artifacts": 78,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "numeric_fact": 36,
+    "table_cell": 42
+  },
+  "eligible_artifacts": 78,
+  "eligible_docs": 3,
+  "eligible_locator_kind_counts": {
+    "source_block": 78,
+    "table_cell": 78,
+    "text_offset": 78
+  },
+  "eligible_pages": 3,
+  "eligible_pages_with_atomic_artifact": 3,
+  "eligible_rate": 1.0,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT with RAPTOR\n30.87%\n23.50%\n6.42%\n19.20%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT without RAPTOR\n29.26%\n22.56%\n5.95%\n18.15%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_007",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 with RAPTOR\n27.93%\n21.17%\n5.70%\n17.03%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 without RAPTOR\n23.52%\n17.73%\n4.65%\n13.98%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_009",
+        "artifact_type": "table_cell",
+        "content_preview": "DPR with RAPTOR\n30.94%\n23.51%\n6.45%\n19.05%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT with RAPTOR\n30.87%\n23.50%\n6.42%\n19.20%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT without RAPTOR\n29.26%\n22.56%\n5.95%\n18.15%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_007",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 with RAPTOR\n27.93%\n21.17%\n5.70%\n17.03%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 without RAPTOR\n23.52%\n17.73%\n4.65%\n13.98%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_009",
+        "artifact_type": "table_cell",
+        "content_preview": "DPR with RAPTOR\n30.94%\n23.51%\n6.45%\n19.05%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "source_block": 78,
+    "table_cell": 78,
+    "text_offset": 78
+  },
+  "missing_numeric_fact_count": 0,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 36,
+  "reason_counts": {
+    "eligible": 78
+  },
+  "schema_valid_but_semantically_weak_count": 0,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 78,
+  "table_cell_count": 42,
+  "total_artifacts": 78,
+  "weak_locator_count": 0
+}
