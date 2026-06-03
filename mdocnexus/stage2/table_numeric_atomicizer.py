@@ -21,7 +21,7 @@ NUMERIC_VALUE_RE = re.compile(
 )
 YEAR_RE = re.compile(r"^(?:19|20)\d{2}$")
 CURRENCY_ONLY_RE = re.compile(r"^\$+$")
-MAX_ATOMIC_CELLS_PER_PAGE = 12
+MAX_ATOMIC_CELLS_PER_PAGE = 8
 
 
 @dataclass(frozen=True)
@@ -141,9 +141,10 @@ def _extract_atomic_cells(lines: list[TextLine], max_cells: int) -> list[AtomicC
     cells: list[AtomicCell] = []
     seen: set[tuple[str, str, str]] = set()
     row_index = 0
+    candidate_limit = max(int(max_cells) * 4, int(max_cells))
 
     for index, line in enumerate(lines):
-        if len(cells) >= max_cells:
+        if len(cells) >= candidate_limit:
             break
 
         if _has_numeric_value(line.text):
@@ -181,10 +182,36 @@ def _extract_atomic_cells(lines: list[TextLine], max_cells: int) -> list[AtomicC
                 continue
             seen.add(key)
             cells.append(cell)
-            if len(cells) >= max_cells:
+            if len(cells) >= candidate_limit:
                 break
         row_index += 1
-    return cells
+    return _rank_atomic_cells(cells)[:max_cells]
+
+
+def _rank_atomic_cells(cells: list[AtomicCell]) -> list[AtomicCell]:
+    return sorted(cells, key=lambda cell: (-_cell_confidence_score(cell), cell.row_index, cell.column_index, cell.row_label, cell.column_label))
+
+
+def _cell_confidence_score(cell: AtomicCell) -> float:
+    score = 0.0
+    if _is_year_only(cell.column_label):
+        score += 4.0
+    elif not cell.column_label.startswith("value_"):
+        score += 3.0
+    if "%" in cell.value_text:
+        score += 2.0
+    if _normalize_numeric_value(cell.value_text) is not None:
+        score += 1.0
+    row_words = len(cell.row_label.split())
+    if 1 <= row_words <= 8:
+        score += 2.0
+    elif row_words <= 14:
+        score += 1.0
+    if len(cell.source_text) <= 160:
+        score += 1.0
+    if cell.column_index == 0:
+        score += 0.4
+    return score
 
 
 def _collect_following_value_lines(lines: list[TextLine], start_index: int) -> list[TextLine]:

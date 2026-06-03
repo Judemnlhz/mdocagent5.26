@@ -1,0 +1,467 @@
+{
+  "anchor_type_counts": {
+    "full_page_image": 1,
+    "text_block": 217
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r036_atomic_budget_precision_gate/stage2_delta/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 171,
+    "missing_numeric_fact": 9,
+    "schema_valid_but_semantically_weak": 9
+  },
+  "artifact_type_counts": {
+    "figure": 2,
+    "numeric_fact": 80,
+    "table_cell": 100,
+    "text_span": 36
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 80,
+    "table_cell": 91
+  },
+  "atomic_eligible_pages": 10,
+  "atomic_strong_eligible_artifacts": 171,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "figure": 1,
+    "numeric_fact": 80,
+    "table_cell": 100
+  },
+  "eligible_artifacts": 181,
+  "eligible_docs": 6,
+  "eligible_locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 1,
+    "source_block": 180,
+    "table_cell": 180,
+    "text_offset": 180
+  },
+  "eligible_pages": 10,
+  "eligible_pages_with_atomic_artifact": 10,
+  "eligible_rate": 0.8302752293577982,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans and of Democrats rating its ethical: 86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ],
+    "missing_numeric_fact": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "Faster RCNN-DC5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table_cell",
+        "content_preview": "320/16",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table_cell",
+        "content_preview": "166M",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "39.0",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "60.5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ],
+    "schema_valid_but_semantically_weak": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "Faster RCNN-DC5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "table_cell",
+        "content_preview": "320/16",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "table_cell",
+        "content_preview": "166M",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "39.0",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "60.5",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 8
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans and of Democrats rating its ethical: 86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ],
+    "not_element_locatable_or_proof_trace_ineligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Fig. 6: Visualizing decoder attention for every predicted object (images from COCO val set). Predictions are made with DETR-DC5 model. Attention scores are code",
+        "doc_id": "2005.12872v3.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 12
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "text_span",
+        "content_preview": "Claim: Both James Cameron and the director of the film Interstellar were born in Canada.",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 1
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "text_span",
+        "content_preview": "Figure 1: Overview of our PROGRAMFC model, which consists of two modules: (i) Program Generation generates a reasoning program for the input claim using Codex w",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 1
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "text_span",
+        "content_preview": "The generated reasoning program serves as a step-by-step guide for verifying the claim. We then execute the program by sequentially delegating each sub-task to ",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 1
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_004",
+        "artifact_type": "text_span",
+        "content_preview": "PROGRAMFC combines explainability with data efficiency. It uses reasoning programs to provide clear explanations of its reasoning process. For data efficiency, ",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 1
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "text_span",
+        "content_preview": "We evaluate PROGRAMFC on two challenging datasets designed for fact-checking complex claims: HOVER (Jiang et al., 2020) and FEVER- OUS (Aly et al., 2021), and w",
+        "doc_id": "2023.acl-long.386.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 1
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 1,
+    "source_block": 217,
+    "table_cell": 180,
+    "text_offset": 217
+  },
+  "missing_numeric_fact_count": 9,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 80,
+  "reason_counts": {
+    "eligible": 181,
+    "not_element_locatable_or_proof_trace_ineligible": 1,
+    "unstructured_artifact_type": 36
+  },
+  "schema_valid_but_semantically_weak_count": 9,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 181,
+  "table_cell_count": 100,
+  "total_artifacts": 218,
+  "weak_locator_count": 0
+}

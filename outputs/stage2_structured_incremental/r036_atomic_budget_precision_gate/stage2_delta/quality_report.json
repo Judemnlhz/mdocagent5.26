@@ -1,0 +1,96 @@
+{
+  "num_records": 1073,
+  "num_documents_attempted": 6,
+  "num_pages_attempted": 10,
+  "num_artifacts": 218,
+  "num_valid_artifacts": 218,
+  "num_discarded_artifacts": 3,
+  "schema_valid_rate": 0.9864253393665159,
+  "anchoring_rate": 0.9864253393665159,
+  "discard_rate": 0.013574660633484163,
+  "artifact_type_counts": {
+    "figure": 2,
+    "numeric_fact": 80,
+    "table_cell": 100,
+    "text_span": 36
+  },
+  "modality_counts": {
+    "image": 2,
+    "numeric": 80,
+    "table": 100,
+    "text": 36
+  },
+  "status_counts": {
+    "anchored": 218
+  },
+  "num_source_anchored": 218,
+  "source_anchored_rate": 1.0,
+  "num_element_locatable": 217,
+  "element_locator_rate": 0.9954128440366973,
+  "num_proof_trace_eligible": 217,
+  "proof_trace_eligible_rate": 0.9954128440366973,
+  "proof_trace_eligible_by_type": {
+    "figure": 1,
+    "numeric_fact": 80,
+    "table_cell": 100,
+    "text_span": 36
+  },
+  "locator_kind_counts": {
+    "figure_region": 1,
+    "full_page_anchor": 1,
+    "source_block": 217,
+    "table_cell": 180,
+    "text_offset": 227
+  },
+  "num_artifacts_without_element_locator": 1,
+  "discard_reason_counts": {
+    "broad_table_only_semantically_weak": 3
+  },
+  "provider_parse_failure_type_counts": {},
+  "provider_parse_failure_json_like_counts": {},
+  "provider_schema_missing_field_counts": {},
+  "provider_raw_text_length_summary": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "avg": null
+  },
+  "locator_status_counts": {
+    "with_locator": 218
+  },
+  "bbox_locator_counts": {
+    "without_bbox": 218
+  },
+  "blocking_reason_counts": {},
+  "storage_format": "artifacts_jsonl",
+  "pages_attempted": 10,
+  "pages_with_image_payload": 10,
+  "pages_without_image_payload": 0,
+  "image_payload_rate": 1.0,
+  "visual_artifact_count": 0,
+  "figure_artifact_count": 2,
+  "caption_artifact_count": 0,
+  "table_artifact_count": 0,
+  "table_cell_artifact_count": 100,
+  "numeric_fact_count": 80,
+  "visual_region_count": 0,
+  "empty_response_count": 0,
+  "parse_failure_count": 0,
+  "schema_failure_count": 0,
+  "anchor_failure_count": 0,
+  "provider_call_success_count": 10,
+  "provider_call_failed_count": 0,
+  "json_parse_success_count": 10,
+  "schema_valid_artifact_count": 218,
+  "anchored_artifact_count": 218,
+  "discarded_artifact_count": 3,
+  "document_generic": true,
+  "compile_scope_mode": "doc_first",
+  "num_selected_docs": 6,
+  "num_selected_pages": 10,
+  "num_artifacts_per_doc_avg": 36.333333333333336,
+  "num_artifacts_per_page_avg": 21.8,
+  "page_selection_source_counts": {
+    "r035_generic_atomic_coverage_probe": 10
+  }
+}

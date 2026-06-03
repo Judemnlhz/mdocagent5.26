@@ -90,6 +90,24 @@ class TableNumericAtomicizerTest(unittest.TestCase):
         self.assertEqual(len(table_cells), 1)
         self.assertEqual(table_cells[0]["normalized_content"]["column_header"], "2022")
 
+    def test_default_budget_limits_atomic_pairs_per_page(self) -> None:
+        lines = ["Metric", "2023", "2022"]
+        for label in "ABCDEFGHIJKL":
+            index = ord(label) - ord("A")
+            lines.extend([f"Metric {label}", str(100 + index), str(200 + index)])
+        page_input = make_page_input("\n".join(lines))
+
+        artifacts = atomicize_table_numeric_artifacts(
+            selected_page={"doc_id": "report.pdf", "page_index": 4},
+            page_input=page_input,
+            existing_artifacts=[],
+        )
+
+        table_cells = [artifact for artifact in artifacts if artifact["artifact_type"] == "table_cell"]
+        numeric_facts = [artifact for artifact in artifacts if artifact["artifact_type"] == "numeric_fact"]
+        self.assertEqual(len(table_cells), 8)
+        self.assertEqual(len(numeric_facts), 8)
+
 
 def make_page_input(text: str) -> dict:
     return {

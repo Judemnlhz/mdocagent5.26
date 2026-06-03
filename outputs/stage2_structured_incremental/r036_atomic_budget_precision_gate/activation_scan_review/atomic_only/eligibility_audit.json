@@ -1,0 +1,213 @@
+{
+  "anchor_type_counts": {
+    "text_block": 171
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r036_atomic_budget_precision_gate/activation_scan_review/atomic_only/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 171
+  },
+  "artifact_type_counts": {
+    "numeric_fact": 80,
+    "table_cell": 91
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 80,
+    "table_cell": 91
+  },
+  "atomic_eligible_pages": 10,
+  "atomic_strong_eligible_artifacts": 171,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "numeric_fact": 80,
+    "table_cell": 91
+  },
+  "eligible_artifacts": 171,
+  "eligible_docs": 6,
+  "eligible_locator_kind_counts": {
+    "source_block": 171,
+    "table_cell": 171,
+    "text_offset": 171
+  },
+  "eligible_pages": 10,
+  "eligible_pages_with_atomic_artifact": 10,
+  "eligible_rate": 1.0,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans and of Democrats rating its ethical: 86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "table_cell",
+        "content_preview": "75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "table_cell",
+        "content_preview": "86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_001",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_numeric_fact_002",
+        "artifact_type": "numeric_fact",
+        "content_preview": "divided, with three-quarters of Republicans ) giving the administration high marks: (75%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "atomicizer_table_cell_003",
+        "artifact_type": "table_cell",
+        "content_preview": "divided, with three-quarters of Republicans and of Democrats rating its ethical: 86%",
+        "doc_id": "05-03-18-political-release.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 3
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "source_block": 171,
+    "table_cell": 171,
+    "text_offset": 171
+  },
+  "missing_numeric_fact_count": 0,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 80,
+  "reason_counts": {
+    "eligible": 171
+  },
+  "schema_valid_but_semantically_weak_count": 0,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 171,
+  "table_cell_count": 91,
+  "total_artifacts": 171,
+  "weak_locator_count": 0
+}
