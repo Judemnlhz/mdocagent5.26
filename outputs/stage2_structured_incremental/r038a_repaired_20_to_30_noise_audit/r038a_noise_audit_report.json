@@ -1,0 +1,875 @@
+{
+  "checks": {
+    "all_pages_have_text": true,
+    "artifact_budget_per_page_respected": true,
+    "artifact_growth_vs_r037_within_limit": true,
+    "no_artifacts_jsonl_written": true,
+    "no_provider_calls": true,
+    "no_quality_noise_flags": true,
+    "not_merged_into_cumulative_artifacts": true
+  },
+  "created_utc": "2026-06-03T10:33:16.787073+00:00",
+  "decision": "proceed_to_small_repaired_provider_gate",
+  "inputs": {
+    "atomicizer_max_cells": 8,
+    "extract_root": "tmp/MMLongBench",
+    "r037_report": "outputs/stage2_structured_incremental/r037_budgeted_targeted_coverage/r037_budgeted_targeted_coverage_report.json",
+    "subset": "outputs/stage2_structured_incremental/r028_20_to_30/subset_delta_20_to_30.jsonl"
+  },
+  "next_step": "Run a very small repaired provider gate on 2-3 R028 pages before any full 20 -> 30 replay.",
+  "page_reports": [
+    {
+      "artifact_count": 16,
+      "doc_id": "2310.09158v1.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 7,
+      "page_key": "2310.09158v1.pdf#p007",
+      "page_text_chars": 4987,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "LI (%) ↓",
+          "content": "vanilla ICL LI (%) ↓: 15.3",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "vanilla ICL",
+          "value_text": "15.3"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "LI (%) ↓",
+          "content": "vanilla ICL LI (%) ↓: 15.3",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "vanilla ICL",
+          "value_text": "15.3"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "Micro-F1 (%)",
+          "content": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "vanilla ICL w. CoT",
+          "value_text": "15.8"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "Micro-F1 (%)",
+          "content": "vanilla ICL w. CoT Micro-F1 (%): 15.8",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "vanilla ICL w. CoT",
+          "value_text": "15.8"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "LI (%) ↓",
+          "content": "CoT w. logical constraints LI (%) ↓: 18.0",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "CoT w. logical constraints",
+          "value_text": "18.0"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "LI (%) ↓",
+          "content": "CoT w. logical constraints LI (%) ↓: 18.0",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "CoT w. logical constraints",
+          "value_text": "18.0"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "2401.18059v1.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 6,
+      "page_key": "2401.18059v1.pdf#p006",
+      "page_text_chars": 2958,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "ROUGE",
+          "content": "SBERT with RAPTOR ROUGE: 30.87%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "SBERT with RAPTOR",
+          "value_text": "30.87%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "ROUGE",
+          "content": "SBERT with RAPTOR ROUGE: 30.87%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "SBERT with RAPTOR",
+          "value_text": "30.87%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "BLEU-1",
+          "content": "SBERT without RAPTOR BLEU-1: 29.26%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "SBERT without RAPTOR",
+          "value_text": "29.26%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "BLEU-1",
+          "content": "SBERT without RAPTOR BLEU-1: 29.26%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "SBERT without RAPTOR",
+          "value_text": "29.26%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "BLEU-4",
+          "content": "BM25 with RAPTOR BLEU-4: 27.93%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "BM25 with RAPTOR",
+          "value_text": "27.93%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "BLEU-4",
+          "content": "BM25 with RAPTOR BLEU-4: 27.93%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "BM25 with RAPTOR",
+          "value_text": "27.93%"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 3,
+      "page_key": "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf#p003",
+      "page_text_chars": 4922,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "reworked within",
+          "content": "to complete reworked within: 80%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "to complete",
+          "value_text": "80%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "reworked within",
+          "content": "to complete reworked within: 80%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "to complete",
+          "value_text": "80%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "complete",
+          "content": "cycle complete: 70%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "cycle",
+          "value_text": "70%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "complete",
+          "content": "cycle complete: 70%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "cycle",
+          "value_text": "70%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "on-time",
+          "content": "transfers on-time: 85%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "transfers",
+          "value_text": "85%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "on-time",
+          "content": "transfers on-time: 85%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "transfers",
+          "value_text": "85%"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "BESTBUY_2023_10K.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 26,
+      "page_key": "BESTBUY_2023_10K.pdf#p026",
+      "page_text_chars": 4131,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2023",
+          "content": "Revenue % change 2023: (10.9)%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Revenue % change",
+          "value_text": "(10.9)%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2023",
+          "content": "Revenue % change 2023: (10.9)%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Revenue % change",
+          "value_text": "(10.9)%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2023",
+          "content": "Comparable sales % change 2023: (5.4)%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Comparable sales % change",
+          "value_text": "(5.4)%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2023",
+          "content": "Comparable sales % change 2023: (5.4)%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Comparable sales % change",
+          "value_text": "(5.4)%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2023",
+          "content": "Gross profit as a % of revenue 2023: 23.0 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Gross profit as a % of revenue",
+          "value_text": "23.0 %"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2023",
+          "content": "Gross profit as a % of revenue 2023: 23.0 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Gross profit as a % of revenue",
+          "value_text": "23.0 %"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 14,
+      "doc_id": "BESTBUY_2023_10K.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 14,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 27,
+      "page_key": "BESTBUY_2023_10K.pdf#p027",
+      "page_text_chars": 4983,
+      "quality_counts": {
+        "atomic_numeric_ok": 14
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2023",
+          "content": "% of revenue 2023: 3.9 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "3.9 %"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2023",
+          "content": "% of revenue 2023: 3.9 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "3.9 %"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2022",
+          "content": "% of revenue 2022: 5.9 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "5.9 %"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2022",
+          "content": "% of revenue 2022: 5.9 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "5.9 %"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "2021",
+          "content": "% of revenue 2021: 5.1 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "5.1 %"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "2021",
+          "content": "% of revenue 2021: 5.1 %",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "% of revenue",
+          "value_text": "5.1 %"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 7,
+        "table_cell": 7
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 8,
+      "page_key": "PIP_Seniors-and-Tech-Use_040314.pdf#p008",
+      "page_text_chars": 2186,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "beyond (just of those",
+          "content": "becomes nearly non-existent beyond (just of those: 5%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "becomes nearly non-existent",
+          "value_text": "5%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "beyond (just of those",
+          "content": "becomes nearly non-existent beyond (just of those: 5%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "becomes nearly non-existent",
+          "value_text": "5%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "devices among older adults",
+          "content": "Smartphone devices among older adults: 77%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Smartphone",
+          "value_text": "77%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "devices among older adults",
+          "content": "Smartphone devices among older adults: 77%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Smartphone",
+          "value_text": "77%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "Cell phone",
+          "content": "Smartphone Cell phone: 18%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Smartphone",
+          "value_text": "18%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "Cell phone",
+          "content": "Smartphone Cell phone: 18%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Smartphone",
+          "value_text": "18%"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "PS_2018.01.09_STEM_FINAL.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 28,
+      "page_key": "PS_2018.01.09_STEM_FINAL.pdf#p028",
+      "page_text_chars": 2360,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": ") and computer workers",
+          "content": "Engineers and architects ) and computer workers: (82%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Engineers and architects",
+          "value_text": "(82%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": ") and computer workers",
+          "content": "Engineers and architects ) and computer workers: (82%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Engineers and architects",
+          "value_text": "(82%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "sector ); almost a quarter",
+          "content": "work in the private, for-profit sector ); almost a quarter: (58%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "work in the private, for-profit",
+          "value_text": "(58%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "sector ); almost a quarter",
+          "content": "work in the private, for-profit sector ); almost a quarter: (58%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "work in the private, for-profit",
+          "value_text": "(58%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": ") are among the most",
+          "content": "Engineers and architects ) are among the most: (77%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Engineers and architects",
+          "value_text": "(77%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": ") are among the most",
+          "content": "Engineers and architects ) are among the most: (77%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "Engineers and architects",
+          "value_text": "(77%"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 16,
+      "doc_id": "STEPBACK.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 16,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 7,
+      "page_key": "STEPBACK.pdf#p007",
+      "page_text_chars": 3184,
+      "quality_counts": {
+        "atomic_numeric_ok": 16
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "Method",
+          "content": "PaLM-2L + CoT Method: 38.7%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + CoT",
+          "value_text": "38.7%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "Method",
+          "content": "PaLM-2L + CoT Method: 38.7%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + CoT",
+          "value_text": "38.7%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "PaLM-2L",
+          "content": "PaLM-2L + TDB PaLM-2L: 39.0%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + TDB",
+          "value_text": "39.0%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "PaLM-2L",
+          "content": "PaLM-2L + TDB PaLM-2L: 39.0%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + TDB",
+          "value_text": "39.0%"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "PaLM-2L + CoT",
+          "content": "PaLM-2L + RAG PaLM-2L + CoT: 39.6%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + RAG",
+          "value_text": "39.6%"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "PaLM-2L + CoT",
+          "content": "PaLM-2L + RAG PaLM-2L + CoT: 39.6%",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "PaLM-2L + RAG",
+          "value_text": "39.6%"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 8,
+        "table_cell": 8
+      }
+    },
+    {
+      "artifact_count": 0,
+      "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 0,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 3,
+      "page_key": "afe620b9beac86c1027b96d31d396407.pdf#p003",
+      "page_text_chars": 5415,
+      "quality_counts": {},
+      "samples": [],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {}
+    },
+    {
+      "artifact_count": 8,
+      "doc_id": "q1-2023-bilibili-inc-investor-presentation.pdf",
+      "duplicate_atomic_key_count": 0,
+      "eligible_count": 8,
+      "has_page_text": true,
+      "noise_flags": [],
+      "page_index": 23,
+      "page_key": "q1-2023-bilibili-inc-investor-presentation.pdf#p023",
+      "page_text_chars": 1874,
+      "quality_counts": {
+        "atomic_numeric_ok": 8
+      },
+      "samples": [
+        {
+          "artifact_type": "table_cell",
+          "column_label": "sharing arrangements.",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) sharing arrangements.: (2)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(2)"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "sharing arrangements.",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) sharing arrangements.: (2)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(2)"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "Server and ba",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) Server and ba: (3)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(3)"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "Server and ba",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) Server and ba: (3)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(3)"
+        },
+        {
+          "artifact_type": "table_cell",
+          "column_label": "Notes:",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) Notes:: (4)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(4)"
+        },
+        {
+          "artifact_type": "numeric_fact",
+          "column_label": "Notes:",
+          "content": "(Non-GAAP, RMB mn; as a percentage of revenue %) Notes:: (4)",
+          "quality_labels": [
+            "atomic_numeric_ok"
+          ],
+          "row_label": "(Non-GAAP, RMB mn; as a percentage of revenue %)",
+          "value_text": "(4)"
+        }
+      ],
+      "selection_reasons": [
+        "image_available",
+        "numeric_dense_text",
+        "percentage_text",
+        "table_or_chart_terms"
+      ],
+      "selection_source": "structured_real_stage2_r028_20_to_30_delta",
+      "type_counts": {
+        "numeric_fact": 4,
+        "table_cell": 4
+      }
+    }
+  ],
+  "schema_version": "r038a_repaired_20_to_30_noise_audit_v1",
+  "scope": {
+    "audit_only": true,
+    "model_config_used": null,
+    "no_activation_scan": true,
+    "no_effectiveness_claim": true,
+    "no_graph": true,
+    "no_provider_calls": true,
+    "no_qa": true,
+    "no_rerank_tuning": true,
+    "no_stage2_compile": true,
+    "not_merged_into_cumulative_artifacts": true,
+    "offline_atomicizer_only": true,
+    "uses_gold_fields": false
+  },
+  "summary": {
+    "artifact_growth_vs_r037": 0.971014,
+    "artifacts_per_page": 13.4,
+    "docs_audited": 9,
+    "duplicate_atomic_key_count": 0,
+    "eligible_count": 134,
+    "noise_failure_count": 0,
+    "noise_failure_pages": [],
+    "pages_audited": 10,
+    "pages_by_doc": {
+      "2310.09158v1.pdf": 1,
+      "2401.18059v1.pdf": 1,
+      "936c0e2c2e6c8e0c07c51bfaf7fd0a83.pdf": 1,
+      "BESTBUY_2023_10K.pdf": 2,
+      "PIP_Seniors-and-Tech-Use_040314.pdf": 1,
+      "PS_2018.01.09_STEM_FINAL.pdf": 1,
+      "STEPBACK.pdf": 1,
+      "afe620b9beac86c1027b96d31d396407.pdf": 1,
+      "q1-2023-bilibili-inc-investor-presentation.pdf": 1
+    },
+    "quality_counts": {
+      "atomic_numeric_ok": 134
+    },
+    "r037_delta_artifacts_per_page": 13.8,
+    "total_artifacts": 134,
+    "type_counts": {
+      "numeric_fact": 67,
+      "table_cell": 67
+    }
+  },
+  "thresholds": {
+    "max_artifact_growth_vs_r037": 1.25,
+    "max_artifacts_per_page": 16
+  }
+}
