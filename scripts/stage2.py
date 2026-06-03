@@ -27,6 +27,7 @@ from mdocnexus.stage2.artifact_pipeline import (
 from mdocnexus.common.model_config import QWEN3VL_CONFIG, stage2_model_fields
 from mdocnexus.stage2.artifact_schema import build_page_artifact_output_schema_dict
 from mdocnexus.stage2.artifact_quality import classify_artifact_quality, quality_discard_reason
+from mdocnexus.stage2.table_numeric_atomicizer import atomicize_table_numeric_artifacts
 from mdocnexus.stage2.index_builder import (
     OUT_OF_RANGE_ERROR,
     PAGE_COUNT_UNKNOWN_ERROR,
@@ -2169,8 +2170,18 @@ def _compile_selected_page_to_jsonl(
         _append_jsonl(Path(output_paths["discard"]), _minimal_discard_row(selected_page, reason, artifact_id, message))
         discarded += 1
 
+    valid_artifacts = list(compile_result.get("valid_artifacts", []))
+    if document_generic:
+        valid_artifacts.extend(
+            atomicize_table_numeric_artifacts(
+                selected_page=selected_page,
+                page_input=page_input,
+                existing_artifacts=valid_artifacts,
+            )
+        )
+
     written = 0
-    for artifact in compile_result.get("valid_artifacts", []):
+    for artifact in valid_artifacts:
         if artifact.get("artifact_type") not in FINAL_ARTIFACT_TYPES or artifact.get("modality") not in FINAL_MODALITIES:
             _append_jsonl(
                 Path(output_paths["discard"]),

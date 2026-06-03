@@ -1,0 +1,248 @@
+{
+  "anchor_type_counts": {
+    "text_block": 83
+  },
+  "artifact_path": "outputs/stage2_structured_incremental/r033_generic_atomicizer/same3_replay/stage2_delta/artifacts.jsonl",
+  "artifact_quality_taxonomy_counts": {
+    "atomic_numeric_ok": 78
+  },
+  "artifact_type_counts": {
+    "figure": 1,
+    "numeric_fact": 36,
+    "table": 2,
+    "table_cell": 42,
+    "text_span": 2
+  },
+  "atomic_eligible_artifact_type_counts": {
+    "numeric_fact": 36,
+    "table_cell": 42
+  },
+  "atomic_eligible_pages": 3,
+  "atomic_strong_eligible_artifacts": 78,
+  "broad_table_only_count": 0,
+  "caption_or_table_title_only_count": 0,
+  "eligible_artifact_type_counts": {
+    "figure": 1,
+    "numeric_fact": 36,
+    "table": 2,
+    "table_cell": 42
+  },
+  "eligible_artifacts": 81,
+  "eligible_docs": 3,
+  "eligible_locator_kind_counts": {
+    "source_block": 81,
+    "table_cell": 78,
+    "text_offset": 81
+  },
+  "eligible_pages": 3,
+  "eligible_pages_with_atomic_artifact": 3,
+  "eligible_rate": 0.9759036144578314,
+  "examples_by_quality_label": {
+    "atomic_numeric_ok": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT with RAPTOR\n30.87%\n23.50%\n6.42%\n19.20%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT without RAPTOR\n29.26%\n22.56%\n5.95%\n18.15%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_007",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 with RAPTOR\n27.93%\n21.17%\n5.70%\n17.03%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 without RAPTOR\n23.52%\n17.73%\n4.65%\n13.98%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_009",
+        "artifact_type": "table_cell",
+        "content_preview": "DPR with RAPTOR\n30.94%\n23.51%\n6.45%\n19.05%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "examples_by_reason": {
+    "eligible": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_001",
+        "artifact_type": "figure",
+        "content_preview": "Figure 4: Querying Process: Illustration of how RAPTOR retrieves information for two questions about the Cinderella story: “What is the central theme of the sto",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_005",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT with RAPTOR\n30.87%\n23.50%\n6.42%\n19.20%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_006",
+        "artifact_type": "table_cell",
+        "content_preview": "SBERT without RAPTOR\n29.26%\n22.56%\n5.95%\n18.15%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_007",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 with RAPTOR\n27.93%\n21.17%\n5.70%\n17.03%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_008",
+        "artifact_type": "table_cell",
+        "content_preview": "BM25 without RAPTOR\n23.52%\n17.73%\n4.65%\n13.98%",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "table_cell",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ],
+    "unstructured_artifact_type": [
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_002",
+        "artifact_type": "text_span",
+        "content_preview": "our results demonstrate that RAPTOR, when combined with any retriever, consistently outperforms the respective retriever across all datasets. 2",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      },
+      {
+        "anchor_types": [
+          "text_block"
+        ],
+        "artifact_id": "artifact_003",
+        "artifact_type": "text_span",
+        "content_preview": "Since RAPTOR with SBERT has the best performance, we use it in all subsequent experiments.",
+        "doc_id": "2401.18059v1.pdf",
+        "locator_kinds": [
+          "source_block",
+          "text_offset"
+        ],
+        "page_index": 6
+      }
+    ]
+  },
+  "full_page_only_locator": 0,
+  "locator_kind_counts": {
+    "source_block": 83,
+    "table_cell": 78,
+    "text_offset": 83
+  },
+  "missing_numeric_fact_count": 0,
+  "missing_strong_locator": 0,
+  "mock_or_placeholder_content": 0,
+  "no_gold_fields_used": true,
+  "numeric_fact_count": 36,
+  "reason_counts": {
+    "eligible": 81,
+    "unstructured_artifact_type": 2
+  },
+  "schema_valid_but_semantically_weak_count": 0,
+  "schema_version": "artifact_rerank_eligibility_audit_v2",
+  "strong_eligible_artifacts": 81,
+  "table_cell_count": 42,
+  "total_artifacts": 83,
+  "weak_locator_count": 0
+}
