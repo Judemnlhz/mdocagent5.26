@@ -1,0 +1,432 @@
+{
+  "all_label_counts": {
+    "artifact_only_gain_order_sensitive_numeric": 1,
+    "artifact_only_gain_same_pages_generation_variance": 1,
+    "artifact_only_loss_answer_value_shift": 1,
+    "artifact_only_loss_unanswerable_false_positive": 1,
+    "binary_same_all_correct_surface_variation": 5,
+    "binary_same_all_wrong_failure_variation": 13
+  },
+  "created_utc": "2026-06-04T02:08:46.023962+00:00",
+  "decision": "r042_manual_attribution_complete",
+  "divergent_summary": {
+    "artifact_only_gains": 2,
+    "artifact_only_losses": 2,
+    "cases": [
+      {
+        "answers": {
+          "top4_artifact_only": "['92%', '42%', '39%']",
+          "top4_original_only": "['90%', '42%', '39%']",
+          "top4_original_plus_artifact": "['90%', '42%', '39%']"
+        },
+        "binary_pattern": "110",
+        "confidence": "high",
+        "evidence_pages": [
+          8,
+          9,
+          10
+        ],
+        "gold_answer": "['90%', '42%', '39%']",
+        "label": "artifact_only_loss_answer_value_shift",
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answe...",
+        "record_id": 223
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "Montgomery",
+          "top4_original_only": "The geographic market name for EPS Code AR03 is not listed in the provided document.",
+          "top4_original_plus_artifact": "The EPS code AR03 is not listed in the document for Arkansas."
+        },
+        "binary_pattern": "110",
+        "confidence": "high",
+        "evidence_pages": [],
+        "gold_answer": "Not answerable",
+        "label": "artifact_only_loss_unanswerable_false_positive",
+        "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+        "record_id": 508
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "0.073",
+          "top4_original_only": "0.023",
+          "top4_original_plus_artifact": "0.023"
+        },
+        "binary_pattern": "001",
+        "confidence": "medium",
+        "evidence_pages": [
+          38,
+          71
+        ],
+        "gold_answer": "0.073",
+        "label": "artifact_only_gain_order_sensitive_numeric",
+        "question": "what is Amazon's FY2017 Operating Profit Margin Before Depreciation? round your answer to three decimal",
+        "record_id": 1034
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "0.023",
+          "top4_original_only": "0.028",
+          "top4_original_plus_artifact": "0.028"
+        },
+        "binary_pattern": "001",
+        "confidence": "medium",
+        "evidence_pages": [
+          35,
+          38
+        ],
+        "gold_answer": "0.023",
+        "label": "artifact_only_gain_same_pages_generation_variance",
+        "question": "what is Amazon's FY2017 return on asset ? round your answer to three decimal",
+        "record_id": 1035
+      }
+    ],
+    "label_counts": {
+      "artifact_only_gain_order_sensitive_numeric": 1,
+      "artifact_only_gain_same_pages_generation_variance": 1,
+      "artifact_only_loss_answer_value_shift": 1,
+      "artifact_only_loss_unanswerable_false_positive": 1
+    },
+    "num_cases": 4
+  },
+  "inputs": {
+    "r041_matrix": "outputs/heldout/r041_r040_identical_score_attribution/record_level_attribution_matrix.jsonl",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "interpretation": {
+    "bottom_line": "The R040 aggregate tie comes from artifact_only losing two answer-value/unanswerable cases and gaining two numeric cases; at least one gain is not attributable to changed selected pages.",
+    "design_implication": "The next experiment should separate page reranking, page order, explicit artifact-snippet injection, and judge bucket effects before any full-data QA."
+  },
+  "r041_context": {
+    "aggregate_scores_equal": true,
+    "binary_vectors_identical": false,
+    "num_records": 37
+  },
+  "recommended_r043_design": [
+    "Keep the 37-record targeted subset frozen for contrastive diagnosis.",
+    "Run a no-new-retrieval prompt contrast only after R042 review: original page text, original page text plus explicit artifact snippets, artifact snippets only, and page-rerank-only.",
+    "Log artifact exposure per record: artifact ids, source pages, snippet tokens, prompt inclusion flag, and whether the gold/evidence page is included.",
+    "Add a support-aware/citation-aware manual rubric for the 4 divergent and 18 text-diff/binary-same records before scaling.",
+    "Do not run full QA until the prompt-visible artifact condition is implemented and separated from page-order effects."
+  ],
+  "schema_version": "r042_r040_manual_attribution_v1",
+  "scope": {
+    "manual_attribution_scaffold_only": true,
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_full_data_generalization": true,
+    "not_official_mmlongbench_result": true,
+    "uses_gold_only_for_posthoc_diagnosis": true
+  },
+  "text_diff_binary_same_summary": {
+    "binary_pattern_counts": {
+      "000": 13,
+      "111": 5
+    },
+    "cases": [
+      {
+        "answers": {
+          "top4_artifact_only": "There are no nodes that are retrieved by RAPTOR for both questions in this specific example. The two sets of retrieved nodes are distinct: Question 1 retriev...",
+          "top4_original_only": "The nodes retrieved by RAPTOR for both questions are 16, 17, 18, and 19.",
+          "top4_original_plus_artifact": "The nodes retrieved by RAPTOR for both questions are 16, 17, 18, 19, 20, 21, and 22."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          7
+        ],
+        "gold_answer": "[16, 19, 25]",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+        "record_id": 69
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "['92%', '42%', '39%']",
+          "top4_original_only": "['90%', '42%', '39%']",
+          "top4_original_plus_artifact": "['92%', '42%', '39%']"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [],
+        "gold_answer": "Not answerable",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answe...",
+        "record_id": 224
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "56 percentage points",
+          "top4_original_only": "56",
+          "top4_original_plus_artifact": "56 percentage points"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          18,
+          20
+        ],
+        "gold_answer": "301",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 1...",
+        "record_id": 227
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The provided documents contain no information regarding Japan's GDP growth or forecasts for the period 2002 to 2023. Therefore, it is not possible to determi...",
+          "top4_original_only": "The provided information does not contain any data regarding Japan's GDP growth or forecasts from 2002 to 2023. Therefore, the percentage shortfall cannot be...",
+          "top4_original_plus_artifact": "The provided materials contain no information about Japan's GDP growth or forecasts from 2002 to 2023. The content exclusively discusses India's economic env..."
+        },
+        "binary_pattern": "111",
+        "confidence": "medium",
+        "evidence_pages": [],
+        "gold_answer": "Not answerable",
+        "label": "binary_same_all_correct_surface_variation",
+        "question": "What was the percentage shortfall in Japan's GDP growth from 2002 to 2023 compared to the forecast?",
+        "record_id": 367
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The document was produced by the Florida Department of Health and was revised in May 2016, not May 2018.",
+          "top4_original_only": "The document was produced by the Florida Department of Health and was revised in May 2016, not May 2018.",
+          "top4_original_plus_artifact": "The document was produced by the Florida Department of Health, and it was revised in May 2016, not May 2018."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [],
+        "gold_answer": "Not answerable",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "Who produced the document that was revised on May 2018?",
+        "record_id": 384
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "15.9",
+          "top4_original_only": "15.9 percentage points",
+          "top4_original_plus_artifact": "15.9 percentage points"
+        },
+        "binary_pattern": "111",
+        "confidence": "medium",
+        "evidence_pages": [
+          6
+        ],
+        "gold_answer": "15.9%",
+        "label": "binary_same_all_correct_surface_variation",
+        "question": "How much higher is the accuracy of PaLM-2L + RAG compared to PaLM-2L on TimeQA?",
+        "record_id": 456
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "2",
+          "top4_original_only": "2",
+          "top4_original_plus_artifact": "0"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          16,
+          18
+        ],
+        "gold_answer": "6",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "How many times does mobile phone appear on pages 16 and 18?",
+        "record_id": 495
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The Pew Research Center data does not include information about children, so the percentage difference between older adults and children with STEM degrees em...",
+          "top4_original_only": "The Pew Research Center survey data does not include information about children, so there is no available data to calculate the percentage difference between...",
+          "top4_original_plus_artifact": "The question cannot be answered based on the provided information, as there is no data on children or a January 2018 survey in the Pew Research Center materi..."
+        },
+        "binary_pattern": "111",
+        "confidence": "medium",
+        "evidence_pages": [],
+        "gold_answer": "Not answerable",
+        "label": "binary_same_all_correct_surface_variation",
+        "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum o...",
+        "record_id": 569
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "3",
+          "top4_original_only": "5",
+          "top4_original_plus_artifact": "Page 3, Page 5, Page 6, Page 8, and Page 10"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "gold_answer": "13",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "How many pages contain tables?",
+        "record_id": 712
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "No",
+          "top4_original_only": "No significant changes have been made to the Risk Management Plan since the last submission to the Office of Management and Budget (OMB).",
+          "top4_original_plus_artifact": "No, the Risk Management Plan has not been significantly changed since the last year's submission to the Office of Management and Budget (OMB)."
+        },
+        "binary_pattern": "111",
+        "confidence": "medium",
+        "evidence_pages": [
+          14
+        ],
+        "gold_answer": "N/A",
+        "label": "binary_same_all_correct_surface_variation",
+        "question": "Describe the significant changes of the Risk Management Plan since last year.",
+        "record_id": 718
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "CoT w. logical constraints",
+          "top4_original_only": "The pre-trained Vicuna-13B performed best on the MAVEN-ERE dataset using the \"CoT w. logical constraints\" baseline, achieving a Micro-F1 score of 25.3% and a...",
+          "top4_original_plus_artifact": "CoT w. logical constraints"
+        },
+        "binary_pattern": "111",
+        "confidence": "medium",
+        "evidence_pages": [
+          8
+        ],
+        "gold_answer": "CoT w. logical constraints ",
+        "label": "binary_same_all_correct_surface_variation",
+        "question": "Which baseline did the pre-trained Vicuna-13B perform best on MAVEN-ERE?",
+        "record_id": 958
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "6692",
+          "top4_original_only": "6692 million",
+          "top4_original_plus_artifact": "6692 million"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          38,
+          53
+        ],
+        "gold_answer": "10314",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "what is long-term debt of Costco in FY 2021? Anwser in millions.",
+        "record_id": 998
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "Costco's financial performance in FY2021 is heavily reliant on net sales and membership fees. Net sales, totaling $192,052 million, represent revenue from me...",
+          "top4_original_only": "Costco relies heavily on net sales and membership fees for its financial performance in FY2021. Net sales, totaling $192.052 billion, represent the primary s...",
+          "top4_original_plus_artifact": "Costco relies heavily on two primary sources for its financial performance in FY2021: net sales ($192,052 million) and membership fees ($3,877 million). Thes..."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          9
+        ],
+        "gold_answer": "the financial performance of our U.S. and Canadian operations.",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "What does Costco rely heavily on for its financial performance in FY2021?",
+        "record_id": 1009
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "Not calculable with the provided information.",
+          "top4_original_only": "Not enough information",
+          "top4_original_plus_artifact": "The DPO cannot be calculated because the Cost of Goods Sold (COGS) for FY2017 is not provided in the available financial statements."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          38,
+          40
+        ],
+        "gold_answer": "97.75",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "What is Amazon's FY2017 days payable outstanding (DPO)?Round your answer to two decimal places.",
+        "record_id": 1033
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "Amazon does not recognize revenue based on the 'least cost' principle. Instead, it follows a revenue recognition model based on four criteria: (1) persuasive...",
+          "top4_original_only": "Amazon does not recognize revenue at the 'least cost.' Instead, it follows a revenue recognition model based on contractual obligations and deliverables, req...",
+          "top4_original_plus_artifact": "Amazon does not recognize revenue based on 'least cost.' Instead, it follows a revenue recognition model based on contractual arrangements and four key crite..."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          47
+        ],
+        "gold_answer": "straight-line basis without regard to deferred payment terms",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "How do Amazon recognize least cost?",
+        "record_id": 1043
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "2.40%",
+          "top4_original_only": "11.16%",
+          "top4_original_plus_artifact": "2.40%"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          40
+        ],
+        "gold_answer": "1.08%",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "what is the change of Best Buy's gross margins change from FY2022 to FY2021? Answer in percentage terms, round to 2 decimal places.",
+        "record_id": 1052
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "10.327%",
+          "top4_original_only": "Not enough information provided",
+          "top4_original_plus_artifact": "Not available"
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          39,
+          40
+        ],
+        "gold_answer": "0.488",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "what is After-tax Return on Average Equity for the fiscal year ending January 28, 2023? round your answer to three decimal places",
+        "record_id": 1055
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The capitalization ratio cannot be calculated with the information provided.",
+          "top4_original_only": "It is not possible to calculate the capitalization ratio for Best Buy for the fiscal year ending January 28, 2023, based on the provided information, as the ...",
+          "top4_original_plus_artifact": "The capitalization ratio is not provided in the text or images, as the necessary data (total shareholders' equity) to calculate it is missing."
+        },
+        "binary_pattern": "000",
+        "confidence": "medium",
+        "evidence_pages": [
+          39
+        ],
+        "gold_answer": "29.6%",
+        "label": "binary_same_all_wrong_failure_variation",
+        "question": "what is capitalization ratio for Best Buy for the fiscal year ending January 28, 2023? Answer in percentage term, round to one decimal places.",
+        "record_id": 1057
+      }
+    ],
+    "label_counts": {
+      "binary_same_all_correct_surface_variation": 5,
+      "binary_same_all_wrong_failure_variation": 13
+    },
+    "num_cases": 18
+  }
+}
