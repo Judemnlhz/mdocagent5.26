@@ -19,6 +19,7 @@ RUNNERS = {
     "r043": "run_r043_contrastive_prompt_exposure.py",
     "r044": "run_r044_small_contrastive_provider.py",
     "r045": "run_r045_support_rubric.py",
+    "r053": "run_r053_question_aware_scaffold.py",
 }
 
 

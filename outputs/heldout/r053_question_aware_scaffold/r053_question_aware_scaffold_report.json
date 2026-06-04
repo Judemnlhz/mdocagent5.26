@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-06-04T04:38:08.154740+00:00",
+  "decision": "r053_question_aware_scaffold_complete",
+  "gate": {
+    "checks": {
+      "all_prompts_have_citation_requirement": true,
+      "all_prompts_have_unsupported_answer_guard": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "at_least_one_case_has_selected_artifacts": true,
+      "design_gate_only": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_previews": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "page_and_artifact_evidence_separated": true,
+      "question_aware_policy_not_first_n": true,
+      "selected_artifact_budget_respected": true,
+      "target_cases_match_r045": true
+    },
+    "created_utc": "2026-06-04T04:38:08.154605+00:00",
+    "decision": "r053_question_aware_scaffold_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_cases": 8,
+    "schema_version": "r053_question_aware_scaffold_gate_v1",
+    "selected_artifact_count_by_record": {
+      "223": 8,
+      "224": 8,
+      "227": 8,
+      "367": 8,
+      "384": 4,
+      "508": 8,
+      "569": 8,
+      "69": 8
+    }
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r044_report": "outputs/heldout/r044_small_contrastive_provider/r044_diagnostic_attribution_report.json",
+    "r045_cases": "outputs/heldout/r045_support_rubric/r045_support_rubric_cases.jsonl"
+  },
+  "num_cases": 8,
+  "recommended_next": [
+    "Manually inspect R053 prompt previews for records 384, 508, and 569 before any provider run.",
+    "If selected artifacts still lack necessary evidence, improve artifact selection with stronger question/value/metric matching.",
+    "If selected artifacts contain evidence but prompts remain ambiguous, run a small prompt-template diagnostic with citation-required output only.",
+    "Do not run full QA until this scaffold is manually accepted and recorded in the tracker."
+  ],
+  "rubric_label_counts": {
+    "all_conditions_miss_requires_error_analysis": 5,
+    "artifact_injection_introduces_false_positive_risk": 1,
+    "diagnostic_gold_match_undercounts_supported_refusal": 1,
+    "rerank_and_artifact_context_help_unanswerable_refusal": 1
+  },
+  "schema_version": "r053_question_aware_scaffold_report_v1",
+  "scope": {
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "prompt_and_selection_scaffold_only": true
+  },
+  "selection_reason_counts": {
+    "artifact_reranked_page": 60,
+    "atomic_artifact_priority": 60,
+    "metric_label_overlap": 30,
+    "numeric_table_type_priority": 60,
+    "original_candidate_page": 60,
+    "question_token_overlap": 45,
+    "value_match:18": 24,
+    "value_match:2002": 8,
+    "value_match:4": 8,
+    "value_match:65": 5,
+    "value_match:8": 16
+  },
+  "transition_label_counts": {
+    "all_conditions_miss": 5,
+    "artifact_injection_gain_vs_original": 1,
+    "artifact_injection_loss_vs_original": 1,
+    "page_rerank_gain_vs_original": 2,
+    "snippet_only_sufficient": 1
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "all_prompts_have_citation_requirement": true,
+    "all_prompts_have_unsupported_answer_guard": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "at_least_one_case_has_selected_artifacts": true,
+    "design_gate_only": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "page_and_artifact_evidence_separated": true,
+    "question_aware_policy_not_first_n": true,
+    "selected_artifact_budget_respected": true,
+    "target_cases_match_r045": true
+  },
+  "created_utc": "2026-06-04T04:38:08.154605+00:00",
+  "decision": "r053_question_aware_scaffold_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_cases": 8,
+  "schema_version": "r053_question_aware_scaffold_gate_v1",
+  "selected_artifact_count_by_record": {
+    "223": 8,
+    "224": 8,
+    "227": 8,
+    "367": 8,
+    "384": 4,
+    "508": 8,
+    "569": 8,
+    "69": 8
+  }
+}
