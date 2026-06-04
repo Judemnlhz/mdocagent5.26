@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "code_like_literal_bucket_present": true,
+    "does_not_claim_artifact_lift": true,
+    "failure_buckets_present": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "records_scanned_positive": true
+  },
+  "created_utc": "2026-06-04T14:19:19.528210+00:00",
+  "decision": "r069_dataset_artifact_health_audit_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r069_dataset_artifact_health_gate_v1"
+}

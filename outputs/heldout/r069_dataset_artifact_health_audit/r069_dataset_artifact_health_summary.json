@@ -1,0 +1,5294 @@
+{
+  "boundary": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true
+  },
+  "by_type": {
+    "code_like_literal": {
+      "current_artifact_literal_present": 25,
+      "public_text_literal_present": 60,
+      "records": 64,
+      "replay_artifact_literal_present": 3,
+      "replay_selector_selected": 3
+    },
+    "computation": {
+      "current_artifact_literal_present": 32,
+      "current_selector_selected": 9,
+      "public_text_literal_present": 104,
+      "records": 181,
+      "replay_artifact_literal_present": 1,
+      "replay_selector_selected": 9
+    },
+    "exact_code_lookup": {
+      "current_artifact_literal_present": 1,
+      "public_text_literal_present": 4,
+      "records": 4,
+      "replay_artifact_literal_present": 3,
+      "replay_selector_selected": 3
+    },
+    "general": {
+      "public_text_literal_present": 15,
+      "records": 255
+    },
+    "key_value_lookup": {
+      "current_artifact_literal_present": 46,
+      "current_selector_selected": 14,
+      "public_text_literal_present": 195,
+      "records": 499,
+      "replay_artifact_literal_present": 6,
+      "replay_selector_selected": 17
+    },
+    "table_numeric": {
+      "current_artifact_literal_present": 63,
+      "current_selector_selected": 16,
+      "public_text_literal_present": 364,
+      "records": 661,
+      "replay_artifact_literal_present": 6,
+      "replay_selector_selected": 19
+    }
+  },
+  "created_utc": "2026-06-04T14:19:19.497083+00:00",
+  "failure_buckets": {
+    "artifact_dimension_support_guard": 17,
+    "artifact_extraction_missing_code_like_literal": 2,
+    "code_like_temporal_metric_literal_triggered_exact_code_guard": 56,
+    "current_store_selected_artifacts": 16,
+    "document_metadata_refusal_guard": 2,
+    "no_relevant_artifact_guard": 31,
+    "operand_completeness_guard": 2,
+    "replay_code_name_code_like_literal_selected": 3,
+    "retrieval_or_public_text_missing_code_like_literal": 3,
+    "retrieval_or_public_text_missing_literals": 666,
+    "retrieved_text_has_literals_but_no_artifacts": 272,
+    "uncategorized_artifact_gap": 3
+  },
+  "failure_examples": {
+    "artifact_dimension_support_guard": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "4"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "2401.18059v1.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "4"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "4"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 69,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          17,
+          6,
+          21,
+          1
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18"
+          ],
+          "quoted": [
+            "8%"
+          ],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30",
+            "8",
+            "9"
+          ],
+          "quoted": [
+            "8%",
+            "9%"
+          ],
+          "years": [
+            "2013"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30",
+            "8",
+            "9"
+          ],
+          "quoted": [
+            "8%",
+            "9%"
+          ],
+          "years": [
+            "2013"
+          ]
+        },
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in desce",
+        "question_types": [
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 223,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          11,
+          8,
+          6,
+          9,
+          7,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18"
+          ],
+          "quoted": [
+            "8%"
+          ],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2022",
+            "30",
+            "8",
+            "9"
+          ],
+          "quoted": [
+            "8%",
+            "9%"
+          ],
+          "years": [
+            "2022"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "30",
+            "8",
+            "9"
+          ],
+          "quoted": [
+            "8%",
+            "9%"
+          ],
+          "years": []
+        },
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in desce",
+        "question_types": [
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 224,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          11,
+          8,
+          6,
+          9,
+          7,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "65"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30",
+            "65"
+          ],
+          "quoted": [],
+          "years": [
+            "2013"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30",
+            "65"
+          ],
+          "quoted": [],
+          "years": [
+            "2013"
+          ]
+        },
+        "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking sur",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 227,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          8,
+          7,
+          4,
+          23,
+          9,
+          19,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30"
+          ],
+          "quoted": [],
+          "years": [
+            "2013"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "18",
+            "2013",
+            "30"
+          ],
+          "quoted": [],
+          "years": [
+            "2013"
+          ]
+        },
+        "question": "What is the gap of infants with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 228,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          8,
+          7,
+          4,
+          1,
+          9,
+          19,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002",
+            "2003"
+          ],
+          "quoted": [],
+          "years": [
+            "2002",
+            "2003"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002",
+            "2003"
+          ],
+          "quoted": [],
+          "years": [
+            "2002",
+            "2003"
+          ]
+        },
+        "question": "What was the value of absolute percentage shortfall in India's GDP growth from 2002 to 2003 compared to the forecast?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 366,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          12,
+          19,
+          18,
+          15,
+          0,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many people are there in total in the MQA Executive Leadership and the Prosecution Services Staff?",
+        "question_types": [
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 399,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          6,
+          4,
+          10,
+          8,
+          11
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "-2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "STEPBACK.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "-2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "-2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How much higher is the accuracy of PaLM-2L + RAG compared to PaLM-2L on TimeQA?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 456,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          6,
+          7,
+          11,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many geographic markers in Greater Houston, Texas?",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 509,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          7,
+          8,
+          9,
+          3
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "17"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "17"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the Word written in Orange box on page 17?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 511,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "17"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          16,
+          8,
+          9,
+          13,
+          1,
+          15,
+          0
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many geographic market names are listed under Los Angeles area?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 513,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          9,
+          8,
+          6,
+          7,
+          3
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "artifact_dimension_support_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many geographic markets in Texas belongs to the Major Metropolitan Area?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 514,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          8,
+          7,
+          3,
+          6,
+          4,
+          2
+        ]
+      }
+    ],
+    "artifact_extraction_missing_code_like_literal": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "2005.12872v3.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "L1"
+          ],
+          "codes": [
+            "AP50",
+            "L1"
+          ],
+          "metric_phrases": [
+            "ap50"
+          ],
+          "numbers": [
+            "1",
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [
+            "L1"
+          ],
+          "codes": [
+            "AP50",
+            "L1"
+          ],
+          "metric_phrases": [
+            "ap50"
+          ],
+          "numbers": [
+            "1",
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What's the AP50 value of DETR with L1 loss and without GIoU loss on the COCO validation set?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 547,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          12,
+          8,
+          22,
+          10,
+          11,
+          15
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "2023.acl-long.386.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "T5"
+          ],
+          "codes": [
+            "F1",
+            "T5"
+          ],
+          "metric_phrases": [
+            "f1"
+          ],
+          "numbers": [
+            "1",
+            "2.0",
+            "3.0",
+            "5"
+          ],
+          "quoted": [
+            "2.0",
+            "3.0"
+          ],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [
+            "T5"
+          ],
+          "codes": [
+            "F1",
+            "T5"
+          ],
+          "metric_phrases": [
+            "f1"
+          ],
+          "numbers": [
+            "1",
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Please list the F1 scores for ProgramFC on different datasets with gold evidence in relation to Flan-T5-small, in descending order, with one decimal place. For example: [\"3.0\", \"2.",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric"
+        ],
+        "record_id": 641,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          5,
+          6,
+          7,
+          4,
+          13
+        ]
+      }
+    ],
+    "code_like_temporal_metric_literal_triggered_exact_code_guard": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q3"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "1",
+            "2015",
+            "3",
+            "3000",
+            "4000"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "In Q3 2015, what is the approximate range of cost in 1 day (dollar) of a mobile incentive platform in Vietnam for installing? Answer with a list of two number for boundary, for exa",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 57,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          0,
+          1,
+          2,
+          3,
+          25,
+          26,
+          12,
+          31
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q3"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2015",
+            "3"
+          ],
+          "quoted": [
+            "or",
+            "s fan page? Directly answer"
+          ],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "As of Q3 2015, are there more active Instagram users in Vietnam, or are there more fans for Appota's fan page? Directly answer 'Instagram' or 'Appota'.",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric"
+        ],
+        "record_id": 58,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          0,
+          1,
+          2,
+          3,
+          32,
+          27,
+          13
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q3"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2015",
+            "3",
+            "9"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "As of Q3 2015, is vietnam's adoption rate of iOS 9 higher or lower than a global average rate? What is the difference in percentage?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 59,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          0,
+          1,
+          2,
+          3,
+          14,
+          6,
+          15,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q3"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2015",
+            "3",
+            "7"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "As of Q3 2015, is vietnam's adoption rate of iOS 7 higher or lower than a global average rate? What is the difference in percentage?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 60,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          0,
+          1,
+          2,
+          3,
+          14,
+          6,
+          15,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "2310.05634v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "F1"
+          ],
+          "metric_phrases": [
+            "f1"
+          ],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [
+            "F1"
+          ],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [
+            "F1"
+          ],
+          "metric_phrases": [
+            "f1"
+          ],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [
+            "F1"
+          ],
+          "years": []
+        },
+        "question": "How many tables include \"F1\" as a metric?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric"
+        ],
+        "record_id": 64,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          6,
+          4,
+          8,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "q1-2023-bilibili-inc-investor-presentation.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q1"
+          ],
+          "metric_phrases": [
+            "gross profit"
+          ],
+          "numbers": [
+            "1",
+            "2022",
+            "2023"
+          ],
+          "quoted": [],
+          "years": [
+            "2022",
+            "2023"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "gross profit"
+          ],
+          "numbers": [
+            "1",
+            "2022",
+            "2023"
+          ],
+          "quoted": [],
+          "years": [
+            "2022",
+            "2023"
+          ]
+        },
+        "question": "By what percentage has gross profit increased in Q1 of 2023 compared to Q1 of 2022?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 488,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          4,
+          6,
+          5,
+          10,
+          18,
+          25,
+          22
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "q1-2023-bilibili-inc-investor-presentation.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "Q1"
+          ],
+          "metric_phrases": [
+            "gross profit"
+          ],
+          "numbers": [
+            "1",
+            "2020",
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2020",
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "gross profit"
+          ],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "By what percentage has gross profit increased in Q1 of 2021 compared to Q1 of 2020?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 489,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          4,
+          6,
+          3,
+          5,
+          18,
+          25,
+          22
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "2305.14160v4.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "GPT2"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [
+            "GPT2"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Using anchor-only context compression, how much can GPT2-XL speed up on AGNews?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric"
+        ],
+        "record_id": 968,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          6,
+          7,
+          4,
+          13
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "FY2019"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "what is the FY2019 fixed asset turnover ratio for Activision Blizzard?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 990,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          108,
+          68,
+          115,
+          91,
+          95,
+          98,
+          120,
+          107
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "FY2017",
+            "FY2019"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2017",
+            "2019",
+            "3"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2017",
+            "2019",
+            "3"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the FY2017 - FY2019 3 year average of capex to revenue ratio for Activision Blizzard?Answer in units of percents and round to one decimal place. ",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 991,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          101,
+          106,
+          69,
+          107,
+          76,
+          72,
+          111
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "F2019"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "what is Interest Coverage Ratio for Activsion Blizzard In F2019?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 993,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          174,
+          96,
+          95,
+          118,
+          113,
+          69,
+          115,
+          48
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [
+            "FY2019"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2019"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "what value stock does Activsion Blizzard repurchase in FY2019? Answer in USD billion\n",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 994,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          119,
+          68,
+          72,
+          91,
+          74,
+          93
+        ]
+      }
+    ],
+    "current_store_selected_artifacts": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "operand_complete_selection",
+        "doc_id": "PS_2018.01.09_STEM_FINAL.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the percentage of workers employed in private, for-profit sectors in the field where the oldest woman advising on increasing diversity in STEM is employed? Please write the",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 575,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "operand_complete_selection",
+        "retrieval_pages": [
+          6,
+          56,
+          30,
+          28,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "What is total long-term Liabilities for COSTCO in FY 2021? Anwser in millions",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 996,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          39,
+          36,
+          46,
+          35
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "what is long-term debt of  Costco in FY 2021? Anwser in millions.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 998,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          39,
+          36,
+          35,
+          40
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "what is total debt of COSTCO in FY 2021?Answer in millions.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 999,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          35,
+          36,
+          39,
+          38,
+          40
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total liabilities"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total liabilities"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "what is total liabilities for COSTCO in FY 2021?Answer in millions.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 1001,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          39,
+          46,
+          35,
+          40,
+          36
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total liabilities"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total liabilities"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "What is total liabilities for costco in FY 2021?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 1004,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          39,
+          46,
+          35,
+          40,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "COSTCO_2021_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total assets"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "total assets"
+          ],
+          "numbers": [
+            "2021"
+          ],
+          "quoted": [],
+          "years": [
+            "2021"
+          ]
+        },
+        "question": "what is total debt to total assets  for costco in FY 2021?\n\n",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 1005,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          37,
+          39,
+          35,
+          36,
+          38,
+          40
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "NETFLIX_2015_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "question": "what is research and development expense of Neflix in FY 2015? Answer in thousands.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 1017,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          23,
+          24,
+          39,
+          42,
+          41,
+          43
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "NETFLIX_2015_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "question": "what is operating leases occurred in FY 2015 for Netfilx?Answer in million.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 1020,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          52,
+          53,
+          58,
+          41,
+          39,
+          42,
+          18
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "question": "what is capitalization ratio for Best Buy for the fiscal year ending January 28, 2023? Answer in percentage term, round to one decimal places.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 1057,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          21,
+          22,
+          31,
+          0,
+          43
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "question": "what is Cash and cash equivalents for Best Buy for the fiscal year ending January 28, 2023? Answer in million",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 1058,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          43,
+          22,
+          28,
+          31,
+          21
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "current_selector_guard": "token_key_value_selection",
+        "doc_id": "BESTBUY_2023_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2023",
+            "28"
+          ],
+          "quoted": [],
+          "years": [
+            "2023"
+          ]
+        },
+        "question": "what goodwill does Best Buy have for for the fiscal year ending January 28, 2023?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 1060,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "token_key_value_selection",
+        "retrieval_pages": [
+          31,
+          45,
+          50,
+          43,
+          22,
+          21
+        ]
+      }
+    ],
+    "document_metadata_refusal_guard": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "document_metadata_refusal_guard",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2016"
+          ],
+          "quoted": [],
+          "years": [
+            "2016"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2016"
+          ],
+          "quoted": [],
+          "years": [
+            "2016"
+          ]
+        },
+        "question": "Who produced the document that was revised on May 2016?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 383,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "document_metadata_refusal_guard",
+        "retrieval_pages": [
+          1,
+          10,
+          11,
+          5,
+          15
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "document_metadata_refusal_guard",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "question": "Who produced the document that was revised on May 2018?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 384,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "document_metadata_refusal_guard",
+        "retrieval_pages": [
+          1,
+          10,
+          11,
+          5,
+          15
+        ]
+      }
+    ],
+    "no_relevant_artifact_guard": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What are the bankers' names associated with GODFREY PHILLIPS INDIA LIMITED? ",
+        "question_types": [
+          "key_value_lookup"
+        ],
+        "record_id": 364,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          14,
+          15,
+          16,
+          12,
+          7,
+          13,
+          18,
+          17
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002",
+            "2023"
+          ],
+          "quoted": [],
+          "years": [
+            "2002",
+            "2023"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "question": "What was the percentage shortfall in Japan's GDP growth from 2002 to 2023 compared to the forecast?",
+        "question_types": [
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 367,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          12,
+          19,
+          18,
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Where are the two plants of GODFREY PHILLIPS INDIA LIMITED located?",
+        "question_types": [
+          "key_value_lookup"
+        ],
+        "record_id": 368,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          14,
+          15,
+          16,
+          12,
+          9,
+          7,
+          10
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2001",
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2001",
+            "2002"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "question": "How much higher was the proposed dividend paid (Rupees in lacs) in 2002 compared to 2001?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 373,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          19,
+          12,
+          18,
+          3,
+          2,
+          16
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002"
+          ],
+          "quoted": [],
+          "years": [
+            "2002"
+          ]
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002",
+            "2003"
+          ],
+          "quoted": [],
+          "years": [
+            "2002",
+            "2003"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2002",
+            "2003"
+          ],
+          "quoted": [],
+          "years": [
+            "2002",
+            "2003"
+          ]
+        },
+        "question": "How much higher was the dividend paid in 2003 compared to 2002?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 374,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          19,
+          12,
+          18,
+          3,
+          13
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What were the GDP growth amounts for the first and second quarters respectively?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 375,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          12,
+          16,
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What were the GDP growth amounts for the third and fourth quarters respectively?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 376,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          12,
+          11,
+          5,
+          1,
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2006",
+            "2007",
+            "2011"
+          ],
+          "quoted": [
+            "2006",
+            "2007",
+            "2011"
+          ],
+          "years": [
+            "2006",
+            "2007",
+            "2011"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What are the years specified in the pie chart of the document? Format all of the years in a list like ['2006', '2007', '2011']",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 377,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          11,
+          18,
+          19,
+          16,
+          12,
+          1,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many figures are there in total in the article?",
+        "question_types": [
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 378,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          4,
+          5,
+          13,
+          1,
+          12,
+          2,
+          10
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2003",
+            "31"
+          ],
+          "quoted": [],
+          "years": [
+            "2003"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2003",
+            "31"
+          ],
+          "quoted": [],
+          "years": [
+            "2003"
+          ]
+        },
+        "question": "For the year ended March 31,2003, how much less were the shareholders' funds compared to the income in rupees?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 380,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          19,
+          18,
+          17,
+          12,
+          13,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What are the words written in the first rectangle on the top of the page two?",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 385,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          10,
+          1,
+          16,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "e79deb02a0c0e87511080836c5d4347b.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many cats are there in the images on page 1?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 390,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          4,
+          5,
+          7,
+          0,
+          2,
+          11,
+          10
+        ]
+      }
+    ],
+    "operand_completeness_guard": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "operand_completeness_guard",
+        "doc_id": "PS_2018.01.09_STEM_FINAL.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status i",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 569,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "operand_completeness_guard",
+        "retrieval_pages": [
+          86,
+          28,
+          40,
+          39,
+          43,
+          27
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "current_selector_guard": "operand_completeness_guard",
+        "doc_id": "NETFLIX_2015_10K.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2015"
+          ]
+        },
+        "question": "what is sales to stockholder equity ratio  of Neflix in FY 2015? Round your answer to three decimal places.",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 1018,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "operand_completeness_guard",
+        "retrieval_pages": [
+          14,
+          54,
+          55,
+          42,
+          39,
+          43,
+          33
+        ]
+      }
+    ],
+    "replay_code_name_code_like_literal_selected": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "AR01"
+          ],
+          "codes": [
+            "AR01"
+          ],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [
+            "01"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [
+            "AR01"
+          ],
+          "codes": [
+            "AR01"
+          ],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What's the geographic market name for EPS Code AR01?\n\n",
+        "question_types": [
+          "code_like_literal",
+          "exact_code_lookup",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 507,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [
+            "AR01"
+          ],
+          "codes": [
+            "AR01"
+          ],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_key_value_selection",
+        "retrieval_pages": [
+          7,
+          5,
+          2,
+          6,
+          8
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [
+            "no"
+          ],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "CA03"
+          ],
+          "codes": [
+            "CA03"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "03"
+          ],
+          "quoted": [
+            "no",
+            "yes"
+          ],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [
+            "CA03"
+          ],
+          "codes": [
+            "CA03"
+          ],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [
+            "no"
+          ],
+          "years": []
+        },
+        "question": "In the context of the College Board Search Platform, is market CA03 considered part of the San Francisco Bay Area? Answer 'yes' or 'no'.",
+        "question_types": [
+          "code_like_literal",
+          "exact_code_lookup",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 516,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [
+            "CA03"
+          ],
+          "codes": [
+            "CA03"
+          ],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [
+            "no"
+          ],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_key_value_selection",
+        "retrieval_pages": [
+          9,
+          8,
+          5,
+          7
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "CA19"
+          ],
+          "codes": [
+            "CA19"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "19"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [
+            "CA19"
+          ],
+          "codes": [
+            "CA19"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "19"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Within the geographic market segments defined by the College Board Search platform, which of the two designated areas, CA19 or Covina and West Covina, encompasses a larger geograph",
+        "question_types": [
+          "code_like_literal",
+          "exact_code_lookup",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 517,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [
+            "CA19"
+          ],
+          "codes": [
+            "CA19"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "19"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_key_value_selection",
+        "retrieval_pages": [
+          8,
+          9,
+          5,
+          4
+        ]
+      }
+    ],
+    "retrieval_or_public_text_missing_code_like_literal": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "91521110100M_4K_UHD_Display_User_Manual_V1.1.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "M250"
+          ],
+          "codes": [
+            "M250"
+          ],
+          "metric_phrases": [],
+          "numbers": [
+            "10",
+            "2",
+            "250",
+            "500"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "10",
+            "2"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "A transmitter operating at a frequency of 500 MHz has a rated maximum output power of 10 W. Using the recommended separation distances between portable and mobile RF communications",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "computation"
+        ],
+        "record_id": 306,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          22,
+          21,
+          19,
+          20
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "AR03"
+          ],
+          "codes": [
+            "AR03"
+          ],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [
+            "03"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [
+            "geographic market name"
+          ],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+        "question_types": [
+          "code_like_literal",
+          "exact_code_lookup",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 508,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          7,
+          9,
+          5,
+          2,
+          6,
+          8
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "exact_code_absence_guard",
+        "doc_id": "2005.12872v3.pdf",
+        "literal_requirements": {
+          "actionable_codes": [
+            "L1"
+          ],
+          "codes": [
+            "AP50",
+            "L1"
+          ],
+          "metric_phrases": [
+            "ap50"
+          ],
+          "numbers": [
+            "1",
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [
+            "AP50"
+          ],
+          "metric_phrases": [
+            "ap50"
+          ],
+          "numbers": [
+            "1",
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What's the AP50 value of DETR without L1 loss and without GIoU loss on the COCO validation set?",
+        "question_types": [
+          "code_like_literal",
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 548,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "exact_code_absence_guard",
+        "retrieval_pages": [
+          8,
+          12,
+          11,
+          10,
+          15
+        ]
+      }
+    ],
+    "retrieval_or_public_text_missing_literals": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "According to the report, which one is greater in population in the survey? Foreign born Latinos, or the Latinos interviewed by cellphone?",
+        "question_types": [
+          "key_value_lookup"
+        ],
+        "record_id": 1,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          18,
+          20,
+          4,
+          19
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 4,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          9,
+          18,
+          22,
+          19,
+          12,
+          3,
+          8,
+          13
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "According to this report, among the Hispanics shaped by four current personal financial situation, which situation involves the highest percentage that expects their future financi",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 5,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          15,
+          13,
+          7,
+          3,
+          12
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2024"
+          ],
+          "quoted": [],
+          "years": [
+            "2024"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2024?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 8,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          4,
+          20,
+          15,
+          3,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 9,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          6,
+          5,
+          3,
+          20
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 12,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          21,
+          17,
+          2,
+          19,
+          15
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Where was Gestalt psychology concieved?",
+        "question_types": [
+          "key_value_lookup"
+        ],
+        "record_id": 13,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          1,
+          10,
+          7,
+          2,
+          0
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "14",
+            "2010"
+          ],
+          "quoted": [],
+          "years": [
+            "2010"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 14,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          7,
+          2,
+          1,
+          0,
+          13,
+          6,
+          4,
+          11
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What range does red color represents in approximate distance from the Mississippi River in the chart that tracks the West NIle Virus in Europe?",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 15,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          1,
+          2,
+          10,
+          7,
+          9,
+          8,
+          5,
+          14
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "How does this document define the law of good gestalt?",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 16,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          10,
+          1,
+          7,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2005",
+            "2010"
+          ],
+          "quoted": [],
+          "years": [
+            "2005",
+            "2010"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 17,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          2,
+          10,
+          1,
+          7,
+          13,
+          14,
+          6,
+          11
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 18,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          1,
+          2,
+          10,
+          7,
+          12,
+          11,
+          4,
+          5
+        ]
+      }
+    ],
+    "retrieved_text_has_literals_but_no_artifacts": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "According to the report, how do 5% of the Latinos see economic upward mobility for their children?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 0,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          4,
+          12,
+          2,
+          16
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2008",
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2008",
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2008",
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2008",
+            "2015"
+          ]
+        },
+        "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 2,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          9,
+          13,
+          3,
+          12,
+          5
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "12"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "12"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Among all 12 references in this report, how many are from its own research center?",
+        "question_types": [
+          "table_numeric"
+        ],
+        "record_id": 3,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          18,
+          2,
+          17,
+          21,
+          22,
+          1
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2014",
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2014",
+            "2015"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2014",
+            "2015"
+          ],
+          "quoted": [],
+          "years": [
+            "2014",
+            "2015"
+          ]
+        },
+        "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich grou",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 6,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          11,
+          10,
+          5,
+          6
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 7,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          20,
+          3,
+          13,
+          4,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2018"
+          ],
+          "quoted": [],
+          "years": [
+            "2018"
+          ]
+        },
+        "question": "According to this report, which group is greater in population in 2018? Republican who are hispanic, or no leans who are male?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 10,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          21,
+          20,
+          15,
+          4,
+          19,
+          2
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "Independents-Report.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [
+            "no lean"
+          ],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [
+            "no lean"
+          ],
+          "years": []
+        },
+        "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+        "question_types": [
+          "general"
+        ],
+        "record_id": 11,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          18,
+          16,
+          4,
+          9,
+          21,
+          10
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2012",
+            "2017"
+          ],
+          "quoted": [],
+          "years": [
+            "2012",
+            "2017"
+          ]
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "2012",
+            "2017"
+          ],
+          "quoted": [],
+          "years": [
+            "2012",
+            "2017"
+          ]
+        },
+        "question": "Of the four missions of Indian Space Program's space mission from 2012 to 2017, which mission includes the launch of least number of satellites?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 24,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          2,
+          4,
+          5,
+          1
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the title of module 1?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 27,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          10,
+          47,
+          88,
+          48,
+          4,
+          3
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "3"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "3"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "Which example notebook does module 3 use to show how to create an interactive map?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 31,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          88,
+          9,
+          0,
+          107,
+          106,
+          6
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "2310.05634v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "1"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "In figure 1, which relation arrows do not point to specific leaf nodes?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 62,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          11,
+          12,
+          3,
+          1
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "2310.05634v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "5"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "In figure 5, what is the color of the line that has no intersection with any other line?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 63,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "no_relevant_artifact_guard",
+        "retrieval_pages": [
+          7,
+          21,
+          20,
+          3,
+          5,
+          4
+        ]
+      }
+    ],
+    "uncategorized_artifact_gap": [
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "2303.08559v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot TACREV dataset?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 186,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          8,
+          7,
+          14,
+          20
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "2303.08559v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "03",
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "50"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "What is the performance of filter-then-rerank methods (w.o. ensemble) on 50-shot CONLL03 dataset?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup"
+        ],
+        "record_id": 187,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          7,
+          8,
+          5,
+          16
+        ]
+      },
+      {
+        "current_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [],
+          "quoted": [],
+          "years": []
+        },
+        "current_selector_guard": "no_relevant_artifact_guard",
+        "doc_id": "2303.08559v2.pdf",
+        "literal_requirements": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "100",
+            "6"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "public_text_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "100",
+            "6"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "question": "If I drop the green module shown in Figure 6,  what is the absolute percentage drop on 100-shot TACREV setting?",
+        "question_types": [
+          "table_numeric",
+          "key_value_lookup",
+          "computation"
+        ],
+        "record_id": 192,
+        "replay_artifact_literal_hits": {
+          "actionable_codes": [],
+          "codes": [],
+          "metric_phrases": [],
+          "numbers": [
+            "6"
+          ],
+          "quoted": [],
+          "years": []
+        },
+        "replay_selector_guard": "artifact_dimension_support_guard",
+        "retrieval_pages": [
+          8,
+          6,
+          14,
+          15,
+          4,
+          7
+        ]
+      }
+    ]
+  },
+  "forbidden_gold_fields_present": [],
+  "input_artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+  "input_extract_path": "tmp/MMLongBench",
+  "input_records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "records_scanned": 1073,
+  "schema_version": "r069_dataset_artifact_health_summary_v1",
+  "top_k": 4
+}

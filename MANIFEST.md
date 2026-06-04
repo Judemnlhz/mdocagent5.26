@@ -58,3 +58,9 @@
 | 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_gate.md | implementation | R068 Stage 2 code-list integration gate |
 | 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_audit.json | implementation | R068 detailed public-only Stage 2 integration audit payload |
 | 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_compact_index.jsonl | implementation | R068 compact Stage 2 code-list integration index |
+| 2026-06-04 14:40 | /run-experiment | scripts/run_r069_dataset_artifact_health_audit.py | implementation | R069 no-provider dataset-level public retrieval/artifact health audit runner |
+| 2026-06-04 14:40 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R069 entry |
+| 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_report.md | implementation | R069 dataset artifact health report |
+| 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_gate.md | implementation | R069 dataset artifact health gate |
+| 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_summary.json | implementation | R069 dataset-level artifact health summary |
+| 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_records.jsonl | implementation | R069 per-record public artifact health index |

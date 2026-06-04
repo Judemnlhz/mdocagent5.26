@@ -1203,3 +1203,44 @@ Key findings:
 
 Decision: keep the Stage 2 code/name extractor integration for public EPS-like lists. Do not relax exact-code matching or run QA for record 508; next work should look for source/OCR evidence for missing exact codes or broaden no-provider coverage checks on positive code/name cases.
 
+### 2026-06-04 R069 Dataset Artifact Health Audit
+
+R069 moves from single-case OCR/source diagnosis to a dataset-level public retrieval and artifact health audit. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Scan MMLongBench public questions and top-4 public retrieved page text.
+- Compare current R038d artifact store coverage with deterministic R068 code/name replay coverage.
+- Separate broad code-like literals from actionable exact-code lookup cases.
+- Attribute failures to retrieval/public text absence, artifact extraction gaps, selector/guard rejection, or selected support availability.
+
+Scope and boundary:
+
+- Records scanned: 1073.
+- Inputs: `data/MMLongBench/sample-with-retrieval-results.json`, R038d union atomic artifact store, and public page text under `tmp/MMLongBench`.
+- The audit intentionally does not use `answer`, `evidence_pages`, prediction correctness, or provider outputs.
+
+Outputs:
+
+- `scripts/run_r069_dataset_artifact_health_audit.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_report.md`
+- `outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_gate.md`
+- `outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_summary.json`
+- `outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_records.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Code-like literal records: 64.
+- Actionable exact-code lookup records: 4.
+- Exact-code lookup public retrieved text contains the actionable literal in 4/4 cases.
+- Current R038d artifacts contain exact-code lookup literals in 1/4 cases, but current selector selects 0/4.
+- R068 code/name replay contains exact-code lookup literals in 3/4 cases and selector selects 3/4: `AR01`, `CA03`, and `CA19`.
+- `AR03` remains unsupported because public retrieved text does not contain exact `AR03`.
+- The broad code-like bucket contains 56 temporal/metric literals (`FY/Q/AP/F1` style) that can trigger exact-code guard behavior and should be normalized separately from actionable code lookup.
+- Broader artifact health remains weak: many records have public text literals but no selected artifacts, so full QA remains premature.
+
+Decision: R068 code/name extraction is worth carrying into a bounded Stage 2 artifact-store rebuild for actionable code/name questions, but selector/parser normalization must also distinguish actionable codes from fiscal years, quarters, and metric labels. Do not run full QA yet; first repair code-like literal guard normalization and rebuild a bounded artifact store for positive exact-code lookup cases.
+
