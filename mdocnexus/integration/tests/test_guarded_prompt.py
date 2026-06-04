@@ -217,6 +217,28 @@ class GuardedPromptTests(unittest.TestCase):
         self.assertIn("[Selected artifact evidence]", prompt)
         self.assertIn("Final answer: answer or Not answerable.", prompt)
 
+    def test_dimension_guard_prompt_routes_to_page_or_refusal(self) -> None:
+        question = "In figure 4, which nodes are retrieved by RAPTOR for both questions?"
+        profile = build_question_profile(question)
+        artifact = score_guarded_artifact(
+            {
+                "artifact_id": "metric_noise",
+                "artifact_type": "numeric_fact",
+                "content": "SBERT with RAPTOR ROUGE: 30.87%",
+                "source_anchored": True,
+            },
+            question,
+            profile,
+            6,
+        )
+        selection = select_guarded_artifacts([artifact], [page_context(6, "Figure 4 shows RAPTOR retrieved nodes for both questions.")], profile)
+        prompt = render_guarded_prompt(question, [page_context(6, "Figure 4 shows RAPTOR retrieved nodes for both questions.")], selection, profile)
+
+        self.assertEqual(selection["guard_decision"], "artifact_dimension_support_guard")
+        self.assertIn("do not cite rejected artifact ids", prompt)
+        self.assertIn("answer from cited page ids only", prompt)
+        self.assertIn("never cite rejected artifact ids", prompt)
+
 
 def numeric_artifact(artifact_id: str, content: str) -> dict:
     return {

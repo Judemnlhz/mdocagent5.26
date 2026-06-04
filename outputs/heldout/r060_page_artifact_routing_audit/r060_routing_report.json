@@ -1,0 +1,94 @@
+{
+  "created_utc": "2026-06-04T08:32:11.573521+00:00",
+  "decision": "r060_routing_complete",
+  "gate": {
+    "checks": {
+      "all_cases_guard_artifacts": true,
+      "all_cases_have_visible_page_support": true,
+      "all_cases_page_routed": true,
+      "all_cases_select_zero_artifacts": true,
+      "all_prompts_block_rejected_artifact_citation": true,
+      "all_prompts_route_to_page_only_when_sufficient": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_previews": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_artifact_lift_claim": true,
+      "not_official_score": true,
+      "not_provider_run": true,
+      "target_records_match_page_sufficient_artifact_insufficient_cases": true
+    },
+    "created_utc": "2026-06-04T08:32:11.573462+00:00",
+    "decision": "r060_routing_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_cases": 2,
+    "page_routed_records": [
+      223,
+      227
+    ],
+    "routing_failures_by_record": {
+      "223": [],
+      "227": []
+    },
+    "schema_version": "r060_routing_gate_v1"
+  },
+  "guard_decision_counts": {
+    "artifact_dimension_support_guard": 2
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r039_record_ids": "outputs/heldout/r039_targeted_activation_rich/record_ids.txt",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json",
+    "target_record_ids": "223,227"
+  },
+  "num_cases": 2,
+  "page_routed_records": [
+    223,
+    227
+  ],
+  "per_record_summary": [
+    {
+      "answer_policy": "use_page_evidence_or_refuse",
+      "artifact_support_sufficient": false,
+      "guard_decision": "artifact_dimension_support_guard",
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "record_id": 223,
+      "routing_failures": [],
+      "routing_passed": true,
+      "selected_artifact_count": 0,
+      "visible_page_support_sufficient": true
+    },
+    {
+      "answer_policy": "use_page_evidence_or_refuse",
+      "artifact_support_sufficient": false,
+      "guard_decision": "artifact_dimension_support_guard",
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "record_id": 227,
+      "routing_failures": [],
+      "routing_passed": true,
+      "selected_artifact_count": 0,
+      "visible_page_support_sufficient": true
+    }
+  ],
+  "recommended_next": [
+    "Do not run full QA from R060.",
+    "If manually accepted, the next bounded step can be a tiny provider diagnostic on page-routed prompts only.",
+    "Keep claims limited: R060 validates prompt routing behavior, not artifact-aware retrieval lift."
+  ],
+  "schema_version": "r060_routing_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "routing_audit_only": true
+  }
+}

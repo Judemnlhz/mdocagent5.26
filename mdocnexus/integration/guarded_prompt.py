@@ -257,6 +257,7 @@ def render_guarded_prompt(
         "Answer using only the visible page evidence and selected artifact evidence below.",
         "First list supporting evidence, then answer. Cite page ids and artifact ids for every factual claim.",
         "If the guard decision says metadata/refusal, exact-code absence, or operand incompleteness, do not compute or infer from partial artifact snippets.",
+        "If the guard decision says artifact-dimension support, do not cite rejected artifact ids; use page evidence only if it fully supports the answer.",
         "If the visible evidence does not fully support an answer, say Not answerable and cite what is missing.",
         f"Question: {question}",
         "",
@@ -282,11 +283,12 @@ def render_guarded_prompt(
             )
     else:
         lines.append("No artifact evidence was selected because the guard rejected the available snippets as insufficient or irrelevant.")
+        lines.append("Do not cite artifact ids from rejected snippets. If page evidence is sufficient, answer from cited page ids only; otherwise say Not answerable.")
     lines.extend([
         "",
         "[Required response format]",
         "Page evidence: cite page ids or state none.",
-        "Artifact evidence: cite artifact ids or state none.",
+        "Artifact evidence: cite selected artifact ids or state none; never cite rejected artifact ids.",
         "Guard check: state whether metadata, exact-code, and operand requirements are satisfied.",
         "Unsupported-answer check: explain whether the visible evidence fully supports the answer.",
         "Final answer: answer or Not answerable.",

@@ -1,0 +1,36 @@
+{
+  "checks": {
+    "all_cases_guard_artifacts": true,
+    "all_cases_have_visible_page_support": true,
+    "all_cases_page_routed": true,
+    "all_cases_select_zero_artifacts": true,
+    "all_prompts_block_rejected_artifact_citation": true,
+    "all_prompts_route_to_page_only_when_sufficient": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true,
+    "not_provider_run": true,
+    "target_records_match_page_sufficient_artifact_insufficient_cases": true
+  },
+  "created_utc": "2026-06-04T08:32:11.573462+00:00",
+  "decision": "r060_routing_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_cases": 2,
+  "page_routed_records": [
+    223,
+    227
+  ],
+  "routing_failures_by_record": {
+    "223": [],
+    "227": []
+  },
+  "schema_version": "r060_routing_gate_v1"
+}
