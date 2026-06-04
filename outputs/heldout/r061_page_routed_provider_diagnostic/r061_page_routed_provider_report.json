@@ -1,0 +1,132 @@
+{
+  "created_utc": "2026-06-04T10:34:51.794554+00:00",
+  "decision": "r061_page_routed_provider_complete",
+  "diagnostic_counts_not_scores": {
+    "pass": 2
+  },
+  "gate": {
+    "checks": {
+      "all_routing_behaviors_passed": true,
+      "does_not_claim_artifact_positive_lift": true,
+      "not_full_qa": true,
+      "not_official_score": true,
+      "prediction_records_have_no_gold_fields": true,
+      "prompt_hashes_match_r060": true,
+      "provider_predictions_exactly_2": true,
+      "scope_limited_to_page_routed_provider_diagnostic": true,
+      "target_records_exactly_223_227": true,
+      "uses_r060_page_routed_zero_artifact_prompts": true
+    },
+    "created_utc": "2026-06-04T10:34:51.794528+00:00",
+    "decision": "r061_page_routed_provider_gate_pass",
+    "does_not_prove_artifact_lift": true,
+    "gate_passed": true,
+    "hard_failures": [],
+    "model": "Qwen/Qwen3-8B",
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_predictions": 2,
+    "schema_version": "r061_page_routed_provider_gate_v1",
+    "target_record_ids": [
+      223,
+      227
+    ]
+  },
+  "inputs": {
+    "r060_previews": "outputs/heldout/r060_page_artifact_routing_audit/r060_routing_prompt_previews.jsonl"
+  },
+  "interpretation": {
+    "artifact_lift_claim": "unsupported_by_this_run",
+    "bottom_line": "R061 only tests whether the provider follows R060 page-only routing on 2 prompts.",
+    "official_score_claim": "unsupported_by_this_run",
+    "retrieval_improvement_claim": "unsupported_by_this_run"
+  },
+  "model": {
+    "base_url": "https://api.siliconflow.cn/v1",
+    "max_tokens": 256,
+    "model": "Qwen/Qwen3-8B",
+    "provider_note": "",
+    "temperature": 0.0
+  },
+  "page_only_routing_pass_count_not_score": 2,
+  "page_only_routing_total": 2,
+  "per_record": [
+    {
+      "prediction_text": "\n\nPage evidence: cite page ids or state none.  \nArtifact evidence: none.  \nGuard check: state that artifacts were rejected and not used.  \nUnsupported-answer check: The page evidence does not fully support the answer. Specific percentages for higher-income seniors regarding online activity, smartphone ownership, and tablet ownership are not provided. The text only mentions relative comparisons (e.g., \"four times as likely\") without absolute values.  \nFinal answer: Not answerable.",
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "r060_answer_policy": "use_page_evidence_or_refuse",
+      "r060_guard_decision": "artifact_dimension_support_guard",
+      "r060_selected_artifact_count": 0,
+      "r060_visible_page_support_sufficient": true,
+      "record_id": 223,
+      "routing_behavior": {
+        "artifact_evidence_none": true,
+        "expected_routing_behavior": "Use cited page evidence only, do not cite rejected artifacts, and mark artifact evidence as none if mentioned.",
+        "failure_modes": [],
+        "page_answer_routed": false,
+        "page_citation_like": false,
+        "record_id": 223,
+        "refusal_like": true,
+        "refusal_routed": true,
+        "rejected_artifact_citation": false,
+        "routing_behavior_passed": true
+      }
+    },
+    {
+      "prediction_text": "\n\nPage evidence: cite page ids or state none.  \nArtifact evidence: none.  \nGuard check: state that artifacts were rejected and not used.  \nUnsupported-answer check: The page evidence does not fully support the answer. The question requires data on the gap in ownership of both a cell phone and a tablet among 65+ college graduates, but the provided pages only mention tablet ownership (Page 19: 31% for college graduates) and smartphone ownership (Page 18: 35% for college graduates). There is no explicit mention of the combined ownership of cell phones and tablets, nor is there a direct comparison of the \"gap\" between 65+ college graduates and non-college graduates. The pages also lack specific numbers for the gap operation (e.g., percentage difference or ratio).  \nFinal answer: Not answerable.",
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "r060_answer_policy": "use_page_evidence_or_refuse",
+      "r060_guard_decision": "artifact_dimension_support_guard",
+      "r060_selected_artifact_count": 0,
+      "r060_visible_page_support_sufficient": true,
+      "record_id": 227,
+      "routing_behavior": {
+        "artifact_evidence_none": true,
+        "expected_routing_behavior": "Use cited page evidence only, do not cite rejected artifacts, and mark artifact evidence as none if mentioned.",
+        "failure_modes": [],
+        "page_answer_routed": true,
+        "page_citation_like": true,
+        "record_id": 227,
+        "refusal_like": true,
+        "refusal_routed": true,
+        "rejected_artifact_citation": false,
+        "routing_behavior_passed": true
+      }
+    }
+  ],
+  "provider_prompt": {
+    "chars_by_record": {
+      "223": 4311,
+      "227": 4215
+    },
+    "max_page_chars": 700,
+    "max_page_contexts": 4,
+    "mode": "r060_derived_compact_page_routing_prompt",
+    "sha256_by_record": {
+      "223": "4c0bcff44f1b6a12c96ea2f0b26a3479ae65d139380bef1760ed92fa080d7d7e",
+      "227": "22db852865c0bf2f12c2f461f875696937960221e9e8383fd218805bacd43af7"
+    },
+    "why_compact": "Full R060 prompt previews are long; R061 uses bounded public page contexts derived from the R060 previews for the provider diagnostic."
+  },
+  "recommended_next": [
+    "If R061 passes, keep the page/artifact routing prompt as a candidate provider-facing scaffold.",
+    "Do not claim artifact-aware retrieval improves from R061; it has no retrieval-condition comparison and only two page-routed prompts.",
+    "If R061 fails, repair the prompt response schema before any broader provider run."
+  ],
+  "schema_version": "r061_page_routed_provider_report_v1",
+  "scope": {
+    "does_not_compare_retrieval_conditions": true,
+    "does_not_prove_artifact_positive_lift": true,
+    "no_full_qa": true,
+    "no_official_score_reported": true,
+    "not_official_mmlongbench_result": true,
+    "provider_calls": 2,
+    "target_records_only": [
+      223,
+      227
+    ],
+    "tests_page_only_routing_behavior_only": true,
+    "tiny_provider_diagnostic": true,
+    "uses_r060_page_routed_prompt_previews": true
+  }
+}

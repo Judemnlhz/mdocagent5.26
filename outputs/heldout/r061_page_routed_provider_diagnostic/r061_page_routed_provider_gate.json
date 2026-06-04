@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "all_routing_behaviors_passed": true,
+    "does_not_claim_artifact_positive_lift": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "prediction_records_have_no_gold_fields": true,
+    "prompt_hashes_match_r060": true,
+    "provider_predictions_exactly_2": true,
+    "scope_limited_to_page_routed_provider_diagnostic": true,
+    "target_records_exactly_223_227": true,
+    "uses_r060_page_routed_zero_artifact_prompts": true
+  },
+  "created_utc": "2026-06-04T10:34:51.794528+00:00",
+  "decision": "r061_page_routed_provider_gate_pass",
+  "does_not_prove_artifact_lift": true,
+  "gate_passed": true,
+  "hard_failures": [],
+  "model": "Qwen/Qwen3-8B",
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_predictions": 2,
+  "schema_version": "r061_page_routed_provider_gate_v1",
+  "target_record_ids": [
+    223,
+    227
+  ]
+}
