@@ -1,0 +1,326 @@
+{
+  "answer_text": {
+    "answer_text_all_same_records": 19,
+    "answer_text_diff_binary_same_records": 18,
+    "diff_examples": [
+      {
+        "answers": {
+          "top4_artifact_only": "There are no nodes that are retrieved by RAPTOR for both questions in this specific example. The two sets of retrieved nodes are distinct: Question 1 retrieves nodes 16, 17, 18, 19, 20, 21, and 22 (purple), while Ques...",
+          "top4_original_only": "The nodes retrieved by RAPTOR for both questions are 16, 17, 18, and 19.",
+          "top4_original_plus_artifact": "The nodes retrieved by RAPTOR for both questions are 16, 17, 18, 19, 20, 21, and 22."
+        },
+        "binary_pattern": "000",
+        "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+        "record_id": 69
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "['92%', '42%', '39%']",
+          "top4_original_only": "['90%', '42%', '39%']",
+          "top4_original_plus_artifact": "['92%', '42%', '39%']"
+        },
+        "binary_pattern": "000",
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2022 tracking survey?",
+        "record_id": 224
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "56 percentage points",
+          "top4_original_only": "56",
+          "top4_original_plus_artifact": "56 percentage points"
+        },
+        "binary_pattern": "000",
+        "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+        "record_id": 227
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The provided documents contain no information regarding Japan's GDP growth or forecasts for the period 2002 to 2023. Therefore, it is not possible to determine the percentage shortfall in Japan's GDP growth from 2002 ...",
+          "top4_original_only": "The provided information does not contain any data regarding Japan's GDP growth or forecasts from 2002 to 2023. Therefore, the percentage shortfall cannot be determined.",
+          "top4_original_plus_artifact": "The provided materials contain no information about Japan's GDP growth or forecasts from 2002 to 2023. The content exclusively discusses India's economic environment and Godfrey Phillips India Limited's financial perf..."
+        },
+        "binary_pattern": "111",
+        "question": "What was the percentage shortfall in Japan's GDP growth from 2002 to 2023 compared to the forecast?",
+        "record_id": 367
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The document was produced by the Florida Department of Health and was revised in May 2016, not May 2018.",
+          "top4_original_only": "The document was produced by the Florida Department of Health and was revised in May 2016, not May 2018.",
+          "top4_original_plus_artifact": "The document was produced by the Florida Department of Health, and it was revised in May 2016, not May 2018."
+        },
+        "binary_pattern": "000",
+        "question": "Who produced the document that was revised on May 2018?",
+        "record_id": 384
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "15.9",
+          "top4_original_only": "15.9 percentage points",
+          "top4_original_plus_artifact": "15.9 percentage points"
+        },
+        "binary_pattern": "111",
+        "question": "How much higher is the accuracy of PaLM-2L + RAG compared to PaLM-2L on TimeQA?",
+        "record_id": 456
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "2",
+          "top4_original_only": "2",
+          "top4_original_plus_artifact": "0"
+        },
+        "binary_pattern": "000",
+        "question": "How many times does mobile phone appear on pages 16 and 18?",
+        "record_id": 495
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "The Pew Research Center data does not include information about children, so the percentage difference between older adults and children with STEM degrees employed in their field cannot be determined from the provided...",
+          "top4_original_only": "The Pew Research Center survey data does not include information about children, so there is no available data to calculate the percentage difference between older age groups (25+) and children with STEM degrees emplo...",
+          "top4_original_plus_artifact": "The question cannot be answered based on the provided information, as there is no data on children or a January 2018 survey in the Pew Research Center materials, which only cover adults aged 25+ and surveys from 2014-..."
+        },
+        "binary_pattern": "111",
+        "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the survey of Pew Research Center, January 2018?",
+        "record_id": 569
+      }
+    ]
+  },
+  "artifact_exposure": {
+    "top4_artifact_only": {
+      "median_artifacts_on_selected_unique_pages": 16.0,
+      "records_with_any_artifact_on_selected_pages": 37,
+      "records_with_positive_artifact_scores": 37,
+      "total_artifacts_on_selected_unique_pages": 663,
+      "total_positive_score_branch_pages": 178
+    },
+    "top4_original_only": {
+      "median_artifacts_on_selected_unique_pages": 16.0,
+      "records_with_any_artifact_on_selected_pages": 37,
+      "total_artifacts_on_selected_unique_pages": 638
+    },
+    "top4_original_plus_artifact": {
+      "median_artifacts_on_selected_unique_pages": 16.0,
+      "records_with_any_artifact_on_selected_pages": 37,
+      "records_with_positive_artifact_scores": 37,
+      "total_artifacts_on_selected_unique_pages": 638,
+      "total_positive_score_branch_pages": 290
+    }
+  },
+  "binary_divergence": {
+    "cancellation_summary": "top4_artifact_only gained 2 records and lost 2 records relative to the other two runs, producing an aggregate tie.",
+    "divergent_record_count": 4,
+    "divergent_records": [
+      {
+        "answers": {
+          "top4_artifact_only": "['92%', '42%', '39%']",
+          "top4_original_only": "['90%', '42%', '39%']",
+          "top4_original_plus_artifact": "['90%', '42%', '39%']"
+        },
+        "binary_correctness": {
+          "top4_artifact_only": 0,
+          "top4_original_only": 1,
+          "top4_original_plus_artifact": 1
+        },
+        "binary_pattern": "110",
+        "doc_id": "PIP_Seniors-and-Tech-Use_040314.pdf",
+        "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+        "record_id": 223,
+        "retrieval_changed_vs_original": true
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "Montgomery",
+          "top4_original_only": "The geographic market name for EPS Code AR03 is not listed in the provided document.",
+          "top4_original_plus_artifact": "The EPS code AR03 is not listed in the document for Arkansas."
+        },
+        "binary_correctness": {
+          "top4_artifact_only": 0,
+          "top4_original_only": 1,
+          "top4_original_plus_artifact": 1
+        },
+        "binary_pattern": "110",
+        "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+        "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+        "record_id": 508,
+        "retrieval_changed_vs_original": true
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "0.073",
+          "top4_original_only": "0.023",
+          "top4_original_plus_artifact": "0.023"
+        },
+        "binary_correctness": {
+          "top4_artifact_only": 1,
+          "top4_original_only": 0,
+          "top4_original_plus_artifact": 0
+        },
+        "binary_pattern": "001",
+        "doc_id": "AMAZON_2017_10K.pdf",
+        "question": "what is Amazon's FY2017 Operating Profit Margin Before Depreciation? round your answer to three decimal",
+        "record_id": 1034,
+        "retrieval_changed_vs_original": true
+      },
+      {
+        "answers": {
+          "top4_artifact_only": "0.023",
+          "top4_original_only": "0.028",
+          "top4_original_plus_artifact": "0.028"
+        },
+        "binary_correctness": {
+          "top4_artifact_only": 1,
+          "top4_original_only": 0,
+          "top4_original_plus_artifact": 0
+        },
+        "binary_pattern": "001",
+        "doc_id": "AMAZON_2017_10K.pdf",
+        "question": "what is Amazon's FY2017 return on asset ? round your answer to three decimal",
+        "record_id": 1035,
+        "retrieval_changed_vs_original": false
+      }
+    ],
+    "pattern_counts": {
+      "000": 17,
+      "001": 2,
+      "110": 2,
+      "111": 16
+    },
+    "single_run_gain_counts": {
+      "top4_artifact_only": 2
+    },
+    "single_run_loss_counts": {
+      "top4_artifact_only": 2
+    }
+  },
+  "checks": {
+    "aggregate_scores_equal": true,
+    "artifact_modes_candidate_pool_constrained_for_all_records": true,
+    "binary_correctness_vectors_identical": false,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "prediction_commands_have_no_artifact_context_arg": true,
+    "scores_match_r040_summary": true,
+    "targeted_37_only": true,
+    "three_requested_runs_only": true
+  },
+  "command_scope_findings": {
+    "artifact_modes_are_page_rerank_inputs_not_prompt_artifact_injection": true,
+    "prediction_commands": {
+      "top4_artifact_only": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_artifact_only__r040_targeted_activation_rich_qa",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa/reranked_records/top4_artifact_only.json"
+      ],
+      "top4_original_only": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_only__r040_targeted_activation_rich_qa",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa/reranked_records/top4_original_only.json"
+      ],
+      "top4_original_plus_artifact": [
+        "python3",
+        "scripts/predict.py",
+        "--config-name",
+        "mmlb",
+        "run-name=top4_original_plus_artifact__r040_targeted_activation_rich_qa",
+        "dataset.top_k=4",
+        "dataset.sample_with_retrieval_path=outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa/reranked_records/top4_original_plus_artifact.json"
+      ]
+    },
+    "prediction_commands_have_no_artifact_context_arg": true,
+    "prediction_commands_use_sample_with_retrieval_path": true,
+    "run_formulas": {
+      "top4_artifact_only": "branch_preserving_artifact_score=max_bm25(question,anchored_page_artifacts); fallback=original_only_when_no_positive_anchor_score",
+      "top4_original_only": "original_retrieval_order",
+      "top4_original_plus_artifact": "branch_preserving_topk_constrained_final_score=lambda_weight*normalized_original_score+(1-lambda_weight)*anchored_artifact_score; candidate_pool=original_branch_top_k; preserve_branch_top1=true; fallback=original_only_when_no_positive_anchor_score"
+    }
+  },
+  "created_utc": "2026-06-04T01:51:00.834478+00:00",
+  "decision": "r041_identical_aggregate_score_attribution_complete",
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r039_record_ids": "outputs/heldout/r039_targeted_activation_rich/record_ids.txt",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "interpretation": {
+    "bottom_line": "R040's identical aggregate scores are best attributed to small record-level cancellation under a page-reranking-only, original-candidate-pool-constrained setup, not to identical per-record behavior and not to evidence that artifact context improves or fails on full data.",
+    "primary_explanation": [
+      "All three aggregate scores are exactly 18/37; the tie is not a rounding artifact.",
+      "The record-level binary vectors are not identical: 4 records diverge, and gains/losses cancel out in the aggregate.",
+      "top4_artifact_only gained 2 records and lost 2 records relative to the other two runs, producing an aggregate tie.",
+      "The artifact-labeled R040 runs changed page-ranking inputs only; prediction commands did not pass artifact content as prompt-visible context.",
+      "Artifact-mode selected pages stayed within the original top-10 retrieval candidate pools for every audited record.",
+      "Retrieval/order changed for some records, but those changes did not cross the binary correctness decision boundary.",
+      "Artifact scores were present on selected pages, so the audit does not reduce to a completely inert artifact store; the observed effect is binary-insensitive under this setup."
+    ]
+  },
+  "num_records": 37,
+  "outcome_counts": {
+    "all_correct": 16,
+    "all_wrong": 17,
+    "binary_divergent": 4
+  },
+  "primary_attribution_counts": {
+    "answer_text_changed_but_binary_bucket_unchanged": 8,
+    "binary_divergence_requires_manual_review": 4,
+    "no_record_level_binary_sensitivity_observed": 7,
+    "retrieval_changed_but_answer_and_binary_bucket_unchanged": 8,
+    "retrieval_or_answer_text_changed_but_binary_bucket_unchanged": 10
+  },
+  "recommended_next_steps": [
+    "Do manual error analysis on records where answer text changed but binary correctness stayed the same.",
+    "If running a later experiment, make it contrastive: separate page-reranking effects from explicit artifact-context injection.",
+    "Add exposure accounting to future manifests so artifact score, selected page, and prompt-visible evidence are distinct fields.",
+    "Do not launch full QA from R040 alone; R041 supports only a targeted diagnostic conclusion."
+  ],
+  "retrieval_change": {
+    "top4_artifact_only": {
+      "any_branch_list_changed_records": 21,
+      "any_branch_set_changed_records": 15,
+      "combined_set_changed_records": 7,
+      "mean_combined_jaccard_unique_pages": 0.952831
+    },
+    "top4_original_plus_artifact": {
+      "any_branch_list_changed_records": 17,
+      "any_branch_set_changed_records": 12,
+      "combined_set_changed_records": 7,
+      "mean_combined_jaccard_unique_pages": 0.961358
+    }
+  },
+  "schema_version": "r041_r040_identical_score_attribution_v1",
+  "scope": {
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_full_data_generalization": true,
+    "not_official_mmlongbench_result": true,
+    "posthoc_attribution_audit_only": true,
+    "uses_only_r039_r040_frozen_outputs": true
+  },
+  "scores": {
+    "top4_artifact_only": {
+      "binary_correctness": 0.4864864864864865,
+      "correct": 18,
+      "scored": 37
+    },
+    "top4_original_only": {
+      "binary_correctness": 0.4864864864864865,
+      "correct": 18,
+      "scored": 37
+    },
+    "top4_original_plus_artifact": {
+      "binary_correctness": 0.4864864864864865,
+      "correct": 18,
+      "scored": 37
+    }
+  }
+}
