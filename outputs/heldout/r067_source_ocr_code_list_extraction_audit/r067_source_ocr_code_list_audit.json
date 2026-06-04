@@ -1,0 +1,308 @@
+{
+  "code_list_extractor_audit": {
+    "all_artifacts_locatable": true,
+    "ar_pairs": [
+      {
+        "artifact_id": "code_name_pair_001",
+        "artifact_type": "text_span",
+        "content": "AR01: Little Rock",
+        "element_locatable": true,
+        "eps_code": "AR01",
+        "geographic_market_name": "Little Rock",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_002",
+        "artifact_type": "text_span",
+        "content": "AR02: Northern Arkansas",
+        "element_locatable": true,
+        "eps_code": "AR02",
+        "geographic_market_name": "Northern Arkansas",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      }
+    ],
+    "extracted_codes": [
+      "AR01",
+      "AR02",
+      "NM01",
+      "NM02",
+      "OK01",
+      "OK02",
+      "TX01",
+      "TX02",
+      "TX03",
+      "TX04",
+      "TX05",
+      "TX06",
+      "TX07",
+      "TX08",
+      "TX09",
+      "TX10",
+      "TX11",
+      "TX12",
+      "TX13",
+      "TX14",
+      "TX15",
+      "TX16",
+      "TX17",
+      "TX18",
+      "TX19",
+      "TX20",
+      "TX21",
+      "TX22",
+      "TX23",
+      "TX24"
+    ],
+    "extracted_pair_count": 30,
+    "sample_pairs": [
+      {
+        "artifact_id": "code_name_pair_001",
+        "artifact_type": "text_span",
+        "content": "AR01: Little Rock",
+        "element_locatable": true,
+        "eps_code": "AR01",
+        "geographic_market_name": "Little Rock",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_002",
+        "artifact_type": "text_span",
+        "content": "AR02: Northern Arkansas",
+        "element_locatable": true,
+        "eps_code": "AR02",
+        "geographic_market_name": "Northern Arkansas",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_003",
+        "artifact_type": "text_span",
+        "content": "NM01: Albuquerque and Northern New Mexico",
+        "element_locatable": true,
+        "eps_code": "NM01",
+        "geographic_market_name": "Albuquerque and Northern New Mexico",
+        "group_label": "New Mexico",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_004",
+        "artifact_type": "text_span",
+        "content": "NM02: Southern New Mexico",
+        "element_locatable": true,
+        "eps_code": "NM02",
+        "geographic_market_name": "Southern New Mexico",
+        "group_label": "New Mexico",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_005",
+        "artifact_type": "text_span",
+        "content": "OK01: Oklahoma City and Western Oklahoma",
+        "element_locatable": true,
+        "eps_code": "OK01",
+        "geographic_market_name": "Oklahoma City and Western Oklahoma",
+        "group_label": "Oklahoma",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_006",
+        "artifact_type": "text_span",
+        "content": "OK02: Tulsa and Eastern Oklahoma",
+        "element_locatable": true,
+        "eps_code": "OK02",
+        "geographic_market_name": "Tulsa and Eastern Oklahoma",
+        "group_label": "Oklahoma",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_007",
+        "artifact_type": "text_span",
+        "content": "TX01: Amarillo, Panhandle, and South Plains",
+        "element_locatable": true,
+        "eps_code": "TX01",
+        "geographic_market_name": "Amarillo, Panhandle, and South Plains",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_008",
+        "artifact_type": "text_span",
+        "content": "TX02: El Paso",
+        "element_locatable": true,
+        "eps_code": "TX02",
+        "geographic_market_name": "El Paso",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_009",
+        "artifact_type": "text_span",
+        "content": "TX03: Midland, Odessa, and Trans Pecos",
+        "element_locatable": true,
+        "eps_code": "TX03",
+        "geographic_market_name": "Midland, Odessa, and Trans Pecos",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_010",
+        "artifact_type": "text_span",
+        "content": "TX04: Abilene and San Angelo",
+        "element_locatable": true,
+        "eps_code": "TX04",
+        "geographic_market_name": "Abilene and San Angelo",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_011",
+        "artifact_type": "text_span",
+        "content": "TX05: Red River Area",
+        "element_locatable": true,
+        "eps_code": "TX05",
+        "geographic_market_name": "Red River Area",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_012",
+        "artifact_type": "text_span",
+        "content": "TX06: Austin and Central Texas",
+        "element_locatable": true,
+        "eps_code": "TX06",
+        "geographic_market_name": "Austin and Central Texas",
+        "group_label": "Texas",
+        "page_index": 7,
+        "source_anchored": true
+      }
+    ],
+    "schema_version": "r067_code_list_extractor_audit_v1",
+    "target_code_extracted": false
+  },
+  "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+  "existing_artifact_page_count": 0,
+  "forbidden_gold_fields_present": [],
+  "no_provider_calls": true,
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "not_prediction_or_eval": true,
+  "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+  "recommended_fix": [
+    "Keep exact-code matching strict; the repaired code-list extractor must not infer AR03 from AR01/AR02 or Arkansas context.",
+    "Manually inspect the page image for AR03 only if the benchmark expects an answer; current OCR/text evidence does not support it.",
+    "Integrate the code-name list extractor into Stage 2 for EPS-like text lists, then rerun no-provider coverage before any provider diagnostic.",
+    "For record 508, route to page-cited absence/refusal unless source/OCR repair reveals exact AR03."
+  ],
+  "record_id": 508,
+  "retrieval_pages": {
+    "candidate_union": [
+      8,
+      7,
+      9,
+      5,
+      6,
+      2
+    ],
+    "top4_artifact_only_combined": [
+      8,
+      7,
+      9,
+      5,
+      6,
+      2
+    ],
+    "top4_original_only_combined": [
+      7,
+      9,
+      5,
+      2,
+      6,
+      8
+    ]
+  },
+  "schema_version": "r067_source_ocr_code_list_extraction_audit_v1",
+  "selector_replay_with_extracted_artifacts": {
+    "answer_policy": "use_page_evidence_for_absence_or_refuse",
+    "candidate_artifact_count": 30,
+    "guard_decision": "exact_code_absence_guard",
+    "guard_reasons": [
+      "no_artifact_contains_exact_question_code",
+      "numeric_artifacts_rejected_without_exact_code_key"
+    ],
+    "positive_candidate_count": 30,
+    "selected_artifact_count": 0,
+    "selected_artifact_ids": []
+  },
+  "source_ocr_audit": {
+    "ar_codes_in_text": [
+      "AR01",
+      "AR02"
+    ],
+    "code_family_present_in_text": true,
+    "codes_in_text": [
+      "AR01",
+      "AR02",
+      "NM01",
+      "NM02",
+      "OK01",
+      "OK02",
+      "TX01",
+      "TX02",
+      "TX03",
+      "TX04",
+      "TX05",
+      "TX06",
+      "TX07",
+      "TX08",
+      "TX09",
+      "TX10",
+      "TX11",
+      "TX12",
+      "TX13",
+      "TX14",
+      "TX15",
+      "TX16",
+      "TX17",
+      "TX18",
+      "TX19",
+      "TX20",
+      "TX21",
+      "TX22",
+      "TX23",
+      "TX24"
+    ],
+    "image_exists": true,
+    "image_path": "tmp/MMLongBench/8dfc21ec151fb9d3578fc32d5c4e5df9_7.png",
+    "schema_version": "r067_source_ocr_audit_v1",
+    "state_marker_present_in_text": true,
+    "target_code_nearby_snippets": [
+      "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkans",
+      "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM",
+      "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK)",
+      "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. Oklaho"
+    ],
+    "target_code_present_in_text": false,
+    "text_char_count": 1504,
+    "text_exists": true,
+    "text_path": "tmp/MMLongBench/8dfc21ec151fb9d3578fc32d5c4e5df9_7.txt"
+  },
+  "target_code": "AR03",
+  "target_page": 7
+}

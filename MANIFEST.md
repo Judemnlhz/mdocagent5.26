@@ -41,3 +41,13 @@
 | 2026-06-04 13:20 | /run-experiment | outputs/heldout/r066_artifact_key_value_extraction_audit/r066_key_value_compact_index.jsonl | implementation | R066 compact AR03 coverage index |
 | 2026-06-04 13:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R066 artifact key/value extraction summary |
 | 2026-06-04 13:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R066 tracker row |
+| 2026-06-04 13:45 | /run-experiment | mdocnexus/stage2/code_name_list_extractor.py | implementation | R067 generic public code/name list extractor for EPS-like text lists |
+| 2026-06-04 13:45 | /run-experiment | mdocnexus/stage2/tests/test_code_name_list_extractor.py | implementation | R067 code/name extractor unit tests |
+| 2026-06-04 13:45 | /run-experiment | scripts/run_r067_source_ocr_code_list_extraction_audit.py | implementation | R067 no-provider source/OCR and code-list extraction audit runner |
+| 2026-06-04 13:45 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R067 entry |
+| 2026-06-04 13:45 | /run-experiment | outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_report.md | implementation | R067 source/OCR code-list extraction report |
+| 2026-06-04 13:45 | /run-experiment | outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_gate.md | implementation | R067 source/OCR code-list extraction gate |
+| 2026-06-04 13:45 | /run-experiment | outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_audit.json | implementation | R067 detailed public-only source/OCR/code-list audit payload |
+| 2026-06-04 13:45 | /run-experiment | outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_code_list_compact_index.jsonl | implementation | R067 compact source/OCR/code-list index |
+| 2026-06-04 13:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R067 source/OCR code-list extraction summary |
+| 2026-06-04 13:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R067 tracker row |

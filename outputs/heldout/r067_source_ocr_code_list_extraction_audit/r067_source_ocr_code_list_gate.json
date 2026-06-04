@@ -1,0 +1,28 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "does_not_claim_artifact_lift": true,
+    "extractor_does_not_invent_ar03": true,
+    "extractor_recovers_ar01_ar02": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_audit": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "r066_gate_was_passed": true,
+    "selector_still_exact_code_absence": true,
+    "source_text_and_image_exist": true,
+    "target_code_absent_from_ocr_text": true,
+    "target_page_is_7": true,
+    "target_record_is_508": true
+  },
+  "created_utc": "2026-06-04T13:22:15.687898+00:00",
+  "decision": "r067_source_ocr_code_list_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r067_source_ocr_code_list_gate_v1",
+  "target_record_id": 508
+}

@@ -1,0 +1,99 @@
+{
+  "created_utc": "2026-06-04T13:22:15.687918+00:00",
+  "decision": "r067_source_ocr_code_list_audit_complete",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "does_not_claim_artifact_lift": true,
+      "extractor_does_not_invent_ar03": true,
+      "extractor_recovers_ar01_ar02": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_audit": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "r066_gate_was_passed": true,
+      "selector_still_exact_code_absence": true,
+      "source_text_and_image_exist": true,
+      "target_code_absent_from_ocr_text": true,
+      "target_page_is_7": true,
+      "target_record_is_508": true
+    },
+    "created_utc": "2026-06-04T13:22:15.687898+00:00",
+    "decision": "r067_source_ocr_code_list_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r067_source_ocr_code_list_gate_v1",
+    "target_record_id": 508
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "extract_path": "tmp/MMLongBench",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r063_comparisons": "outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl",
+    "r066_gate": "outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_gate.json"
+  },
+  "recommended_next": [
+    "Keep exact-code matching strict; the repaired code-list extractor must not infer AR03 from AR01/AR02 or Arkansas context.",
+    "Manually inspect the page image for AR03 only if the benchmark expects an answer; current OCR/text evidence does not support it.",
+    "Integrate the code-name list extractor into Stage 2 for EPS-like text lists, then rerun no-provider coverage before any provider diagnostic.",
+    "For record 508, route to page-cited absence/refusal unless source/OCR repair reveals exact AR03."
+  ],
+  "schema_version": "r067_source_ocr_code_list_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_mmlongbench_result": true,
+    "target_page_only": 7,
+    "target_record_only": 508
+  },
+  "summary": {
+    "ar_codes_in_text": [
+      "AR01",
+      "AR02"
+    ],
+    "ar_pairs": [
+      {
+        "artifact_id": "code_name_pair_001",
+        "artifact_type": "text_span",
+        "content": "AR01: Little Rock",
+        "element_locatable": true,
+        "eps_code": "AR01",
+        "geographic_market_name": "Little Rock",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      },
+      {
+        "artifact_id": "code_name_pair_002",
+        "artifact_type": "text_span",
+        "content": "AR02: Northern Arkansas",
+        "element_locatable": true,
+        "eps_code": "AR02",
+        "geographic_market_name": "Northern Arkansas",
+        "group_label": "Arkansas",
+        "page_index": 7,
+        "source_anchored": true
+      }
+    ],
+    "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+    "existing_artifact_page_count": 0,
+    "extracted_pair_count": 30,
+    "image_exists": true,
+    "record_id": 508,
+    "schema_version": "r067_code_list_compact_index_v1",
+    "selected_artifact_count": 0,
+    "selector_guard_with_extracted_artifacts": "exact_code_absence_guard",
+    "target_code": "AR03",
+    "target_code_extracted": false,
+    "target_code_present_in_text": false,
+    "target_page": 7,
+    "text_exists": true
+  }
+}

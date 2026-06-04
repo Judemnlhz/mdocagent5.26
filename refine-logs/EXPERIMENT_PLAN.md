@@ -1117,3 +1117,47 @@ Key findings:
 - Primary root cause is `extracted_document_text_missing_required_code`, with secondary categories for artifact key/value absence and numeric-table-only artifact normalization.
 
 Decision: do not relax exact-code matching for AR03. Keep the exact-code absence guard and route this case to page-cited refusal/absence handling. Before any provider diagnostic, audit whether the source PDF visually contains AR03 but OCR/extraction dropped it; if the source also lacks AR03, treat this as not answerable under visible evidence. Separately, repair EPS/table-list artifact extraction for page text such as page 7, where the Arkansas EPS neighborhood is visible but no artifacts are generated.
+
+### 2026-06-04 R067 Source/OCR Code-List Extraction Audit
+
+R067 follows R066 by separating two issues for record 508 / page 7 / `AR03`: whether current OCR/source text supports the requested exact code, and whether Stage 2 can extract code/name list artifacts from visible EPS-like text.
+
+Purpose:
+
+- Check that page text and page image exist for the target source page.
+- Confirm whether OCR/extracted text contains exact `AR03`.
+- Add a deterministic, page-local code/name list extractor for EPS-like lists.
+- Verify the extractor recovers visible code/name pairs without inventing missing codes.
+- Replay exact-code selection against the extracted artifacts.
+- Keep the result no-provider and diagnostic-only.
+
+Scope and boundary:
+
+- Target record only: 508.
+- Target page only: 7.
+- Target code: `AR03`.
+- Inputs: R063 cached parser output, R066 gate, R040/R039 retrieval records, R038d union atomic artifact store, and public page image/text under `tmp/MMLongBench`.
+- No provider calls, no prediction, no evaluation, no full QA, no official score, and no artifact-lift claim.
+
+Outputs:
+
+- `mdocnexus/stage2/code_name_list_extractor.py`
+- `mdocnexus/stage2/tests/test_code_name_list_extractor.py`
+- `scripts/run_r067_source_ocr_code_list_extraction_audit.py`
+- `outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_report.md`
+- `outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_gate.md`
+- `outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_audit.json`
+- `outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_code_list_compact_index.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Page text and image both exist for page 7.
+- OCR text contains `AR01` and `AR02`, but not exact `AR03`.
+- Existing artifact count for page 7 is 0.
+- The code/name extractor recovers 30 visible EPS-like pairs from page 7.
+- The extractor recovers `AR01: Little Rock` and `AR02: Northern Arkansas` and does not invent `AR03`.
+- Replaying the exact-code selector with extracted artifacts still gives `exact_code_absence_guard` for record 508.
+
+Decision: integrate the code/name list extractor into Stage 2 for EPS-like public text lists, because it repairs the page-7 artifact coverage gap. Do not relax exact-code matching and do not answer record 508 from `AR01`/`AR02` or Arkansas context. Record 508 should remain page-cited absence/refusal unless source-image or OCR repair reveals exact `AR03`.
