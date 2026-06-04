@@ -1,0 +1,48 @@
+{
+  "checks": {
+    "all_parser_outputs_parseable": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "deterministic_selector_still_used": true,
+    "does_not_claim_artifact_lift": true,
+    "llm_does_not_select_artifacts_directly": true,
+    "no_answer_generation": true,
+    "no_full_qa": true,
+    "no_prediction_or_eval": true,
+    "not_official_score": true,
+    "parser_inputs_question_only": true,
+    "parser_outputs_have_no_gold_fields": true,
+    "provider_outputs_exactly_target_count": true,
+    "scope_limited_to_evidence_demand_parser_diagnostic": true,
+    "selector_previews_have_no_gold_fields": true,
+    "target_records_match_requested_small_set": true
+  },
+  "created_utc": "2026-06-04T12:08:45.960877+00:00",
+  "decision": "r063_llm_evidence_demand_parser_gate_pass",
+  "gate_passed": true,
+  "guard_decision_counts": {
+    "artifact_dimension_support_guard": 4,
+    "document_metadata_refusal_guard": 2,
+    "operand_completeness_guard": 1
+  },
+  "hard_failures": [],
+  "interpretation_counts": {
+    "llm_requirements_no_positive_artifact_lift_claim": 3,
+    "llm_requirements_tighten_or_confirm_artifact_rejection": 4
+  },
+  "llm_artifact_supporting_records": [],
+  "llm_selected_positive_records": [],
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r063_llm_evidence_demand_gate_v1",
+  "target_record_ids": [
+    384,
+    508,
+    569,
+    69,
+    223,
+    224,
+    227
+  ]
+}

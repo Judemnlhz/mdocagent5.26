@@ -1,0 +1,246 @@
+{
+  "created_utc": "2026-06-04T12:08:45.960958+00:00",
+  "decision": "r063_llm_evidence_demand_parser_complete",
+  "gate": {
+    "checks": {
+      "all_parser_outputs_parseable": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "deterministic_selector_still_used": true,
+      "does_not_claim_artifact_lift": true,
+      "llm_does_not_select_artifacts_directly": true,
+      "no_answer_generation": true,
+      "no_full_qa": true,
+      "no_prediction_or_eval": true,
+      "not_official_score": true,
+      "parser_inputs_question_only": true,
+      "parser_outputs_have_no_gold_fields": true,
+      "provider_outputs_exactly_target_count": true,
+      "scope_limited_to_evidence_demand_parser_diagnostic": true,
+      "selector_previews_have_no_gold_fields": true,
+      "target_records_match_requested_small_set": true
+    },
+    "created_utc": "2026-06-04T12:08:45.960877+00:00",
+    "decision": "r063_llm_evidence_demand_parser_gate_pass",
+    "gate_passed": true,
+    "guard_decision_counts": {
+      "artifact_dimension_support_guard": 4,
+      "document_metadata_refusal_guard": 2,
+      "operand_completeness_guard": 1
+    },
+    "hard_failures": [],
+    "interpretation_counts": {
+      "llm_requirements_no_positive_artifact_lift_claim": 3,
+      "llm_requirements_tighten_or_confirm_artifact_rejection": 4
+    },
+    "llm_artifact_supporting_records": [],
+    "llm_selected_positive_records": [],
+    "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r063_llm_evidence_demand_gate_v1",
+    "target_record_ids": [
+      384,
+      508,
+      569,
+      69,
+      223,
+      224,
+      227
+    ]
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "parser_contract": {
+      "allowed_inputs": [
+        "question text only for parser",
+        "public parser output merged into deterministic selector profile"
+      ],
+      "config_flag": "enable_llm_evidence_demand_parser",
+      "default_enabled": false,
+      "does_not_do": [
+        "answer generation",
+        "artifact selection by LLM",
+        "prediction",
+        "evaluation",
+        "official score",
+        "artifact lift claim"
+      ],
+      "forbidden_inputs": [
+        "answer",
+        "answers",
+        "gold_answer",
+        "evidence_pages",
+        "gold_evidence",
+        "binary_correctness",
+        "provider answer generation"
+      ],
+      "schema_version": "evidence_demand_parser_v1",
+      "selector_boundary": "LLM parses evidence demand only; deterministic guarded selector still scores and selects public artifacts."
+    },
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "model": {
+    "base_url": "https://api.siliconflow.cn/v1",
+    "max_tokens": 700,
+    "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "temperature": 0.0
+  },
+  "per_record": [
+    {
+      "answer_type": "metadata_lookup",
+      "interpretation": "llm_requirements_no_positive_artifact_lift_claim",
+      "llm_added_dimensions": [
+        "producer",
+        "revision_date"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "document_metadata_refusal_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "Who produced the document that was revised on May 2018?",
+      "record_id": 384,
+      "rule_guard": "document_metadata_refusal_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "metadata_lookup",
+      "interpretation": "llm_requirements_no_positive_artifact_lift_claim",
+      "llm_added_dimensions": [
+        "eps_code",
+        "geographic_market_name"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "document_metadata_refusal_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+      "record_id": 508,
+      "rule_guard": "exact_code_absence_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "computation",
+      "interpretation": "llm_requirements_no_positive_artifact_lift_claim",
+      "llm_added_dimensions": [
+        "age_group",
+        "education_status",
+        "employment_status",
+        "organization",
+        "survey_date"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "operand_completeness_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the survey of Pew Research Center, January 2018?",
+      "record_id": 569,
+      "rule_guard": "operand_completeness_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "visual_caption",
+      "interpretation": "llm_requirements_tighten_or_confirm_artifact_rejection",
+      "llm_added_dimensions": [
+        "algorithm",
+        "figure_number",
+        "node"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "artifact_dimension_support_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+      "record_id": 69,
+      "rule_guard": "artifact_dimension_support_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "table_lookup",
+      "interpretation": "llm_requirements_tighten_or_confirm_artifact_rejection",
+      "llm_added_dimensions": [
+        "device_usage",
+        "population_group"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "artifact_dimension_support_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "record_id": 223,
+      "rule_guard": "artifact_dimension_support_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "numeric_comparison",
+      "interpretation": "llm_requirements_tighten_or_confirm_artifact_rejection",
+      "llm_added_dimensions": [
+        "population_group",
+        "survey_period",
+        "survey_source"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "artifact_dimension_support_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2022 tracking survey?",
+      "record_id": 224,
+      "rule_guard": "artifact_dimension_support_guard",
+      "rule_selected_artifact_count": 0
+    },
+    {
+      "answer_type": "numeric_comparison",
+      "interpretation": "llm_requirements_tighten_or_confirm_artifact_rejection",
+      "llm_added_dimensions": [
+        "age_group",
+        "device_type",
+        "education_level",
+        "survey_period"
+      ],
+      "llm_artifact_support_sufficient": false,
+      "llm_guard": "artifact_dimension_support_guard",
+      "llm_selected_artifact_count": 0,
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "record_id": 227,
+      "rule_guard": "artifact_dimension_support_guard",
+      "rule_selected_artifact_count": 0
+    }
+  ],
+  "recommended_next": [
+    "Manually inspect R063 selector comparisons before changing the adapter path.",
+    "If the parser adds useful dimensions but still selects no supporting artifacts, improve artifact store/coverage rather than running full QA.",
+    "If the parser preserves or improves supporting artifact retention on positive cases, add a default-off integration gate for parser-assisted profiles before any provider QA run."
+  ],
+  "schema_version": "r063_llm_evidence_demand_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "does_not_prove_retrieval_improvement": true,
+    "no_answer_generation": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "not_official_mmlongbench_result": true,
+    "provider_calls": 7,
+    "provider_role": "question-only evidence-demand parser",
+    "selector_role": "deterministic guarded selector",
+    "target_records_only": [
+      384,
+      508,
+      569,
+      69,
+      223,
+      224,
+      227
+    ]
+  },
+  "summary": {
+    "guard_decision_counts": {
+      "artifact_dimension_support_guard": 4,
+      "document_metadata_refusal_guard": 2,
+      "operand_completeness_guard": 1
+    },
+    "interpretation_counts": {
+      "llm_requirements_no_positive_artifact_lift_claim": 3,
+      "llm_requirements_tighten_or_confirm_artifact_rejection": 4
+    },
+    "llm_artifact_supporting_records": [],
+    "llm_selected_positive_records": [],
+    "num_records": 7,
+    "parseable_outputs": 7
+  }
+}

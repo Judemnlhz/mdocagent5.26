@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unified entrypoint for heldout diagnostic audit runners.
 
-This wrapper keeps the R043-R045 and R053-R062 diagnostic workflow discoverable without
+This wrapper keeps the R043-R045 and R053-R063 diagnostic workflow discoverable without
 duplicating the implementation in each focused runner. It deliberately excludes
 R041/R042 one-off attribution scripts; their final reports are retained under
 ``outputs/heldout``.
@@ -29,6 +29,7 @@ RUNNERS = {
     "r060": "run_r060_page_artifact_routing_audit.py",
     "r061": "run_r061_page_routed_provider.py",
     "r062": "run_r062_guarded_routing_integration_decision.py",
+    "r063": "run_r063_llm_evidence_demand_parser.py",
 }
 
 

@@ -1,0 +1,27 @@
+{
+  "allowed_inputs": [
+    "question text only for parser",
+    "public parser output merged into deterministic selector profile"
+  ],
+  "config_flag": "enable_llm_evidence_demand_parser",
+  "default_enabled": false,
+  "does_not_do": [
+    "answer generation",
+    "artifact selection by LLM",
+    "prediction",
+    "evaluation",
+    "official score",
+    "artifact lift claim"
+  ],
+  "forbidden_inputs": [
+    "answer",
+    "answers",
+    "gold_answer",
+    "evidence_pages",
+    "gold_evidence",
+    "binary_correctness",
+    "provider answer generation"
+  ],
+  "schema_version": "evidence_demand_parser_v1",
+  "selector_boundary": "LLM parses evidence demand only; deterministic guarded selector still scores and selects public artifacts."
+}
