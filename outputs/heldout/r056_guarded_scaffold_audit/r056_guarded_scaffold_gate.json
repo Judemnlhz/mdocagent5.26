@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "all_prompts_have_citation_requirement": true,
+    "all_prompts_have_unsupported_answer_guard": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "has_positive_signal_non_refusal_cases": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "page_and_artifact_evidence_separated": true,
+    "positive_signal_cases_not_all_cleared": true,
+    "r384_metadata_refusal_guard": true,
+    "r508_exact_code_absence_guard": true,
+    "r569_operand_completeness_guard": true,
+    "scaffold_only": true,
+    "target_cases_match_r045": true,
+    "uses_reusable_guarded_prompt_module": true
+  },
+  "created_utc": "2026-06-04T05:31:44.166876+00:00",
+  "decision": "r056_guarded_scaffold_gate_pass",
+  "gate_passed": true,
+  "guard_decision_by_record": {
+    "223": "token_key_value_selection",
+    "224": "token_key_value_selection",
+    "227": "token_key_value_selection",
+    "367": "no_relevant_artifact_guard",
+    "384": "document_metadata_refusal_guard",
+    "508": "exact_code_absence_guard",
+    "569": "operand_completeness_guard",
+    "69": "token_key_value_selection"
+  },
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_cases": 8,
+  "positive_signal_case_count": 4,
+  "positive_signal_cases_cleared": [],
+  "schema_version": "r056_guarded_scaffold_gate_v1",
+  "selected_artifact_count_by_record": {
+    "223": 8,
+    "224": 8,
+    "227": 8,
+    "367": 0,
+    "384": 0,
+    "508": 0,
+    "569": 0,
+    "69": 8
+  }
+}
