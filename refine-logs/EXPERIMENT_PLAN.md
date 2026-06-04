@@ -1080,3 +1080,40 @@ Key checks:
 
 Decision: keep R065 parser code-type normalization in the default-off parser scaffold. Next should inspect or repair artifact key/value extraction for missing AR03 evidence, then rerun no-provider coverage/mismatch audit before any provider QA.
 
+
+### 2026-06-04 R066 Artifact Key/Value Extraction Audit
+
+R066 audits the remaining record 508 / `AR03` break after R065 normalized the parser route from metadata lookup to table/code lookup.
+
+Purpose:
+
+- Inspect whether `AR03` exists in candidate artifacts, retrieved page text, or whole-document extracted text.
+- Replay the deterministic exact-code selector guard.
+- Attribute the failure without provider calls, prediction, evaluation, full QA, official score, or artifact-lift claim.
+
+Scope and boundary:
+
+- Target record only: 508.
+- Inputs: cached R063 parser output, R065 gate, R040/R039 retrieval records, R038d union atomic artifact store, and public extracted page text.
+- No model/API calls were made in R066.
+
+Outputs:
+
+- `scripts/run_r066_artifact_key_value_extraction_audit.py`
+- `outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_report.md`
+- `outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_gate.md`
+- `outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_audit.json`
+- `outputs/heldout/r066_artifact_key_value_extraction_audit/r066_key_value_compact_index.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Selector replay is `exact_code_absence_guard`.
+- Candidate artifact count is 16; all are on page 8. Candidate page counts are `{"2": 0, "5": 0, "6": 0, "7": 0, "8": 16, "9": 0}`.
+- No candidate artifact raw or normalized text contains exact `AR03`.
+- Retrieved page text has Arkansas/EPS context, but no exact `AR03`.
+- Whole-document extracted text has AR-family codes but no exact `AR03`.
+- Primary root cause is `extracted_document_text_missing_required_code`, with secondary categories for artifact key/value absence and numeric-table-only artifact normalization.
+
+Decision: do not relax exact-code matching for AR03. Keep the exact-code absence guard and route this case to page-cited refusal/absence handling. Before any provider diagnostic, audit whether the source PDF visually contains AR03 but OCR/extraction dropped it; if the source also lacks AR03, treat this as not answerable under visible evidence. Separately, repair EPS/table-list artifact extraction for page text such as page 7, where the Arkansas EPS neighborhood is visible but no artifacts are generated.

@@ -1,0 +1,85 @@
+{
+  "created_utc": "2026-06-04T13:03:03.724040+00:00",
+  "decision": "r066_artifact_key_value_audit_complete",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "audit_reports_artifact_exact_code_status": true,
+      "audit_reports_whole_document_extract_exact_code_status": true,
+      "does_not_claim_artifact_lift": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_audit": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "r065_gate_was_passed": true,
+      "selector_replay_is_exact_code_absence_guard": true,
+      "target_record_is_508": true
+    },
+    "created_utc": "2026-06-04T13:03:03.724010+00:00",
+    "decision": "r066_artifact_key_value_audit_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r066_artifact_key_value_gate_v1",
+    "target_record_id": 508
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "extract_path": "tmp/MMLongBench",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r063_comparisons": "outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl",
+    "r065_gate": "outputs/heldout/r065_parser_code_type_regression/r065_parser_code_type_gate.json"
+  },
+  "recommended_next": [
+    "Do not relax exact-code selector matching for AR03; current public evidence does not contain the requested code.",
+    "Keep the exact-code absence guard and route this case to page-cited refusal/absence handling.",
+    "Audit the source PDF/OCR for whether AR03 is visually present but missing from extracted text; if absent in the source, treat as not answerable under visible evidence.",
+    "Repair EPS/table-list artifact extraction for page text with code/name lists; page 7 has no artifacts while it contains the Arkansas EPS neighborhood.",
+    "After extraction repair, rerun a no-provider exact-code coverage audit before any provider diagnostic."
+  ],
+  "schema_version": "r066_artifact_key_value_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_mmlongbench_result": true,
+    "target_record_only": 508
+  },
+  "summary": {
+    "all_categories": [
+      "artifact_normalization_over_numeric_tables_not_eps_key_values",
+      "artifact_store_missing_exact_code_key_value",
+      "extracted_document_text_missing_required_code",
+      "selector_guard_correct_for_current_public_evidence",
+      "visible_page_supports_code_absence_not_answer"
+    ],
+    "artifact_code_family_present": false,
+    "artifact_exact_code_present": false,
+    "candidate_artifact_count": 16,
+    "candidate_artifact_page_counts": {
+      "2": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 16,
+      "9": 0
+    },
+    "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+    "primary_root_cause": "extracted_document_text_missing_required_code",
+    "record_id": 508,
+    "required_codes": [
+      "AR03"
+    ],
+    "retrieved_page_exact_code_present": false,
+    "retrieved_page_state_marker_present": true,
+    "schema_version": "r066_key_value_compact_index_v1",
+    "selector_guard": "exact_code_absence_guard",
+    "whole_document_code_family_present": true,
+    "whole_document_exact_code_present": false
+  }
+}

@@ -33,3 +33,11 @@
 | 2026-06-04 12:39 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R065 entry |
 | 2026-06-04 12:39 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R065 parser code-type normalization summary |
 | 2026-06-04 12:39 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R065 tracker row |
+| 2026-06-04 13:20 | /run-experiment | scripts/run_r066_artifact_key_value_extraction_audit.py | implementation | R066 no-provider AR03 artifact key/value extraction audit runner |
+| 2026-06-04 13:20 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R066 entry |
+| 2026-06-04 13:20 | /run-experiment | outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_report.md | implementation | R066 artifact key/value extraction report |
+| 2026-06-04 13:20 | /run-experiment | outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_gate.md | implementation | R066 artifact key/value extraction gate |
+| 2026-06-04 13:20 | /run-experiment | outputs/heldout/r066_artifact_key_value_extraction_audit/r066_artifact_key_value_audit.json | implementation | R066 detailed public-only audit payload |
+| 2026-06-04 13:20 | /run-experiment | outputs/heldout/r066_artifact_key_value_extraction_audit/r066_key_value_compact_index.jsonl | implementation | R066 compact AR03 coverage index |
+| 2026-06-04 13:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R066 artifact key/value extraction summary |
+| 2026-06-04 13:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R066 tracker row |

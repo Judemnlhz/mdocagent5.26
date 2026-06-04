@@ -1,0 +1,214 @@
+{
+  "artifact_audit": {
+    "artifact_types": [
+      "numeric_fact",
+      "table_cell"
+    ],
+    "candidate_artifact_count": 16,
+    "code_family_present_in_raw_artifacts": false,
+    "exact_code_present_in_raw_artifacts": false,
+    "raw_code_or_family_hit_count": 0,
+    "raw_code_or_family_hits": [],
+    "required_codes": [
+      "AR03"
+    ],
+    "schema_version": "r066_artifact_code_audit_v1",
+    "scored_candidate_count": 16,
+    "scored_code_or_family_hit_count": 0,
+    "scored_code_or_family_hits": [],
+    "selector_exact_code_hit_count": 0,
+    "selector_exact_code_hit_ids": []
+  },
+  "candidate_artifact_page_counts": {
+    "2": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 16,
+    "9": 0
+  },
+  "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+  "forbidden_gold_fields_present": [],
+  "no_provider_calls": true,
+  "normalized_demand": {
+    "answer_policy": "cite_visible_support_or_refuse",
+    "answer_type": "table_lookup",
+    "evidence_dimensions": [
+      {
+        "aliases": [
+          "EPS Code"
+        ],
+        "dimension": "eps_code",
+        "label": "EPS Code"
+      },
+      {
+        "aliases": [
+          "Market Name",
+          "Geographic Market"
+        ],
+        "dimension": "geographic_market_name",
+        "label": "Geographic Market Name"
+      }
+    ],
+    "is_computation_question": false,
+    "is_document_metadata_lookup": false,
+    "is_numeric_or_table_question": true,
+    "min_numeric_values": 0,
+    "not_answer_generation": true,
+    "required_entities": [
+      "EPS Code AR03"
+    ],
+    "required_metrics": [],
+    "required_operands": [],
+    "required_values_or_codes": [
+      "AR03"
+    ],
+    "requires_exact_code_selection": true,
+    "schema_version": "evidence_demand_parser_v1",
+    "strictly_public_question_only": true
+  },
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "not_prediction_or_eval": true,
+  "profile_flags": {
+    "codes": [
+      "AR03"
+    ],
+    "is_document_metadata_lookup": false,
+    "is_numeric_or_table_question": true,
+    "profile_source": "rule_profile_plus_llm_evidence_demand",
+    "requires_exact_code_selection": true
+  },
+  "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+  "recommended_fix": [
+    "Do not relax exact-code selector matching for AR03; current public evidence does not contain the requested code.",
+    "Keep the exact-code absence guard and route this case to page-cited refusal/absence handling.",
+    "Audit the source PDF/OCR for whether AR03 is visually present but missing from extracted text; if absent in the source, treat as not answerable under visible evidence.",
+    "Repair EPS/table-list artifact extraction for page text with code/name lists; page 7 has no artifacts while it contains the Arkansas EPS neighborhood.",
+    "After extraction repair, rerun a no-provider exact-code coverage audit before any provider diagnostic."
+  ],
+  "record_id": 508,
+  "retrieval_pages": {
+    "candidate_union": [
+      8,
+      7,
+      9,
+      5,
+      6,
+      2
+    ],
+    "top4_artifact_only_combined": [
+      8,
+      7,
+      9,
+      5,
+      6,
+      2
+    ],
+    "top4_original_only_combined": [
+      7,
+      9,
+      5,
+      2,
+      6,
+      8
+    ]
+  },
+  "retrieved_page_text_audit": {
+    "code_family_present": true,
+    "code_or_family_page_hit_count": 1,
+    "code_or_family_page_hits": [
+      {
+        "exists": true,
+        "matched_code_families": [
+          "AR"
+        ],
+        "matched_required_codes": [],
+        "matched_state_markers": [
+          "AR",
+          "Arkansas"
+        ],
+        "nearby_snippets": [
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. O",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. Oklahoma City and",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. Oklahoma City and Western O"
+        ],
+        "page_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf#p007",
+        "page_index": 7
+      }
+    ],
+    "exact_code_present": false,
+    "page_count": 6,
+    "required_codes": [
+      "AR03"
+    ],
+    "schema_version": "r066_page_code_audit_v1",
+    "state_marker_present": true
+  },
+  "root_cause_attribution": {
+    "all_categories": [
+      "artifact_normalization_over_numeric_tables_not_eps_key_values",
+      "artifact_store_missing_exact_code_key_value",
+      "extracted_document_text_missing_required_code",
+      "selector_guard_correct_for_current_public_evidence",
+      "visible_page_supports_code_absence_not_answer"
+    ],
+    "claim_ceiling": "diagnostic_attribution_only_no_artifact_lift_claim",
+    "evidence": [
+      "No candidate artifact raw/normalized text contains the required exact code.",
+      "Candidate artifacts are numeric/table atoms but contain no EPS code-family entries.",
+      "Retrieved page text shows Arkansas/EPS context but not AR03; it supports absence/refusal, not a value answer.",
+      "Whole-document extracted text contains no AR03 exact-code hit.",
+      "R065 exact-code guard rejects artifacts because no artifact contains the required code."
+    ],
+    "primary_root_cause": "extracted_document_text_missing_required_code",
+    "schema_version": "r066_root_cause_attribution_v1"
+  },
+  "schema_version": "r066_artifact_key_value_extraction_audit_v1",
+  "selector_replay": {
+    "answer_policy": "use_page_evidence_for_absence_or_refuse",
+    "candidate_artifact_count": 16,
+    "guard_decision": "exact_code_absence_guard",
+    "guard_reasons": [
+      "no_artifact_contains_exact_question_code",
+      "numeric_artifacts_rejected_without_exact_code_key"
+    ],
+    "positive_candidate_count": 8,
+    "selected_artifact_count": 0,
+    "selected_artifact_ids": []
+  },
+  "whole_document_text_audit": {
+    "code_family_present": true,
+    "code_or_family_page_hit_count": 1,
+    "code_or_family_page_hits": [
+      {
+        "exists": true,
+        "matched_code_families": [
+          "AR"
+        ],
+        "matched_required_codes": [],
+        "matched_state_markers": [
+          "AR",
+          "Arkansas"
+        ],
+        "nearby_snippets": [
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. O",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. Oklahoma City and",
+          "NM OK TX AR 5 6 7 15 1 2 1 2 1 2 1 2 3 4 8 9 10 11 12 13 24 23 14 19 21 20 16 17 18 22 EPS Geographic Market Name Code Arkansas (AR) 1. Little Rock AR01 2. Northern Arkansas AR02 New Mexico (NM) 1. Albuquerque and Northern New Mexico NM01 2. Southern New Mexico NM02 Oklahoma (OK) 1. Oklahoma City and Western O"
+        ],
+        "page_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf#p007",
+        "page_index": 7
+      }
+    ],
+    "exact_code_present": false,
+    "page_count": 18,
+    "required_codes": [
+      "AR03"
+    ],
+    "schema_version": "r066_page_code_audit_v1",
+    "state_marker_present": true
+  }
+}

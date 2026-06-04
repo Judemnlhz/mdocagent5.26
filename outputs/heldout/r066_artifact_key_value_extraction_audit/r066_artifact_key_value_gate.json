@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "audit_reports_artifact_exact_code_status": true,
+    "audit_reports_whole_document_extract_exact_code_status": true,
+    "does_not_claim_artifact_lift": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_audit": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "r065_gate_was_passed": true,
+    "selector_replay_is_exact_code_absence_guard": true,
+    "target_record_is_508": true
+  },
+  "created_utc": "2026-06-04T13:03:03.724010+00:00",
+  "decision": "r066_artifact_key_value_audit_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r066_artifact_key_value_gate_v1",
+  "target_record_id": 508
+}
