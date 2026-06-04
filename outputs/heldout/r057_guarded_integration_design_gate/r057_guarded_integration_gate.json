@@ -1,0 +1,149 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "contract_default_disabled": true,
+    "contract_has_config_flag": true,
+    "disabled_generates_no_prompt_previews": true,
+    "disabled_records_unchanged": true,
+    "enabled_does_not_claim_artifact_lift": true,
+    "enabled_generates_prompt_previews": true,
+    "enabled_manifest_no_gold": true,
+    "enabled_records_unchanged": true,
+    "integration_outputs_written": true,
+    "no_full_qa": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "prompt_previews_have_no_gold_fields": true
+  },
+  "created_utc": "2026-06-04T07:16:14.310248+00:00",
+  "decision": "r057_guarded_integration_gate_pass",
+  "disabled_manifest": {
+    "contract": {
+      "allowed_inputs": [
+        "record_index",
+        "doc_id",
+        "question",
+        "text/image retrieval page ids and scores",
+        "public page text previews",
+        "public artifact fields: artifact_id, artifact_type, modality, content, normalized_content, page_index, source_anchored, validation_status"
+      ],
+      "config_flag": "enable_guarded_prompt_scaffold",
+      "control_surface": "selection/prompt preview only; official retrieval/eval path is unchanged unless explicitly wired later",
+      "default_enabled": false,
+      "does_not_do": [
+        "provider call",
+        "prediction",
+        "evaluation",
+        "official score",
+        "artifact positive-lift claim",
+        "default adapter behavior change"
+      ],
+      "forbidden_inputs": [
+        "answer",
+        "answers",
+        "gold_answer",
+        "evidence_pages",
+        "evidence_sources",
+        "binary_correctness",
+        "gold_evidence",
+        "gold_page",
+        "gold_pages",
+        "provider raw outputs",
+        "API keys or secrets"
+      ],
+      "schema_version": "guarded_prompt_integration_v1"
+    },
+    "enabled": false,
+    "forbidden_gold_fields_present": [],
+    "guard_decision_by_record": {},
+    "input_records_sha256": "f399934d25eb9e75cc71b75b95cd43c0d15b669f5201144d4ff05a9350d4ec17",
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true,
+    "num_prompt_previews": 0,
+    "output_records_sha256": "f399934d25eb9e75cc71b75b95cd43c0d15b669f5201144d4ff05a9350d4ec17",
+    "records_unchanged": true,
+    "schema_version": "guarded_prompt_integration_v1",
+    "selected_artifact_count_by_record": {}
+  },
+  "enabled_manifest": {
+    "contract": {
+      "allowed_inputs": [
+        "record_index",
+        "doc_id",
+        "question",
+        "text/image retrieval page ids and scores",
+        "public page text previews",
+        "public artifact fields: artifact_id, artifact_type, modality, content, normalized_content, page_index, source_anchored, validation_status"
+      ],
+      "config_flag": "enable_guarded_prompt_scaffold",
+      "control_surface": "selection/prompt preview only; official retrieval/eval path is unchanged unless explicitly wired later",
+      "default_enabled": false,
+      "does_not_do": [
+        "provider call",
+        "prediction",
+        "evaluation",
+        "official score",
+        "artifact positive-lift claim",
+        "default adapter behavior change"
+      ],
+      "forbidden_inputs": [
+        "answer",
+        "answers",
+        "gold_answer",
+        "evidence_pages",
+        "evidence_sources",
+        "binary_correctness",
+        "gold_evidence",
+        "gold_page",
+        "gold_pages",
+        "provider raw outputs",
+        "API keys or secrets"
+      ],
+      "schema_version": "guarded_prompt_integration_v1"
+    },
+    "enabled": true,
+    "forbidden_gold_fields_present": [],
+    "guard_decision_by_record": {
+      "223": "token_key_value_selection",
+      "224": "token_key_value_selection",
+      "227": "token_key_value_selection",
+      "367": "no_relevant_artifact_guard",
+      "384": "document_metadata_refusal_guard",
+      "508": "exact_code_absence_guard",
+      "569": "operand_completeness_guard",
+      "69": "token_key_value_selection"
+    },
+    "input_records_sha256": "f399934d25eb9e75cc71b75b95cd43c0d15b669f5201144d4ff05a9350d4ec17",
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true,
+    "num_prompt_previews": 8,
+    "output_records_sha256": "f399934d25eb9e75cc71b75b95cd43c0d15b669f5201144d4ff05a9350d4ec17",
+    "records_unchanged": true,
+    "schema_version": "guarded_prompt_integration_v1",
+    "selected_artifact_count_by_record": {
+      "223": 8,
+      "224": 8,
+      "227": 8,
+      "367": 0,
+      "384": 0,
+      "508": 0,
+      "569": 0,
+      "69": 8
+    }
+  },
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_records": 8,
+  "schema_version": "r057_guarded_integration_gate_v1"
+}
