@@ -13,7 +13,7 @@
     "selector_replay_is_exact_code_absence_guard": true,
     "target_record_is_508": true
   },
-  "created_utc": "2026-06-04T13:03:03.724010+00:00",
+  "created_utc": "2026-06-04T13:04:24.205335+00:00",
   "decision": "r066_artifact_key_value_audit_gate_pass",
   "gate_passed": true,
   "hard_failures": [],
