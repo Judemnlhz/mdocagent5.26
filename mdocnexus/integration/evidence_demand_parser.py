@@ -79,9 +79,12 @@ def normalize_evidence_demand(value: Mapping[str, Any]) -> dict[str, Any]:
         "strictly_public_question_only": True,
         "not_answer_generation": True,
     }
-    literal_text = " ".join(demand["required_values_or_codes"])
+    literal_text = " ".join(demand["required_values_or_codes"] + demand["required_entities"])
     if CODE_PATTERN.search(literal_text):
+        demand["answer_type"] = "table_lookup"
         demand["requires_exact_code_selection"] = True
+        demand["is_document_metadata_lookup"] = False
+        demand["is_numeric_or_table_question"] = True
     if demand["is_computation_question"] and demand["min_numeric_values"] < 2:
         demand["min_numeric_values"] = 2
     return demand

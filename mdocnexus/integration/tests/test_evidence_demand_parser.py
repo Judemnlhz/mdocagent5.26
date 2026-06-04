@@ -60,6 +60,38 @@ class EvidenceDemandParserTests(unittest.TestCase):
         self.assertEqual(len(profile["evidence_requirements"]["dimensions"]), 2)
         self.assertEqual(validate_public_parser_payload({"question": question, "profile": profile}), [])
 
+
+    def test_code_pattern_overrides_metadata_misclassification(self) -> None:
+        demand = normalize_evidence_demand({
+            "answer_type": "metadata_lookup",
+            "required_entities": ["EPS Code AR03"],
+            "required_values_or_codes": ["AR03"],
+            "evidence_dimensions": [
+                {"dimension": "eps_code", "label": "EPS Code", "aliases": ["EPS Code"]},
+                {"dimension": "geographic_market_name", "label": "Geographic Market Name", "aliases": ["Market Name"]},
+            ],
+        })
+
+        self.assertEqual(demand["answer_type"], "table_lookup")
+        self.assertTrue(demand["requires_exact_code_selection"])
+        self.assertTrue(demand["is_numeric_or_table_question"])
+        self.assertFalse(demand["is_document_metadata_lookup"])
+
+    def test_date_metadata_without_code_stays_metadata_lookup(self) -> None:
+        demand = normalize_evidence_demand({
+            "answer_type": "metadata_lookup",
+            "required_entities": ["document", "producer"],
+            "required_values_or_codes": ["May 2018"],
+            "evidence_dimensions": [
+                {"dimension": "revision_date", "label": "revision date", "aliases": ["revised on"]},
+                {"dimension": "producer", "label": "producer", "aliases": ["produced by"]},
+            ],
+        })
+
+        self.assertEqual(demand["answer_type"], "metadata_lookup")
+        self.assertFalse(demand["requires_exact_code_selection"])
+        self.assertTrue(demand["is_document_metadata_lookup"])
+
     def test_contract_is_default_off_and_forbids_gold(self) -> None:
         contract = evidence_demand_contract()
 

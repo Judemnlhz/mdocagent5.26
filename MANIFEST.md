@@ -24,3 +24,12 @@
 | 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_parser_artifact_mismatch_gate.md | implementation | R064 mismatch attribution gate |
 | 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_mismatch_audits.jsonl | implementation | R064 per-record coverage and root-cause audits |
 | 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_mismatch_compact_index.jsonl | implementation | R064 compact root-cause index |
+| 2026-06-04 12:39 | /run-experiment | scripts/run_r065_parser_code_type_regression.py | implementation | R065 no-provider parser code-type regression runner |
+| 2026-06-04 12:39 | /run-experiment | outputs/heldout/r065_parser_code_type_regression/r065_parser_code_type_report.md | implementation | R065 parser code-type regression report |
+| 2026-06-04 12:39 | /run-experiment | outputs/heldout/r065_parser_code_type_regression/r065_parser_code_type_gate.md | implementation | R065 parser code-type gate |
+| 2026-06-04 12:39 | /run-experiment | outputs/heldout/r065_parser_code_type_regression/r065_parser_code_type_regressions.jsonl | implementation | R065 per-record regression details |
+| 2026-06-04 12:39 | /run-experiment | mdocnexus/integration/evidence_demand_parser.py | implementation | R065 updated code-pattern post-normalization behavior |
+| 2026-06-04 12:39 | /run-experiment | mdocnexus/integration/tests/test_evidence_demand_parser.py | implementation | R065 added code-pattern and metadata-control regression tests |
+| 2026-06-04 12:39 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R065 entry |
+| 2026-06-04 12:39 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R065 parser code-type normalization summary |
+| 2026-06-04 12:39 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R065 tracker row |

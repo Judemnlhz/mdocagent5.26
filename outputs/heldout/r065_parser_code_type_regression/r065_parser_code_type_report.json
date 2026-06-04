@@ -1,0 +1,86 @@
+{
+  "created_utc": "2026-06-04T12:37:53.961212+00:00",
+  "decision": "r065_parser_code_type_regression_complete",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "does_not_claim_artifact_lift": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_outputs": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "record_384_control_passed": true,
+      "record_508_passed": true,
+      "target_records_exactly_508_384": true
+    },
+    "created_utc": "2026-06-04T12:37:53.961191+00:00",
+    "decision": "r065_parser_code_type_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r065_parser_code_type_gate_v1",
+    "target_record_ids": [
+      508,
+      384
+    ]
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r063_comparisons": "outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl"
+  },
+  "per_record": [
+    {
+      "after_answer_type": "table_lookup",
+      "before_answer_type": "metadata_lookup",
+      "failed_checks": [],
+      "guard_decision": "exact_code_absence_guard",
+      "passed": true,
+      "profile_flags": {
+        "codes": [
+          "AR03"
+        ],
+        "is_document_metadata_lookup": false,
+        "is_numeric_or_table_question": true,
+        "requires_exact_code_selection": true
+      },
+      "record_id": 508
+    },
+    {
+      "after_answer_type": "metadata_lookup",
+      "before_answer_type": "metadata_lookup",
+      "failed_checks": [],
+      "guard_decision": "document_metadata_refusal_guard",
+      "passed": true,
+      "profile_flags": {
+        "codes": [],
+        "is_document_metadata_lookup": true,
+        "is_numeric_or_table_question": true,
+        "requires_exact_code_selection": false
+      },
+      "record_id": 384
+    }
+  ],
+  "recommended_next": [
+    "Keep the R065 parser code-type normalization in the default-off parser scaffold.",
+    "Do not run full QA from R065; next inspect or repair artifact key/value extraction for the missing AR03 evidence.",
+    "Rerun no-provider mismatch/coverage audit after artifact extraction changes."
+  ],
+  "schema_version": "r065_parser_code_type_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_mmlongbench_result": true,
+    "parser_post_normalization_regression_only": true,
+    "target_records_only": [
+      508,
+      384
+    ]
+  }
+}
