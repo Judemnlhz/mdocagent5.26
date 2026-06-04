@@ -76,6 +76,7 @@ def main() -> None:
     manifest_path = output_root / "r043_prompt_exposure_manifest.json"
     gate_json_path = output_root / "r043_prompt_exposure_gate.json"
     gate_md_path = output_root / "r043_prompt_exposure_gate.md"
+    compact_index_path = output_root / "r043_prompt_exposure_compact_index.jsonl"
     preview_dir = output_root / "prompt_previews"
     if not args.execute:
         print(
@@ -85,6 +86,7 @@ def main() -> None:
                     "output_root": str(output_root),
                     "conditions": CONDITIONS,
                     "manifest": str(manifest_path),
+                    "compact_index": str(compact_index_path),
                     "gate": str(gate_json_path),
                     "no_provider_calls": True,
                     "no_new_qa": True,
@@ -111,6 +113,7 @@ def main() -> None:
         ]
         previews_by_condition[condition] = previews
         write_jsonl(preview_dir / f"{condition}.jsonl", previews)
+    write_jsonl(compact_index_path, build_compact_index(previews_by_condition))
     manifest = build_manifest(args, record_ids, previews_by_condition)
     gate = build_gate(args, manifest, previews_by_condition)
     write_json(manifest_path, manifest)
@@ -124,6 +127,7 @@ def main() -> None:
                 "conditions": CONDITIONS,
                 "num_records": len(record_ids),
                 "manifest": str(manifest_path),
+                "compact_index": str(compact_index_path),
                 "gate_md": str(gate_md_path),
             },
             ensure_ascii=False,
@@ -223,6 +227,33 @@ def build_preview(
         }),
     }
 
+
+def build_compact_index(previews_by_condition: dict[str, list[dict[str, Any]]]) -> list[dict[str, Any]]:
+    rows = []
+    for condition in CONDITIONS:
+        for preview in previews_by_condition[condition]:
+            exposure = preview["exposure"]
+            rows.append(
+                {
+                    "schema_version": "r043_prompt_exposure_compact_index_v1",
+                    "condition": condition,
+                    "record_id": preview["record_id"],
+                    "doc_id": preview["doc_id"],
+                    "retrieval_source_run": preview["retrieval_source_run"],
+                    "retrieval_pages": preview["retrieval_pages"],
+                    "prompt_contains_page_text": exposure["prompt_contains_page_text"],
+                    "prompt_contains_artifacts": exposure["prompt_contains_artifacts"],
+                    "artifact_ids": exposure["artifact_ids"],
+                    "artifact_source_pages": exposure["artifact_source_pages"],
+                    "artifact_snippet_count": exposure["artifact_snippet_count"],
+                    "missing_page_text_pages": exposure["missing_page_text_pages"],
+                    "prompt_char_count": len(preview["prompt_preview"]),
+                    "prompt_preview_sha256": preview["prompt_preview_sha256"],
+                    "r041_binary_pattern": exposure["r041_binary_pattern"],
+                    "r041_case_class": exposure["r041_case_class"],
+                }
+            )
+    return rows
 
 def load_page_context(extract_path: Path, doc_stem: str, page: int, max_chars: int) -> dict[str, Any]:
     path = extract_path / f"{doc_stem}_{page}.txt"

@@ -1,163 +1,0 @@
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/mdocagent_top1_official_reproduction.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/mdocagent_top4_official_reproduction.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/top4_original_only.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/top4_artifact_only.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-Create model:  SiliconFlowTextModel
-./results/MMLongBench/top4_artifact_only__small_artifact_60_90
-  0%|          | 0/30 [00:00<?, ?it/s][2026-06-02 03:51:50,870][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  3%|▎         | 1/30 [00:01<00:46,  1.59s/it][2026-06-02 03:51:52,006][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  7%|▋         | 2/30 [00:02<00:36,  1.32s/it][2026-06-02 03:51:52,892][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 10%|█         | 3/30 [00:03<00:30,  1.12s/it][2026-06-02 03:51:53,955][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 13%|█▎        | 4/30 [00:04<00:28,  1.10s/it][2026-06-02 03:51:54,831][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 17%|█▋        | 5/30 [00:05<00:25,  1.02s/it][2026-06-02 03:51:55,893][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 20%|██        | 6/30 [00:06<00:24,  1.03s/it][2026-06-02 03:51:56,830][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 23%|██▎       | 7/30 [00:07<00:23,  1.00s/it][2026-06-02 03:52:00,050][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 27%|██▋       | 8/30 [00:10<00:37,  1.71s/it][2026-06-02 03:52:01,198][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 30%|███       | 9/30 [00:11<00:32,  1.53s/it][2026-06-02 03:52:02,223][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 33%|███▎      | 10/30 [00:12<00:27,  1.38s/it][2026-06-02 03:52:03,515][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 37%|███▋      | 11/30 [00:14<00:25,  1.35s/it][2026-06-02 03:52:04,618][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 40%|████      | 12/30 [00:15<00:22,  1.28s/it][2026-06-02 03:52:06,307][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 43%|████▎     | 13/30 [00:17<00:23,  1.40s/it][2026-06-02 03:52:07,383][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 47%|████▋     | 14/30 [00:18<00:20,  1.30s/it][2026-06-02 03:52:08,464][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 50%|█████     | 15/30 [00:19<00:18,  1.24s/it][2026-06-02 03:52:09,405][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 53%|█████▎    | 16/30 [00:20<00:16,  1.15s/it][2026-06-02 03:52:10,559][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 57%|█████▋    | 17/30 [00:21<00:14,  1.15s/it][2026-06-02 03:52:11,693][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 60%|██████    | 18/30 [00:22<00:13,  1.14s/it][2026-06-02 03:52:13,288][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 63%|██████▎   | 19/30 [00:23<00:14,  1.28s/it][2026-06-02 03:52:14,200][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 67%|██████▋   | 20/30 [00:24<00:11,  1.17s/it][2026-06-02 03:52:15,453][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 70%|███████   | 21/30 [00:26<00:10,  1.19s/it][2026-06-02 03:52:16,510][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 73%|███████▎  | 22/30 [00:27<00:09,  1.15s/it][2026-06-02 03:52:17,616][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 77%|███████▋  | 23/30 [00:28<00:07,  1.14s/it][2026-06-02 03:52:18,823][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 80%|████████  | 24/30 [00:29<00:06,  1.16s/it][2026-06-02 03:52:20,010][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 83%|████████▎ | 25/30 [00:30<00:05,  1.17s/it][2026-06-02 03:52:20,859][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 87%|████████▋ | 26/30 [00:31<00:04,  1.07s/it][2026-06-02 03:52:21,925][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 90%|█████████ | 27/30 [00:32<00:03,  1.07s/it][2026-06-02 03:52:22,998][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 93%|█████████▎| 28/30 [00:33<00:02,  1.07s/it][2026-06-02 03:52:24,077][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 97%|█████████▋| 29/30 [00:34<00:01,  1.07s/it][2026-06-02 03:52:25,174][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-100%|██████████| 30/30 [00:35<00:00,  1.08s/it]100%|██████████| 30/30 [00:35<00:00,  1.20s/it]
-Save results to ./results/MMLongBench/top4_artifact_only__small_artifact_60_90/results.txt.
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/top4_original_plus_artifact.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-Create model:  SiliconFlowTextModel
-./results/MMLongBench/top4_original_plus_artifact__small_artifact_60_90
-  0%|          | 0/30 [00:00<?, ?it/s][2026-06-02 03:52:30,814][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  3%|▎         | 1/30 [00:01<00:38,  1.33s/it][2026-06-02 03:52:31,910][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  7%|▋         | 2/30 [00:02<00:33,  1.18s/it][2026-06-02 03:52:32,875][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 10%|█         | 3/30 [00:03<00:29,  1.08s/it][2026-06-02 03:52:34,033][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 13%|█▎        | 4/30 [00:04<00:28,  1.11s/it][2026-06-02 03:52:35,710][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 17%|█▋        | 5/30 [00:06<00:32,  1.32s/it][2026-06-02 03:52:36,928][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 20%|██        | 6/30 [00:07<00:30,  1.28s/it][2026-06-02 03:52:37,974][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 23%|██▎       | 7/30 [00:08<00:27,  1.21s/it][2026-06-02 03:52:39,054][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 27%|██▋       | 8/30 [00:09<00:25,  1.17s/it][2026-06-02 03:52:40,022][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 30%|███       | 9/30 [00:10<00:23,  1.10s/it][2026-06-02 03:52:40,984][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 33%|███▎      | 10/30 [00:11<00:21,  1.06s/it][2026-06-02 03:52:41,957][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 37%|███▋      | 11/30 [00:12<00:19,  1.03s/it][2026-06-02 03:52:43,294][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 40%|████      | 12/30 [00:13<00:20,  1.13s/it][2026-06-02 03:52:44,644][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 43%|████▎     | 13/30 [00:15<00:20,  1.19s/it][2026-06-02 03:52:45,843][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 47%|████▋     | 14/30 [00:16<00:19,  1.20s/it][2026-06-02 03:52:46,798][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 50%|█████     | 15/30 [00:17<00:16,  1.12s/it][2026-06-02 03:52:47,768][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 53%|█████▎    | 16/30 [00:18<00:15,  1.08s/it][2026-06-02 03:52:48,972][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 57%|█████▋    | 17/30 [00:19<00:14,  1.12s/it][2026-06-02 03:52:49,957][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 60%|██████    | 18/30 [00:20<00:12,  1.08s/it][2026-06-02 03:52:50,950][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 63%|██████▎   | 19/30 [00:21<00:11,  1.05s/it][2026-06-02 03:52:51,853][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 67%|██████▋   | 20/30 [00:22<00:10,  1.01s/it][2026-06-02 03:52:52,800][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 70%|███████   | 21/30 [00:23<00:08,  1.01it/s][2026-06-02 03:52:53,744][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 73%|███████▎  | 22/30 [00:24<00:07,  1.03it/s][2026-06-02 03:52:54,741][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 77%|███████▋  | 23/30 [00:25<00:06,  1.02it/s][2026-06-02 03:52:55,621][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 80%|████████  | 24/30 [00:26<00:05,  1.05it/s][2026-06-02 03:52:56,648][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 83%|████████▎ | 25/30 [00:27<00:04,  1.03it/s][2026-06-02 03:52:57,890][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 87%|████████▋ | 26/30 [00:28<00:04,  1.05s/it][2026-06-02 03:52:58,882][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 90%|█████████ | 27/30 [00:29<00:03,  1.04s/it][2026-06-02 03:52:59,840][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 93%|█████████▎| 28/30 [00:30<00:02,  1.01s/it][2026-06-02 03:53:00,763][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 97%|█████████▋| 29/30 [00:31<00:00,  1.01it/s][2026-06-02 03:53:03,027][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-100%|██████████| 30/30 [00:33<00:00,  1.37s/it]100%|██████████| 30/30 [00:33<00:00,  1.12s/it]
-Save results to ./results/MMLongBench/top4_original_plus_artifact__small_artifact_60_90/results.txt.
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/reranked_records/top4_graph_context.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "cost_log_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/cost_log.json",
-  "max_records": null,
-  "num_failed_runs": 0,
-  "num_records": 30,
-  "num_runs": 6,
-  "prepare_only": false,
-  "record_slice": "60:90",
-  "run_tag": "small_artifact_60_90",
-  "selected_runs": [
-    "top4_artifact_only",
-    "top4_original_plus_artifact"
-  ],
-  "status": "executed_or_attempted",
-  "summary_md_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/summary.md",
-  "summary_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_artifact_60_90/summary.json"
-}

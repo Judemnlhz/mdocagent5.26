@@ -1,0 +1,378 @@
+{
+  "case_counts": {
+    "all_conditions_miss_sample": 5,
+    "transition_case": 3
+  },
+  "cases": [
+    {
+      "action": "Add an unsupported-answer guard for artifact snippets on not-answerable questions.",
+      "artifact_evidence_status": "misleading_or_irrelevant",
+      "case_type": "transition_case",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the document that was revised on May 2018 was produced by the \"Strategic Planning Services Team.\" This information is derived from the snippets provided, which mention the team in relation to numeric facts and table cells.",
+        "original_pages_only": "The document that was revised on May 2016 (not May 2018, as no revision date for 2018 is mentioned) was produced by the **Florida Department of Health** (4052 Bald Cypress Way, Bin # A00, Tallahassee, FL 32399-1701). \n\nNo information about a May 2018 revision is provided in the visible context.",
+        "original_pages_plus_artifact_snippets": "The document that was revised on May 2016 (not May 2018 as mentioned in the question) was produced by the **Florida Department of Health**, as stated on Page 1. The visible context does not provide information about a revision in May 2018. \n\nIf you meant the May 2016 revision, the producer is clearly the Florida Department of Health. If there is a May 2018 revision referenced elsewhere, it is not visible in the provided context.",
+        "page_rerank_only": "The document that was revised in May 2016 (not May 2018, as no revision date for 2018 is mentioned in the visible context) was produced by the **Florida Department of Health** (located at 4052 Bald Cypress Way, Bin # A00, Tallahassee, FL 32399-1701). \n\nNo information about a May 2018 revision is provided in the given context."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "unsupported_false_positive",
+        "original_pages_only": "supported_refusal",
+        "original_pages_plus_artifact_snippets": "mixed_refusal_with_unneeded_answer",
+        "page_rerank_only": "supported_refusal"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "page_text_evidence_status": "sufficient_for_refusal",
+      "question": "Who produced the document that was revised on May 2018?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": true,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": true
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "unanswerable_equivalent",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "r044_transition_labels": [
+        "artifact_injection_loss_vs_original"
+      ],
+      "record_id": 384,
+      "rubric_label": "artifact_injection_introduces_false_positive_risk",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "Page text supports a refusal because the visible revision is May 2016, not May 2018. Artifact snippets mention Strategic Planning Services Team on page 10 but do not support the requested producer/date relation."
+    },
+    {
+      "action": "Preserve this as a positive diagnostic for unanswerable guard behavior, not as an answer-generation win.",
+      "artifact_evidence_status": "sufficient_for_absence_check",
+      "case_type": "transition_case",
+      "condition_predictions": {
+        "artifact_snippets_only": "The geographic market name for EPS Code AR03 is not explicitly mentioned in the provided artifact snippets. The snippets list various geographic market names and codes, but none correspond to AR03. Therefore, the answer cannot be determined from the given context.",
+        "original_pages_only": "The geographic market name for EPS Code AR03 is **Mobile** (from the Alabama section on Page 6). \n\n*(Note: While AR03 is not explicitly listed under Arkansas (AR) on Page 7, the context shows that AR codes are assigned to Arkansas, and the numbering skips from AR02 to other states. The only \"AR03\" appearing in the visible context is under Alabama (AL03), which is labeled as Mobile. This suggests a possible data discrepancy or that AR03 may not be defined in the provided pages.)*",
+        "original_pages_plus_artifact_snippets": "The geographic market name for EPS Code AR03 is not listed in the provided context. The document only includes AR01 (Little Rock) and AR02 (Northern Arkansas) for Arkansas.",
+        "page_rerank_only": "The geographic market name for EPS Code AR03 is not listed in the provided context. The document only includes AR01 (Little Rock) and AR02 (Northern Arkansas) for Arkansas."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "supported_refusal",
+        "original_pages_only": "unsupported_false_positive",
+        "original_pages_plus_artifact_snippets": "supported_refusal",
+        "page_rerank_only": "supported_refusal"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "page_text_evidence_status": "sufficient_when_ordered_correctly",
+      "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+      "r042_label": "artifact_only_loss_unanswerable_false_positive",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": true,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": true,
+        "page_rerank_only": true
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "unanswerable_equivalent",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "unanswerable_equivalent",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "r044_transition_labels": [
+        "page_rerank_gain_vs_original",
+        "artifact_injection_gain_vs_original",
+        "snippet_only_sufficient"
+      ],
+      "record_id": 508,
+      "rubric_label": "rerank_and_artifact_context_help_unanswerable_refusal",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "The visible Arkansas codes include AR01 and AR02 but not AR03. Original pages led to a false positive, while reranked pages, page+artifact snippets, and snippet-only conditions all support refusal."
+    },
+    {
+      "action": "Improve diagnostic matching for insufficient-data refusals and separate refusal quality from exact string matching.",
+      "artifact_evidence_status": "supports_insufficient_data_not_answer_value",
+      "case_type": "transition_case",
+      "condition_predictions": {
+        "artifact_snippets_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field and the sum of children with the same status, we need the relevant numeric values from the context. However, the provided snippets do not explicitly list the required sums for the older age group and children. \n\nThe snippets mention percentages like:\n- 82% (Engineers and architects and computer workers)\n- 77% (Engineers and architects among the most)\n- 65.9% (social science occupations)\n\nBut without the specific sums for the two groups (older age group and children), we cannot compute the percentage difference. \n\n**Answer:** Insufficient data in the provided context to determine the percentage difference.",
+        "original_pages_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the Pew Research Center survey (January 2018), we need to identify the relevant data from the provided context.\n\n### Relevant Data:\n1. **Older Age Group (Workers ages 25 and older with at least a bachelor’s degree in STEM):**\n   - **52%** of STEM-trained workers are employed in a STEM occupation (Page 40).\n   - **33%** of workers ages 25 and older with at least a bachelor’s degree have an undergraduate degree in a STEM major field of study (Page 40).\n\n2. **Children (K-12 public schools):**\n   - **13%** of those with a STEM postgraduate degree rate K-12 STEM education as above average (Page 86).\n   - **27%** of adults with some college or less education give K-12 STEM education in the U.S. the same rating (Page 86).\n\n### Calculation:\n- **Sum for Older Age Group:** 52% (employed in STEM) + 33% (STEM degree holders) = **85%**\n- **Sum",
+        "original_pages_plus_artifact_snippets": "To calculate the percentage difference between the sum of older age groups who have received a STEM degree and are employed in their field and the sum of children with the same status, we need to identify the relevant data points from the provided context.\n\nFrom the visible context, we can gather the following information:\n\n1. **Older Age Group with STEM Degrees Employed in Their Field**:\n   - On **Page 40**, it is mentioned that among workers ages 25 and older with at least a bachelor’s degree, **52%** of those with a STEM degree are employed in a STEM occupation.\n   - On **Page 27**, it is noted that **29%** of STEM workers have a postgraduate degree (master’s, doctorate, or professional degree), which is a subset of the older age group.\n\n2. **Children with the Same Status**:\n   - The context does not provide specific data for children (likely referring to K-12 students) who have received a STEM degree and are employed in their field, as this would not be applicable to children. The closest relevant data is about perceptions of K-12 STEM education quality, but not employment status.\n\nSince the context does not provide data on children with STEM degrees and employment in their field (as",
+        "page_rerank_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field and the sum of children with the same status, we need to identify the relevant data from the provided context.\n\nFrom **Page 40**, it is stated that **52%** of workers aged 25 and older with at least a bachelor’s degree in a STEM field are employed in a STEM occupation.  \n\nFrom **Page 43**, it is mentioned that **56% of women** and **49% of men** who majored in STEM are working in a STEM occupation. However, this does not directly provide a figure for children.  \n\nSince the context does not explicitly provide data on children with STEM degrees employed in their field, we cannot compute the percentage difference.  \n\n**Answer:** The percentage difference cannot be determined from the visible context because data on children with STEM degrees employed in their field is not provided."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "supported_refusal",
+        "original_pages_only": "unsupported_partial_calculation",
+        "original_pages_plus_artifact_snippets": "unsupported_partial_calculation",
+        "page_rerank_only": "supported_refusal"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "page_text_evidence_status": "supports_insufficient_data_when_prompt_order_emphasizes_relevant_pages",
+      "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the survey of Pew Research Center, January 2018?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": true
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "r044_transition_labels": [
+        "page_rerank_gain_vs_original"
+      ],
+      "record_id": 569,
+      "rubric_label": "diagnostic_gold_match_undercounts_supported_refusal",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "The task asks about children with STEM degrees, but visible contexts do not provide that data. Page-rerank and snippet-only predictions explicitly refuse; the simple R044 matcher counted only page-rerank as a match."
+    },
+    {
+      "action": "Inspect only if the next prompt/artifact-selection iteration needs more negative examples.",
+      "artifact_evidence_status": "not_adjudicated",
+      "case_type": "all_conditions_miss_sample",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the nodes retrieved by RAPTOR for both questions are associated with the following metrics:\n\n1. SBERT with RAPTOR ROUGE: 30.87% (atomicizer_numeric_fact_002)\n2. BM25 with RAPTOR BLEU-4: 27.93% (atomicizer_numeric_fact_006)\n3. DPR with RAPTOR SBERT with RAPTOR: 30.94% (atomicizer_numeric_fact_010)\n\nThese entries explicitly mention \"RAPTOR\" in their descriptions, indicating they were retrieved by RAPTOR for the questions.",
+        "original_pages_only": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The figure is mentioned on Page 6, but the description only highlights that RAPTOR's selections are indicated by highlighted nodes and that its context often encompasses the information retrieved by DPR. No specific node numbers or details are provided in the visible pages. \n\nThus, based on the given context, the answer cannot be determined.",
+        "original_pages_plus_artifact_snippets": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The figure is mentioned on page 6, but the details about the specific nodes retrieved are not provided in the given text. Therefore, based on the available context, I cannot determine which nodes are retrieved by RAPTOR for both questions.",
+        "page_rerank_only": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The text mentions that \"highlighted nodes indicate RAPTOR’s selections\" and that RAPTOR’s context often encompasses the information retrieved by DPR, but it does not provide the exact node identifiers or details for the two questions about the Cinderella story. \n\nTherefore, based on the given context, the specific nodes retrieved by RAPTOR for both questions cannot be determined."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "not_manually_adjudicated",
+        "original_pages_only": "not_manually_adjudicated",
+        "original_pages_plus_artifact_snippets": "not_manually_adjudicated",
+        "page_rerank_only": "not_manually_adjudicated"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "[16, 19, 25]",
+      "page_text_evidence_status": "not_adjudicated",
+      "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "r044_transition_labels": [
+        "all_conditions_miss"
+      ],
+      "record_id": 69,
+      "rubric_label": "all_conditions_miss_requires_error_analysis",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "All four R044 conditions missed under the diagnostic matcher. This fixed sample is retained for manual error analysis, not for aggregate scoring."
+    },
+    {
+      "action": "Inspect only if the next prompt/artifact-selection iteration needs more negative examples.",
+      "artifact_evidence_status": "not_adjudicated",
+      "case_type": "all_conditions_miss_sample",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the provided context, the percentages for Higher-income seniors going online, having a smartphone, and owning a tablet computer are not explicitly listed. The closest relevant data points are:\n\n- Smartphone devices among older adults: 77%  \n- Smartphone Cell phone: 18%  \n- Ownership by the standards of: 27%  \n\nHowever, these do not directly answer the question for \"Higher-income seniors\" specifically. The context does not contain the exact breakdown requested. \n\nIf forced to infer from the given data (though not precise), the descending order might resemble:  \n[\"77%\", \"27%\", \"18%\"]  \n\nBut this is an approximation and not a confirmed answer from the context.",
+        "original_pages_only": "Based on the visible context, the percentages for higher-income seniors (those with an annual household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (from Page 6)\n2. **Own a smartphone**: 42% (from Page 8)\n3. **Own a tablet computer**: 39% (from Page 9)\n\nListing these in descending order:  \n[\"90%\", \"42%\", \"39%\"]",
+        "original_pages_plus_artifact_snippets": "Based on the provided context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. Percentage who go online: 90% (from Page 6)\n2. Percentage who own a smartphone: 42% (from Page 8)\n3. Percentage who own a tablet computer: 39% (from Page 9)\n\nIn descending order, the list format is:\n[\"90%\", \"42%\", \"39%\"]",
+        "page_rerank_only": "Based on the visible context, the percentages for higher-income seniors (those with an annual household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]"
+      },
+      "condition_support": {
+        "artifact_snippets_only": "not_manually_adjudicated",
+        "original_pages_only": "not_manually_adjudicated",
+        "original_pages_plus_artifact_snippets": "not_manually_adjudicated",
+        "page_rerank_only": "not_manually_adjudicated"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "['90%', '42%', '39%']",
+      "page_text_evidence_status": "not_adjudicated",
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "r042_label": "artifact_only_loss_answer_value_shift",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "r044_transition_labels": [
+        "all_conditions_miss"
+      ],
+      "record_id": 223,
+      "rubric_label": "all_conditions_miss_requires_error_analysis",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "All four R044 conditions missed under the diagnostic matcher. This fixed sample is retained for manual error analysis, not for aggregate scoring."
+    },
+    {
+      "action": "Inspect only if the next prompt/artifact-selection iteration needs more negative examples.",
+      "artifact_evidence_status": "not_adjudicated",
+      "case_type": "all_conditions_miss_sample",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the percentages for Higher-income seniors going online, having a smartphone, and owning a tablet computer are not explicitly provided. The snippets mention general statistics for older adults but do not specify \"Higher-income seniors\" or the exact metrics requested (online usage, smartphone ownership, tablet ownership). \n\nHowever, if we infer from the closest available data for older adults:\n- Smartphone ownership: 77% (from `atomicizer_numeric_fact_004`)\n- Tablet ownership: 27% (from `atomicizer_numeric_fact_010`)\n- Online usage: 18% (from `artifact_001` for seniors, though this is likely outdated or misaligned).\n\nSince the question asks for Higher-income seniors specifically and the context lacks this granularity, the answer cannot be accurately derived. \n\nIf forced to list the closest general older adult figures in descending order:  \n[\"77%\", \"27%\", \"18%\"]  \n\n(Note: This is an approximation and not specific to Higher-income seniors.)",
+        "original_pages_only": "Based on the visible context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]",
+        "original_pages_plus_artifact_snippets": "Based on the provided context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (from Page 6)\n2. **Own a smartphone**: 42% (from Page 8)\n3. **Own a tablet computer**: 39% (from Page 9)\n\nIn descending order, the list format is:  \n[\"90%\", \"42%\", \"39%\"]",
+        "page_rerank_only": "Based on the visible context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]"
+      },
+      "condition_support": {
+        "artifact_snippets_only": "not_manually_adjudicated",
+        "original_pages_only": "not_manually_adjudicated",
+        "original_pages_plus_artifact_snippets": "not_manually_adjudicated",
+        "page_rerank_only": "not_manually_adjudicated"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "page_text_evidence_status": "not_adjudicated",
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2022 tracking survey?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "r044_transition_labels": [
+        "all_conditions_miss"
+      ],
+      "record_id": 224,
+      "rubric_label": "all_conditions_miss_requires_error_analysis",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "All four R044 conditions missed under the diagnostic matcher. This fixed sample is retained for manual error analysis, not for aggregate scoring."
+    },
+    {
+      "action": "Inspect only if the next prompt/artifact-selection iteration needs more negative examples.",
+      "artifact_evidence_status": "not_adjudicated",
+      "case_type": "all_conditions_miss_sample",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the gap for 65+ people with a College graduate who own both a cell phone and a tablet computer is **18%** (from the snippet: \"Smartphone Cell phone: 18%\"). \n\nNo other specific percentage for tablet computer ownership among this group is provided in the snippets, so the answer is limited to the cell phone data.",
+        "original_pages_only": "The gap between 65+ college graduates who own a cell phone and those who own a tablet computer in the Pew Research Center’s July 18-September 30, 2013 tracking survey is **56 percentage points**. \n\nHere’s the breakdown from the visible context:\n- **Cell phone ownership among 65+ college graduates**: 87% (Page 7 states that 87% of seniors with a college degree go online, and cell phone ownership is closely tied to internet use in this demographic).  \n- **Tablet ownership among 65+ college graduates**: 31% (Page 9 and Page 19 both confirm this figure).  \n\nThus, the gap is calculated as:  \n87% (cell phone) - 31% (tablet) = **56 percentage points**.  \n\n(Note: The context does not explicitly state cell phone ownership for college graduates, but Page 7 links high internet adoption (87%) to this group, and Page 18 shows smartphone ownership for college graduates at 35%, suggesting broader cell phone ownership would be higher. The 87% figure is inferred as the closest proxy for general cell phone adoption among this subgroup.)",
+        "original_pages_plus_artifact_snippets": "The gap for 65+ people with a college graduate who own both a cell phone and a tablet computer can be inferred from the data provided in the context. \n\nFrom **Page 9**, it is stated that **77% of seniors (ages 65 and older) own a cell phone**, and **31% of college graduate seniors own a tablet computer** (as shown in the \"Tablet and e-book reader adoption among seniors\" table). \n\nHowever, the exact overlap (those who own **both** a cell phone and a tablet) is not explicitly provided. Assuming independence (though this may not be strictly accurate), the gap would be the difference between cell phone ownership (77%) and tablet ownership among college graduates (31%). \n\nThus, the gap is roughly **46 percentage points** (77% - 31%). \n\n**Final Answer:**  \nThe gap is approximately **46 percentage points** between cell phone ownership (77%) and tablet ownership (31%) among 65+ college graduates.  \n\n*(Note: If a combined ownership statistic were available, the gap might differ, but the context does not provide this exact figure.)*",
+        "page_rerank_only": "The gap for 65+ people with a college degree who own both a cell phone and a tablet computer can be inferred from the data provided in the context. \n\n1. **Cell Phone Ownership**: On Page 7, it states that 77% of all seniors (65+) own a cell phone. However, the breakdown for college graduates is not explicitly provided for cell phones. \n\n2. **Tablet Ownership**: On Page 9, it shows that 31% of college graduate seniors own a tablet computer. \n\nSince the exact cell phone ownership rate for college graduates is not provided, we cannot calculate the precise gap for owning both devices. However, we know that:\n- The overall cell phone ownership for seniors is 77%, and it is likely higher for college graduates (given that other tech adoption rates are higher for this group).\n- Tablet ownership for college graduate seniors is 31%.\n\nThus, the gap would depend on the cell phone ownership rate among college graduate seniors, which is not specified in the visible context. \n\n**Final Answer**: The exact gap cannot be determined from the visible context because the cell phone ownership rate for 65+ college graduates is not provided. However, 31% of college graduate seniors own a tablet computer."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "not_manually_adjudicated",
+        "original_pages_only": "not_manually_adjudicated",
+        "original_pages_plus_artifact_snippets": "not_manually_adjudicated",
+        "page_rerank_only": "not_manually_adjudicated"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "301",
+      "page_text_evidence_status": "not_adjudicated",
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "r044_transition_labels": [
+        "all_conditions_miss"
+      ],
+      "record_id": 227,
+      "rubric_label": "all_conditions_miss_requires_error_analysis",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "All four R044 conditions missed under the diagnostic matcher. This fixed sample is retained for manual error analysis, not for aggregate scoring."
+    },
+    {
+      "action": "Inspect only if the next prompt/artifact-selection iteration needs more negative examples.",
+      "artifact_evidence_status": "not_adjudicated",
+      "case_type": "all_conditions_miss_sample",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot answer the question based on the visible snippets. \n\nAnswer: Unable to determine from the given context.",
+        "original_pages_only": "The visible context does not contain any information about Japan's GDP growth or forecasts from 2002 to 2023. The provided pages primarily discuss financial statements, shareholder information, and operational details of Godfrey Phillips India Limited. Therefore, I cannot answer the question based on the given context.  \n\n**Answer:** The percentage shortfall in Japan's GDP growth compared to the forecast is not mentioned in the provided context.",
+        "original_pages_plus_artifact_snippets": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot determine the percentage shortfall based on the visible context. \n\nAnswer: The information about Japan's GDP growth shortfall compared to forecasts is not available in the provided context.",
+        "page_rerank_only": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot answer the question based on the given material. \n\nFor accurate data, please refer to official economic reports or databases from sources like the World Bank, IMF, or Japan's government publications."
+      },
+      "condition_support": {
+        "artifact_snippets_only": "not_manually_adjudicated",
+        "original_pages_only": "not_manually_adjudicated",
+        "original_pages_plus_artifact_snippets": "not_manually_adjudicated",
+        "page_rerank_only": "not_manually_adjudicated"
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "page_text_evidence_status": "not_adjudicated",
+      "question": "What was the percentage shortfall in Japan's GDP growth from 2002 to 2023 compared to the forecast?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "r044_diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "r044_match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "r044_transition_labels": [
+        "all_conditions_miss"
+      ],
+      "record_id": 367,
+      "rubric_label": "all_conditions_miss_requires_error_analysis",
+      "schema_version": "r045_support_rubric_case_v1",
+      "support_summary": "All four R044 conditions missed under the diagnostic matcher. This fixed sample is retained for manual error analysis, not for aggregate scoring."
+    }
+  ],
+  "condition_support_counts": {
+    "artifact_snippets_only:not_manually_adjudicated": 5,
+    "artifact_snippets_only:supported_refusal": 2,
+    "artifact_snippets_only:unsupported_false_positive": 1,
+    "original_pages_only:not_manually_adjudicated": 5,
+    "original_pages_only:supported_refusal": 1,
+    "original_pages_only:unsupported_false_positive": 1,
+    "original_pages_only:unsupported_partial_calculation": 1,
+    "original_pages_plus_artifact_snippets:mixed_refusal_with_unneeded_answer": 1,
+    "original_pages_plus_artifact_snippets:not_manually_adjudicated": 5,
+    "original_pages_plus_artifact_snippets:supported_refusal": 1,
+    "original_pages_plus_artifact_snippets:unsupported_partial_calculation": 1,
+    "page_rerank_only:not_manually_adjudicated": 5,
+    "page_rerank_only:supported_refusal": 3
+  },
+  "created_utc": "2026-06-04T03:55:42.727475+00:00",
+  "decision": "r045_support_rubric_complete",
+  "inputs": {
+    "r044_report": "outputs/heldout/r044_small_contrastive_provider/r044_diagnostic_attribution_report.json"
+  },
+  "key_findings": [
+    "R044's simple diagnostic matcher undercounted at least one supported refusal: record 569 snippet-only is a supported insufficient-data answer.",
+    "Record 384 shows artifact snippets can introduce unsupported false-positive risk on not-answerable questions.",
+    "Record 508 is the clearest positive diagnostic: reranked pages and artifact snippets support refusing AR03 rather than hallucinating a market.",
+    "The next iteration should improve refusal/support rubric and artifact selection before any full-data run."
+  ],
+  "num_cases": 8,
+  "recommended_next": [
+    "Implement question-aware artifact selection rather than fixed first-N artifacts per page.",
+    "Add explicit unsupported-answer/refusal instructions for Not answerable cases.",
+    "Require cited page ids or artifact ids in future diagnostic prompts before reporting any broader score.",
+    "Treat R044 counts as preliminary; R045 support labels supersede simple gold-match labels for transition cases."
+  ],
+  "rubric_label_counts": {
+    "all_conditions_miss_requires_error_analysis": 5,
+    "artifact_injection_introduces_false_positive_risk": 1,
+    "diagnostic_gold_match_undercounts_supported_refusal": 1,
+    "rerank_and_artifact_context_help_unanswerable_refusal": 1
+  },
+  "schema_version": "r045_support_rubric_report_v1",
+  "scope": {
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "posthoc_support_rubric_only": true
+  }
+}

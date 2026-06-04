@@ -1,3 +1,0 @@
-- run-name=top4_original_only__small_gate_30_60
-- dataset.top_k=4
-- dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/small_gate_30_60/reranked_records/top4_original_only.json

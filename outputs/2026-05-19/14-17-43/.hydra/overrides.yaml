@@ -1,4 +1,0 @@
-- run-name=mmlb-MDocAgent
-- +runtime.resume_path=/home/lhz/MDocAgent/results/MMLongBench/mmlb-MDocAgent-top4/2026-05-18-08-11.json
-- mdoc_agent.num_workers=3
-- mdoc_agent.max_retries=5

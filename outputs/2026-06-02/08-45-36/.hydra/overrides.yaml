@@ -1,3 +1,0 @@
-- run-name=top4_original_plus_artifact__anchored_artifact_topk_top1_policy_probe_top30
-- dataset.top_k=4
-- dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/anchored_artifact_topk_top1_policy_probe_top30/reranked_records/top4_original_plus_artifact.json

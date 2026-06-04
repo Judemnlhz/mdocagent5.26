@@ -1,4 +1,0 @@
-- run-name=top4_artifact_only__anchored_artifact_activation_probe_top30_matrix
-- dataset.top_k=4
-- dataset.sample_with_retrieval_path=outputs/experiments/mdocagent_module_ablation/run_tags/anchored_artifact_activation_probe_top30_matrix/reranked_records/top4_artifact_only.json
-- +runtime.resume_path=results/MMLongBench/top4_artifact_only__anchored_artifact_activation_probe_top30_matrix/2026-06-02-06-41.json

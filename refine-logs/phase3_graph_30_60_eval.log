@@ -1,129 +1,0 @@
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/mdocagent_top1_official_reproduction.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/mdocagent_top4_official_reproduction.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/top4_original_only.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/top4_artifact_only.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/top4_original_plus_artifact.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-{
-  "forbidden_fields_found": [],
-  "input_retrieval_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/reranked_records/top4_graph_context.json",
-  "loader_compatible": true,
-  "loader_errors": [],
-  "missing_required_fields": [],
-  "num_records": 30,
-  "status": "pass",
-  "top_k_checked": [
-    1,
-    4
-  ]
-}
-Create model:  SiliconFlowTextModel
-./results/MMLongBench/top4_graph_context__small_graph_30_60
-  0%|          | 0/30 [00:00<?, ?it/s][2026-06-01 13:28:17,807][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  3%|▎         | 1/30 [00:01<00:46,  1.60s/it][2026-06-01 13:28:18,906][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-  7%|▋         | 2/30 [00:02<00:36,  1.29s/it][2026-06-01 13:28:20,045][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 10%|█         | 3/30 [00:03<00:32,  1.22s/it][2026-06-01 13:28:32,415][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 13%|█▎        | 4/30 [00:16<02:26,  5.62s/it][2026-06-01 13:28:33,567][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 17%|█▋        | 5/30 [00:17<01:40,  4.01s/it][2026-06-01 13:28:34,720][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 20%|██        | 6/30 [00:18<01:12,  3.04s/it][2026-06-01 13:28:35,872][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 23%|██▎       | 7/30 [00:19<00:55,  2.42s/it][2026-06-01 13:28:36,812][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 27%|██▋       | 8/30 [00:20<00:42,  1.95s/it][2026-06-01 13:28:37,859][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 30%|███       | 9/30 [00:21<00:35,  1.67s/it][2026-06-01 13:28:39,270][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 33%|███▎      | 10/30 [00:23<00:31,  1.59s/it][2026-06-01 13:28:40,395][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 37%|███▋      | 11/30 [00:24<00:27,  1.45s/it][2026-06-01 13:28:41,556][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 40%|████      | 12/30 [00:25<00:24,  1.36s/it][2026-06-01 13:28:42,594][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 43%|████▎     | 13/30 [00:26<00:21,  1.26s/it][2026-06-01 13:28:43,776][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 47%|████▋     | 14/30 [00:27<00:19,  1.24s/it][2026-06-01 13:28:44,878][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 50%|█████     | 15/30 [00:28<00:17,  1.20s/it][2026-06-01 13:28:46,058][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 53%|█████▎    | 16/30 [00:29<00:16,  1.19s/it][2026-06-01 13:28:47,145][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 57%|█████▋    | 17/30 [00:30<00:15,  1.16s/it][2026-06-01 13:28:48,171][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 60%|██████    | 18/30 [00:31<00:13,  1.12s/it][2026-06-01 13:28:49,300][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 63%|██████▎   | 19/30 [00:33<00:12,  1.12s/it][2026-06-01 13:28:50,433][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 67%|██████▋   | 20/30 [00:34<00:11,  1.13s/it][2026-06-01 13:28:51,464][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 70%|███████   | 21/30 [00:35<00:09,  1.10s/it][2026-06-01 13:28:52,708][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 73%|███████▎  | 22/30 [00:36<00:09,  1.14s/it][2026-06-01 13:28:53,982][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 77%|███████▋  | 23/30 [00:37<00:08,  1.18s/it][2026-06-01 13:28:55,240][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 80%|████████  | 24/30 [00:38<00:07,  1.20s/it][2026-06-01 13:28:56,342][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 83%|████████▎ | 25/30 [00:40<00:05,  1.17s/it][2026-06-01 13:28:57,380][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 87%|████████▋ | 26/30 [00:41<00:04,  1.13s/it][2026-06-01 13:28:58,949][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 90%|█████████ | 27/30 [00:42<00:03,  1.26s/it][2026-06-01 13:29:00,261][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 93%|█████████▎| 28/30 [00:44<00:02,  1.28s/it][2026-06-01 13:29:01,407][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
- 97%|█████████▋| 29/30 [00:45<00:01,  1.24s/it][2026-06-01 13:29:02,467][httpx][INFO] - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
-100%|██████████| 30/30 [00:46<00:00,  1.18s/it]100%|██████████| 30/30 [00:46<00:00,  1.54s/it]
-Save results to ./results/MMLongBench/top4_graph_context__small_graph_30_60/results.txt.
-{
-  "cost_log_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/cost_log.json",
-  "max_records": null,
-  "num_failed_runs": 0,
-  "num_records": 30,
-  "num_runs": 6,
-  "prepare_only": false,
-  "record_slice": "30:60",
-  "run_tag": "small_graph_30_60",
-  "selected_runs": [
-    "top4_graph_context"
-  ],
-  "status": "executed_or_attempted",
-  "summary_md_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/summary.md",
-  "summary_path": "outputs/experiments/mdocagent_module_ablation/run_tags/small_graph_30_60/summary.json"
-}
-__EVAL_EXIT__:

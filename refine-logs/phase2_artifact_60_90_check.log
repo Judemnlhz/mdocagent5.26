@@ -1,7 +1,0 @@
-{
-  "status": "fail",
-  "runs_requested": [
-    "top4_artifact_only",
-    "top4_original_plus_artifact"
-  ]
-}
