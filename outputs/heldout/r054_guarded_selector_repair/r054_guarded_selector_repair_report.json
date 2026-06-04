@@ -1,0 +1,102 @@
+{
+  "created_utc": "2026-06-04T04:57:34.579060+00:00",
+  "decision": "r054_guarded_selector_repair_complete",
+  "gate": {
+    "checks": {
+      "all_prompts_have_citation_requirement": true,
+      "all_prompts_have_unsupported_answer_guard": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "design_gate_only": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_previews": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "page_and_artifact_evidence_separated": true,
+      "r384_metadata_refusal_guard": true,
+      "r384_no_numeric_table_artifacts_selected": true,
+      "r508_exact_code_or_absence_guard": true,
+      "r508_no_artifact_without_exact_ar03": true,
+      "r569_operand_completeness_guard": true,
+      "selected_artifact_budget_respected": true,
+      "target_cases_match_r045": true
+    },
+    "created_utc": "2026-06-04T04:57:34.578967+00:00",
+    "decision": "r054_guarded_selector_repair_gate_pass",
+    "gate_passed": true,
+    "guard_decision_by_record": {
+      "223": "token_key_value_selection",
+      "224": "token_key_value_selection",
+      "227": "token_key_value_selection",
+      "367": "no_relevant_artifact_guard",
+      "384": "document_metadata_refusal_guard",
+      "508": "exact_code_absence_guard",
+      "569": "operand_completeness_guard",
+      "69": "token_key_value_selection"
+    },
+    "hard_failures": [],
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_cases": 8,
+    "schema_version": "r054_guarded_selector_repair_gate_v1",
+    "selected_artifact_count_by_record": {
+      "223": 8,
+      "224": 8,
+      "227": 8,
+      "367": 0,
+      "384": 0,
+      "508": 0,
+      "569": 0,
+      "69": 8
+    }
+  },
+  "guard_decision_counts": {
+    "document_metadata_refusal_guard": 1,
+    "exact_code_absence_guard": 1,
+    "no_relevant_artifact_guard": 1,
+    "operand_completeness_guard": 1,
+    "token_key_value_selection": 4
+  },
+  "guard_reason_counts": {
+    "document_metadata_lookup_uses_page_text_not_numeric_artifacts": 1,
+    "missing_operands:children": 1,
+    "no_artifact_contains_exact_question_code": 1,
+    "no_question_overlapping_artifacts": 1,
+    "numeric_artifacts_rejected_without_exact_code_key": 1,
+    "operand_completeness_failed": 1,
+    "selected_question_overlapping_artifacts": 4,
+    "visible_page_metadata_present": 1
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r044_report": "outputs/heldout/r044_small_contrastive_provider/r044_diagnostic_attribution_report.json",
+    "r045_cases": "outputs/heldout/r045_support_rubric/r045_support_rubric_cases.jsonl"
+  },
+  "manual_repair_summary": {
+    "384": "document metadata/refusal route; numeric/table artifacts rejected",
+    "508": "exact AR03 key-value selection required; otherwise use page evidence for unsupported/refusal",
+    "569": "operand-completeness guard blocks calculation from partial snippets"
+  },
+  "num_cases": 8,
+  "recommended_next": [
+    "Do not run full QA from R054.",
+    "Manually inspect R054 prompt previews for 384, 508, and 569 against the recorded guard decisions.",
+    "If accepted, run only a tiny provider diagnostic on the guarded prompts; treat it as diagnostic attribution, not an official score.",
+    "If rejected, repair selector guards again before any provider call."
+  ],
+  "rubric_label_counts": {
+    "all_conditions_miss_requires_error_analysis": 5,
+    "artifact_injection_introduces_false_positive_risk": 1,
+    "diagnostic_gold_match_undercounts_supported_refusal": 1,
+    "rerank_and_artifact_context_help_unanswerable_refusal": 1
+  },
+  "schema_version": "r054_guarded_selector_repair_report_v1",
+  "scope": {
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "selector_and_prompt_guard_only": true
+  }
+}
