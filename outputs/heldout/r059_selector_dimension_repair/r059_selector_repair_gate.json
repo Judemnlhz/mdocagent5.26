@@ -1,0 +1,64 @@
+{
+  "checks": {
+    "all_target_records_dimension_guarded": true,
+    "all_target_records_have_positive_candidates": true,
+    "all_target_records_select_zero_artifacts": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true,
+    "not_provider_run": true,
+    "positive_controls_have_supporting_artifacts": true,
+    "positive_controls_retained": true,
+    "target_records_match_r058_failures": true
+  },
+  "created_utc": "2026-06-04T08:12:09.226100+00:00",
+  "decision": "r059_selector_repair_gate_pass",
+  "dimension_guarded_records": [
+    69,
+    223,
+    224,
+    227
+  ],
+  "gate_passed": true,
+  "guard_decision_by_record": {
+    "223": "artifact_dimension_support_guard",
+    "224": "artifact_dimension_support_guard",
+    "227": "artifact_dimension_support_guard",
+    "69": "artifact_dimension_support_guard"
+  },
+  "guard_reasons_by_record": {
+    "223": [
+      "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2013",
+      "selected_artifacts_do_not_cover_question_dimensions"
+    ],
+    "224": [
+      "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2022",
+      "selected_artifacts_do_not_cover_question_dimensions",
+      "visible_context_missing_dimensions:year_2022"
+    ],
+    "227": [
+      "artifact_missing_dimensions:age_65_plus,college_graduate,tablet_computer,gap_operation,year_2013",
+      "selected_artifacts_do_not_cover_question_dimensions"
+    ],
+    "69": [
+      "artifact_missing_dimensions:figure_4,retrieved_nodes,both_questions",
+      "selected_artifacts_do_not_cover_question_dimensions",
+      "visible_context_missing_dimensions:both_questions"
+    ]
+  },
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_positive_controls": 2,
+  "num_target_cases": 4,
+  "positive_control_retained": [
+    "raptor_full_dimension_control",
+    "higher_income_2013_full_dimension_control"
+  ],
+  "schema_version": "r059_selector_repair_gate_v1"
+}

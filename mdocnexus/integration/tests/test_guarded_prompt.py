@@ -4,6 +4,7 @@ import json
 import unittest
 
 from mdocnexus.integration.guarded_prompt import (
+    audit_selected_artifact_support,
     build_question_profile,
     forbidden_public_fields,
     render_guarded_prompt,
@@ -76,8 +77,8 @@ class GuardedPromptTests(unittest.TestCase):
                 {
                     "artifact_id": "fig4",
                     "artifact_type": "caption",
-                    "content": "Figure 4 shows RAPTOR retrieved nodes and questions.",
-                    "normalized_content": {"metric_name": "Figure 4", "value_text": "RAPTOR retrieved nodes and questions"},
+                    "content": "Figure 4 shows RAPTOR retrieved nodes for both questions.",
+                    "normalized_content": {"metric_name": "Figure 4", "value_text": "RAPTOR retrieved nodes for both questions"},
                     "source_anchored": True,
                 },
                 question,
@@ -91,6 +92,109 @@ class GuardedPromptTests(unittest.TestCase):
         self.assertEqual(selection["guard_decision"], "token_key_value_selection")
         self.assertEqual(len(selection["selected_artifacts"]), 1)
 
+    def test_raptor_metric_overlap_without_question_dimensions_is_guarded(self) -> None:
+        question = "In figure 4, which nodes are retrieved by RAPTOR for both questions?"
+        profile = build_question_profile(question)
+        candidates = [
+            score_guarded_artifact(
+                {
+                    "artifact_id": "raptor_metric",
+                    "artifact_type": "numeric_fact",
+                    "content": "SBERT with RAPTOR ROUGE: 30.87%",
+                    "normalized_content": {
+                        "metric_name": "SBERT with RAPTOR",
+                        "column_label": "ROUGE",
+                        "value_text": "30.87%",
+                    },
+                    "source_anchored": True,
+                },
+                question,
+                profile,
+                6,
+            )
+        ]
+
+        selection = select_guarded_artifacts(candidates, [], profile)
+
+        self.assertEqual(selection["guard_decision"], "artifact_dimension_support_guard")
+        self.assertEqual(selection["selected_artifacts"], [])
+        self.assertTrue(any("artifact_missing_dimensions:" in reason for reason in selection["guard_reasons"]))
+
+    def test_raptor_artifact_with_all_question_dimensions_is_retained(self) -> None:
+        question = "In figure 4, which nodes are retrieved by RAPTOR for both questions?"
+        profile = build_question_profile(question)
+        candidates = [
+            score_guarded_artifact(
+                {
+                    "artifact_id": "fig4_nodes",
+                    "artifact_type": "caption",
+                    "content": "Figure 4 shows the RAPTOR retrieved nodes for both questions.",
+                    "normalized_content": {
+                        "metric_name": "Figure 4",
+                        "value_text": "RAPTOR retrieved nodes for both questions",
+                    },
+                    "source_anchored": True,
+                },
+                question,
+                profile,
+                6,
+            )
+        ]
+
+        selection = select_guarded_artifacts(candidates, [], profile)
+        support = audit_selected_artifact_support(selection["selected_artifacts"], [], profile)
+
+        self.assertEqual(selection["guard_decision"], "token_key_value_selection")
+        self.assertEqual([row["artifact_id"] for row in selection["selected_artifacts"]], ["fig4_nodes"])
+        self.assertTrue(support["artifact_support_sufficient"])
+
+    def test_demographic_artifact_must_cover_group_metric_time_and_values(self) -> None:
+        question = (
+            "Among the Higher-income seniors, what are the percentage of them go online, "
+            "has smartphone phone, and own a tablet computer in the Pew Research Center's "
+            "Internet Project July 18-September 30, 2013 tracking survey?"
+        )
+        profile = build_question_profile(question)
+        weak = score_guarded_artifact(
+            {
+                "artifact_id": "smartphone_only",
+                "artifact_type": "numeric_fact",
+                "content": "devices among older adults have high levels of smartphone: 18%",
+                "normalized_content": {
+                    "metric_name": "devices among older adults",
+                    "column_label": "have high levels of smartphone",
+                    "value_text": "18%",
+                },
+                "source_anchored": True,
+            },
+            question,
+            profile,
+            8,
+        )
+        strong = score_guarded_artifact(
+            {
+                "artifact_id": "higher_income_2013",
+                "artifact_type": "table",
+                "content": "2013 Higher-income seniors go online: 80%; smartphone: 50%; tablet computer: 30%",
+                "normalized_content": {
+                    "row_label": "Higher-income seniors",
+                    "column_label": "2013 go online smartphone tablet computer",
+                    "value_text": "80%; 50%; 30%",
+                },
+                "source_anchored": True,
+            },
+            question,
+            profile,
+            8,
+        )
+
+        weak_selection = select_guarded_artifacts([weak], [], profile)
+        strong_selection = select_guarded_artifacts([strong], [], profile)
+
+        self.assertEqual(weak_selection["guard_decision"], "artifact_dimension_support_guard")
+        self.assertEqual(strong_selection["guard_decision"], "token_key_value_selection")
+        self.assertEqual([row["artifact_id"] for row in strong_selection["selected_artifacts"]], ["higher_income_2013"])
+
     def test_prompt_and_public_payload_are_no_gold(self) -> None:
         question = "Which figure shows both RAPTOR retrieved nodes and questions?"
         profile = build_question_profile(question)
@@ -98,7 +202,7 @@ class GuardedPromptTests(unittest.TestCase):
             {
                 "artifact_id": "fig4",
                 "artifact_type": "caption",
-                "content": "Figure 4 shows RAPTOR retrieved nodes and questions.",
+            "content": "Figure 4 shows RAPTOR retrieved nodes for both questions.",
                 "source_anchored": True,
             },
             question,

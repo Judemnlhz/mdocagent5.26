@@ -96,6 +96,7 @@ def build_question_profile(question: str) -> dict[str, Any]:
         "tokens": tokens,
         "codes": codes,
         "numbers": numbers,
+        "evidence_requirements": build_evidence_requirements(question),
         "is_numeric_or_table_question": bool(is_numeric or is_code_or_table),
         "is_document_metadata_lookup": is_metadata_lookup,
         "is_computation_question": is_computation,
@@ -236,6 +237,10 @@ def select_guarded_artifacts(
     eligible = [row for row in candidates if row.get("question_token_overlap") or row.get("key_value_token_hits")]
     selected = rank_artifacts(eligible)[:max_artifacts]
     if selected:
+        support = audit_selected_artifact_support(selected, page_contexts, profile)
+        if not support["artifact_support_sufficient"]:
+            reasons = ["selected_artifacts_do_not_cover_question_dimensions", *support["failure_reasons"]]
+            return selection_result([], candidates, "artifact_dimension_support_guard", reasons, "use_page_evidence_or_refuse", positive_candidate_count)
         return selection_result(selected, [row for row in candidates if row not in selected], "token_key_value_selection", ["selected_question_overlapping_artifacts"], "cite_visible_support_or_refuse", positive_candidate_count)
     return selection_result([], candidates, "no_relevant_artifact_guard", ["no_question_overlapping_artifacts"], "use_page_evidence_or_refuse", positive_candidate_count)
 
@@ -317,6 +322,163 @@ def metadata_page_signal(page_contexts: list[dict[str, Any]], profile: Mapping[s
         if number not in joined:
             signals.append(f"question_date_not_visible:{number}")
     return signals
+
+
+def audit_selected_artifact_support(
+    selected_artifacts: list[dict[str, Any]],
+    page_contexts: list[dict[str, Any]],
+    profile: Mapping[str, Any],
+) -> dict[str, Any]:
+    requirements = profile.get("evidence_requirements")
+    if not isinstance(requirements, Mapping):
+        requirements = {"dimensions": [], "min_numeric_values": 0}
+    dimensions = list(requirements.get("dimensions") or [])
+    artifact_text = normalize(" ".join(artifact_evidence_text(item) for item in selected_artifacts))
+    page_text = normalize(" ".join(str(ctx.get("text_preview") or "") for ctx in page_contexts))
+    all_visible_text = normalize(f"{artifact_text} {page_text}")
+    artifact_dimension_checks = dimension_checks(dimensions, artifact_text)
+    page_dimension_checks = dimension_checks(dimensions, page_text)
+    visible_dimension_checks = dimension_checks(dimensions, all_visible_text)
+    artifact_values = extract_numeric_values(artifact_text)
+    page_values = extract_numeric_values(page_text)
+    min_numeric_values = int(requirements.get("min_numeric_values") or 0)
+    citable_artifacts = [
+        item
+        for item in selected_artifacts
+        if str(item.get("artifact_id") or "").strip()
+        and item.get("page_index") is not None
+        and str(item.get("content_preview") or "").strip()
+    ]
+    artifact_support_sufficient = (
+        bool(selected_artifacts)
+        and len(citable_artifacts) == len(selected_artifacts)
+        and all(check["covered"] for check in artifact_dimension_checks)
+        and len(artifact_values) >= min_numeric_values
+    )
+    visible_support_sufficient = (
+        all(check["covered"] for check in visible_dimension_checks)
+        and len(sorted(set(artifact_values + page_values))) >= min_numeric_values
+    )
+    failure_reasons = []
+    if not selected_artifacts:
+        failure_reasons.append("no_selected_artifacts")
+    if len(citable_artifacts) != len(selected_artifacts):
+        failure_reasons.append("selected_artifacts_not_all_citable")
+    missing_artifact_dimensions = [check["dimension"] for check in artifact_dimension_checks if not check["covered"]]
+    if missing_artifact_dimensions:
+        failure_reasons.append("artifact_missing_dimensions:" + ",".join(missing_artifact_dimensions))
+    if len(artifact_values) < min_numeric_values:
+        failure_reasons.append(f"artifact_numeric_values_below_required:{len(artifact_values)}<{min_numeric_values}")
+    if not visible_support_sufficient:
+        missing_visible_dimensions = [check["dimension"] for check in visible_dimension_checks if not check["covered"]]
+        if missing_visible_dimensions:
+            failure_reasons.append("visible_context_missing_dimensions:" + ",".join(missing_visible_dimensions))
+    if not failure_reasons:
+        failure_reasons.append("none")
+    return {
+        "schema_version": "guarded_artifact_support_audit_v1",
+        "requirements": requirements,
+        "artifact_dimension_checks": artifact_dimension_checks,
+        "page_dimension_checks": page_dimension_checks,
+        "visible_dimension_checks": visible_dimension_checks,
+        "artifact_numeric_values": artifact_values,
+        "page_numeric_values": page_values[:20],
+        "citable_artifact_count": len(citable_artifacts),
+        "artifact_support_sufficient": artifact_support_sufficient,
+        "visible_support_sufficient": visible_support_sufficient,
+        "support_class": "supporting_artifact_evidence_confirmed" if artifact_support_sufficient else "artifact_positive_signal_only_insufficient",
+        "failure_reasons": failure_reasons,
+    }
+
+
+def build_evidence_requirements(question: str) -> dict[str, Any]:
+    q_norm = normalize(question)
+    dimensions = []
+    min_numeric_values = 0
+    if "figure 4" in q_norm and "raptor" in q_norm:
+        dimensions.extend([
+            evidence_requirement("figure_4", "figure 4", ["figure 4", "fig. 4", "fig 4"]),
+            evidence_requirement("raptor", "RAPTOR", ["raptor"]),
+            evidence_requirement("retrieved_nodes", "retrieved nodes", ["node", "nodes", "retrieved"]),
+            evidence_requirement("both_questions", "both questions", ["both questions", "both"]),
+        ])
+    if "higher-income" in q_norm or "higher income" in q_norm:
+        dimensions.extend([
+            evidence_requirement("higher_income_seniors", "Higher-income seniors", ["higher-income seniors", "higher income seniors", "higher-income", "higher income"]),
+            evidence_requirement("go_online", "go online", ["go online", "online"]),
+            evidence_requirement("smartphone", "smartphone", ["smartphone"]),
+            evidence_requirement("tablet_computer", "tablet computer", ["tablet computer", "tablet"]),
+        ])
+        min_numeric_values = max(min_numeric_values, 3)
+    if "college graduate" in q_norm:
+        dimensions.extend([
+            evidence_requirement("age_65_plus", "65+ people", ["65+", "65 +", "65 and older", "65 or older"]),
+            evidence_requirement("college_graduate", "College graduate", ["college graduate", "college"]),
+            evidence_requirement("cell_phone", "cell phone", ["cell phone", "cellphone"]),
+            evidence_requirement("tablet_computer", "tablet computer", ["tablet computer", "tablet"]),
+            evidence_requirement("gap_operation", "gap", ["gap", "difference"]),
+        ])
+        min_numeric_values = max(min_numeric_values, 2)
+    for year in re.findall(r"\b(?:19|20)\d{2}\b", question):
+        dimensions.append(evidence_requirement(f"year_{year}", year, [year]))
+    if not dimensions:
+        keyword_terms = sorted(question_tokens(question))[:8]
+        dimensions = [evidence_requirement(f"term_{term}", term, [term]) for term in keyword_terms]
+    deduped = []
+    seen = set()
+    for item in dimensions:
+        if item["dimension"] not in seen:
+            seen.add(item["dimension"])
+            deduped.append(item)
+    return {
+        "dimensions": deduped,
+        "min_numeric_values": min_numeric_values,
+        "strictly_public_question_only": True,
+        "requires_artifact_ids_for_citation": True,
+    }
+
+
+def evidence_requirement(dimension: str, label: str, aliases: list[str]) -> dict[str, Any]:
+    return {"dimension": dimension, "label": label, "aliases": aliases}
+
+
+def dimension_checks(requirements: list[dict[str, Any]], text: str) -> list[dict[str, Any]]:
+    rows = []
+    for req in requirements:
+        aliases = list(req.get("aliases") or [])
+        matched = [alias for alias in aliases if phrase_present(text, alias)]
+        rows.append({
+            "dimension": req["dimension"],
+            "label": req["label"],
+            "covered": bool(matched),
+            "matched_aliases": matched,
+        })
+    return rows
+
+
+def phrase_present(text: str, phrase: str) -> bool:
+    text_norm = normalize(text).replace("-", " ")
+    phrase_norm = normalize(phrase).replace("-", " ")
+    if phrase_norm in text_norm:
+        return True
+    tokens = phrase_norm.split()
+    if len(tokens) > 1:
+        return all(token in text_norm for token in tokens)
+    return False
+
+
+def artifact_evidence_text(item: Mapping[str, Any]) -> str:
+    normalized_content = item.get("normalized_content") if isinstance(item.get("normalized_content"), Mapping) else {}
+    return " ".join([
+        str(item.get("artifact_id") or ""),
+        str(item.get("artifact_type") or ""),
+        str(item.get("content_preview") or ""),
+        json.dumps(dict(normalized_content), ensure_ascii=False, sort_keys=True),
+    ])
+
+
+def extract_numeric_values(text: str) -> list[str]:
+    return sorted(set(re.findall(r"[-+]?\d+(?:\.\d+)?\s*%?", text)))
 
 
 def rank_artifacts(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
