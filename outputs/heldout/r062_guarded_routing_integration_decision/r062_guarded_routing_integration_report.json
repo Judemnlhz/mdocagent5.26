@@ -1,0 +1,167 @@
+{
+  "compact_provider_scaffold": {
+    "boundary": "Optional provider-facing scaffold only; not default adapter prompt and not a full QA prompt.",
+    "hashes_match_r061": true,
+    "mode": "r060_derived_compact_page_routing_prompt",
+    "provenance": "Derived from R060 public page-routed previews and checked against R061 compact prompt hashes.",
+    "record_ids": [
+      223,
+      227
+    ],
+    "sha256_by_record": {
+      "223": "4c0bcff44f1b6a12c96ea2f0b26a3479ae65d139380bef1760ed92fa080d7d7e",
+      "227": "22db852865c0bf2f12c2f461f875696937960221e9e8383fd218805bacd43af7"
+    }
+  },
+  "contract": {
+    "allowed_inputs": [
+      "record_index",
+      "doc_id",
+      "question",
+      "text/image retrieval page ids and scores",
+      "public page text previews",
+      "public artifact fields: artifact_id, artifact_type, modality, content, normalized_content, page_index, source_anchored, validation_status"
+    ],
+    "config_flag": "enable_guarded_prompt_scaffold",
+    "control_surface": "selection/prompt preview only; official retrieval/eval path is unchanged unless explicitly wired later",
+    "default_enabled": false,
+    "does_not_do": [
+      "provider call",
+      "prediction",
+      "evaluation",
+      "official score",
+      "artifact positive-lift claim",
+      "default adapter behavior change"
+    ],
+    "forbidden_inputs": [
+      "answer",
+      "answers",
+      "gold_answer",
+      "evidence_pages",
+      "evidence_sources",
+      "binary_correctness",
+      "gold_evidence",
+      "gold_page",
+      "gold_pages",
+      "provider raw outputs",
+      "API keys or secrets"
+    ],
+    "schema_version": "guarded_prompt_integration_v1"
+  },
+  "created_utc": "2026-06-04T11:52:27.341853+00:00",
+  "decision": "r062_guarded_routing_integration_ready_default_off",
+  "disabled": {
+    "enabled": false,
+    "num_prompt_previews": 0,
+    "records_unchanged": true
+  },
+  "enabled": {
+    "enabled": true,
+    "guard_decision_by_record": {
+      "223": "artifact_dimension_support_guard",
+      "227": "artifact_dimension_support_guard"
+    },
+    "no_gold_fields_in_public_previews": true,
+    "num_prompt_previews": 2,
+    "records_unchanged": true,
+    "selected_artifact_count_by_record": {
+      "223": 0,
+      "227": 0
+    }
+  },
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "compact_scaffold_hashes_match_r061": true,
+      "compact_scaffold_marked_optional_provider_facing": true,
+      "compact_scaffold_provenance_from_r060": true,
+      "compact_scaffolds_have_no_gold_fields": true,
+      "contract_default_disabled": true,
+      "contract_has_config_flag": true,
+      "disabled_generates_no_prompt_previews": true,
+      "disabled_records_unchanged": true,
+      "does_not_claim_artifact_lift": true,
+      "enabled_emits_previews_and_manifest_only": true,
+      "enabled_previews_have_no_gold_fields": true,
+      "enabled_previews_page_routed_zero_artifact": true,
+      "enabled_records_unchanged": true,
+      "no_full_qa": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "r060_previews_page_routed_zero_artifact": true,
+      "r061_scope_is_tiny_page_routing_only": true,
+      "target_records_exactly_223_227": true
+    },
+    "compact_prompt_sha256_by_record": {
+      "223": "4c0bcff44f1b6a12c96ea2f0b26a3479ae65d139380bef1760ed92fa080d7d7e",
+      "227": "22db852865c0bf2f12c2f461f875696937960221e9e8383fd218805bacd43af7"
+    },
+    "created_utc": "2026-06-04T11:52:27.341753+00:00",
+    "decision": "r062_guarded_routing_integration_gate_pass",
+    "enabled_guard_decision_by_record": {
+      "223": "artifact_dimension_support_guard",
+      "227": "artifact_dimension_support_guard"
+    },
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_records": 2,
+    "schema_version": "r062_guarded_routing_integration_gate_v1",
+    "target_record_ids": [
+      223,
+      227
+    ]
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r044_report": "outputs/heldout/r044_small_contrastive_provider/r044_diagnostic_attribution_report.json",
+    "r045_cases": "outputs/heldout/r045_support_rubric/r045_support_rubric_cases.jsonl",
+    "r060_previews": "outputs/heldout/r060_page_artifact_routing_audit/r060_routing_prompt_previews.jsonl",
+    "r061_report": "outputs/heldout/r061_page_routed_provider_diagnostic/r061_page_routed_provider_report.json"
+  },
+  "integration_decision": {
+    "adapter_path": "Do not alter official MDocAgent retrieval/eval path in R062; only expose the guarded scaffold as an opt-in preview/control surface.",
+    "next_allowed_step": "If manually accepted, wire optional adapter preview hooks or run another no-provider compatibility audit on more positive controls. Do not run full QA from R062.",
+    "recommended_action": "Keep guarded selector and compact page-routing scaffold default-off behind enable_guarded_prompt_scaffold; emit previews/manifest for audit before any future provider run."
+  },
+  "num_records": 2,
+  "output_paths": {
+    "compact_scaffolds_jsonl": "outputs/heldout/r062_guarded_routing_integration_decision/r062_compact_routing_scaffolds.jsonl",
+    "gate_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_gate.json",
+    "gate_md": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_gate.md",
+    "integration_manifest": "outputs/heldout/r062_guarded_routing_integration_decision/integration_outputs/guarded_prompt_integration_manifest.json",
+    "integration_prompt_previews": "outputs/heldout/r062_guarded_routing_integration_decision/integration_outputs/guarded_prompt_integration_previews.jsonl",
+    "manifest_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_integration_decision_manifest.json",
+    "public_records_jsonl": "outputs/heldout/r062_guarded_routing_integration_decision/r062_public_records.jsonl",
+    "report_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_report.json",
+    "report_md": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_report.md"
+  },
+  "r061_boundary_repeated": {
+    "does_not_prove_artifact_positive_lift": true,
+    "not_official_mmlongbench_result": true,
+    "provider_diagnostic_records": [
+      223,
+      227
+    ],
+    "tests_page_only_routing_behavior_only": true
+  },
+  "schema_version": "r062_guarded_routing_integration_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "does_not_prove_retrieval_improvement": true,
+    "integration_decision_gate_only": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "target_records_only": [
+      223,
+      227
+    ]
+  }
+}

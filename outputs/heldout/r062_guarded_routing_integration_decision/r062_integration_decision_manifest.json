@@ -1,0 +1,50 @@
+{
+  "created_utc": "2026-06-04T11:52:27.341869+00:00",
+  "decision": "r062_guarded_routing_integration_gate_pass",
+  "gate_passed": true,
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r044_report": "outputs/heldout/r044_small_contrastive_provider/r044_diagnostic_attribution_report.json",
+    "r045_cases": "outputs/heldout/r045_support_rubric/r045_support_rubric_cases.jsonl",
+    "r060_previews": "outputs/heldout/r060_page_artifact_routing_audit/r060_routing_prompt_previews.jsonl",
+    "r061_report": "outputs/heldout/r061_page_routed_provider_diagnostic/r061_page_routed_provider_report.json"
+  },
+  "no_full_qa": true,
+  "no_prediction_or_eval": true,
+  "no_provider_calls": true,
+  "not_artifact_lift_claim": true,
+  "not_official_score": true,
+  "outputs": {
+    "compact_scaffolds_jsonl": "outputs/heldout/r062_guarded_routing_integration_decision/r062_compact_routing_scaffolds.jsonl",
+    "gate_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_gate.json",
+    "gate_md": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_gate.md",
+    "integration_manifest": "outputs/heldout/r062_guarded_routing_integration_decision/integration_outputs/guarded_prompt_integration_manifest.json",
+    "integration_prompt_previews": "outputs/heldout/r062_guarded_routing_integration_decision/integration_outputs/guarded_prompt_integration_previews.jsonl",
+    "manifest_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_integration_decision_manifest.json",
+    "public_records_jsonl": "outputs/heldout/r062_guarded_routing_integration_decision/r062_public_records.jsonl",
+    "report_json": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_report.json",
+    "report_md": "outputs/heldout/r062_guarded_routing_integration_decision/r062_guarded_routing_integration_report.md"
+  },
+  "schema_version": "r062_integration_decision_manifest_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "does_not_prove_retrieval_improvement": true,
+    "integration_decision_gate_only": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "target_records_only": [
+      223,
+      227
+    ]
+  },
+  "skill_context": [
+    "ARIS run-experiment protocol",
+    "experiment integrity",
+    "output manifest discipline"
+  ],
+  "stage": "R062"
+}

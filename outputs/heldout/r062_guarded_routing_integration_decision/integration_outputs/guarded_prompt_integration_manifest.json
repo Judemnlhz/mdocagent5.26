@@ -1,0 +1,58 @@
+{
+  "contract": {
+    "allowed_inputs": [
+      "record_index",
+      "doc_id",
+      "question",
+      "text/image retrieval page ids and scores",
+      "public page text previews",
+      "public artifact fields: artifact_id, artifact_type, modality, content, normalized_content, page_index, source_anchored, validation_status"
+    ],
+    "config_flag": "enable_guarded_prompt_scaffold",
+    "control_surface": "selection/prompt preview only; official retrieval/eval path is unchanged unless explicitly wired later",
+    "default_enabled": false,
+    "does_not_do": [
+      "provider call",
+      "prediction",
+      "evaluation",
+      "official score",
+      "artifact positive-lift claim",
+      "default adapter behavior change"
+    ],
+    "forbidden_inputs": [
+      "answer",
+      "answers",
+      "gold_answer",
+      "evidence_pages",
+      "evidence_sources",
+      "binary_correctness",
+      "gold_evidence",
+      "gold_page",
+      "gold_pages",
+      "provider raw outputs",
+      "API keys or secrets"
+    ],
+    "schema_version": "guarded_prompt_integration_v1"
+  },
+  "enabled": true,
+  "forbidden_gold_fields_present": [],
+  "guard_decision_by_record": {
+    "223": "artifact_dimension_support_guard",
+    "227": "artifact_dimension_support_guard"
+  },
+  "input_records_sha256": "7c3e40fd453a0b21ad3c87e44c56eb04eff30dc9475e823d991d46ffeb268e63",
+  "no_full_qa": true,
+  "no_gold_fields_in_public_previews": true,
+  "no_prediction_or_eval": true,
+  "no_provider_calls": true,
+  "not_artifact_lift_claim": true,
+  "not_official_score": true,
+  "num_prompt_previews": 2,
+  "output_records_sha256": "7c3e40fd453a0b21ad3c87e44c56eb04eff30dc9475e823d991d46ffeb268e63",
+  "records_unchanged": true,
+  "schema_version": "guarded_prompt_integration_v1",
+  "selected_artifact_count_by_record": {
+    "223": 0,
+    "227": 0
+  }
+}

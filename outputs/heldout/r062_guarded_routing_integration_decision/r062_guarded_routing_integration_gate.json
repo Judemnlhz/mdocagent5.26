@@ -1,0 +1,46 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "compact_scaffold_hashes_match_r061": true,
+    "compact_scaffold_marked_optional_provider_facing": true,
+    "compact_scaffold_provenance_from_r060": true,
+    "compact_scaffolds_have_no_gold_fields": true,
+    "contract_default_disabled": true,
+    "contract_has_config_flag": true,
+    "disabled_generates_no_prompt_previews": true,
+    "disabled_records_unchanged": true,
+    "does_not_claim_artifact_lift": true,
+    "enabled_emits_previews_and_manifest_only": true,
+    "enabled_previews_have_no_gold_fields": true,
+    "enabled_previews_page_routed_zero_artifact": true,
+    "enabled_records_unchanged": true,
+    "no_full_qa": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "r060_previews_page_routed_zero_artifact": true,
+    "r061_scope_is_tiny_page_routing_only": true,
+    "target_records_exactly_223_227": true
+  },
+  "compact_prompt_sha256_by_record": {
+    "223": "4c0bcff44f1b6a12c96ea2f0b26a3479ae65d139380bef1760ed92fa080d7d7e",
+    "227": "22db852865c0bf2f12c2f461f875696937960221e9e8383fd218805bacd43af7"
+  },
+  "created_utc": "2026-06-04T11:52:27.341753+00:00",
+  "decision": "r062_guarded_routing_integration_gate_pass",
+  "enabled_guard_decision_by_record": {
+    "223": "artifact_dimension_support_guard",
+    "227": "artifact_dimension_support_guard"
+  },
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_records": 2,
+  "schema_version": "r062_guarded_routing_integration_gate_v1",
+  "target_record_ids": [
+    223,
+    227
+  ]
+}
