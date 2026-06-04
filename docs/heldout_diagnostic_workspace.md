@@ -26,7 +26,7 @@ python3 scripts/run_heldout_diagnostic_audits.py r045 -- --execute
 
 ## Cleaned Material
 
-- Removed `refine-logs/` because its useful conclusions are superseded by tracked reports and this document.
+- Retained `refine-logs/EXPERIMENT_PLAN.md` and `refine-logs/EXPERIMENT_TRACKER.md` for the experiment-plan workflow. Removed only transient `refine-logs/*.log` run logs.
 - Removed Hydra date-run logs under `outputs/2026-*`; they are run logs, not final diagnostic artifacts.
 - Removed R043 large prompt preview JSONLs after retaining the compact exposure index and hashes.
 - Removed R041/R042 one-off scripts after retaining their final reports.
