@@ -1,0 +1,225 @@
+{
+  "artifact_support_insufficient_records": [
+    69,
+    223,
+    224,
+    227
+  ],
+  "artifact_support_sufficient_records": [],
+  "created_utc": "2026-06-04T07:38:22.634906+00:00",
+  "decision": "r058_positive_evidence_needs_selector_fix",
+  "gate": {
+    "artifact_support_insufficient_records": [
+      69,
+      223,
+      224,
+      227
+    ],
+    "artifact_support_sufficient_records": [],
+    "checks": {
+      "all_cases_have_selected_artifacts": true,
+      "all_positive_cases_have_supporting_artifact_evidence": false,
+      "all_prompts_have_citation_requirement": true,
+      "all_selected_artifacts_are_citable": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_previews": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_artifact_lift_claim": true,
+      "not_official_score": true,
+      "page_and_artifact_evidence_separated": true,
+      "positive_signal_is_not_treated_as_support": true,
+      "target_records_match_positive_signal_cases": true
+    },
+    "created_utc": "2026-06-04T07:38:22.634835+00:00",
+    "decision": "r058_positive_evidence_needs_selector_fix",
+    "failure_reasons_by_record": {
+      "223": [
+        "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2013"
+      ],
+      "224": [
+        "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2022",
+        "visible_context_missing_dimensions:year_2022"
+      ],
+      "227": [
+        "artifact_missing_dimensions:age_65_plus,college_graduate,tablet_computer,gap_operation,year_2013"
+      ],
+      "69": [
+        "artifact_missing_dimensions:figure_4,retrieved_nodes,both_questions",
+        "visible_context_missing_dimensions:both_questions"
+      ]
+    },
+    "gate_passed": false,
+    "hard_failures": [
+      "all_positive_cases_have_supporting_artifact_evidence"
+    ],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_cases": 4,
+    "schema_version": "r058_positive_evidence_gate_v1",
+    "selected_artifact_count_by_record": {
+      "223": 8,
+      "224": 8,
+      "227": 8,
+      "69": 8
+    },
+    "support_class_by_record": {
+      "223": "artifact_positive_signal_only_insufficient",
+      "224": "artifact_positive_signal_only_insufficient",
+      "227": "artifact_positive_signal_only_insufficient",
+      "69": "artifact_positive_signal_only_insufficient"
+    },
+    "visible_support_sufficient_records": [
+      223,
+      227
+    ]
+  },
+  "guard_decision_counts": {
+    "token_key_value_selection": 4
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "positive_record_ids": "69,223,224,227",
+    "r039_record_ids": "outputs/heldout/r039_targeted_activation_rich/record_ids.txt",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "num_cases": 4,
+  "per_record_summary": [
+    {
+      "artifact_support_sufficient": false,
+      "failure_reasons": [
+        "artifact_missing_dimensions:figure_4,retrieved_nodes,both_questions",
+        "visible_context_missing_dimensions:both_questions"
+      ],
+      "guard_decision": "token_key_value_selection",
+      "missing_artifact_dimensions": [
+        "figure_4",
+        "retrieved_nodes",
+        "both_questions"
+      ],
+      "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+      "record_id": 69,
+      "selected_artifact_count": 8,
+      "selected_artifact_ids": [
+        "atomicizer_numeric_fact_002",
+        "atomicizer_numeric_fact_006",
+        "atomicizer_numeric_fact_008",
+        "atomicizer_numeric_fact_010",
+        "atomicizer_numeric_fact_012",
+        "atomicizer_numeric_fact_014",
+        "atomicizer_numeric_fact_016",
+        "atomicizer_table_cell_001"
+      ],
+      "support_class": "artifact_positive_signal_only_insufficient",
+      "visible_support_sufficient": false
+    },
+    {
+      "artifact_support_sufficient": false,
+      "failure_reasons": [
+        "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2013"
+      ],
+      "guard_decision": "token_key_value_selection",
+      "missing_artifact_dimensions": [
+        "higher_income_seniors",
+        "go_online",
+        "tablet_computer",
+        "year_2013"
+      ],
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "record_id": 223,
+      "selected_artifact_count": 8,
+      "selected_artifact_ids": [
+        "atomicizer_numeric_fact_008",
+        "atomicizer_table_cell_007",
+        "atomicizer_numeric_fact_010",
+        "atomicizer_numeric_fact_012",
+        "atomicizer_table_cell_009",
+        "atomicizer_table_cell_011",
+        "atomicizer_numeric_fact_004",
+        "atomicizer_numeric_fact_006"
+      ],
+      "support_class": "artifact_positive_signal_only_insufficient",
+      "visible_support_sufficient": true
+    },
+    {
+      "artifact_support_sufficient": false,
+      "failure_reasons": [
+        "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2022",
+        "visible_context_missing_dimensions:year_2022"
+      ],
+      "guard_decision": "token_key_value_selection",
+      "missing_artifact_dimensions": [
+        "higher_income_seniors",
+        "go_online",
+        "tablet_computer",
+        "year_2022"
+      ],
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2022 tracking survey?",
+      "record_id": 224,
+      "selected_artifact_count": 8,
+      "selected_artifact_ids": [
+        "atomicizer_numeric_fact_008",
+        "atomicizer_table_cell_007",
+        "atomicizer_numeric_fact_010",
+        "atomicizer_numeric_fact_012",
+        "atomicizer_table_cell_009",
+        "atomicizer_table_cell_011",
+        "atomicizer_numeric_fact_004",
+        "atomicizer_numeric_fact_006"
+      ],
+      "support_class": "artifact_positive_signal_only_insufficient",
+      "visible_support_sufficient": false
+    },
+    {
+      "artifact_support_sufficient": false,
+      "failure_reasons": [
+        "artifact_missing_dimensions:age_65_plus,college_graduate,tablet_computer,gap_operation,year_2013"
+      ],
+      "guard_decision": "token_key_value_selection",
+      "missing_artifact_dimensions": [
+        "age_65_plus",
+        "college_graduate",
+        "tablet_computer",
+        "gap_operation",
+        "year_2013"
+      ],
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "record_id": 227,
+      "selected_artifact_count": 8,
+      "selected_artifact_ids": [
+        "atomicizer_numeric_fact_006",
+        "atomicizer_table_cell_005",
+        "atomicizer_numeric_fact_008",
+        "atomicizer_numeric_fact_010",
+        "atomicizer_numeric_fact_012",
+        "atomicizer_table_cell_007",
+        "atomicizer_table_cell_009",
+        "atomicizer_table_cell_011"
+      ],
+      "support_class": "artifact_positive_signal_only_insufficient",
+      "visible_support_sufficient": true
+    }
+  ],
+  "recommended_next": [
+    "Do not run provider QA on R058 positives yet.",
+    "Repair guarded selector ranking so positive-signal artifacts must cover question dimensions, not just token overlap.",
+    "Add table/key-value dimension matching for demographic, time, metric, and operand constraints.",
+    "Rerun R058 before wiring guarded selector into full QA."
+  ],
+  "schema_version": "r058_positive_evidence_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "positive_evidence_diagnostic_only": true
+  },
+  "support_class_counts": {
+    "artifact_positive_signal_only_insufficient": 4
+  }
+}

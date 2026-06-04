@@ -1,0 +1,68 @@
+{
+  "artifact_support_insufficient_records": [
+    69,
+    223,
+    224,
+    227
+  ],
+  "artifact_support_sufficient_records": [],
+  "checks": {
+    "all_cases_have_selected_artifacts": true,
+    "all_positive_cases_have_supporting_artifact_evidence": false,
+    "all_prompts_have_citation_requirement": true,
+    "all_selected_artifacts_are_citable": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_artifact_lift_claim": true,
+    "not_official_score": true,
+    "page_and_artifact_evidence_separated": true,
+    "positive_signal_is_not_treated_as_support": true,
+    "target_records_match_positive_signal_cases": true
+  },
+  "created_utc": "2026-06-04T07:38:22.634835+00:00",
+  "decision": "r058_positive_evidence_needs_selector_fix",
+  "failure_reasons_by_record": {
+    "223": [
+      "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2013"
+    ],
+    "224": [
+      "artifact_missing_dimensions:higher_income_seniors,go_online,tablet_computer,year_2022",
+      "visible_context_missing_dimensions:year_2022"
+    ],
+    "227": [
+      "artifact_missing_dimensions:age_65_plus,college_graduate,tablet_computer,gap_operation,year_2013"
+    ],
+    "69": [
+      "artifact_missing_dimensions:figure_4,retrieved_nodes,both_questions",
+      "visible_context_missing_dimensions:both_questions"
+    ]
+  },
+  "gate_passed": false,
+  "hard_failures": [
+    "all_positive_cases_have_supporting_artifact_evidence"
+  ],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_cases": 4,
+  "schema_version": "r058_positive_evidence_gate_v1",
+  "selected_artifact_count_by_record": {
+    "223": 8,
+    "224": 8,
+    "227": 8,
+    "69": 8
+  },
+  "support_class_by_record": {
+    "223": "artifact_positive_signal_only_insufficient",
+    "224": "artifact_positive_signal_only_insufficient",
+    "227": "artifact_positive_signal_only_insufficient",
+    "69": "artifact_positive_signal_only_insufficient"
+  },
+  "visible_support_sufficient_records": [
+    223,
+    227
+  ]
+}
