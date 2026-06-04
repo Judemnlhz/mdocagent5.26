@@ -1,0 +1,61 @@
+{
+  "checks": {
+    "all_conditions_have_37_records": true,
+    "artifact_snippets_only_has_no_page_text": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "four_conditions_present": true,
+    "no_gold_fields_in_previews": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "original_pages_only_has_no_artifact_snippets": true,
+    "page_rerank_only_has_no_artifact_snippets": true,
+    "plus_condition_has_artifact_exposure": true,
+    "prompt_hashes_unique_by_condition": true,
+    "snippet_only_has_artifact_exposure": true
+  },
+  "condition_summary": {
+    "artifact_snippets_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/artifact_snippets_only.jsonl",
+      "prompt_contains_artifacts_records": 37,
+      "prompt_contains_page_text_records": 0,
+      "retrieval_source_run": "top4_artifact_only",
+      "total_artifact_snippets": 276
+    },
+    "original_pages_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/original_pages_only.jsonl",
+      "prompt_contains_artifacts_records": 0,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_original_only",
+      "total_artifact_snippets": 0
+    },
+    "original_pages_plus_artifact_snippets": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/original_pages_plus_artifact_snippets.jsonl",
+      "prompt_contains_artifacts_records": 37,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_original_only",
+      "total_artifact_snippets": 264
+    },
+    "page_rerank_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/page_rerank_only.jsonl",
+      "prompt_contains_artifacts_records": 0,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_artifact_only",
+      "total_artifact_snippets": 0
+    }
+  },
+  "created_utc": "2026-06-04T02:32:39.552441+00:00",
+  "decision": "r043_prompt_exposure_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "recommended_next_phase": "small_provider_contrastive_run",
+  "schema_version": "r043_prompt_exposure_gate_v1"
+}

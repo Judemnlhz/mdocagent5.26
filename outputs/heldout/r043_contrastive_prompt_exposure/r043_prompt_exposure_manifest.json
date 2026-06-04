@@ -1,0 +1,105 @@
+{
+  "budgets": {
+    "max_artifact_chars": 260,
+    "max_artifacts_per_page": 6,
+    "max_page_chars": 1800
+  },
+  "conditions": {
+    "artifact_snippets_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/artifact_snippets_only.jsonl",
+      "prompt_contains_artifacts_records": 37,
+      "prompt_contains_page_text_records": 0,
+      "retrieval_source_run": "top4_artifact_only",
+      "total_artifact_snippets": 276
+    },
+    "original_pages_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/original_pages_only.jsonl",
+      "prompt_contains_artifacts_records": 0,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_original_only",
+      "total_artifact_snippets": 0
+    },
+    "original_pages_plus_artifact_snippets": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/original_pages_plus_artifact_snippets.jsonl",
+      "prompt_contains_artifacts_records": 37,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_original_only",
+      "total_artifact_snippets": 264
+    },
+    "page_rerank_only": {
+      "missing_page_text_records": 0,
+      "num_records": 37,
+      "preview_path": "prompt_previews/page_rerank_only.jsonl",
+      "prompt_contains_artifacts_records": 0,
+      "prompt_contains_page_text_records": 37,
+      "retrieval_source_run": "top4_artifact_only",
+      "total_artifact_snippets": 0
+    }
+  },
+  "created_utc": "2026-06-04T02:32:39.552274+00:00",
+  "decision": "r043_prompt_exposure_scaffold_prepared",
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "extract_path": "tmp/MMLongBench",
+    "r039_record_ids": "outputs/heldout/r039_targeted_activation_rich/record_ids.txt",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r041_matrix": "outputs/heldout/r041_r040_identical_score_attribution/record_level_attribution_matrix.jsonl",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "num_records": 37,
+  "record_ids": [
+    69,
+    223,
+    224,
+    227,
+    364,
+    366,
+    367,
+    383,
+    384,
+    385,
+    456,
+    495,
+    507,
+    508,
+    509,
+    569,
+    575,
+    712,
+    713,
+    718,
+    958,
+    995,
+    996,
+    998,
+    1009,
+    1011,
+    1012,
+    1013,
+    1033,
+    1034,
+    1035,
+    1043,
+    1052,
+    1053,
+    1055,
+    1057,
+    1058
+  ],
+  "schema_version": "r043_prompt_exposure_manifest_v1",
+  "scope": {
+    "gold_fields_excluded_from_previews": true,
+    "no_full_qa": true,
+    "no_new_evaluation": true,
+    "no_new_prediction": true,
+    "no_provider_calls": true,
+    "not_full_data_generalization": true,
+    "prompt_preview_only": true
+  }
+}
