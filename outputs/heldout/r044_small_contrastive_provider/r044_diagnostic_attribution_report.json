@@ -1,0 +1,833 @@
+{
+  "condition_diagnostic_match_counts_not_official_scores": {
+    "artifact_snippets_only": 1,
+    "original_pages_only": 1,
+    "original_pages_plus_artifact_snippets": 1,
+    "page_rerank_only": 3
+  },
+  "created_utc": "2026-06-04T03:23:48.492011+00:00",
+  "decision": "r044_small_contrastive_diagnostic_complete",
+  "gate": {
+    "checks": {
+      "four_conditions_present": true,
+      "not_full_qa": true,
+      "not_official_score": true,
+      "prediction_records_have_no_gold_fields": true,
+      "predictions_complete_4x22": true,
+      "prompt_hashes_match_r043": true,
+      "r043_condition_mapping_confirmed": true,
+      "target_records_exactly_22": true
+    },
+    "conditions": [
+      "original_pages_only",
+      "page_rerank_only",
+      "original_pages_plus_artifact_snippets",
+      "artifact_snippets_only"
+    ],
+    "created_utc": "2026-06-04T03:23:48.485555+00:00",
+    "decision": "r044_small_contrastive_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "mapping_audit": {
+      "condition_checks": {
+        "artifact_snippets_only": {
+          "artifact_exposure_matches": true,
+          "num_focus_rows": 22,
+          "page_text_exposure_matches": true,
+          "retrieval_source_run_matches": true
+        },
+        "original_pages_only": {
+          "artifact_exposure_matches": true,
+          "num_focus_rows": 22,
+          "page_text_exposure_matches": true,
+          "retrieval_source_run_matches": true
+        },
+        "original_pages_plus_artifact_snippets": {
+          "artifact_exposure_matches": true,
+          "num_focus_rows": 22,
+          "page_text_exposure_matches": true,
+          "retrieval_source_run_matches": true
+        },
+        "page_rerank_only": {
+          "artifact_exposure_matches": true,
+          "num_focus_rows": 22,
+          "page_text_exposure_matches": true,
+          "retrieval_source_run_matches": true
+        }
+      },
+      "expected_mapping": {
+        "artifact_snippets_only": {
+          "prompt_contains_artifacts": true,
+          "prompt_contains_page_text": false,
+          "retrieval_source_run": "top4_artifact_only"
+        },
+        "original_pages_only": {
+          "prompt_contains_artifacts": false,
+          "prompt_contains_page_text": true,
+          "retrieval_source_run": "top4_original_only"
+        },
+        "original_pages_plus_artifact_snippets": {
+          "prompt_contains_artifacts": true,
+          "prompt_contains_page_text": true,
+          "retrieval_source_run": "top4_original_only"
+        },
+        "page_rerank_only": {
+          "prompt_contains_artifacts": false,
+          "prompt_contains_page_text": true,
+          "retrieval_source_run": "top4_artifact_only"
+        }
+      },
+      "mapping_confirmed": true,
+      "r043_gate_passed": true
+    },
+    "model": "deepseek-ai/DeepSeek-V3",
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_predictions": 88,
+    "num_target_records": 22,
+    "schema_version": "r044_execution_gate_v1"
+  },
+  "inputs": {
+    "r042_cases": "outputs/heldout/r042_r040_manual_attribution/manual_attribution_cases.jsonl",
+    "r043_root": "outputs/heldout/r043_contrastive_prompt_exposure",
+    "records": "data/MMLongBench/sample-with-retrieval-results.json"
+  },
+  "interpretation": {
+    "artifact_injection_gain_count": 1,
+    "artifact_injection_loss_count": 1,
+    "bottom_line": "R044 is a 22-case diagnostic contrast over prompt-visible exposure; counts are not official scores.",
+    "condition_match_counts_not_official_scores": {
+      "artifact_snippets_only": 1,
+      "original_pages_only": 1,
+      "original_pages_plus_artifact_snippets": 1,
+      "page_rerank_only": 3
+    },
+    "page_rerank_gain_count": 2,
+    "page_rerank_loss_count": 0,
+    "snippet_only_sufficient_count": 1
+  },
+  "mapping_audit": {
+    "condition_checks": {
+      "artifact_snippets_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "original_pages_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "original_pages_plus_artifact_snippets": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "page_rerank_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      }
+    },
+    "expected_mapping": {
+      "artifact_snippets_only": {
+        "prompt_contains_artifacts": true,
+        "prompt_contains_page_text": false,
+        "retrieval_source_run": "top4_artifact_only"
+      },
+      "original_pages_only": {
+        "prompt_contains_artifacts": false,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_original_only"
+      },
+      "original_pages_plus_artifact_snippets": {
+        "prompt_contains_artifacts": true,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_original_only"
+      },
+      "page_rerank_only": {
+        "prompt_contains_artifacts": false,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_artifact_only"
+      }
+    },
+    "mapping_confirmed": true,
+    "r043_gate_passed": true
+  },
+  "model": {
+    "base_url": "https://api.siliconflow.cn/v1",
+    "max_tokens": 256,
+    "model": "deepseek-ai/DeepSeek-V3",
+    "provider_note": "Qwen/Qwen3-8B timed out on the first full R043 prompt; DeepSeek-V3 was used for this diagnostic provider run.",
+    "temperature": 0.0
+  },
+  "num_predictions": 88,
+  "num_target_records": 22,
+  "per_record": [
+    {
+      "answer_format": "List",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the nodes retrieved by RAPTOR for both questions are associated with the following metrics:\n\n1. SBERT with RAPTOR ROUGE: 30.87% (atomicizer_numeric_fact_002)\n2. BM25 with RAPTOR BLEU-4: 27.93% (atomicizer_numeric_fact_006)\n3. DPR with RAPTOR SBERT with RAPTOR: 30.94% (atomicizer_numeric_fact_010)\n\nThese entries explicitly mention \"RAPTOR\" in their descriptions, indicating they were retrieved by RAPTOR for the questions.",
+        "original_pages_only": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The figure is mentioned on Page 6, but the description only highlights that RAPTOR's selections are indicated by highlighted nodes and that its context often encompasses the information retrieved by DPR. No specific node numbers or details are provided in the visible pages. \n\nThus, based on the given context, the answer cannot be determined.",
+        "original_pages_plus_artifact_snippets": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The figure is mentioned on page 6, but the details about the specific nodes retrieved are not provided in the given text. Therefore, based on the available context, I cannot determine which nodes are retrieved by RAPTOR for both questions.",
+        "page_rerank_only": "The visible context does not explicitly specify which nodes are retrieved by RAPTOR for both questions in Figure 4. The text mentions that \"highlighted nodes indicate RAPTOR’s selections\" and that RAPTOR’s context often encompasses the information retrieved by DPR, but it does not provide the exact node identifiers or details for the two questions about the Cinderella story. \n\nTherefore, based on the given context, the specific nodes retrieved by RAPTOR for both questions cannot be determined."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "[16, 19, 25]",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "In figure 4, which nodes are retrieved by RAPTOR for both questions?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 69,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "List",
+      "case_type": "binary_divergent",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the provided context, the percentages for Higher-income seniors going online, having a smartphone, and owning a tablet computer are not explicitly listed. The closest relevant data points are:\n\n- Smartphone devices among older adults: 77%  \n- Smartphone Cell phone: 18%  \n- Ownership by the standards of: 27%  \n\nHowever, these do not directly answer the question for \"Higher-income seniors\" specifically. The context does not contain the exact breakdown requested. \n\nIf forced to infer from the given data (though not precise), the descending order might resemble:  \n[\"77%\", \"27%\", \"18%\"]  \n\nBut this is an approximation and not a confirmed answer from the context.",
+        "original_pages_only": "Based on the visible context, the percentages for higher-income seniors (those with an annual household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (from Page 6)\n2. **Own a smartphone**: 42% (from Page 8)\n3. **Own a tablet computer**: 39% (from Page 9)\n\nListing these in descending order:  \n[\"90%\", \"42%\", \"39%\"]",
+        "original_pages_plus_artifact_snippets": "Based on the provided context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. Percentage who go online: 90% (from Page 6)\n2. Percentage who own a smartphone: 42% (from Page 8)\n3. Percentage who own a tablet computer: 39% (from Page 9)\n\nIn descending order, the list format is:\n[\"90%\", \"42%\", \"39%\"]",
+        "page_rerank_only": "Based on the visible context, the percentages for higher-income seniors (those with an annual household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "['90%', '42%', '39%']",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey?",
+      "r042_label": "artifact_only_loss_answer_value_shift",
+      "record_id": 223,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "None",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the percentages for Higher-income seniors going online, having a smartphone, and owning a tablet computer are not explicitly provided. The snippets mention general statistics for older adults but do not specify \"Higher-income seniors\" or the exact metrics requested (online usage, smartphone ownership, tablet ownership). \n\nHowever, if we infer from the closest available data for older adults:\n- Smartphone ownership: 77% (from `atomicizer_numeric_fact_004`)\n- Tablet ownership: 27% (from `atomicizer_numeric_fact_010`)\n- Online usage: 18% (from `artifact_001` for seniors, though this is likely outdated or misaligned).\n\nSince the question asks for Higher-income seniors specifically and the context lacks this granularity, the answer cannot be accurately derived. \n\nIf forced to list the closest general older adult figures in descending order:  \n[\"77%\", \"27%\", \"18%\"]  \n\n(Note: This is an approximation and not specific to Higher-income seniors.)",
+        "original_pages_only": "Based on the visible context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]",
+        "original_pages_plus_artifact_snippets": "Based on the provided context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (from Page 6)\n2. **Own a smartphone**: 42% (from Page 8)\n3. **Own a tablet computer**: 39% (from Page 9)\n\nIn descending order, the list format is:  \n[\"90%\", \"42%\", \"39%\"]",
+        "page_rerank_only": "Based on the visible context, the percentages for higher-income seniors (household income of $75,000 or more) are as follows:\n\n1. **Go online**: 90% (Page 6)\n2. **Own a smartphone**: 42% (Page 8)\n3. **Own a tablet computer**: 39% (Page 9)\n\nThe answer in descending order is:  \n[\"90%\", \"42%\", \"39%\"]"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "Among the Higher-income seniors, what are the percentage of them go online, has smartphone phone, and own a tablet computer? Please write the answer in the list format and in descend order,e.g., [\"9%\",\"8%\"] in the Pew Research Center’s Internet Project July 18-September 30, 2022 tracking survey?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 224,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Int",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the gap for 65+ people with a College graduate who own both a cell phone and a tablet computer is **18%** (from the snippet: \"Smartphone Cell phone: 18%\"). \n\nNo other specific percentage for tablet computer ownership among this group is provided in the snippets, so the answer is limited to the cell phone data.",
+        "original_pages_only": "The gap between 65+ college graduates who own a cell phone and those who own a tablet computer in the Pew Research Center’s July 18-September 30, 2013 tracking survey is **56 percentage points**. \n\nHere’s the breakdown from the visible context:\n- **Cell phone ownership among 65+ college graduates**: 87% (Page 7 states that 87% of seniors with a college degree go online, and cell phone ownership is closely tied to internet use in this demographic).  \n- **Tablet ownership among 65+ college graduates**: 31% (Page 9 and Page 19 both confirm this figure).  \n\nThus, the gap is calculated as:  \n87% (cell phone) - 31% (tablet) = **56 percentage points**.  \n\n(Note: The context does not explicitly state cell phone ownership for college graduates, but Page 7 links high internet adoption (87%) to this group, and Page 18 shows smartphone ownership for college graduates at 35%, suggesting broader cell phone ownership would be higher. The 87% figure is inferred as the closest proxy for general cell phone adoption among this subgroup.)",
+        "original_pages_plus_artifact_snippets": "The gap for 65+ people with a college graduate who own both a cell phone and a tablet computer can be inferred from the data provided in the context. \n\nFrom **Page 9**, it is stated that **77% of seniors (ages 65 and older) own a cell phone**, and **31% of college graduate seniors own a tablet computer** (as shown in the \"Tablet and e-book reader adoption among seniors\" table). \n\nHowever, the exact overlap (those who own **both** a cell phone and a tablet) is not explicitly provided. Assuming independence (though this may not be strictly accurate), the gap would be the difference between cell phone ownership (77%) and tablet ownership among college graduates (31%). \n\nThus, the gap is roughly **46 percentage points** (77% - 31%). \n\n**Final Answer:**  \nThe gap is approximately **46 percentage points** between cell phone ownership (77%) and tablet ownership (31%) among 65+ college graduates.  \n\n*(Note: If a combined ownership statistic were available, the gap might differ, but the context does not provide this exact figure.)*",
+        "page_rerank_only": "The gap for 65+ people with a college degree who own both a cell phone and a tablet computer can be inferred from the data provided in the context. \n\n1. **Cell Phone Ownership**: On Page 7, it states that 77% of all seniors (65+) own a cell phone. However, the breakdown for college graduates is not explicitly provided for cell phones. \n\n2. **Tablet Ownership**: On Page 9, it shows that 31% of college graduate seniors own a tablet computer. \n\nSince the exact cell phone ownership rate for college graduates is not provided, we cannot calculate the precise gap for owning both devices. However, we know that:\n- The overall cell phone ownership for seniors is 77%, and it is likely higher for college graduates (given that other tech adoption rates are higher for this group).\n- Tablet ownership for college graduate seniors is 31%.\n\nThus, the gap would depend on the cell phone ownership rate among college graduate seniors, which is not specified in the visible context. \n\n**Final Answer**: The exact gap cannot be determined from the visible context because the cell phone ownership rate for 65+ college graduates is not provided. However, 31% of college graduate seniors own a tablet computer."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "301",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "What is the gap of 65+ people with College graduate contain a cell phone and a tablet computer in the Pew Research Center’s Internet Project July 18-September 30, 2013 tracking survey. ? ",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 227,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "None",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot answer the question based on the visible snippets. \n\nAnswer: Unable to determine from the given context.",
+        "original_pages_only": "The visible context does not contain any information about Japan's GDP growth or forecasts from 2002 to 2023. The provided pages primarily discuss financial statements, shareholder information, and operational details of Godfrey Phillips India Limited. Therefore, I cannot answer the question based on the given context.  \n\n**Answer:** The percentage shortfall in Japan's GDP growth compared to the forecast is not mentioned in the provided context.",
+        "original_pages_plus_artifact_snippets": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot determine the percentage shortfall based on the visible context. \n\nAnswer: The information about Japan's GDP growth shortfall compared to forecasts is not available in the provided context.",
+        "page_rerank_only": "The provided context does not contain any information about Japan's GDP growth from 2002 to 2023 or any related forecasts. Therefore, I cannot answer the question based on the given material. \n\nFor accurate data, please refer to official economic reports or databases from sources like the World Bank, IMF, or Japan's government publications."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "What was the percentage shortfall in Japan's GDP growth from 2002 to 2023 compared to the forecast?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "record_id": 367,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "None",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the document that was revised on May 2018 was produced by the \"Strategic Planning Services Team.\" This information is derived from the snippets provided, which mention the team in relation to numeric facts and table cells.",
+        "original_pages_only": "The document that was revised on May 2016 (not May 2018, as no revision date for 2018 is mentioned) was produced by the **Florida Department of Health** (4052 Bald Cypress Way, Bin # A00, Tallahassee, FL 32399-1701). \n\nNo information about a May 2018 revision is provided in the visible context.",
+        "original_pages_plus_artifact_snippets": "The document that was revised on May 2016 (not May 2018 as mentioned in the question) was produced by the **Florida Department of Health**, as stated on Page 1. The visible context does not provide information about a revision in May 2018. \n\nIf you meant the May 2016 revision, the producer is clearly the Florida Department of Health. If there is a May 2018 revision referenced elsewhere, it is not visible in the provided context.",
+        "page_rerank_only": "The document that was revised in May 2016 (not May 2018, as no revision date for 2018 is mentioned in the visible context) was produced by the **Florida Department of Health** (located at 4052 Bald Cypress Way, Bin # A00, Tallahassee, FL 32399-1701). \n\nNo information about a May 2018 revision is provided in the given context."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": true,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": true
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "unanswerable_equivalent",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "question": "Who produced the document that was revised on May 2018?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 384,
+      "transition_labels": [
+        "artifact_injection_loss_vs_original"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the accuracy of PaLM-2L + RAG is **39.6%**, while the accuracy of PaLM-2L (without RAG) is **38.7%**. \n\nThe difference in accuracy is:  \n39.6% - 38.7% = **0.9% higher** for PaLM-2L + RAG compared to PaLM-2L.",
+        "original_pages_only": "The accuracy of PaLM-2L + RAG on TimeQA is **57.4%**, compared to the baseline PaLM-2L accuracy of **41.5%**. This means PaLM-2L + RAG achieves a **15.9 percentage point improvement** over PaLM-2L alone.  \n\n(Source: Table 2 on Page 5, which shows PaLM-2L at 41.5% and PaLM-2L + RAG at 57.4%.)",
+        "original_pages_plus_artifact_snippets": "The accuracy of PaLM-2L + RAG is **15.9% higher** than PaLM-2L on TimeQA. \n\nFrom the context (Page 5, Table 2):\n- PaLM-2L baseline accuracy: **41.5%**\n- PaLM-2L + RAG accuracy: **57.4%**  \n\nThe difference is calculated as:  \n57.4% (RAG) - 41.5% (baseline) = **15.9%**.  \n\nThis improvement is highlighted in the text as well: \"augmenting the baseline model by regular retrieval augmentation (RAG) improves the accuracy to 57.4%, highlighting the factual intensive nature of the task.\"  \n\n(Note: The Step-Back + RAG combination achieves even higher accuracy at 68.7%, but the question specifically asks for the comparison between PaLM-2L + RAG and PaLM-2L alone.)",
+        "page_rerank_only": "The accuracy of **PaLM-2L + RAG** on TimeQA is **57.4%**, while the baseline **PaLM-2L** achieves **41.5%**.  \n\nThus, **PaLM-2L + RAG** is **15.9 percentage points higher** in accuracy compared to **PaLM-2L** on TimeQA.  \n\n(Source: Table 2 on Page 5.)"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "15.9%",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "How much higher is the accuracy of PaLM-2L + RAG compared to PaLM-2L on TimeQA?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "record_id": 456,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Int",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the provided context, there is no mention of \"mobile phone\" on pages 16 or 18. The visible snippets only contain information from page 23. \n\nTherefore, the answer is: 0.",
+        "original_pages_only": "The term \"mobile phone\" does not appear on pages 16 or 18 in the provided context. Therefore, the answer is 0.",
+        "original_pages_plus_artifact_snippets": "The term \"mobile phone\" does not appear in the provided context for pages 16 and 18. Therefore, the answer is:\n\n0 times.",
+        "page_rerank_only": "The term \"mobile phone\" does not appear on pages 16 or 18 in the provided context. Therefore, the answer is 0."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "6",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "How many times does mobile phone appear on pages 16 and 18?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 495,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "None",
+      "case_type": "binary_divergent",
+      "condition_predictions": {
+        "artifact_snippets_only": "The geographic market name for EPS Code AR03 is not explicitly mentioned in the provided artifact snippets. The snippets list various geographic market names and codes, but none correspond to AR03. Therefore, the answer cannot be determined from the given context.",
+        "original_pages_only": "The geographic market name for EPS Code AR03 is **Mobile** (from the Alabama section on Page 6). \n\n*(Note: While AR03 is not explicitly listed under Arkansas (AR) on Page 7, the context shows that AR codes are assigned to Arkansas, and the numbering skips from AR02 to other states. The only \"AR03\" appearing in the visible context is under Alabama (AL03), which is labeled as Mobile. This suggests a possible data discrepancy or that AR03 may not be defined in the provided pages.)*",
+        "original_pages_plus_artifact_snippets": "The geographic market name for EPS Code AR03 is not listed in the provided context. The document only includes AR01 (Little Rock) and AR02 (Northern Arkansas) for Arkansas.",
+        "page_rerank_only": "The geographic market name for EPS Code AR03 is not listed in the provided context. The document only includes AR01 (Little Rock) and AR02 (Northern Arkansas) for Arkansas."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": true,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": true,
+        "page_rerank_only": true
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "match_level": {
+        "artifact_snippets_only": "unanswerable_equivalent",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "unanswerable_equivalent",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+      "r042_label": "artifact_only_loss_unanswerable_false_positive",
+      "record_id": 508,
+      "transition_labels": [
+        "page_rerank_gain_vs_original",
+        "artifact_injection_gain_vs_original",
+        "snippet_only_sufficient"
+      ]
+    },
+    {
+      "answer_format": "None",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field and the sum of children with the same status, we need the relevant numeric values from the context. However, the provided snippets do not explicitly list the required sums for the older age group and children. \n\nThe snippets mention percentages like:\n- 82% (Engineers and architects and computer workers)\n- 77% (Engineers and architects among the most)\n- 65.9% (social science occupations)\n\nBut without the specific sums for the two groups (older age group and children), we cannot compute the percentage difference. \n\n**Answer:** Insufficient data in the provided context to determine the percentage difference.",
+        "original_pages_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the Pew Research Center survey (January 2018), we need to identify the relevant data from the provided context.\n\n### Relevant Data:\n1. **Older Age Group (Workers ages 25 and older with at least a bachelor’s degree in STEM):**\n   - **52%** of STEM-trained workers are employed in a STEM occupation (Page 40).\n   - **33%** of workers ages 25 and older with at least a bachelor’s degree have an undergraduate degree in a STEM major field of study (Page 40).\n\n2. **Children (K-12 public schools):**\n   - **13%** of those with a STEM postgraduate degree rate K-12 STEM education as above average (Page 86).\n   - **27%** of adults with some college or less education give K-12 STEM education in the U.S. the same rating (Page 86).\n\n### Calculation:\n- **Sum for Older Age Group:** 52% (employed in STEM) + 33% (STEM degree holders) = **85%**\n- **Sum",
+        "original_pages_plus_artifact_snippets": "To calculate the percentage difference between the sum of older age groups who have received a STEM degree and are employed in their field and the sum of children with the same status, we need to identify the relevant data points from the provided context.\n\nFrom the visible context, we can gather the following information:\n\n1. **Older Age Group with STEM Degrees Employed in Their Field**:\n   - On **Page 40**, it is mentioned that among workers ages 25 and older with at least a bachelor’s degree, **52%** of those with a STEM degree are employed in a STEM occupation.\n   - On **Page 27**, it is noted that **29%** of STEM workers have a postgraduate degree (master’s, doctorate, or professional degree), which is a subset of the older age group.\n\n2. **Children with the Same Status**:\n   - The context does not provide specific data for children (likely referring to K-12 students) who have received a STEM degree and are employed in their field, as this would not be applicable to children. The closest relevant data is about perceptions of K-12 STEM education quality, but not employment status.\n\nSince the context does not provide data on children with STEM degrees and employment in their field (as",
+        "page_rerank_only": "To calculate the percentage difference between the sum of the older age group who have received a STEM degree and are employed in their field and the sum of children with the same status, we need to identify the relevant data from the provided context.\n\nFrom **Page 40**, it is stated that **52%** of workers aged 25 and older with at least a bachelor’s degree in a STEM field are employed in a STEM occupation.  \n\nFrom **Page 43**, it is mentioned that **56% of women** and **49% of men** who majored in STEM are working in a STEM occupation. However, this does not directly provide a figure for children.  \n\nSince the context does not explicitly provide data on children with STEM degrees employed in their field, we cannot compute the percentage difference.  \n\n**Answer:** The percentage difference cannot be determined from the visible context because data on children with STEM degrees employed in their field is not provided."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": true
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "Not answerable",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "unanswerable_equivalent"
+      },
+      "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the survey of Pew Research Center, January 2018?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "record_id": 569,
+      "transition_labels": [
+        "page_rerank_gain_vs_original"
+      ]
+    },
+    {
+      "answer_format": "Int",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, only **page 3** contains tables (as indicated by the numeric facts listed for that page). There is no information about tables on other pages. \n\nAnswer: **1 page** (page 3) contains tables.",
+        "original_pages_only": "Based on the visible context, there are **4 pages** that contain tables:\n\n1. **Page 2** - Contains a \"Performance Information Table.\"\n2. **Page 3** - Contains another \"Performance Information Table.\"\n3. **Page 4** - Contains a \"Planning & Operational Systems - Privacy Table.\"\n4. **Page 9** - Contains a \"Service Component Reference Model (SRM) Table.\"\n\nThus, the answer is: **4 pages contain tables**.",
+        "original_pages_plus_artifact_snippets": "Based on the visible context, there are **4 pages** that contain tables:\n\n1. **Page 2** - Contains a \"Performance Information Table\"\n2. **Page 3** - Contains a \"Performance Information Table\"\n3. **Page 4** - Contains a \"Planning & Operational Systems - Privacy Table\"\n4. **Page 9** - Contains a \"Service Component Reference Model (SRM) Table\"\n\nThe other pages (5, 7) are continuations of the same SRM table from Page 9, so they are not counted as separate tables. \n\nThus, the total is **4 pages with tables**.",
+        "page_rerank_only": "Based on the visible context, there are **4 pages** that contain tables. These pages are:\n\n1. **Page 2**: Contains a \"Performance Information Table.\"\n2. **Page 3**: Contains another \"Performance Information Table.\"\n3. **Page 4**: Contains a \"Planning & Operational Systems - Privacy Table.\"\n4. **Page 9**: Contains a \"Service Component Reference Model (SRM) Table.\"\n\nThus, the answer is: **4 pages contain tables**."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "13",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "How many pages contain tables?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 712,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Str",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the significant changes in the Risk Management Plan since last year include:  \n\n- **80% of the plan was completely reworked** (to complete reworked within: 80%).  \n- **70% of the risk management cycle has been completed** (cycle complete: 70%).  \n- **85% of risk-related transfers were completed on time** (transfers on-time: 85%).  \n- **Resolution time and completion targets were maintained at 80%** (resolution time Maintain at Results will be: 80%; to complete Maintain at Results will be: 80%).  \n- **The risk management cycle performance increased to 72%** (cycle Increase to Results will be: 72%).  \n\nThese metrics indicate substantial updates in rework, cycle completion, transfer efficiency, and performance targets.",
+        "original_pages_only": "The provided context does not include any information about the **Risk Management Plan** or its changes since last year. The visible pages (Pages 0, 3, 4, 13, and 14) focus on the **Integrated Personnel Management System (IPMS)**, including its technical alignment with the FEA Technical Reference Model (TRM), performance metrics, lifecycle cost estimates, and security/privacy details. \n\nSince no details about the **Risk Management Plan** are available in the visible context, I cannot describe any significant changes to it. For an accurate answer, additional pages containing the Risk Management Plan would need to be provided. \n\nWould you like me to summarize any other aspects of the IPMS based on the available pages?",
+        "original_pages_plus_artifact_snippets": "The provided context does not include specific details about the changes to the Risk Management Plan since last year. The available pages focus on technical alignment with the FEA Technical Reference Model (TRM), lifecycle cost estimates, performance metrics, and system privacy details, but no explicit comparison or revision history of the Risk Management Plan is mentioned. \n\nFor a precise answer, additional context or documentation outlining the previous year's Risk Management Plan and its current revisions would be required.",
+        "page_rerank_only": "The provided context does not include specific details about the changes to the Risk Management Plan since last year. The documents focus on technical alignment with the FEA Technical Reference Model, lifecycle cost estimates, performance metrics, and system privacy assessments, but no explicit comparison or revision history of the Risk Management Plan is mentioned. \n\nFor accurate information on the Risk Management Plan's changes, you would need access to the previous year's documentation or a section explicitly detailing revisions to the plan."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "N/A",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "Describe the significant changes of the Risk Management Plan since last year.",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "record_id": 718,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Str",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, the pre-trained Vicuna-13B performed best on the MAVEN-ERE baseline with a score of 16.3 when using \"all logical constraints\" (w. all logical constraints Vicuna-13B-PT: 16.3). \n\nThis outperforms the other baselines listed, such as vanilla ICL (15.3), vanilla ICL w. CoT (15.8), and CoT w. logical constraints (18.0, where lower is better for LI (%) ↓).",
+        "original_pages_only": "The pre-trained Vicuna-13B performed best on the MAVEN-ERE baseline with the **CoT w. logical constraints** setting, achieving a Micro-F1 score of **18.0%** (an improvement of +3.1% over its non-pre-trained counterpart) and a logical inconsistency (LI) score of **6.0%** (a reduction of -15.7%). This is highlighted in **Table 3** on **Page 7**. \n\nFor comparison, other settings for Vicuna-13B-PT on MAVEN-ERE include:\n- **vanilla ICL**: 15.3% Micro-F1  \n- **w. all logical constraints**: 16.3% Micro-F1  \n- **w. retrieved logical constraints**: 16.1% Micro-F1  \n\nThus, **CoT w. logical constraints** was its strongest baseline.",
+        "original_pages_plus_artifact_snippets": "The pre-trained Vicuna-13B performed best on the MAVEN-ERE baseline with the \"CoT w. logical constraints\" setting, achieving a Micro-F1 score of 18.0% (as shown in Table 3 on Page 7). This is the highest Micro-F1 score among all the configurations listed for Vicuna-13B on MAVEN-ERE. \n\nThe relevant context is:  \n> **CoT w. logical constraints 18.0 (+3.1%)**  \n\nThis result is highlighted in the table and represents the top performance for Vicuna-13B on this baseline.",
+        "page_rerank_only": "The pre-trained Vicuna-13B performed best on the MAVEN-ERE baseline with the \"CoT w. logical constraints\" setting, achieving a Micro-F1 score of **18.0%** (as shown in Table 3 on Page 7). This was the highest Micro-F1 score among all the Vicuna-13B configurations listed for MAVEN-ERE. \n\nThe improvement over the vanilla ICL baseline (+3.1%) and the reduction in logical inconsistency (LI) to 6.0% also indicate its relative effectiveness compared to other Vicuna-13B approaches."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "CoT w. logical constraints ",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "Which baseline did the pre-trained Vicuna-13B perform best on MAVEN-ERE?",
+      "r042_label": "binary_same_all_correct_surface_variation",
+      "record_id": 958,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The long-term debt of Costco in FY 2021 is not provided in the visible context. The available data includes cash and cash equivalents, short-term investments, receivables, merchandise inventories, and other current assets, but no information on long-term debt is present.",
+        "original_pages_only": "The long-term debt of Costco in FY 2021 is **$6,692 million**. \n\nThis information is found under the \"OTHER LIABILITIES\" section on Page 37, listed as \"Long-term debt, excluding current portion.\"",
+        "original_pages_plus_artifact_snippets": "The long-term debt of Costco in FY 2021 is **$6,692 million**. \n\nThis information is found in the \"Long-term debt, excluding current portion\" line item on page 37 of the consolidated balance sheets.",
+        "page_rerank_only": "The long-term debt of Costco in FY 2021 is **$6,692 million**. \n\nThis information is found under the \"OTHER LIABILITIES\" section on page 37, where it lists \"Long-term debt, excluding current portion\" as $6,692 million for August 29, 2021."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "10314",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is long-term debt of  Costco in FY 2021? Anwser in millions.",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 998,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Str",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "Based on the visible context, Costco's financial performance in FY2021 relied heavily on its **net income including noncontrolling interests**, which was **5,079** (compared to 4,059 in 2020). This is the most prominent numeric fact provided for FY2021. Other contributing factors include depreciation and amortization (1,781), stock-based compensation (665), and other non-cash operating activities (85), but the net income figure is the primary indicator of overall financial performance. \n\n(Source: page 39)",
+        "original_pages_only": "Based on the visible context, Costco relies heavily on **net sales and membership fees** for its financial performance in FY2021. \n\nKey evidence:\n1. **Page 35 (Consolidated Statements of Income)** shows that net sales ($192,052 million) and membership fees ($3,877 million) together constitute nearly all of Costco's total revenue ($195,929 million).\n2. **Page 28 (Cash Flows from Operating Activities)** explicitly states: \"Our cash flow provided by operations is primarily from net sales and membership fees.\"\n\nThese two revenue streams are the dominant drivers of Costco's financial performance.",
+        "original_pages_plus_artifact_snippets": "Based on the visible context, Costco relies heavily on **net sales and membership fees** for its financial performance in FY2021. This is evident from the consolidated statements of income (Page 35), which show that net sales accounted for $192,052 million and membership fees contributed $3,877 million, totaling $195,929 million in revenue. Additionally, Page 28 highlights that cash flow from operations is \"primarily from net sales and membership fees.\" \n\nThus, the two key drivers of Costco's financial performance in FY2021 are:\n1. **Net sales** ($192,052 million)\n2. **Membership fees** ($3,877 million)",
+        "page_rerank_only": "Based on the visible context, Costco relies heavily on **net sales and membership fees** for its financial performance in FY2021. \n\nKey evidence includes:\n- The **Consolidated Statements of Income** (Page 35) show that net sales ($192,052 million) and membership fees ($3,877 million) together constitute nearly all of Costco's total revenue ($195,929 million).  \n- **Cash Flows from Operating Activities** (Page 28) explicitly state that cash flow from operations is \"primarily from net sales and membership fees.\"\n\nNo other revenue sources are highlighted as significant contributors in the provided context."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "the financial performance of our U.S. and Canadian operations.",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "What does Costco rely heavily on for its financial performance in FY2021?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1009,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain the necessary information to calculate Amazon's FY2017 days payable outstanding (DPO). The snippets only include data up to 2016 and do not mention accounts payable or cost of goods sold, which are required for DPO calculation. \n\nTherefore, I cannot determine Amazon's FY2017 DPO from the given context.",
+        "original_pages_only": "To calculate Amazon's Days Payable Outstanding (DPO) for FY2017, we use the formula:\n\n\\[ \\text{DPO} = \\left( \\frac{\\text{Accounts Payable}}{\\text{Cost of Goods Sold (COGS)}} \\right) \\times 365 \\]\n\nFrom the provided context:\n- **Accounts Payable (2017)**: $34,616 million (from the Balance Sheet on Page 39).\n- **Cost of Goods Sold (COGS)**: Not directly provided, but we can approximate it using the **Inventory** and **Purchases** data. However, since COGS is not explicitly stated, we can use an alternative approach if necessary.\n\nAlternatively, if we assume COGS is derived from inventory changes and purchases, but the exact COGS is not visible in the context, we might need to rely on another method or infer it from other data. However, since the exact COGS is not provided in the visible context, we cannot accurately compute DPO.\n\nGiven the visible data, the calculation cannot be completed without COGS. Thus, the answer cannot be determined from the provided context. \n\n**Answer:** Unable to determine (missing COGS data).",
+        "original_pages_plus_artifact_snippets": "To calculate Amazon's Days Payable Outstanding (DPO) for FY2017, we use the formula:\n\n\\[ \\text{DPO} = \\left( \\frac{\\text{Accounts Payable}}{\\text{Cost of Goods Sold (COGS)}} \\right) \\times \\text{Number of Days in Period} \\]\n\nFrom the context:\n- **Accounts Payable (2017)**: $34,616 million (Page 39)\n- **COGS**: Not directly provided, but we can approximate it using the **Inventory** and **Purchases** data. However, the necessary data for COGS (or Purchases) is not visible in the provided context. \n\nSince the required data to compute COGS is missing, we cannot accurately calculate the DPO for FY2017. \n\n**Answer:** Insufficient data to compute Amazon's FY2017 DPO.",
+        "page_rerank_only": "To calculate Amazon's Days Payable Outstanding (DPO) for FY2017, we use the formula:\n\n\\[ \\text{DPO} = \\left( \\frac{\\text{Accounts Payable}}{\\text{Cost of Goods Sold (COGS)}} \\right) \\times \\text{Number of Days in Period} \\]\n\nFrom the provided context:\n- **Accounts Payable (2017)**: $34,616 million (from the Consolidated Balance Sheets on Page 39).\n- **Cost of Goods Sold (COGS)**: Not directly provided, but we can approximate it using the **Inventory** and **Purchases** data. However, the necessary details (like inventory purchases) are not explicitly visible in the context. \n\nAn alternative approach is to use the **Accounts Payable Turnover Ratio**, but the required data (total supplier purchases) is also not directly available in the visible context. \n\nGiven the lack of explicit COGS or purchases data in the visible pages, we cannot accurately compute DPO with the provided information. \n\n**Answer**: Insufficient data in the visible context to calculate Amazon's FY2017 DPO. \n\n*(Note: If additional pages or data were visible, we might derive COGS from changes in inventory and accounts"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "97.75",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "What is Amazon's FY2017 days payable outstanding (DPO)?Round your answer to two decimal places. ",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1033,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "binary_divergent",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain the necessary information to calculate Amazon's FY2017 Operating Profit Margin Before Depreciation. The snippets only include data from 2015, and none of them relate to operating profit or depreciation for 2017. \n\nAnswer: Unable to determine from the given context.",
+        "original_pages_only": "To calculate Amazon's FY2017 Operating Profit Margin Before Depreciation, follow these steps:\n\n1. **Operating Income (from Consolidated Statements of Operations, Page 37):**  \n   - 2017 Operating Income = **$4,106 million**\n\n2. **Depreciation (from Consolidated Statements of Cash Flows, Page 36):**  \n   - 2017 Depreciation = **$11,478 million**  \n\n3. **Operating Profit Before Depreciation**:  \n   \\[\n   \\text{Operating Profit Before Depreciation} = \\text{Operating Income} + \\text{Depreciation} = 4,106 + 11,478 = 15,584 \\text{ million}\n   \\]\n\n4. **Total Net Sales (from Consolidated Statements of Operations, Page 37):**  \n   - 2017 Total Net Sales = **$177,866 million**  \n\n5. **Operating Profit Margin Before Depreciation**:  \n   \\[\n   \\text{Margin} = \\left( \\frac{\\text{Operating Profit Before Depreciation}}{\\text{Total Net Sales}} \\right) \\times 100 = \\left( \\frac{15,584}{177,866} \\right) \\times 100 \\approx ",
+        "original_pages_plus_artifact_snippets": "To calculate Amazon's FY2017 Operating Profit Margin Before Depreciation, we'll use the following formula:\n\nOperating Profit Margin Before Depreciation = (Operating Income + Depreciation) / Total Net Sales\n\nFrom the context:\n- Operating Income for 2017: $4,106 million (Page 37)\n- Depreciation for 2017: $11,478 million (Page 36)\n- Total Net Sales for 2017: $177,866 million (Page 37)\n\nCalculation:\n= ($4,106 + $11,478) / $177,866\n= $15,584 / $177,866\n= 0.0876 or 8.760% when rounded to three decimal places\n\nAnswer: 0.088 (8.8%)",
+        "page_rerank_only": "To calculate Amazon's FY2017 Operating Profit Margin Before Depreciation, we use the following formula:\n\n\\[\n\\text{Operating Profit Margin Before Depreciation} = \\frac{\\text{Operating Income} + \\text{Depreciation}}{\\text{Total Net Sales}}\n\\]\n\nFrom the **Consolidated Statements of Operations (Page 37)**:\n- **Operating Income (2017)**: \\$4,106 million  \n- **Total Net Sales (2017)**: \\$177,866 million  \n\nFrom the **Consolidated Statements of Cash Flows (Page 36)**:\n- **Depreciation (2017)**: \\$11,478 million  \n\nNow, plug in the values:\n\n\\[\n\\text{Operating Profit Margin Before Depreciation} = \\frac{4,106 + 11,478}{177,866} = \\frac{15,584}{177,866} \\approx 0.0876\n\\]\n\n**Rounded to three decimals**: **0.088** (or **8.8%**).  \n\n### Final Answer:  \n**Amazon's FY2017 Operating Profit Margin Before Depreciation is 0.088 (8.8%).**"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "0.073",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is Amazon's FY2017 Operating Profit Margin Before Depreciation? round your answer to three decimal",
+      "r042_label": "artifact_only_gain_order_sensitive_numeric",
+      "record_id": 1034,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "binary_divergent",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain the necessary information to calculate Amazon's FY2017 return on assets (ROA). The ROA formula is:\n\nROA = Net Income / Total Assets\n\nHowever, the visible snippets only include data for 2015 and 2016 (net income for 2015 and asset components for 2016), but no net income or total assets figure for 2017. Therefore, I cannot calculate the FY2017 ROA from the given information.",
+        "original_pages_only": "To calculate Amazon's Return on Assets (ROA) for FY2017, we use the formula:\n\n\\[ \\text{ROA} = \\frac{\\text{Net Income}}{\\text{Total Assets}} \\]\n\nFrom the provided context:\n- **Net Income for 2017**: $3,033 million (from the Consolidated Statements of Comprehensive Income, Page 38).\n- **Total Assets for 2017**: $131,310 million (from the Consolidated Balance Sheets, Page 39).\n\nNow, plug in the numbers:\n\n\\[ \\text{ROA} = \\frac{3,033}{131,310} \\approx 0.0231 \\]\n\nRounded to three decimal places, Amazon's FY2017 Return on Assets is **0.023**.",
+        "original_pages_plus_artifact_snippets": "To calculate Amazon's Return on Assets (ROA) for FY2017, we use the formula:\n\n\\[ \\text{ROA} = \\frac{\\text{Net Income}}{\\text{Total Assets}} \\]\n\nFrom the context:\n- **Net Income for 2017**: $3,033 million (from the Consolidated Statements of Cash Flows, Page 36)\n- **Total Assets for 2017**: $131,310 million (from the Consolidated Balance Sheets, Page 39)\n\nNow, compute the ROA:\n\n\\[ \\text{ROA} = \\frac{3,033}{131,310} \\approx 0.0231 \\]\n\nRounded to three decimal places, Amazon's FY2017 Return on Assets is **0.023**.",
+        "page_rerank_only": "To calculate Amazon's Return on Assets (ROA) for FY2017, we use the formula:\n\n\\[ \\text{ROA} = \\frac{\\text{Net Income}}{\\text{Total Assets}} \\]\n\nFrom the provided context:\n- **Net Income for 2017**: $3,033 million (from the Consolidated Statements of Comprehensive Income, Page 38).\n- **Total Assets for 2017**: $131,310 million (from the Consolidated Balance Sheets, Page 39).\n\nNow, plug in the numbers:\n\n\\[ \\text{ROA} = \\frac{3,033}{131,310} \\approx 0.0231 \\]\n\nWhen rounded to three decimal places, Amazon's FY2017 Return on Assets is **0.023**."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "0.023",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is Amazon's FY2017 return on asset ? round your answer to three decimal",
+      "r042_label": "artifact_only_gain_same_pages_generation_variance",
+      "record_id": 1035,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Str",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain any information about how Amazon recognizes the least cost. The snippets only include numeric financial data from 2016, such as cash equivalents, marketable securities, inventories, and other assets. There is no mention of cost recognition methods or strategies used by Amazon.",
+        "original_pages_only": "The provided context does not explicitly mention how Amazon recognizes the least cost. The visible pages discuss revenue recognition, foreign currency transactions, investments, and financial statements, but there is no specific information on cost recognition methods or least cost strategies. \n\nFor details on Amazon's cost recognition, you would need to refer to sections of the document that discuss cost accounting, inventory management, or operational expenses, which are not included in the visible context.",
+        "original_pages_plus_artifact_snippets": "The provided context does not contain specific information on how Amazon recognizes least cost. The visible pages discuss revenue recognition, foreign currency transactions, accounting pronouncements, investments, and financial statements, but do not address cost recognition methods or least cost strategies. \n\nFor details on Amazon's cost recognition practices, you would need to refer to sections of the document that discuss cost accounting, inventory valuation, or expense management, which are not included in the visible context.",
+        "page_rerank_only": "The provided context does not contain specific information on how Amazon recognizes the least cost. The visible pages discuss revenue recognition, foreign currency transactions, accounting pronouncements, investments, and financial statements, but do not address cost recognition methodologies. \n\nFor details on Amazon's cost recognition practices, you would need to refer to sections of the document that discuss cost accounting, inventory management, or expense allocation, which are not included in the visible context."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "straight-line basis without regard to deferred payment terms",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "How do Amazon recognize least cost?",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1043,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain the necessary information to determine the change in Best Buy's gross margins from FY2022 to FY2021. Therefore, I cannot answer the question based on the visible snippets.",
+        "original_pages_only": "The provided context does not include the specific gross margin figures for Best Buy for FY2022 and FY2021. Therefore, I cannot calculate the change in gross margins between those fiscal years based on the visible pages. \n\nFor an accurate answer, I would need access to the gross margin percentages (or the revenue and gross profit figures) for both FY2022 and FY2021, which are not present in the given pages. \n\nLet me know if you can provide the relevant data or direct me to the correct pages where this information is available.",
+        "original_pages_plus_artifact_snippets": "The gross profit as a percentage of revenue (gross margin) for Best Buy's International segment was 23.9% in FY2022 and 21.5% in FY2021. \n\nThe change in gross margin from FY2021 to FY2022 is calculated as:\n23.9% (FY2022) - 21.5% (FY2021) = 2.40%\n\nTherefore, Best Buy's gross margins increased by 2.40 percentage points from FY2021 to FY2022.",
+        "page_rerank_only": "The visible context does not provide the specific gross margin percentages for Best Buy's Domestic segment or overall company for FY2022 and FY2021. Therefore, I cannot calculate the change in gross margins between those fiscal years. \n\nThe context includes some financial data for the International segment (e.g., gross profit as % of revenue was 23.9% in FY2022 and 21.5% in FY2021), but this does not reflect the company-wide gross margins requested in the question. \n\nWithout access to the Domestic segment's or consolidated gross margin figures for these years in the provided pages, I'm unable to answer the question accurately."
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "1.08%",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is the change of  Best Buy's gross margins change from FY2022 to FY2021? Answer in percentage terms, round to 2 decimal places.",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1052,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The After-tax Return on Average Equity for the fiscal year ending January 28, 2023, is not provided in the visible context. The available data includes percentages of revenue and operating income figures but does not specify the After-tax Return on Average Equity. \n\nAnswer: Not available in the provided context.",
+        "original_pages_only": "The After-tax Return on Average Equity for the fiscal year ending January 28, 2023, can be calculated using the following formula:\n\n\\[ \\text{After-tax Return on Average Equity} = \\frac{\\text{Net Earnings}}{\\text{Average Shareholders' Equity}} \\]\n\nFrom the provided context:\n- **Net Earnings** for fiscal year ending January 28, 2023: **$1,419 million** (from the Consolidated Statements of Earnings on Page 39).\n- **Shareholders' Equity** as of January 28, 2023: **$2,795 million** (from the Consolidated Balance Sheets on Page 38).\n- **Shareholders' Equity** as of January 29, 2022: **$3,020 million** (from the Consolidated Balance Sheets on Page 38).\n\n**Average Shareholders' Equity** is calculated as:\n\\[ \\text{Average Shareholders' Equity} = \\frac{\\text{Equity}_{2023} + \\text{Equity}_{2022}}{2} = \\frac{2,795 + 3,020}{2} = 2,907.5 \\]\n\nNow, compute the After-tax Return on Average Equity:\n\\[ \\frac{1,419",
+        "original_pages_plus_artifact_snippets": "To calculate the After-tax Return on Average Equity for the fiscal year ending January 28, 2023, we need the following information from the provided context:\n\n1. **Net Earnings (After-tax)**: $1,419 million (from the Consolidated Statements of Earnings on Page 39).\n2. **Average Equity**: \n   - Equity as of January 28, 2023: $2,795 million (from the Consolidated Balance Sheets on Page 38).\n   - Equity as of January 29, 2022: $3,020 million (from the Consolidated Balance Sheets on Page 38).\n   - Average Equity = ($2,795 + $3,020) / 2 = $2,907.5 million.\n\n**Calculation**:\nAfter-tax Return on Average Equity = (Net Earnings / Average Equity) * 100  \n= ($1,419 / $2,907.5) * 100  \n= 48.803% (rounded to three decimal places).\n\n**Final Answer**: 48.803%",
+        "page_rerank_only": "The After-tax Return on Average Equity for the fiscal year ending January 28, 2023, is not explicitly provided in the visible context. The necessary financial data to calculate it (such as net income and average equity) is not available in the provided pages. \n\nWould you like me to attempt calculating it if you can provide the relevant figures?"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "0.488",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is After-tax Return on Average Equity  for the fiscal year ending January 28, 2023? round your answer to three decimal places",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1055,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    },
+    {
+      "answer_format": "Float",
+      "case_type": "answer_text_diff_binary_same",
+      "condition_predictions": {
+        "artifact_snippets_only": "The provided context does not contain the necessary information to calculate the capitalization ratio for Best Buy for the fiscal year ending January 28, 2023. The capitalization ratio typically requires data on total debt and total equity, which are not visible in the snippets. \n\nAnswer: Not available in the provided context.",
+        "original_pages_only": "The provided context does not contain the necessary information to calculate the capitalization ratio for Best Buy for the fiscal year ending January 28, 2023. Therefore, I cannot provide an answer based on the visible pages.",
+        "original_pages_plus_artifact_snippets": "The capitalization ratio for Best Buy for the fiscal year ending January 28, 2023, is not provided in the visible context. Therefore, I cannot answer the question based on the given information.",
+        "page_rerank_only": "The provided context does not contain the specific information needed to calculate the capitalization ratio for Best Buy for the fiscal year ending January 28, 2023. The capitalization ratio typically requires data on total debt and total capital (debt plus equity), which is not visible in the given pages. \n\nTo answer the question accurately, you would need access to the relevant financial statements (e.g., balance sheet) from Best Buy's annual report, specifically the sections detailing total debt and shareholders' equity. \n\nIf you can provide the missing context or direct me to the appropriate page, I’d be happy to assist further!"
+      },
+      "diagnostic_gold_match": {
+        "artifact_snippets_only": false,
+        "original_pages_only": false,
+        "original_pages_plus_artifact_snippets": false,
+        "page_rerank_only": false
+      },
+      "gold_answer_for_posthoc_diagnostic_only": "29.6%",
+      "match_level": {
+        "artifact_snippets_only": "mismatch",
+        "original_pages_only": "mismatch",
+        "original_pages_plus_artifact_snippets": "mismatch",
+        "page_rerank_only": "mismatch"
+      },
+      "question": "what is capitalization ratio for Best Buy for the fiscal year ending January 28, 2023? Answer in percentage term, round to one decimal places.",
+      "r042_label": "binary_same_all_wrong_failure_variation",
+      "record_id": 1057,
+      "transition_labels": [
+        "all_conditions_miss"
+      ]
+    }
+  ],
+  "recommended_next": [
+    "Manually inspect records where artifact snippets improve over original pages and where snippet-only fails despite plus succeeding.",
+    "Do not promote these counts to official scores; they are prompt-exposure diagnostics on 22 selected cases.",
+    "If the diagnostic pattern is coherent, implement a controlled R045 with fixed prompt templates and explicit support/citation rubric before any full-data run."
+  ],
+  "schema_version": "r044_diagnostic_attribution_v1",
+  "scope": {
+    "gold_used_only_for_posthoc_diagnostic_attribution": true,
+    "no_full_qa": true,
+    "no_official_score_reported": true,
+    "not_official_mmlongbench_result": true,
+    "small_contrastive_provider_run": true,
+    "target_records_only": 22
+  },
+  "transition_counts": {
+    "all_conditions_miss": 19,
+    "artifact_injection_gain_vs_original": 1,
+    "artifact_injection_loss_vs_original": 1,
+    "page_rerank_gain_vs_original": 2,
+    "snippet_only_sufficient": 1
+  }
+}

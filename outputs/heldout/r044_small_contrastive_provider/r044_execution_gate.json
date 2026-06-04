@@ -1,0 +1,80 @@
+{
+  "checks": {
+    "four_conditions_present": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "prediction_records_have_no_gold_fields": true,
+    "predictions_complete_4x22": true,
+    "prompt_hashes_match_r043": true,
+    "r043_condition_mapping_confirmed": true,
+    "target_records_exactly_22": true
+  },
+  "conditions": [
+    "original_pages_only",
+    "page_rerank_only",
+    "original_pages_plus_artifact_snippets",
+    "artifact_snippets_only"
+  ],
+  "created_utc": "2026-06-04T03:23:48.485555+00:00",
+  "decision": "r044_small_contrastive_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "mapping_audit": {
+    "condition_checks": {
+      "artifact_snippets_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "original_pages_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "original_pages_plus_artifact_snippets": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      },
+      "page_rerank_only": {
+        "artifact_exposure_matches": true,
+        "num_focus_rows": 22,
+        "page_text_exposure_matches": true,
+        "retrieval_source_run_matches": true
+      }
+    },
+    "expected_mapping": {
+      "artifact_snippets_only": {
+        "prompt_contains_artifacts": true,
+        "prompt_contains_page_text": false,
+        "retrieval_source_run": "top4_artifact_only"
+      },
+      "original_pages_only": {
+        "prompt_contains_artifacts": false,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_original_only"
+      },
+      "original_pages_plus_artifact_snippets": {
+        "prompt_contains_artifacts": true,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_original_only"
+      },
+      "page_rerank_only": {
+        "prompt_contains_artifacts": false,
+        "prompt_contains_page_text": true,
+        "retrieval_source_run": "top4_artifact_only"
+      }
+    },
+    "mapping_confirmed": true,
+    "r043_gate_passed": true
+  },
+  "model": "deepseek-ai/DeepSeek-V3",
+  "not_full_qa": true,
+  "not_official_score": true,
+  "num_predictions": 88,
+  "num_target_records": 22,
+  "schema_version": "r044_execution_gate_v1"
+}
