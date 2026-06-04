@@ -1161,3 +1161,45 @@ Key findings:
 - Replaying the exact-code selector with extracted artifacts still gives `exact_code_absence_guard` for record 508.
 
 Decision: integrate the code/name list extractor into Stage 2 for EPS-like public text lists, because it repairs the page-7 artifact coverage gap. Do not relax exact-code matching and do not answer record 508 from `AR01`/`AR02` or Arkansas context. Record 508 should remain page-cited absence/refusal unless source-image or OCR repair reveals exact `AR03`.
+
+### 2026-06-04 R068 Code-List Stage2 Integration Audit
+
+R068 turns the R067 extractor result into a Stage 2 integration gate without running providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Verify that `extract_code_name_list_artifacts` is wired into the `scripts/stage2.py` document-generic final-store postprocess branch.
+- Replay the deterministic integration path on record 508 / page 7 / `AR03`.
+- Confirm that visible EPS-like code/name artifacts are produced while exact-code absence/refusal behavior remains strict.
+
+Scope and boundary:
+
+- Target record only: 508.
+- Target page only: 7.
+- Target code: `AR03`.
+- Inputs: R067 gate, R063 cached parser comparison, R040/R039 retrieval records, R038d union atomic artifact store, and public page image/text under `tmp/MMLongBench`.
+- No model/API calls were made in R068.
+
+Outputs:
+
+- `scripts/stage2.py`
+- `scripts/run_r068_code_list_stage2_integration_audit.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_report.md`
+- `outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_gate.md`
+- `outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_audit.json`
+- `outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_compact_index.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Stage 2 now imports and calls the code/name extractor inside the document-generic final-store postprocess branch after the numeric atomicizer.
+- Existing page-7 artifact count before integration is 0.
+- Integration replay generates 30 final code/name artifacts from public page text.
+- Integrated artifacts include `AR01` and `AR02`, pass final quality filtering, and are locatable.
+- Integrated artifacts do not include `AR03`.
+- Selector replay remains `exact_code_absence_guard`, so record 508 is still routed to exact-code absence/refusal rather than inferred from nearby Arkansas/EPS context.
+
+Decision: keep the Stage 2 code/name extractor integration for public EPS-like lists. Do not relax exact-code matching or run QA for record 508; next work should look for source/OCR evidence for missing exact codes or broaden no-provider coverage checks on positive code/name cases.
+

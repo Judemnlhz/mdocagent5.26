@@ -1,0 +1,81 @@
+{
+  "created_utc": "2026-06-04T13:48:37.228251+00:00",
+  "decision": "r068_code_list_stage2_integration_audit_complete",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "does_not_claim_artifact_lift": true,
+      "existing_page7_artifact_count_before_integration_is_zero": true,
+      "integrated_artifacts_are_locatable": true,
+      "integrated_artifacts_do_not_include_ar03": true,
+      "integrated_artifacts_include_ar01_ar02": true,
+      "integrated_artifacts_pass_final_quality_filter": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_audit": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "provider_client_not_modified_by_integration": true,
+      "r067_gate_was_passed": true,
+      "selector_still_exact_code_absence": true,
+      "source_text_and_image_exist": true,
+      "stage2_call_present": true,
+      "stage2_document_generic_branch_call_after_atomicizer": true,
+      "stage2_import_present": true,
+      "stage2_replay_generates_code_name_artifacts": true,
+      "target_page_is_7": true,
+      "target_record_is_508": true
+    },
+    "created_utc": "2026-06-04T13:48:37.228235+00:00",
+    "decision": "r068_code_list_stage2_integration_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r068_code_list_stage2_integration_gate_v1",
+    "target_record_id": 508
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "extract_path": "tmp/MMLongBench",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r063_comparisons": "outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl",
+    "r067_gate": "outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_source_ocr_code_list_gate.json",
+    "stage2_script": "scripts/stage2.py"
+  },
+  "recommended_next": [
+    "Keep the code/name extractor integrated in Stage 2 document-generic final-store postprocessing for public EPS-like text lists.",
+    "Keep record 508 on exact-code absence/refusal; do not infer AR03 from AR01/AR02 or Arkansas context.",
+    "Next coverage work should find source/OCR evidence for missing exact codes, not relax selector matching or run QA."
+  ],
+  "schema_version": "r068_code_list_stage2_integration_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_mmlongbench_result": true,
+    "target_page_only": 7,
+    "target_record_only": 508
+  },
+  "summary": {
+    "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+    "existing_artifact_count_before_integration": 0,
+    "final_artifact_count": 30,
+    "integrated_ar_codes": [
+      "AR01",
+      "AR02"
+    ],
+    "record_id": 508,
+    "schema_version": "r068_code_list_stage2_compact_index_v1",
+    "selected_artifact_count": 0,
+    "selector_guard_after_integration": "exact_code_absence_guard",
+    "stage2_document_generic_branch_call_after_atomicizer": true,
+    "stage2_import_present": true,
+    "target_code": "AR03",
+    "target_code_integrated": false,
+    "target_page": 7
+  }
+}

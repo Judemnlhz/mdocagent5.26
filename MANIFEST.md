@@ -51,3 +51,10 @@
 | 2026-06-04 13:45 | /run-experiment | outputs/heldout/r067_source_ocr_code_list_extraction_audit/r067_code_list_compact_index.jsonl | implementation | R067 compact source/OCR/code-list index |
 | 2026-06-04 13:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R067 source/OCR code-list extraction summary |
 | 2026-06-04 13:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R067 tracker row |
+| 2026-06-04 14:10 | /run-experiment | scripts/stage2.py | implementation | R068 integrated code/name list extractor into Stage 2 document-generic final-store postprocess branch |
+| 2026-06-04 14:10 | /run-experiment | scripts/run_r068_code_list_stage2_integration_audit.py | implementation | R068 no-provider Stage 2 code-list integration audit runner |
+| 2026-06-04 14:10 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R068 entry |
+| 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_report.md | implementation | R068 Stage 2 code-list integration report |
+| 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_gate.md | implementation | R068 Stage 2 code-list integration gate |
+| 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_integration_audit.json | implementation | R068 detailed public-only Stage 2 integration audit payload |
+| 2026-06-04 14:10 | /run-experiment | outputs/heldout/r068_code_list_stage2_integration_audit/r068_code_list_stage2_compact_index.jsonl | implementation | R068 compact Stage 2 code-list integration index |
