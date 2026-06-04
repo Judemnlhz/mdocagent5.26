@@ -1,0 +1,123 @@
+{
+  "created_utc": "2026-06-04T05:17:03.099069+00:00",
+  "decision": "r055_guarded_prompt_provider_complete",
+  "diagnostic_counts_not_scores": {
+    "pass": 3
+  },
+  "gate": {
+    "checks": {
+      "all_guard_behaviors_passed": true,
+      "does_not_claim_artifact_positive_lift": true,
+      "not_full_qa": true,
+      "not_official_score": true,
+      "prediction_records_have_no_gold_fields": true,
+      "prompt_hashes_match_r054": true,
+      "provider_predictions_exactly_3": true,
+      "scope_limited_to_guard_prompt_refusal_noise_avoidance": true,
+      "target_records_exactly_384_508_569": true,
+      "uses_r054_zero_artifact_guarded_prompts": true
+    },
+    "created_utc": "2026-06-04T05:17:03.099009+00:00",
+    "decision": "r055_guarded_prompt_provider_gate_pass",
+    "does_not_prove_artifact_lift": true,
+    "gate_passed": true,
+    "hard_failures": [],
+    "model": "Qwen/Qwen3-8B",
+    "not_full_qa": true,
+    "not_official_score": true,
+    "num_predictions": 3,
+    "schema_version": "r055_guarded_prompt_provider_gate_v1",
+    "target_record_ids": [
+      384,
+      508,
+      569
+    ]
+  },
+  "guard_behavior_pass_count_not_score": 3,
+  "guard_behavior_total": 3,
+  "inputs": {
+    "r054_previews": "outputs/heldout/r054_guarded_selector_repair/r054_guarded_prompt_previews.jsonl"
+  },
+  "interpretation": {
+    "artifact_lift_claim": "unsupported_by_this_run",
+    "bottom_line": "R055 only tests whether the R054 guard prompts make the provider refuse or avoid artifact-noise traps on 3 manually accepted cases.",
+    "official_score_claim": "unsupported_by_this_run",
+    "retrieval_improvement_claim": "unsupported_by_this_run"
+  },
+  "model": {
+    "base_url": "https://api.siliconflow.cn/v1",
+    "max_tokens": 256,
+    "model": "Qwen/Qwen3-8B",
+    "provider_note": "",
+    "temperature": 0.0
+  },
+  "per_record": [
+    {
+      "guard_behavior": {
+        "expected_guard_behavior": "Refuse May 2018 metadata lookup or state visible metadata mismatch; avoid Strategic Planning Services Team false positive.",
+        "failure_modes": [],
+        "guard_behavior_passed": true,
+        "record_id": 384,
+        "refusal_like": true
+      },
+      "prediction_text": "\n\nPage evidence: Page 1 (present) states \"Produced by: Florida Department of Health\" for a document revised in May 2016. Other pages (10, 11, 5) mention the Division of Medical Quality Assurance (MQA) and strategic planning efforts but do not specify a producer for a document revised in May 2018.  \nArtifact evidence: none  \nGuard check: Metadata requirements are not satisfied because the visible page metadata (e.g., \"Revised May 2016\") does not match the question’s request for a document revised in May 2018. The guard also notes that exact-code absence and operand incompleteness apply.  \nUnsupported-answer check: The visible evidence only confirms the producer (\"Florida Department of Health\") for a document revised in May 2016, not May 2018. No page explicitly states the producer for the May 2018 revision.  \nFinal answer: Not answerable (visible evidence does not mention the producer of the document revised in May 2018).",
+      "question": "Who produced the document that was revised on May 2018?",
+      "r054_answer_policy": "refuse_if_visible_metadata_mismatches_question",
+      "r054_guard_decision": "document_metadata_refusal_guard",
+      "r054_selected_artifact_count": 0,
+      "record_id": 384
+    },
+    {
+      "guard_behavior": {
+        "expected_guard_behavior": "Refuse or state exact AR03 geographic market is absent; avoid assigning AR01/AR02 market names to AR03.",
+        "failure_modes": [],
+        "guard_behavior_passed": true,
+        "record_id": 508,
+        "refusal_like": true
+      },
+      "prediction_text": "\n\nPage evidence: none  \nArtifact evidence: none  \nGuard check: metadata/refusal, exact-code absence, operand incompleteness  \nUnsupported-answer check: The visible evidence does not fully support the answer because no page contains the exact EPS Code AR03.  \nFinal answer: Not answerable",
+      "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+      "r054_answer_policy": "use_page_evidence_for_absence_or_refuse",
+      "r054_guard_decision": "exact_code_absence_guard",
+      "r054_selected_artifact_count": 0,
+      "record_id": 508
+    },
+    {
+      "guard_behavior": {
+        "expected_guard_behavior": "Refuse calculation because operands are incomplete, especially children operand; do not output a computed percentage.",
+        "failure_modes": [],
+        "guard_behavior_passed": true,
+        "record_id": 569,
+        "refusal_like": true
+      },
+      "prediction_text": "\n\nPage evidence: 27, 28, 39, 40, 43  \nArtifact evidence: none  \nGuard check: The metadata/operand requirements are not satisfied. The operand \"children\" is missing, and the guard decision explicitly states \"missing_operands:children\" and \"operand_completeness_failed\".  \nUnsupported-answer check: The visible evidence does not provide data on \"children\" with STEM degrees employed in their field. While \"older age group\" is mentioned (e.g., \"workers ages 25 and older\"), the question requires a comparison between \"children\" and \"older age group,\" which is not supported by the available data.  \nFinal answer: Not answerable. The evidence lacks data on children with STEM degrees employed in their field, making it impossible to compute the percentage difference.",
+      "question": "What is the percentage difference between the sum of older age group who have received a STEM degree and are employed in their field, and the sum of children with the same status in the survey of Pew Research Center, January 2018?",
+      "r054_answer_policy": "not_answerable_due_to_incomplete_operands",
+      "r054_guard_decision": "operand_completeness_guard",
+      "r054_selected_artifact_count": 0,
+      "record_id": 569
+    }
+  ],
+  "recommended_next": [
+    "If R055 passes, keep the guard as a candidate prompt-control component for later controlled diagnostics.",
+    "Do not claim artifact-aware retrieval improves from R055; it has zero retrieval-condition comparison and only three guarded prompts.",
+    "Before any broader run, decide whether to integrate these guards into the selector/prompt path or run another tiny contrastive diagnostic with explicit positive evidence cases."
+  ],
+  "schema_version": "r055_guarded_prompt_provider_report_v1",
+  "scope": {
+    "does_not_compare_retrieval_conditions": true,
+    "does_not_prove_artifact_positive_lift": true,
+    "no_full_qa": true,
+    "no_official_score_reported": true,
+    "not_official_mmlongbench_result": true,
+    "provider_calls": 3,
+    "target_records_only": [
+      384,
+      508,
+      569
+    ],
+    "tests_guard_prompt_refusal_noise_avoidance_only": true,
+    "tiny_provider_diagnostic": true,
+    "uses_r054_guarded_prompt_previews": true
+  }
+}

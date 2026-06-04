@@ -1,0 +1,9 @@
+{
+  "decision": "r055_guarded_prompt_provider_gate_pass",
+  "gate_passed": true,
+  "num_predictions": 3,
+  "report_md": "outputs/heldout/r055_guarded_prompt_provider_diagnostic/r055_guarded_prompt_provider_report.md",
+  "not_full_qa": true,
+  "not_official_score": true,
+  "does_not_prove_artifact_lift": true
+}
