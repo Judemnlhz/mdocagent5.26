@@ -19,3 +19,8 @@
 | 2026-06-04 12:10 | /run-experiment | outputs/heldout/r063_llm_evidence_demand_parser/r063_llm_evidence_demand_gate.md | implementation | R063 evidence-demand parser gate |
 | 2026-06-04 12:10 | /run-experiment | outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl | implementation | R063 rule-vs-LLM selector comparisons |
 | 2026-06-04 12:10 | /run-experiment | outputs/heldout/r063_llm_evidence_demand_parser/provider/r063_evidence_demand_parser_outputs.jsonl | implementation | R063 Qwen3-VL question-only parser outputs |
+| 2026-06-04 12:18 | /run-experiment | scripts/run_r064_parser_artifact_mismatch_audit.py | implementation | R064 no-provider parser/artifact mismatch audit runner |
+| 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_parser_artifact_mismatch_report.md | implementation | R064 mismatch attribution report |
+| 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_parser_artifact_mismatch_gate.md | implementation | R064 mismatch attribution gate |
+| 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_mismatch_audits.jsonl | implementation | R064 per-record coverage and root-cause audits |
+| 2026-06-04 12:18 | /run-experiment | outputs/heldout/r064_parser_artifact_mismatch_audit/r064_mismatch_compact_index.jsonl | implementation | R064 compact root-cause index |

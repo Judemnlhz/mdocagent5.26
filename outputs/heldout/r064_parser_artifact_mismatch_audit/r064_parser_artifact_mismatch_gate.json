@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "all_records_have_coverage_matrix": true,
+    "all_records_have_root_cause": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "does_not_claim_artifact_lift": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_audits": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "r063_gate_was_passed": true,
+    "target_records_match_r063_small_set": true
+  },
+  "created_utc": "2026-06-04T12:17:51.275715+00:00",
+  "decision": "r064_parser_artifact_mismatch_gate_pass",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_artifact_lift_claim": true,
+  "not_full_qa": true,
+  "not_official_score": true,
+  "root_cause_counts": {
+    "artifact_operand_missing": 1,
+    "artifact_store_missing_required_dimensions": 1,
+    "parser_answer_type_misclassified": 1,
+    "retrieval_context_or_parser_constraint_gap": 3,
+    "selector_support_threshold_or_alias_gap": 1
+  },
+  "schema_version": "r064_parser_artifact_mismatch_gate_v1",
+  "target_record_ids": [
+    384,
+    508,
+    569,
+    69,
+    223,
+    224,
+    227
+  ]
+}

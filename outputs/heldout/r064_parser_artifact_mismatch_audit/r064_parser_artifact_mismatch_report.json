@@ -1,0 +1,278 @@
+{
+  "created_utc": "2026-06-04T12:17:51.275758+00:00",
+  "decision": "r064_parser_artifact_mismatch_complete",
+  "gate": {
+    "checks": {
+      "all_records_have_coverage_matrix": true,
+      "all_records_have_root_cause": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "does_not_claim_artifact_lift": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_audits": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "r063_gate_was_passed": true,
+      "target_records_match_r063_small_set": true
+    },
+    "created_utc": "2026-06-04T12:17:51.275715+00:00",
+    "decision": "r064_parser_artifact_mismatch_gate_pass",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_artifact_lift_claim": true,
+    "not_full_qa": true,
+    "not_official_score": true,
+    "root_cause_counts": {
+      "artifact_operand_missing": 1,
+      "artifact_store_missing_required_dimensions": 1,
+      "parser_answer_type_misclassified": 1,
+      "retrieval_context_or_parser_constraint_gap": 3,
+      "selector_support_threshold_or_alias_gap": 1
+    },
+    "schema_version": "r064_parser_artifact_mismatch_gate_v1",
+    "target_record_ids": [
+      384,
+      508,
+      569,
+      69,
+      223,
+      224,
+      227
+    ]
+  },
+  "inputs": {
+    "artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "r040_root": "outputs/heldout/r040_targeted_activation_rich_qa/run_tags/r040_targeted_activation_rich_qa",
+    "r063_comparisons": "outputs/heldout/r063_llm_evidence_demand_parser/r063_selector_comparisons.jsonl",
+    "r063_gate": "outputs/heldout/r063_llm_evidence_demand_parser/r063_llm_evidence_demand_gate.json"
+  },
+  "per_record": [
+    {
+      "all_categories": [
+        "retrieval_context_or_parser_constraint_gap"
+      ],
+      "answer_type": "metadata_lookup",
+      "artifact_dimension_covered_count": 0,
+      "dimension_count": 2,
+      "missing_artifact_dimensions": [
+        "revision_date",
+        "producer"
+      ],
+      "missing_page_dimensions": [
+        "revision_date"
+      ],
+      "page_dimension_covered_count": 1,
+      "primary_root_cause": "retrieval_context_or_parser_constraint_gap",
+      "r063_llm_guard": "document_metadata_refusal_guard",
+      "recommended_fix": [
+        "Manually inspect whether parser dimensions are overconstrained or whether top-k page context missed required evidence.",
+        "If parser is overconstrained, simplify evidence_dimensions; if context is missing, fix retrieval/coverage before QA."
+      ],
+      "record_id": 384
+    },
+    {
+      "all_categories": [
+        "artifact_key_value_missing_required_code",
+        "parser_answer_type_misclassified",
+        "retrieval_context_or_parser_constraint_gap"
+      ],
+      "answer_type": "metadata_lookup",
+      "artifact_dimension_covered_count": 0,
+      "dimension_count": 2,
+      "missing_artifact_dimensions": [
+        "eps_code",
+        "geographic_market_name"
+      ],
+      "missing_page_dimensions": [
+        "eps_code"
+      ],
+      "page_dimension_covered_count": 1,
+      "primary_root_cause": "parser_answer_type_misclassified",
+      "r063_llm_guard": "document_metadata_refusal_guard",
+      "recommended_fix": [
+        "Tighten parser schema/examples so EPS/code questions are table_lookup with requires_exact_code_selection, not metadata_lookup.",
+        "Add a parser post-normalization rule: literal code patterns force table/code lookup unless the question asks document revision/producer metadata."
+      ],
+      "record_id": 508
+    },
+    {
+      "all_categories": [
+        "artifact_operand_missing",
+        "retrieval_context_or_parser_constraint_gap"
+      ],
+      "answer_type": "computation",
+      "artifact_dimension_covered_count": 0,
+      "dimension_count": 5,
+      "missing_artifact_dimensions": [
+        "survey_date",
+        "organization",
+        "age_group",
+        "education_status",
+        "employment_status"
+      ],
+      "missing_page_dimensions": [
+        "survey_date",
+        "age_group",
+        "employment_status"
+      ],
+      "page_dimension_covered_count": 2,
+      "primary_root_cause": "artifact_operand_missing",
+      "r063_llm_guard": "operand_completeness_guard",
+      "recommended_fix": [
+        "Repair artifact extraction for computation operands before any provider QA run.",
+        "Keep operand-completeness guard active; do not compute from partial artifact snippets."
+      ],
+      "record_id": 569
+    },
+    {
+      "all_categories": [
+        "artifact_store_missing_required_dimensions",
+        "selector_support_threshold_or_alias_gap"
+      ],
+      "answer_type": "visual_caption",
+      "artifact_dimension_covered_count": 1,
+      "dimension_count": 3,
+      "missing_artifact_dimensions": [
+        "figure_number",
+        "node"
+      ],
+      "missing_page_dimensions": [],
+      "page_dimension_covered_count": 3,
+      "primary_root_cause": "artifact_store_missing_required_dimensions",
+      "r063_llm_guard": "artifact_dimension_support_guard",
+      "recommended_fix": [
+        "Improve artifact content/normalization so required dimensions visible in pages are preserved in snippets.",
+        "Do not relax selector support thresholds until artifact snippets carry citable evidence."
+      ],
+      "record_id": 69
+    },
+    {
+      "all_categories": [
+        "retrieval_context_or_parser_constraint_gap"
+      ],
+      "answer_type": "table_lookup",
+      "artifact_dimension_covered_count": 0,
+      "dimension_count": 2,
+      "missing_artifact_dimensions": [
+        "population_group",
+        "device_usage"
+      ],
+      "missing_page_dimensions": [
+        "population_group",
+        "device_usage"
+      ],
+      "page_dimension_covered_count": 0,
+      "primary_root_cause": "retrieval_context_or_parser_constraint_gap",
+      "r063_llm_guard": "artifact_dimension_support_guard",
+      "recommended_fix": [
+        "Manually inspect whether parser dimensions are overconstrained or whether top-k page context missed required evidence.",
+        "If parser is overconstrained, simplify evidence_dimensions; if context is missing, fix retrieval/coverage before QA."
+      ],
+      "record_id": 223
+    },
+    {
+      "all_categories": [
+        "retrieval_context_or_parser_constraint_gap"
+      ],
+      "answer_type": "numeric_comparison",
+      "artifact_dimension_covered_count": 0,
+      "dimension_count": 3,
+      "missing_artifact_dimensions": [
+        "population_group",
+        "survey_source",
+        "survey_period"
+      ],
+      "missing_page_dimensions": [
+        "population_group",
+        "survey_period"
+      ],
+      "page_dimension_covered_count": 1,
+      "primary_root_cause": "retrieval_context_or_parser_constraint_gap",
+      "r063_llm_guard": "artifact_dimension_support_guard",
+      "recommended_fix": [
+        "Manually inspect whether parser dimensions are overconstrained or whether top-k page context missed required evidence.",
+        "If parser is overconstrained, simplify evidence_dimensions; if context is missing, fix retrieval/coverage before QA."
+      ],
+      "record_id": 224
+    },
+    {
+      "all_categories": [
+        "retrieval_context_or_parser_constraint_gap",
+        "selector_support_threshold_or_alias_gap"
+      ],
+      "answer_type": "numeric_comparison",
+      "artifact_dimension_covered_count": 1,
+      "dimension_count": 4,
+      "missing_artifact_dimensions": [
+        "age_group",
+        "education_level",
+        "survey_period"
+      ],
+      "missing_page_dimensions": [
+        "age_group"
+      ],
+      "page_dimension_covered_count": 3,
+      "primary_root_cause": "selector_support_threshold_or_alias_gap",
+      "r063_llm_guard": "artifact_dimension_support_guard",
+      "recommended_fix": [
+        "Inspect matched artifact aliases manually; if genuinely supporting, add alias/normalization bridge or adjust support audit.",
+        "If matches are only lexical noise, keep current guard unchanged."
+      ],
+      "record_id": 227
+    }
+  ],
+  "recommended_next": [
+    "Do not run more models or full QA from R064.",
+    "First fix parser/code-type normalization for parser_answer_type_misclassified cases.",
+    "Then repair artifact extraction/normalization for page-visible dimensions and exact key/value or operand gaps.",
+    "Rerun a no-provider coverage audit before any provider QA experiment."
+  ],
+  "schema_version": "r064_parser_artifact_mismatch_report_v1",
+  "scope": {
+    "does_not_prove_artifact_positive_lift": true,
+    "mismatch_attribution_only": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_mmlongbench_result": true,
+    "target_records_only": [
+      384,
+      508,
+      569,
+      69,
+      223,
+      224,
+      227
+    ]
+  },
+  "summary": {
+    "num_records": 7,
+    "records_by_root_cause": {
+      "artifact_operand_missing": [
+        569
+      ],
+      "artifact_store_missing_required_dimensions": [
+        69
+      ],
+      "parser_answer_type_misclassified": [
+        508
+      ],
+      "retrieval_context_or_parser_constraint_gap": [
+        223,
+        224,
+        384
+      ],
+      "selector_support_threshold_or_alias_gap": [
+        227
+      ]
+    },
+    "root_cause_counts": {
+      "artifact_operand_missing": 1,
+      "artifact_store_missing_required_dimensions": 1,
+      "parser_answer_type_misclassified": 1,
+      "retrieval_context_or_parser_constraint_gap": 3,
+      "selector_support_threshold_or_alias_gap": 1
+    }
+  }
+}
