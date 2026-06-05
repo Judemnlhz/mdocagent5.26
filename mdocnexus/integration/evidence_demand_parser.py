@@ -11,7 +11,14 @@ import json
 import re
 from typing import Any, Mapping
 
-from .guarded_prompt import CODE_PATTERN, build_question_profile, forbidden_public_fields, normalize, question_tokens
+from .guarded_prompt import (
+    CODE_PATTERN,
+    actionable_exact_codes,
+    build_question_profile,
+    forbidden_public_fields,
+    normalize,
+    question_tokens,
+)
 
 SCHEMA_VERSION = "evidence_demand_parser_v1"
 ALLOWED_ANSWER_TYPES = {
@@ -80,7 +87,9 @@ def normalize_evidence_demand(value: Mapping[str, Any]) -> dict[str, Any]:
         "not_answer_generation": True,
     }
     literal_text = " ".join(demand["required_values_or_codes"] + demand["required_entities"])
-    if CODE_PATTERN.search(literal_text):
+    literal_codes = actionable_exact_codes(CODE_PATTERN.findall(literal_text))
+    demand["requires_exact_code_selection"] = bool(demand["requires_exact_code_selection"] and literal_codes)
+    if literal_codes:
         demand["answer_type"] = "table_lookup"
         demand["requires_exact_code_selection"] = True
         demand["is_document_metadata_lookup"] = False
@@ -101,7 +110,7 @@ def merge_evidence_demand_profile(question: str, demand: Mapping[str, Any]) -> d
         + [" ".join(dimension.get("aliases") or []) for dimension in normalized["evidence_dimensions"]]
     )
     tokens = sorted(set(profile.get("tokens") or []) | question_tokens(extra_text))
-    codes = sorted(set(profile.get("codes") or []) | set(CODE_PATTERN.findall(extra_text)))
+    codes = sorted(set(profile.get("codes") or []) | set(actionable_exact_codes(CODE_PATTERN.findall(extra_text))))
     numbers = sorted(set(profile.get("numbers") or []) | set(re.findall(r"[-+]?\d+(?:\.\d+)?", extra_text)))
     requirements = profile.get("evidence_requirements") if isinstance(profile.get("evidence_requirements"), Mapping) else {}
     demand_dimensions = list(normalized["evidence_dimensions"])
@@ -121,7 +130,7 @@ def merge_evidence_demand_profile(question: str, demand: Mapping[str, Any]) -> d
         "is_numeric_or_table_question": bool(profile.get("is_numeric_or_table_question") or normalized["is_numeric_or_table_question"]),
         "is_document_metadata_lookup": bool(profile.get("is_document_metadata_lookup") or normalized["is_document_metadata_lookup"]),
         "is_computation_question": bool(profile.get("is_computation_question") or normalized["is_computation_question"]),
-        "requires_exact_code_selection": bool(profile.get("requires_exact_code_selection") or normalized["requires_exact_code_selection"]),
+        "requires_exact_code_selection": bool(codes and (profile.get("requires_exact_code_selection") or normalized["requires_exact_code_selection"])),
         "required_operands": sorted(set(profile.get("required_operands") or []) | set(normalized["required_operands"])),
         "answer_policy": "cite_visible_support_or_refuse",
         "evidence_demand_parser": normalized,

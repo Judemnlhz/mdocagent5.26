@@ -64,3 +64,15 @@
 | 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_gate.md | implementation | R069 dataset artifact health gate |
 | 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_summary.json | implementation | R069 dataset-level artifact health summary |
 | 2026-06-04 14:40 | /run-experiment | outputs/heldout/r069_dataset_artifact_health_audit/r069_dataset_artifact_health_records.jsonl | implementation | R069 per-record public artifact health index |
+| 2026-06-05 00:55 | /run-experiment | mdocnexus/integration/guarded_prompt.py | implementation | R070 shared actionable exact-code vs temporal/metric code-like literal normalization |
+| 2026-06-05 00:55 | /run-experiment | mdocnexus/integration/tests/test_guarded_prompt.py | implementation | R070 selector guard normalization unit tests |
+| 2026-06-05 00:55 | /run-experiment | scripts/run_r070_code_like_literal_guard_normalization.py | implementation | R070 no-provider code-like literal guard normalization runner |
+| 2026-06-05 00:55 | /run-experiment | outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_report.md | implementation | R070 code-like literal guard normalization report |
+| 2026-06-05 00:55 | /run-experiment | outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_gate.md | implementation | R070 code-like literal guard normalization gate |
+| 2026-06-05 00:55 | /run-experiment | outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_summary.json | implementation | R070 code-like literal guard summary |
+| 2026-06-05 00:55 | /run-experiment | outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_records.jsonl | implementation | R070 per-record code-like literal guard audit index |
+| 2026-06-05 00:55 | /run-experiment | mdocnexus/integration/evidence_demand_parser.py | implementation | R070 parser normalization uses actionable exact-code semantics |
+| 2026-06-05 00:55 | /run-experiment | mdocnexus/integration/tests/test_evidence_demand_parser.py | implementation | R070 parser guard normalization unit tests |
+| 2026-06-05 00:55 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R070 entry |
+| 2026-06-05 00:55 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R070 code-like literal guard normalization summary |
+| 2026-06-05 00:55 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R070 tracker row |

@@ -1,0 +1,527 @@
+{
+  "created_utc": "2026-06-05T01:00:06.352796+00:00",
+  "decision": "r070_code_like_literal_guard_normalization_complete",
+  "gate": {
+    "checks": {
+      "actionable_exact_codes_keep_strict_guard": true,
+      "actionable_targets_seen": true,
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "code_like_records_present": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_outputs": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "records_scanned_positive": true,
+      "temporal_metric_literals_do_not_trigger_exact_code_guard": true,
+      "temporal_metric_targets_seen": true
+    },
+    "created_utc": "2026-06-05T01:00:06.352788+00:00",
+    "decision": "r070_code_like_literal_guard_normalization_complete",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r070_code_like_literal_guard_gate_v1"
+  },
+  "recommended_next": [
+    "Keep temporal/metric code-like literals out of exact-code absence guard; route them through normal numeric/table support checks.",
+    "Keep actionable exact codes on strict exact-code selection/absence behavior; do not infer from nearby code families.",
+    "Next no-provider step should rebuild or replay bounded Stage 2 artifacts for positive actionable code/name cases before any provider QA."
+  ],
+  "schema_version": "r070_code_like_literal_guard_report_v1",
+  "scope": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true
+  },
+  "summary": {
+    "actionable_exact_code_records": 8,
+    "actionable_strict_guard_records": 8,
+    "boundary": {
+      "does_not_use_answer_or_evidence_pages": true,
+      "no_evaluation": true,
+      "no_full_qa": true,
+      "no_prediction": true,
+      "no_provider_calls": true,
+      "not_official_score": true
+    },
+    "classification_counts": {
+      "actionable_exact_code": 8,
+      "temporal_metric_literal": 56
+    },
+    "code_like_records": 64,
+    "created_utc": "2026-06-05T01:00:06.350293+00:00",
+    "examples": {
+      "actionable_exact_code": [
+        {
+          "actionable_exact_codes": [
+            "M250"
+          ],
+          "code_like_literals": [
+            "M250"
+          ],
+          "doc_id": "91521110100M_4K_UHD_Display_User_Manual_V1.1.pdf",
+          "guard_normalization_ok": true,
+          "question": "A transmitter operating at a frequency of 500 MHz has a rated maximum output power of 10 W. Using the recommended separation distances between portable and mobile RF communications",
+          "record_id": 306,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": []
+        },
+        {
+          "actionable_exact_codes": [
+            "AR01"
+          ],
+          "code_like_literals": [
+            "AR01"
+          ],
+          "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+          "guard_normalization_ok": true,
+          "question": "What's the geographic market name for EPS Code AR01?\n\n",
+          "record_id": 507,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": []
+        },
+        {
+          "actionable_exact_codes": [
+            "AR03"
+          ],
+          "code_like_literals": [
+            "AR03"
+          ],
+          "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+          "guard_normalization_ok": true,
+          "question": "According to this document, what's the geographic market name for EPS Code AR03?",
+          "record_id": 508,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": []
+        },
+        {
+          "actionable_exact_codes": [
+            "CA03"
+          ],
+          "code_like_literals": [
+            "CA03"
+          ],
+          "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+          "guard_normalization_ok": true,
+          "question": "In the context of the College Board Search Platform, is market CA03 considered part of the San Francisco Bay Area? Answer 'yes' or 'no'.",
+          "record_id": 516,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": []
+        },
+        {
+          "actionable_exact_codes": [
+            "CA19"
+          ],
+          "code_like_literals": [
+            "CA19"
+          ],
+          "doc_id": "8dfc21ec151fb9d3578fc32d5c4e5df9.pdf",
+          "guard_normalization_ok": true,
+          "question": "Within the geographic market segments defined by the College Board Search platform, which of the two designated areas, CA19 or Covina and West Covina, encompasses a larger geograph",
+          "record_id": 517,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": []
+        },
+        {
+          "actionable_exact_codes": [
+            "L1"
+          ],
+          "code_like_literals": [
+            "AP50",
+            "L1"
+          ],
+          "doc_id": "2005.12872v3.pdf",
+          "guard_normalization_ok": true,
+          "question": "What's the AP50 value of DETR with L1 loss and without GIoU loss on the COCO validation set?",
+          "record_id": 547,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": [
+            "AP50"
+          ]
+        },
+        {
+          "actionable_exact_codes": [
+            "L1"
+          ],
+          "code_like_literals": [
+            "AP50",
+            "L1"
+          ],
+          "doc_id": "2005.12872v3.pdf",
+          "guard_normalization_ok": true,
+          "question": "What's the AP50 value of DETR without L1 loss and without GIoU loss on the COCO validation set?",
+          "record_id": 548,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": [
+            "AP50"
+          ]
+        },
+        {
+          "actionable_exact_codes": [
+            "T5"
+          ],
+          "code_like_literals": [
+            "F1",
+            "T5"
+          ],
+          "doc_id": "2023.acl-long.386.pdf",
+          "guard_normalization_ok": true,
+          "question": "Please list the F1 scores for ProgramFC on different datasets with gold evidence in relation to Flan-T5-small, in descending order, with one decimal place. For example: [\"3.0\", \"2.",
+          "record_id": 641,
+          "requires_exact_code_selection": true,
+          "selector_guard": "exact_code_absence_guard",
+          "temporal_metric_literals": [
+            "F1"
+          ]
+        }
+      ],
+      "normalization_failures": [],
+      "temporal_metric": [
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q3"
+          ],
+          "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+          "guard_normalization_ok": true,
+          "question": "In Q3 2015, what is the approximate range of cost in 1 day (dollar) of a mobile incentive platform in Vietnam for installing? Answer with a list of two number for boundary, for exa",
+          "record_id": 57,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q3"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q3"
+          ],
+          "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+          "guard_normalization_ok": true,
+          "question": "As of Q3 2015, are there more active Instagram users in Vietnam, or are there more fans for Appota's fan page? Directly answer 'Instagram' or 'Appota'.",
+          "record_id": 58,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q3"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q3"
+          ],
+          "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+          "guard_normalization_ok": true,
+          "question": "As of Q3 2015, is vietnam's adoption rate of iOS 9 higher or lower than a global average rate? What is the difference in percentage?",
+          "record_id": 59,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q3"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q3"
+          ],
+          "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+          "guard_normalization_ok": true,
+          "question": "As of Q3 2015, is vietnam's adoption rate of iOS 7 higher or lower than a global average rate? What is the difference in percentage?",
+          "record_id": 60,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q3"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "F1"
+          ],
+          "doc_id": "2310.05634v2.pdf",
+          "guard_normalization_ok": true,
+          "question": "How many tables include \"F1\" as a metric?",
+          "record_id": 64,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "F1"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q1"
+          ],
+          "doc_id": "q1-2023-bilibili-inc-investor-presentation.pdf",
+          "guard_normalization_ok": true,
+          "question": "By what percentage has gross profit increased in Q1 of 2023 compared to Q1 of 2022?",
+          "record_id": 488,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q1"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "Q1"
+          ],
+          "doc_id": "q1-2023-bilibili-inc-investor-presentation.pdf",
+          "guard_normalization_ok": true,
+          "question": "By what percentage has gross profit increased in Q1 of 2021 compared to Q1 of 2020?",
+          "record_id": 489,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "Q1"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "GPT2"
+          ],
+          "doc_id": "2305.14160v4.pdf",
+          "guard_normalization_ok": true,
+          "question": "Using anchor-only context compression, how much can GPT2-XL speed up on AGNews?",
+          "record_id": 968,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "GPT2"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2019"
+          ],
+          "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is the FY2019 fixed asset turnover ratio for Activision Blizzard?",
+          "record_id": 990,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2019"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2017",
+            "FY2019"
+          ],
+          "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "What is the FY2017 - FY2019 3 year average of capex to revenue ratio for Activision Blizzard?Answer in units of percents and round to one decimal place. ",
+          "record_id": 991,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2017",
+            "FY2019"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "F2019"
+          ],
+          "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is Interest Coverage Ratio for Activsion Blizzard In F2019?",
+          "record_id": 993,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "F2019"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2019"
+          ],
+          "doc_id": "ACTIVISIONBLIZZARD_2019_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what value stock does Activsion Blizzard repurchase in FY2019? Answer in USD billion\n",
+          "record_id": 994,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2019"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "What is common equity  for COSTCO in FY2021? ",
+          "record_id": 995,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is EBITDA  for costco in FY2021?",
+          "record_id": 997,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is total debt to EBITDA ratio of COSTCO in FY2021?round your answer to three decimal places.",
+          "record_id": 1000,
+          "requires_exact_code_selection": false,
+          "selector_guard": "artifact_dimension_support_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is Long-term Debt to Total Liabilities for COSTCO in FY2021? Round your answer to two decimal places.",
+          "record_id": 1002,
+          "requires_exact_code_selection": false,
+          "selector_guard": "artifact_dimension_support_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is current liabilities to total liabilities for COSTCO in FY2021? Round your answer to three decimal places.",
+          "record_id": 1003,
+          "requires_exact_code_selection": false,
+          "selector_guard": "artifact_dimension_support_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "what is Operating cash flow to Current Liabilitiesfor COSTCO in FY2021? Round your answer to three decimal places.",
+          "record_id": 1006,
+          "requires_exact_code_selection": false,
+          "selector_guard": "artifact_dimension_support_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "How much shares did COSTCO repurchase in FY2021?",
+          "record_id": 1007,
+          "requires_exact_code_selection": false,
+          "selector_guard": "no_relevant_artifact_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        },
+        {
+          "actionable_exact_codes": [],
+          "code_like_literals": [
+            "FY2021"
+          ],
+          "doc_id": "COSTCO_2021_10K.pdf",
+          "guard_normalization_ok": true,
+          "question": "How much did COSTCO spend on repurchasing of common stock in FY2021?Answer in millions.\n",
+          "record_id": 1008,
+          "requires_exact_code_selection": false,
+          "selector_guard": "artifact_dimension_support_guard",
+          "temporal_metric_literals": [
+            "FY2021"
+          ]
+        }
+      ]
+    },
+    "forbidden_gold_fields_present": [],
+    "input_artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+    "input_extract_path": "tmp/MMLongBench",
+    "input_records": "data/MMLongBench/sample-with-retrieval-results.json",
+    "records_scanned": 1073,
+    "schema_version": "r070_code_like_literal_guard_summary_v1",
+    "selector_guard_counts": {
+      "artifact_dimension_support_guard": 13,
+      "exact_code_absence_guard": 8,
+      "no_relevant_artifact_guard": 42,
+      "operand_completeness_guard": 1
+    },
+    "target_presence": {
+      "actionable_targets": {
+        "AR01": true,
+        "AR03": true,
+        "CA03": true,
+        "CA19": true
+      },
+      "temporal_metric_targets": {
+        "AP50": true,
+        "F1": true,
+        "FY2015": true,
+        "FY2018": true,
+        "Q3": true
+      }
+    },
+    "temporal_metric_exact_code_guard_count": 0,
+    "temporal_metric_records": 56,
+    "top_k": 4
+  }
+}

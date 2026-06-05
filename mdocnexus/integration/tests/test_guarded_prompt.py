@@ -4,12 +4,14 @@ import json
 import unittest
 
 from mdocnexus.integration.guarded_prompt import (
+    actionable_exact_codes,
     audit_selected_artifact_support,
     build_question_profile,
     forbidden_public_fields,
     render_guarded_prompt,
     score_guarded_artifact,
     select_guarded_artifacts,
+    temporal_metric_code_like_literals,
 )
 
 
@@ -24,6 +26,42 @@ class GuardedPromptTests(unittest.TestCase):
 
         self.assertEqual(selection["guard_decision"], "document_metadata_refusal_guard")
         self.assertEqual(selection["selected_artifacts"], [])
+
+
+    def test_temporal_metric_code_like_literals_do_not_trigger_exact_code_guard(self) -> None:
+        for literal in ["FY2015", "FY2018", "Q3", "AP50", "F1"]:
+            with self.subTest(literal=literal):
+                question = f"What was the reported metric for {literal}?"
+                profile = build_question_profile(question)
+                artifact = score_guarded_artifact(
+                    numeric_artifact("metric", f"Reported metric for {literal}: 42"),
+                    question,
+                    profile,
+                    1,
+                )
+
+                selection = select_guarded_artifacts([artifact], [], profile)
+
+                self.assertEqual(profile["codes"], [])
+                self.assertIn(literal, profile["temporal_metric_literals"])
+                self.assertFalse(profile["requires_exact_code_selection"])
+                self.assertNotEqual(selection["guard_decision"], "exact_code_absence_guard")
+
+    def test_actionable_exact_code_literals_remain_strict(self) -> None:
+        literals = ["AR01", "CA03", "CA19", "AR03"]
+
+        self.assertEqual(actionable_exact_codes(literals + ["FY2018", "Q3", "AP50", "F1"]), sorted(literals))
+        self.assertEqual(temporal_metric_code_like_literals(["FY2018", "Q3", "AP50", "F1"]), ["AP50", "F1", "FY2018", "Q3"])
+
+        question = "According to this document, what's the geographic market name for EPS Code AR03?"
+        profile = build_question_profile(question)
+        candidates = [score_guarded_artifact(numeric_artifact("ar01", "EPS Code AR01: Little Rock"), question, profile, 8)]
+
+        selection = select_guarded_artifacts(candidates, [], profile)
+
+        self.assertEqual(profile["codes"], ["AR03"])
+        self.assertTrue(profile["requires_exact_code_selection"])
+        self.assertEqual(selection["guard_decision"], "exact_code_absence_guard")
 
     def test_exact_code_absence_rejects_numeric_noise(self) -> None:
         question = "According to this document, what's the geographic market name for EPS Code AR03?"

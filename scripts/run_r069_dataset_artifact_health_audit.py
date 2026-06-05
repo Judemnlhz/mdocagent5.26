@@ -29,7 +29,7 @@ for path in [str(REPO_ROOT), str(SCRIPT_DIR)]:
 import run_r053_question_aware_scaffold as r053
 import run_r067_source_ocr_code_list_extraction_audit as r067
 import run_r068_code_list_stage2_integration_audit as r068
-from mdocnexus.integration.guarded_prompt import CODE_PATTERN, build_question_profile, forbidden_public_fields, score_guarded_artifact, select_guarded_artifacts
+from mdocnexus.integration.guarded_prompt import CODE_PATTERN, actionable_exact_codes, build_question_profile, forbidden_public_fields, score_guarded_artifact, select_guarded_artifacts
 from mdocnexus.stage2.artifact_quality import classify_artifact_quality, quality_discard_reason
 from mdocnexus.stage2.code_name_list_extractor import extract_code_name_list_artifacts
 
@@ -142,7 +142,7 @@ def retrieval_pages(record: Mapping[str, Any], top_k: int) -> list[int]:
 def classify_question(question: str, profile: Mapping[str, Any]) -> list[str]:
     q_norm = r053.normalize(question)
     types = []
-    if profile.get("codes"):
+    if profile.get("code_like_literals") or CODE_PATTERN.findall(question):
         types.append("code_like_literal")
     if is_exact_code_lookup_question(q_norm, profile):
         types.append("exact_code_lookup")
@@ -165,30 +165,14 @@ def is_exact_code_lookup_question(q_norm: str, profile: Mapping[str, Any]) -> bo
 
 
 def actionable_codes(codes: list[Any]) -> list[str]:
-    rows = []
-    for code in codes:
-        text = str(code or "").upper()
-        if not text:
-            continue
-        if re.fullmatch(r"FY\d{4}", text):
-            continue
-        if re.fullmatch(r"Q[1-4]", text):
-            continue
-        if re.fullmatch(r"F\d+", text):
-            continue
-        if re.fullmatch(r"AP\d+", text):
-            continue
-        if re.fullmatch(r"GPT\d+", text):
-            continue
-        rows.append(text)
-    return sorted(set(rows))
+    return actionable_exact_codes(codes)
 
 
 def extract_literals(question: str, profile: Mapping[str, Any]) -> dict[str, list[str]]:
     q_norm = r053.normalize(question)
     years = sorted(set(re.findall(r"\b(?:19|20)\d{2}\b", question)))
     numbers = sorted(set(str(item) for item in profile.get("numbers") or []))
-    codes = sorted(set(str(item) for item in profile.get("codes") or CODE_PATTERN.findall(question)))
+    codes = sorted(set(str(item) for item in profile.get("code_like_literals") or CODE_PATTERN.findall(question)))
     actionable = actionable_codes(codes)
     quoted = sorted(set(match.strip() for match in re.findall(r"[\"']([^\"']{2,80})[\"']", question) if match.strip()))
     metric_phrases = []

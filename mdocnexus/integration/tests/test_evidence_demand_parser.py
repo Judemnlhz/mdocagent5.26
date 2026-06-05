@@ -77,6 +77,33 @@ class EvidenceDemandParserTests(unittest.TestCase):
         self.assertTrue(demand["is_numeric_or_table_question"])
         self.assertFalse(demand["is_document_metadata_lookup"])
 
+
+    def test_temporal_metric_code_like_literals_do_not_force_exact_code_selection(self) -> None:
+        for literal in ["FY2015", "FY2018", "Q3", "AP50", "F1"]:
+            with self.subTest(literal=literal):
+                demand = normalize_evidence_demand({
+                    "answer_type": "metadata_lookup",
+                    "required_entities": ["document"],
+                    "required_values_or_codes": [literal],
+                    "requires_exact_code_selection": True,
+                    "evidence_dimensions": [
+                        {"dimension": "literal", "label": literal, "aliases": [literal]},
+                    ],
+                })
+
+                self.assertFalse(demand["requires_exact_code_selection"])
+                self.assertTrue(demand["is_document_metadata_lookup"])
+
+    def test_merge_ignores_temporal_metric_literals_as_exact_codes(self) -> None:
+        profile = merge_evidence_demand_profile("What was F1 in FY2018?", {
+            "answer_type": "table_lookup",
+            "required_values_or_codes": ["F1", "FY2018"],
+            "is_numeric_or_table_question": True,
+        })
+
+        self.assertEqual(profile["codes"], [])
+        self.assertFalse(profile["requires_exact_code_selection"])
+
     def test_date_metadata_without_code_stays_metadata_lookup(self) -> None:
         demand = normalize_evidence_demand({
             "answer_type": "metadata_lookup",

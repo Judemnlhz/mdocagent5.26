@@ -1244,3 +1244,45 @@ Key findings:
 
 Decision: R068 code/name extraction is worth carrying into a bounded Stage 2 artifact-store rebuild for actionable code/name questions, but selector/parser normalization must also distinguish actionable codes from fiscal years, quarters, and metric labels. Do not run full QA yet; first repair code-like literal guard normalization and rebuild a bounded artifact store for positive exact-code lookup cases.
 
+### 2026-06-05 R070 Code-Like Literal Guard Normalization
+
+R070 repairs and audits the selector/parser normalization gap found by R069. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Keep actionable exact codes (`AR01`, `CA03`, `CA19`, `AR03`) on strict exact-code selection/absence behavior.
+- Normalize temporal/metric code-like literals (`FY2015`, `FY2018`, `Q3`, `AP50`, `F1`) so they do not trigger `exact_code_absence_guard`.
+- Verify the rule-profile and LLM evidence-demand parser merge paths use the same actionable-code semantics.
+
+Scope and boundary:
+
+- Records scanned: 1073.
+- Inputs: `data/MMLongBench/sample-with-retrieval-results.json`, R038d union atomic artifact store, and public page text under `tmp/MMLongBench`.
+- The audit intentionally does not use `answer`, `evidence_pages`, prediction correctness, or provider outputs.
+
+Outputs:
+
+- `mdocnexus/integration/guarded_prompt.py`
+- `mdocnexus/integration/evidence_demand_parser.py`
+- `mdocnexus/integration/tests/test_guarded_prompt.py`
+- `mdocnexus/integration/tests/test_evidence_demand_parser.py`
+- `scripts/run_r070_code_like_literal_guard_normalization.py`
+- `scripts/run_r069_dataset_artifact_health_audit.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_report.md`
+- `outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_gate.md`
+- `outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_summary.json`
+- `outputs/heldout/r070_code_like_literal_guard_normalization/r070_code_like_literal_guard_records.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Code-like records: 64.
+- Temporal/metric records: 56.
+- Temporal/metric exact-code guard count: 0.
+- Actionable exact-code records: 8.
+- Actionable strict-guard records: 8.
+- Target coverage confirms `FY2015`, `FY2018`, `Q3`, `AP50`, and `F1` are temporal/metric literals, while `AR01`, `AR03`, `CA03`, and `CA19` remain actionable exact codes.
+
+Decision: keep the R070 selector/parser normalization repair. Do not relax exact-code matching; do not run full QA yet. Next no-provider step should rebuild or replay a bounded Stage 2 artifact store for positive actionable code/name cases, then run a small guarded provider diagnostic only after artifact support is visible and selector-selected.

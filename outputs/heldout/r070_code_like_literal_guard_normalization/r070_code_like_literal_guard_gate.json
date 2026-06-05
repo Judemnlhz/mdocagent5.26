@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "actionable_exact_codes_keep_strict_guard": true,
+    "actionable_targets_seen": true,
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "code_like_records_present": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "records_scanned_positive": true,
+    "temporal_metric_literals_do_not_trigger_exact_code_guard": true,
+    "temporal_metric_targets_seen": true
+  },
+  "created_utc": "2026-06-05T01:00:06.352788+00:00",
+  "decision": "r070_code_like_literal_guard_normalization_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r070_code_like_literal_guard_gate_v1"
+}

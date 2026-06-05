@@ -13,6 +13,7 @@ import re
 from typing import Any, Mapping
 
 CODE_PATTERN = re.compile(r"\b[A-Z]{1,4}\d{1,4}\b")
+TEMPORAL_METRIC_CODE_PATTERN = re.compile(r"^(?:FY\d{2,4}|Q[1-4]|F\d+|AP\d+|GPT\d+)$", re.IGNORECASE)
 METADATA_TERMS = {"produced", "producer", "revised", "revision", "document", "version"}
 COMPUTE_TERMS = {"difference", "sum", "total", "ratio", "rate", "percentage", "calculate"}
 NUMERIC_WORDS = {
@@ -82,7 +83,9 @@ def build_question_profile(question: str) -> dict[str, Any]:
     q_norm = normalize(question)
     tokens = sorted(question_tokens(question))
     token_set = set(tokens)
-    codes = CODE_PATTERN.findall(question)
+    code_like_literals = normalize_code_like_literals(CODE_PATTERN.findall(question))
+    codes = actionable_exact_codes(code_like_literals)
+    temporal_metric_literals = temporal_metric_code_like_literals(code_like_literals)
     numbers = re.findall(r"[-+]?\d+(?:\.\d+)?", question)
     is_numeric = any(word in q_norm for word in NUMERIC_WORDS) or bool(numbers)
     is_code_or_table = bool(codes) or any(word in q_norm for word in ["code", "table", "row", "column", "market"])
@@ -95,6 +98,8 @@ def build_question_profile(question: str) -> dict[str, Any]:
     return {
         "tokens": tokens,
         "codes": codes,
+        "code_like_literals": code_like_literals,
+        "temporal_metric_literals": temporal_metric_literals,
         "numbers": numbers,
         "evidence_requirements": build_evidence_requirements(question),
         "is_numeric_or_table_question": bool(is_numeric or is_code_or_table),
@@ -491,6 +496,31 @@ def rank_artifacts(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         item["selection_rank"] = rank
         output.append(item)
     return output
+
+
+def normalize_code_like_literals(values: list[Any]) -> list[str]:
+    rows = []
+    seen = set()
+    for value in values:
+        text = str(value or "").strip().upper()
+        if not text or text in seen:
+            continue
+        seen.add(text)
+        rows.append(text)
+    return rows
+
+
+def is_actionable_exact_code(value: Any) -> bool:
+    text = str(value or "").strip().upper()
+    return bool(CODE_PATTERN.fullmatch(text)) and TEMPORAL_METRIC_CODE_PATTERN.fullmatch(text) is None
+
+
+def actionable_exact_codes(values: list[Any]) -> list[str]:
+    return sorted(code for code in normalize_code_like_literals(values) if is_actionable_exact_code(code))
+
+
+def temporal_metric_code_like_literals(values: list[Any]) -> list[str]:
+    return sorted(code for code in normalize_code_like_literals(values) if not is_actionable_exact_code(code))
 
 
 def searchable_artifact_text(artifact: Mapping[str, Any], normalized: Mapping[str, Any]) -> str:
