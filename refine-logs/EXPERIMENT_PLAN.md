@@ -1695,3 +1695,45 @@ Key findings:
 
 Decision: R076 fixes the over-intervention and diagnostic-stability issues, but the result is still only a small paired diagnostic. Do not launch full MMLB QA yet. Next step should expand the paired diagnostic with `parallel_workers<=3`, balanced buckets, and inspection of selected-artifact false positives before any full MDocAgent run.
 
+### 2026-06-05 R077 Expanded Paired Provider Diagnostic + False-Positive Audit
+
+R077 expands the R076 paired diagnostic to the full R075 sampled set while keeping provider parallelism capped at 3. It is still not full MDocAgent QA, not full MMLB, and not an official score.
+
+Purpose:
+
+- Compare the repaired R076 evidence prompt against an original-question prompt under the same single-provider retrieved-page setup.
+- Avoid interpreting single-provider failures as direct MDocAgent baseline regressions.
+- Audit selected-artifact and strict-guard false positives before any full QA run.
+
+Scope and boundary:
+
+- Selected cases: 66 (`max-help=29`, `max-risk=29`, `max-stable=8`).
+- Provider/evaluator model pair: `Qwen/Qwen3-8B` / `deepseek-ai/DeepSeek-V3`.
+- Runtime controls: `parallel_workers=3`, `request_timeout=45`, `max_retries=1`.
+- No full MMLB, no full MDocAgent multi-agent QA, no official score.
+
+Outputs:
+
+- `outputs/heldout/r077_paired_provider_expansion/r075_selected_cases.jsonl`
+- `outputs/heldout/r077_paired_provider_expansion/predictions/r075_predictions.jsonl`
+- `outputs/heldout/r077_paired_provider_expansion/predictions/r075_evaluations.jsonl`
+- `outputs/heldout/r077_paired_provider_expansion/predictions/r075_original_predictions.jsonl`
+- `outputs/heldout/r077_paired_provider_expansion/predictions/r075_original_evaluations.jsonl`
+- `outputs/heldout/r077_paired_provider_expansion/r075_small_provider_summary.json`
+- `outputs/heldout/r077_paired_provider_expansion/r075_small_provider_report.md`
+- `outputs/heldout/r077_paired_provider_expansion/r077_selected_artifact_false_positive_audit.json`
+- `outputs/heldout/r077_paired_provider_expansion/r077_selected_artifact_false_positive_audit.md`
+
+Gate result: diagnostic completed; paired small result is positive but insufficient for full QA.
+
+Key findings:
+
+- Evidence prompt side: 66 predictions/evaluations, provider failures=7 (`0.106061`).
+- Original prompt side: 66 predictions/evaluations, provider failures=10.
+- Direct comparison to historical MDocAgent top-4 correctness remains negative: `changed_to_right=4`, `changed_to_wrong=25`, delta=`-21`; this remains a mismatched diagnostic because it compares single-provider prompting to original MDocAgent.
+- Paired original-vs-evidence result is slightly positive: `changed_to_right=2`, `changed_to_wrong=1`, paired delta=`+1`.
+- Selected-artifact cases: 16; selected-artifact paired outcomes were `changed_to_right=2`, `kept_right=1`, `kept_wrong=13`, with no selected-artifact paired hurt.
+- The only paired hurt is record 1035 (`AMAZON_2017_10K.pdf`), an `operand_completeness_guard` case where visible page text had net income and assets, but the evidence guard still forced not-answerable.
+
+Decision: do not launch full MMLB yet. The next repair should target strict operand guard/page-evidence conflict: if visible retrieved page text supplies all operands, the guard should downgrade from refusal to page-evidence computation rather than overriding visible evidence.
+

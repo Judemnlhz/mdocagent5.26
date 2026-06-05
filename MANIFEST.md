@@ -143,3 +143,14 @@
 | 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_small_provider_report.md | implementation | R076 paired small provider report |
 | 2026-06-05 08:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R076 no-artifact passthrough and paired diagnostic summary |
 | 2026-06-05 08:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R076 tracker row |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r075_selected_cases.jsonl | implementation | R077 expanded paired diagnostic selected cases |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/predictions/r075_predictions.jsonl | implementation | R077 evidence-prompt provider predictions |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/predictions/r075_evaluations.jsonl | implementation | R077 evidence-prompt sampled evaluations |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/predictions/r075_original_predictions.jsonl | implementation | R077 paired original-question provider predictions |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/predictions/r075_original_evaluations.jsonl | implementation | R077 paired original-question sampled evaluations |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r075_small_provider_summary.json | implementation | R077 expanded paired provider summary |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r075_small_provider_report.md | implementation | R077 expanded paired provider report |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r077_selected_artifact_false_positive_audit.json | implementation | R077 selected-artifact false-positive audit payload |
+| 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r077_selected_artifact_false_positive_audit.md | implementation | R077 selected-artifact false-positive audit report |
+| 2026-06-05 08:40 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R077 paired diagnostic and false-positive audit summary |
+| 2026-06-05 08:40 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R077 tracker row |
