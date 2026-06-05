@@ -1,0 +1,29 @@
+{
+  "blocked_datasets": [
+    "FETA",
+    "LDU",
+    "PTAB",
+    "PTEXT"
+  ],
+  "checks": {
+    "all_target_datasets_reported": true,
+    "blocked_inputs_are_explicit_not_silent": true,
+    "cross_dataset_question_skill_activation_recorded": true,
+    "mmlb_capsule_mean_ratio_below_one": true,
+    "mmlb_full_reuse_audit_available": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "registry_contract_valid": true,
+    "registry_has_no_dataset_specific_skill_names": true
+  },
+  "created_utc": "2026-06-05T03:32:38.770224+00:00",
+  "decision": "r073_cross_dataset_reuse_audit_complete_with_input_gaps",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r073_cross_dataset_gate_v1"
+}

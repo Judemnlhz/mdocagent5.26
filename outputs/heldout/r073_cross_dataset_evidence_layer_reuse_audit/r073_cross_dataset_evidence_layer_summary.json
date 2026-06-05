@@ -1,0 +1,1586 @@
+{
+  "blocked_datasets": [
+    "FETA",
+    "LDU",
+    "PTAB",
+    "PTEXT"
+  ],
+  "boundary": {
+    "does_not_substitute_gold_pages_for_retrieval": true,
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_global_knowledge_graph": true,
+    "not_large_skill_tree": true,
+    "not_official_score": true
+  },
+  "created_utc": "2026-06-05T03:32:38.699503+00:00",
+  "cross_dataset_activated_skill_counts": {
+    "exact_code_lookup": 84,
+    "figure_caption_grounding": 488,
+    "key_value_lookup": 2810,
+    "numeric_computation": 25,
+    "table_numeric_lookup": 2904,
+    "text_span_grounding": 1670
+  },
+  "dataset_summaries": {
+    "FETA": {
+      "activated_skill_counts": {
+        "exact_code_lookup": 13,
+        "figure_caption_grounding": 8,
+        "key_value_lookup": 362,
+        "table_numeric_lookup": 540,
+        "text_span_grounding": 97
+      },
+      "artifact_path": "",
+      "artifact_store_available": false,
+      "blocked_reason": "No public retrieval-page list and matching artifact store equivalent to the MMLB R038d store was found; gold answer/evidence fields were not used.",
+      "dataset": "FETA",
+      "docs_with_page_text_count": 1016,
+      "docs_with_page_text_rate": 1.0,
+      "examples": [
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Ben Platt (actor).pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "When and in what play did Platt appear at the Music Box Theatre?",
+          "record_id": 0,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Ben Platt (actor).pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which role did Ben Platt play at the Second Stage Theatre in 2016?",
+          "record_id": 1,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "List of French monarchs.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What year did Philip I the Amorous become King of the Franks, what year did that run end, and what number king was he?",
+          "record_id": 2,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "List of French monarchs.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "During which years was Henry I king of the franks and which House of Capet lineage number was he?",
+          "record_id": 3,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "List of French monarchs.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Who was the son of Louis X?",
+          "record_id": 4,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "List of French monarchs.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Who was King of the Franks from 1108 to 1137?",
+          "record_id": 5,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Local governance in Kerala.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How many of each type of local government are in the Indian state of Kerala?",
+          "record_id": 6,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Achaemenid Empire.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Who succeeded Artaxerxes II?",
+          "record_id": 7,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Erika Jayne.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Did Jayne make into the top of any ranking by Billboard in 2016?",
+          "record_id": 8,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Love Island (series 1).pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which couples made it to the end of Love Island (series 1) and who won?",
+          "record_id": 9,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Honda CBR600F.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the maximum power and torque of the Honda CBR600F?",
+          "record_id": 10,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Colin Firth.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "For which film was Firth awarded the Volpi Cup for Best Actor and at which Film Festival did he receive it?",
+          "record_id": 11,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Randy Moss.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What are Randy Moss's touchdown stats?",
+          "record_id": 12,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "History of immigration to the United States.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How did total immigration change from 1820 to 1830?",
+          "record_id": 13,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Crosby, Stills & Nash (album).pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How far up the Top 100 Chart did the 2 singles from the album Crosby, Stills & Nash travel before they peaked?",
+          "record_id": 14,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "General Sherman (tree).pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What are the characteristics of General Sherman? ",
+          "record_id": 15,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Nadiya Hussain.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What awards was Nadiya Hussain nominated for?",
+          "record_id": 16,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Nadiya Hussain.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What was Hussain's role in Junior bake off in 2016?",
+          "record_id": 17,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Nadiya Hussain.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What role did Nadiya Hussain take on in the year 2016 for the BBC One channel?",
+          "record_id": 18,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "FETA",
+          "doc_id": "Indian cricket team in England in 1932.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the result of the Indian cricket team in England in 1932?",
+          "record_id": 19,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        }
+      ],
+      "extract_path": "tmp/FetaTab",
+      "full_capsule_audit_available": false,
+      "guard_decision_counts": {},
+      "page_text_dir_exists": true,
+      "public_retrieval_available": false,
+      "public_sample_file_exists": true,
+      "records_scanned": 1016,
+      "sample_path": "data/FetaTab/samples.json",
+      "schema_version": "r073_dataset_summary_v1",
+      "status": "blocked_missing_public_retrieval_or_artifacts",
+      "text_file_count": 13721,
+      "total_records": 1016
+    },
+    "LDU": {
+      "activated_skill_counts": {
+        "exact_code_lookup": 62,
+        "figure_caption_grounding": 286,
+        "key_value_lookup": 506,
+        "numeric_computation": 14,
+        "table_numeric_lookup": 1450,
+        "text_span_grounding": 262
+      },
+      "artifact_path": "",
+      "artifact_store_available": false,
+      "blocked_reason": "No public retrieval-page list and matching artifact store equivalent to the MMLB R038d store was found; gold answer/evidence fields were not used.",
+      "dataset": "LDU",
+      "docs_with_page_text_count": 2325,
+      "docs_with_page_text_rate": 1.0,
+      "examples": [
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4026369.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which publications are stated as helpful in producing a manual?",
+          "record_id": 0,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4125651.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which titles would provide insights into the importance of light efficiency and quality metrics in lighting products?\nSelect titles from the doc that best answer the question, do n",
+          "record_id": 1,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4145761.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which of the following is the first step in creating a task from a chat message in Nextcloud Talk?\n(A) Open the 'Tasks' app.\n(B) Install the Deck app if it is not already installed",
+          "record_id": 2,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4091930.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "List all states that InfraMap provides services in.",
+          "record_id": 3,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4088207.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the total amount of liabilities for Nordic Fibreboard AS as of 31.12.2020?",
+          "record_id": 4,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4076912.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What's name of the figure at the page which contains a table whose name is \"Table 18: Quality control related uses by type of use\"?",
+          "record_id": 5,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4016916.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What penalties are specified for possession of category l or category 2 items?",
+          "record_id": 6,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4136511.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Wind energy percentage  in 2016 is lower than that in 2017, yes or no?",
+          "record_id": 7,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4050613.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the total number of inpatient beds across all four buildings (BLD-03877, BLD-05669, BLD-05670, BLD-05671) for \"Medical /Surgical (Include GYN)\" units in 2018?",
+          "record_id": 8,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4106951.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which section best matches the follwing description: \n<description>This text primarily discusses David Lack's scientific research on robins, as published in \"The Life of the Robin.",
+          "record_id": 9,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4190345.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Who was the principal author of the Historic Resources Assessment Report?",
+          "record_id": 10,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4027862.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What was difference value between the quantity of total consumption and total import for rice production in 2020?\n(A). 30517 metric tons\n(B). 34082 metric tons\n(C). 3565 metric ton",
+          "record_id": 11,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4080199.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "The state's definition of religion, mainly based on liberal Protestant Christian values, marginalizes groups that don't fit its criteria by denying them access to benefits,yes or n",
+          "record_id": 12,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4197991.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the interval between specific lunar/solar events in days?",
+          "record_id": 13,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4066338.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What's name of the table at the page which contains a figure whose name is \"Figure 2.7: Example feature points detected by VeriLook SDK a) good fit on FRGC image,b) bad fit on MORP",
+          "record_id": 14,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4192639.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which sections explore the intersection of spirituality, ethics, and environmental consciousness?\nSelect titles from the doc that best answer the question, do not alter or analyze ",
+          "record_id": 15,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4051057.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What's name of the figure at the page which contains a table whose name is \"Table 1: Details of six tree plots located in mixed swamp forest habitat. Peat depth estimated based on ",
+          "record_id": 16,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4146508.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How many fuel cell patents did Esso obtain in the 1960s?",
+          "record_id": 17,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4082742.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the percentage decrease in hospitalizations between May 14 and May 20, 2020?\n(A). -6.5%\n(B). +6.5%\n(C). -65%\n(D). +65%\nChoose the letter name in front of the right option f",
+          "record_id": 18,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "LDU",
+          "doc_id": "4040209.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What documentation is required for outbound shipments from Karnataka?",
+          "record_id": 19,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        }
+      ],
+      "extract_path": "tmp/LongDocURL",
+      "full_capsule_audit_available": false,
+      "guard_decision_counts": {},
+      "page_text_dir_exists": true,
+      "public_retrieval_available": false,
+      "public_sample_file_exists": true,
+      "records_scanned": 2325,
+      "sample_path": "data/LongDocURL/samples.json",
+      "schema_version": "r073_dataset_summary_v1",
+      "status": "blocked_missing_public_retrieval_or_artifacts",
+      "text_file_count": 33913,
+      "total_records": 2325
+    },
+    "MMLB": {
+      "activated_skill_counts": {
+        "exact_code_lookup": 8,
+        "figure_caption_grounding": 165,
+        "key_value_lookup": 206,
+        "numeric_computation": 10,
+        "table_numeric_lookup": 625,
+        "text_span_grounding": 163
+      },
+      "artifact_path": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+      "artifact_store_available": true,
+      "dataset": "MMLB",
+      "docs_with_page_text_count": 134,
+      "examples": [
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.025401,
+            "flat_artifact_vs_raw": 0.003342
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to the report, how do 5% of the Latinos see economic upward mobility for their children?",
+          "record_id": 0,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.024343,
+            "flat_artifact_vs_raw": 0.003203
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to the report, which one is greater in population in the survey? Foreign born Latinos, or the Latinos interviewed by cellphone?",
+          "record_id": 1,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.017479,
+            "flat_artifact_vs_raw": 0.0023
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+          "record_id": 2,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.021372,
+            "flat_artifact_vs_raw": 0.002812
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Among all 12 references in this report, how many are from its own research center?",
+          "record_id": 3,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.011628,
+            "flat_artifact_vs_raw": 0.00153
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+          "record_id": 4,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.020063,
+            "flat_artifact_vs_raw": 0.00264
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to this report, among the Hispanics shaped by four current personal financial situation, which situation involves the highest percentage that expects their future financi",
+          "record_id": 5,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.030794,
+            "flat_artifact_vs_raw": 0.004052
+          },
+          "dataset": "MMLB",
+          "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich grou",
+          "record_id": 6,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.026592,
+            "flat_artifact_vs_raw": 0.003499
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+          "record_id": 7,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.028295,
+            "flat_artifact_vs_raw": 0.003723
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2024?",
+          "record_id": 8,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.035185,
+            "flat_artifact_vs_raw": 0.00463
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+          "record_id": 9,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.028636,
+            "flat_artifact_vs_raw": 0.003768
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to this report, which group is greater in population in 2018? Republican who are hispanic, or no leans who are male?",
+          "record_id": 10,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.028658,
+            "flat_artifact_vs_raw": 0.003771
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+          "record_id": 11,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.050398,
+            "flat_artifact_vs_raw": 0.004421
+          },
+          "dataset": "MMLB",
+          "doc_id": "Independents-Report.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+          "record_id": 12,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.09291,
+            "flat_artifact_vs_raw": 0.012225
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Where was Gestalt psychology concieved?",
+          "record_id": 13,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.18038,
+            "flat_artifact_vs_raw": 0.015823
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+          "record_id": 14,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.089412,
+            "flat_artifact_vs_raw": 0.011765
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "What range does red color represents in approximate distance from the Mississippi River in the chart that tracks the West NIle Virus in Europe?",
+          "record_id": 15,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.094763,
+            "flat_artifact_vs_raw": 0.012469
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "How does this document define the law of good gestalt?",
+          "record_id": 16,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.089412,
+            "flat_artifact_vs_raw": 0.011765
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+          "record_id": 17,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.089412,
+            "flat_artifact_vs_raw": 0.011765
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+          "record_id": 18,
+          "status": null
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup",
+            "figure_caption_grounding"
+          ],
+          "compression_ratios": {
+            "capsule_with_guard_vs_raw": 0.142145,
+            "flat_artifact_vs_raw": 0.012469
+          },
+          "dataset": "MMLB",
+          "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+          "guard_decision": "no_relevant_artifact_guard",
+          "input_mode": "full_public_retrieval_artifact_capsule",
+          "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+          "record_id": 19,
+          "status": null
+        }
+      ],
+      "extract_path": "tmp/MMLongBench",
+      "full_capsule_audit_available": true,
+      "guard_decision_counts": {
+        "artifact_dimension_support_guard": 30,
+        "document_metadata_refusal_guard": 3,
+        "exact_code_absence_guard": 8,
+        "no_relevant_artifact_guard": 1007,
+        "operand_complete_selection": 1,
+        "operand_completeness_guard": 9,
+        "token_key_value_selection": 15
+      },
+      "mean_capsule_with_guard_raw_ratio": 0.222101,
+      "page_text_dir_exists": true,
+      "public_retrieval_available": true,
+      "public_sample_file_exists": true,
+      "records_scanned": 1073,
+      "sample_path": "data/MMLongBench/sample-with-retrieval-results.json",
+      "schema_version": "r073_dataset_summary_v1",
+      "status": "full_public_retrieval_artifact_capsule_audited",
+      "text_file_count": 6492,
+      "total_records": 1073
+    },
+    "PTAB": {
+      "activated_skill_counts": {
+        "figure_caption_grounding": 2,
+        "key_value_lookup": 208,
+        "table_numeric_lookup": 46,
+        "text_span_grounding": 137
+      },
+      "artifact_path": "",
+      "artifact_store_available": false,
+      "blocked_reason": "No public retrieval-page list and matching artifact store equivalent to the MMLB R038d store was found; gold answer/evidence fields were not used.",
+      "dataset": "PTAB",
+      "docs_with_page_text_count": 393,
+      "docs_with_page_text_rate": 1.0,
+      "examples": [
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1912.01214.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "what language pairs are explored?",
+          "record_id": 0,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1801.05147.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What accuracy does the proposed system achieve?",
+          "record_id": 1,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1704.06194.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "On which benchmarks they achieve the state of the art?",
+          "record_id": 2,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1909.00512.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How do they calculate a static embedding for each word?",
+          "record_id": 3,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "2003.03106.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is the performance of BERT on the task?",
+          "record_id": 4,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1909.11687.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What state-of-the-art compression techniques were used in the comparison?",
+          "record_id": 5,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1804.05918.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What discourse relations does it work best/worst for?",
+          "record_id": 6,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "2002.01664.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which 7 Indian languages do they experiment with?",
+          "record_id": 7,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.00540.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Do they use graphical models?",
+          "record_id": 8,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.00540.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What metric is used for evaluation?",
+          "record_id": 9,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "2004.03354.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which eight NER tasks did they evaluate on?",
+          "record_id": 10,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1611.04798.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Do they test their framework performance on commonly used language pairs, such as English-to-German?",
+          "record_id": 11,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.01541.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What languages are evaluated?",
+          "record_id": 12,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.01541.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is MSD prediction?",
+          "record_id": 13,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.09194.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What other models do they compare to?",
+          "record_id": 14,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1802.06024.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How much better than the baseline is LiLi?",
+          "record_id": 15,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.00530.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How many labels do the datasets have?",
+          "record_id": 16,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1809.00530.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What are the source and target domains?",
+          "record_id": 17,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "1912.08960.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which datasets are used?",
+          "record_id": 18,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTAB",
+          "doc_id": "2002.11910.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What are previous state of the art results?",
+          "record_id": 19,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        }
+      ],
+      "extract_path": "tmp/PaperTab",
+      "full_capsule_audit_available": false,
+      "guard_decision_counts": {},
+      "page_text_dir_exists": true,
+      "public_retrieval_available": false,
+      "public_sample_file_exists": true,
+      "records_scanned": 393,
+      "sample_path": "data/PaperTab/samples.json",
+      "schema_version": "r073_dataset_summary_v1",
+      "status": "blocked_missing_public_retrieval_or_artifacts",
+      "text_file_count": 3375,
+      "total_records": 393
+    },
+    "PTEXT": {
+      "activated_skill_counts": {
+        "exact_code_lookup": 1,
+        "figure_caption_grounding": 27,
+        "key_value_lookup": 1528,
+        "numeric_computation": 1,
+        "table_numeric_lookup": 243,
+        "text_span_grounding": 1011
+      },
+      "artifact_path": "",
+      "artifact_store_available": false,
+      "blocked_reason": "No public retrieval-page list and matching artifact store equivalent to the MMLB R038d store was found; gold answer/evidence fields were not used.",
+      "dataset": "PTEXT",
+      "docs_with_page_text_count": 2804,
+      "docs_with_page_text_rate": 1.0,
+      "examples": [
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1912.01214.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "which multilingual approaches do they compare with?",
+          "record_id": 0,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1912.01214.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "what are the pivot-based baselines?",
+          "record_id": 1,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1912.01214.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "which datasets did they experiment with?",
+          "record_id": 2,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1810.08699.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "what ner models were evaluated?",
+          "record_id": 3,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1810.08699.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "what is the source of the news sentences?",
+          "record_id": 4,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1810.08699.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "did they use a crowdsourcing platform for manual annotations?",
+          "record_id": 5,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1609.00425.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "what are the topics pulled from Reddit?",
+          "record_id": 6,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1609.00425.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What predictive model do they build?",
+          "record_id": 7,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "table_numeric_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1801.05147.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What crowdsourcing platform is used?",
+          "record_id": 8,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1811.00383.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "How do they match words before reordering them?",
+          "record_id": 9,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1811.00383.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "On how many language pairs do they show that preordering assisting language sentences helps translation quality?",
+          "record_id": 10,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1811.00383.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which dataset(s) do they experiment with?",
+          "record_id": 11,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1909.09067.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which information about text structure is included in the corpus?",
+          "record_id": 12,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1909.09067.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Which information about typography is included in the corpus?",
+          "record_id": 13,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1704.06194.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What they use in their propsoed framework?",
+          "record_id": 14,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1704.06194.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What does KBQA abbreviate for",
+          "record_id": 15,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1704.06194.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What is te core component for KBQA?",
+          "record_id": 16,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "1909.00512.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What experiments are proposed to test that upper layers produce context-specific embeddings?",
+          "record_id": 17,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "key_value_lookup"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "2003.03106.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "What are the other algorithms tested?",
+          "record_id": 18,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        },
+        {
+          "activated_skill_names": [
+            "text_span_grounding"
+          ],
+          "compression_ratios": null,
+          "dataset": "PTEXT",
+          "doc_id": "2003.03106.pdf",
+          "guard_decision": null,
+          "input_mode": "question_only_availability",
+          "question": "Does BERT reach the best performance among all the algorithms compared?",
+          "record_id": 19,
+          "status": "blocked_missing_public_retrieval_or_artifacts"
+        }
+      ],
+      "extract_path": "tmp/PaperText",
+      "full_capsule_audit_available": false,
+      "guard_decision_counts": {},
+      "page_text_dir_exists": true,
+      "public_retrieval_available": false,
+      "public_sample_file_exists": true,
+      "records_scanned": 2804,
+      "sample_path": "data/PaperText/samples.json",
+      "schema_version": "r073_dataset_summary_v1",
+      "status": "blocked_missing_public_retrieval_or_artifacts",
+      "text_file_count": 11513,
+      "total_records": 2804
+    }
+  },
+  "datasets_reported": [
+    "FETA",
+    "LDU",
+    "MMLB",
+    "PTAB",
+    "PTEXT"
+  ],
+  "forbidden_gold_fields_present": [],
+  "full_capsule_audit_datasets": [
+    "MMLB"
+  ],
+  "mmlb_token_stats": {
+    "capsule_with_guard_vs_raw": {
+      "max": 1.212766,
+      "mean": 0.222101,
+      "median": 0.026779,
+      "min": 0.00604
+    }
+  },
+  "registry_contract_failures": [],
+  "registry_skill_count": 6,
+  "registry_skill_names": [
+    "exact_code_lookup",
+    "figure_caption_grounding",
+    "key_value_lookup",
+    "numeric_computation",
+    "table_numeric_lookup",
+    "text_span_grounding"
+  ],
+  "schema_version": "r073_cross_dataset_summary_v1",
+  "settings": {
+    "capsule_units": 4,
+    "max_records_per_dataset": 0,
+    "top_k": 4
+  }
+}

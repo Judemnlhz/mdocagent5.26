@@ -1528,3 +1528,40 @@ Key findings:
 - Guarded capsule lower than raw rate: 0.976701.
 
 Decision: keep capsule rendering inside the existing Evidence Skill Registry module rather than adding another abstraction. Proceed to R073 cross-dataset reuse/token audit before any provider QA.
+
+### 2026-06-05 R073 Cross-Dataset Evidence Layer Reuse Audit
+
+R073 audits whether the lightweight evidence layer can be reused across MMLB, LDU, PTAB, PTEXT, and FETA public inputs without adding dataset-named skills or a large graph/skill tree. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Reuse the existing R071 Evidence Skill Registry and R072 capsule renderer as the only evidence-layer interface.
+- Report cross-dataset public input availability and question-only skill activation with the same registry.
+- Run full token/capsule reuse only where public retrieval pages and artifact bindings already exist.
+
+Scope and boundary:
+
+- Datasets reported: MMLB, LDU, FETA, PTAB, PTEXT.
+- MMLB full capsule audit records scanned: 1073.
+- LDU/FETA/PTAB/PTEXT are marked `blocked_missing_public_retrieval_or_artifacts` because public samples and page text exist, but no equivalent public retrieval-page list plus artifact store binding is present.
+- The audit intentionally does not use `answer`, `evidence_pages`, prediction correctness, provider outputs, or gold pages as substitute retrieval.
+
+Outputs:
+
+- `scripts/run_r073_cross_dataset_evidence_layer_reuse_audit.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_report.md`
+- `outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_gate.md`
+- `outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_summary.json`
+- `outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_records.jsonl`
+
+Gate result: passed with explicit input gaps.
+
+Key findings:
+
+- MMLB mean guarded capsule/raw ratio: 0.222101.
+- Cross-dataset skill activation used all registry skills: `exact_code_lookup`, `figure_caption_grounding`, `key_value_lookup`, `numeric_computation`, `table_numeric_lookup`, `text_span_grounding`.
+- Blocked datasets: `['FETA', 'LDU', 'PTAB', 'PTEXT']` due to missing public retrieval/artifact bindings.
+- No forbidden gold fields were found in public outputs.
+
+Decision: keep the evidence layer lightweight and shared. The next step should be a small reusable public retrieval-to-artifact binding adapter for blocked datasets, not new dataset-specific skills or a heavy GraphRAG tree. Do not claim cross-dataset token/citation gains until those bindings exist and pass a follow-up audit.

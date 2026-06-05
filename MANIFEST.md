@@ -99,3 +99,11 @@
 | 2026-06-05 02:20 | /run-experiment | outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_records.jsonl | implementation | R072 per-record capsule token audit index |
 | 2026-06-05 02:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R072 token-budgeted capsule summary |
 | 2026-06-05 02:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R072 tracker row |
+| 2026-06-05 03:45 | /run-experiment | scripts/run_r073_cross_dataset_evidence_layer_reuse_audit.py | implementation | R073 no-provider cross-dataset evidence-layer reuse audit runner |
+| 2026-06-05 03:45 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R073 entry |
+| 2026-06-05 03:45 | /run-experiment | outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_report.md | implementation | R073 cross-dataset evidence-layer reuse report |
+| 2026-06-05 03:45 | /run-experiment | outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_gate.md | implementation | R073 cross-dataset evidence-layer gate |
+| 2026-06-05 03:45 | /run-experiment | outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_summary.json | implementation | R073 cross-dataset evidence-layer summary |
+| 2026-06-05 03:45 | /run-experiment | outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_records.jsonl | implementation | R073 per-record cross-dataset evidence-layer audit index |
+| 2026-06-05 03:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R073 cross-dataset evidence-layer reuse summary |
+| 2026-06-05 03:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R073 tracker row |
