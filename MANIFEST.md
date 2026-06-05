@@ -118,3 +118,13 @@
 | 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_records.jsonl | implementation | R074 per-record baseline-aligned prompt bucket audit |
 | 2026-06-05 04:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R074 baseline-aligned evidence prompt integration summary |
 | 2026-06-05 04:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R074 tracker row |
+| 2026-06-05 07:25 | /run-experiment | scripts/run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py | implementation | R075 small provider diagnostic runner with cached parallel provider/evaluator calls |
+| 2026-06-05 07:25 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R075 entry |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_selected_cases.jsonl | implementation | R075 sampled help/risk/stable diagnostic cases |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/predictions/r075_predictions.jsonl | implementation | R075 provider predictions, not official QA |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/predictions/r075_evaluations.jsonl | implementation | R075 sampled evaluator outputs, not official score |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_summary.json | implementation | R075 small provider summary with negative help-hurt delta and provider failures |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_gate.md | implementation | R075 completion gate |
+| 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_report.md | implementation | R075 report blocking full MMLB expansion from current R074 prompt |
+| 2026-06-05 07:25 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R075 small provider diagnostic summary |
+| 2026-06-05 07:25 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R075 tracker row |

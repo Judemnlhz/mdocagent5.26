@@ -1605,3 +1605,45 @@ Key findings:
 - Recommended command: `python3 scripts/predict.py --config-name mmlb run-name=mmlb-MDocAgent-r074-evidence-layer-top4 dataset.top_k=4 dataset.sample_with_retrieval_path=outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json +dataset.prompt_question_key=_nexus_prompt_question`.
 
 Decision: the method is now wired as a runnable MDocAgent variant without changing baseline defaults. The next run should be a small provider diagnostic over balanced help/risk buckets; do not launch full MMLB QA until help > hurt is observed.
+
+### 2026-06-05 R075 MMLB Evidence Prompt Small Provider Diagnostic
+
+R075 is a bounded provider diagnostic over R074 help/risk/stable buckets. It does not run full MDocAgent multi-agent QA, full MMLB, or official scoring.
+
+Purpose:
+
+- Test whether the R074 evidence-layer prompt helps more than it hurts before any full QA launch.
+- Reuse existing MDocAgent top-4 baseline correctness only as sampled comparison metadata.
+- Add resumable, cached, parallel provider/evaluator execution so slow provider calls do not block the diagnostic.
+
+Scope and boundary:
+
+- Selected cases: 66 from R074 buckets (`29` help candidates, `29` baseline-correct risk cases, `8` stable cases).
+- Provider model: `Qwen/Qwen3-8B`; evaluator model: `deepseek-ai/DeepSeek-V3`.
+- Parallel workers: 6; request timeout: 20 seconds; max retries: 1 for the completed diagnostic run.
+- No official score, no full MMLB claim, and no full MDocAgent QA claim.
+
+Outputs:
+
+- `scripts/run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_selected_cases.jsonl`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/predictions/r075_predictions.jsonl`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/predictions/r075_evaluations.jsonl`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_summary.json`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_gate.md`
+- `outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_report.md`
+
+Gate result: completed, but blocks full-run expansion.
+
+Key findings:
+
+- Provider predictions/evaluations: 66/66.
+- Provider failures: 21 (`0.318182`), conservatively scored as incorrect.
+- Evaluation failures: 21 (`0.318182`), corresponding to provider failures.
+- Sample accuracy, not official: `0.212121`; baseline sample reference, not official: `0.560606`.
+- Outcomes: `changed_to_right=6`, `changed_to_wrong=29`, `kept_right=8`, `kept_wrong=23`; help-hurt delta = `-23`.
+- Bucket diagnosis: baseline-correct no-selected-artifact risk cases produced 22 changed-to-wrong rows, and baseline-correct stable cases produced 7 changed-to-wrong rows.
+
+Decision: do not launch full MMLB QA from the current R074 evidence prompt. The next step should be a smaller balanced rerun with a stable provider or longer timeout, plus a prompt/guard repair that keeps baseline-correct/no-artifact cases close to the original question instead of forcing evidence-layer refusal or page routing.
+

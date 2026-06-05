@@ -1,0 +1,82 @@
+{
+  "created_utc": "2026-06-05T07:28:23.799099+00:00",
+  "decision": "r075_small_provider_diagnostic_complete",
+  "gate": {
+    "checks": {
+      "all_selected_evaluated": true,
+      "all_selected_have_predictions": true,
+      "not_full_mdocagent_qa": true,
+      "not_full_mmlb": true,
+      "not_official_score": true,
+      "provider_execution_requested": true,
+      "selected_cases_do_not_expose_gold_fields": true,
+      "selected_cases_positive": true
+    },
+    "created_utc": "2026-06-05T07:28:23.799093+00:00",
+    "decision": "r075_small_provider_diagnostic_complete",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_full_mdocagent_qa": true,
+    "not_official_score": true,
+    "schema_version": "r075_small_provider_gate_v1"
+  },
+  "recommended_next": [
+    "Provider stability is a blocker: 21 sampled rows timed out or failed and were conservatively scored as incorrect.",
+    "Observed help-hurt delta is negative (-23); do not launch full MMLB QA from the current R074 prompt.",
+    "First rerun a smaller balanced diagnostic with a stable provider or longer timeout, then reduce baseline-correct no-selected-artifact prompt intervention strength."
+  ],
+  "schema_version": "r075_small_provider_report_v1",
+  "scope": {
+    "not_full_mdocagent_qa": true,
+    "not_full_mmlb": true,
+    "not_official_score": true,
+    "small_provider_diagnostic": true,
+    "uses_existing_baseline_results_for_comparison": true
+  },
+  "summary": {
+    "all_selected_evaluated": true,
+    "baseline_sample_accuracy_reference_not_official": 0.560606,
+    "boundary": {
+      "not_full_mdocagent_qa": true,
+      "not_full_mmlb": true,
+      "not_official_score": true,
+      "small_provider_diagnostic": true,
+      "uses_existing_baseline_results_for_comparison": true
+    },
+    "changed_to_right_minus_wrong": -23,
+    "created_utc": "2026-06-05T07:28:23.798555+00:00",
+    "eval_model": "deepseek-ai/DeepSeek-V3",
+    "evaluated_bucket_counts": {
+      "baseline_correct_no_selected_artifact_risk": 29,
+      "baseline_correct_stable_candidate": 8,
+      "baseline_wrong_capsule_supported_candidate": 8,
+      "baseline_wrong_guarded_or_page_routed_candidate": 21
+    },
+    "evaluation_failure_rate": 0.318182,
+    "evaluation_failures": 21,
+    "evaluation_outputs_contain_binary_correctness_not_gold_answers": true,
+    "evaluations": 66,
+    "forbidden_gold_fields_in_selected_cases": [],
+    "model": "Qwen/Qwen3-8B",
+    "outcome_counts": {
+      "changed_to_right": 6,
+      "changed_to_wrong": 29,
+      "kept_right": 8,
+      "kept_wrong": 23
+    },
+    "parallel_workers": 6,
+    "provider_failure_rate": 0.318182,
+    "provider_failures": 21,
+    "provider_predictions": 66,
+    "request_timeout": 20.0,
+    "sample_accuracy_not_official": 0.212121,
+    "schema_version": "r075_small_provider_summary_v1",
+    "selected_cases": 66,
+    "selection_bucket_counts": {
+      "baseline_correct_no_selected_artifact_risk": 29,
+      "baseline_correct_stable_candidate": 8,
+      "baseline_wrong_capsule_supported_candidate": 8,
+      "baseline_wrong_guarded_or_page_routed_candidate": 21
+    }
+  }
+}
