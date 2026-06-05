@@ -50,13 +50,24 @@ Before paper claims, use `experiment-audit` on completed result directories and 
 
 ## Current Next Runs
 
-The current planned sequence is:
+The current planned sequence has two gated branches:
+
+### Baseline/Reproduction Branch
 
 1. R047: ARIS pre-flight for MMLongBench top-4.
 2. R048: current-commit official top-4 reproduction.
 3. R049: adapter original-only sanity.
-4. R050: artifact-aware comparison.
-5. R051: graph-guided comparison.
-6. R052: monitor plus integrity audit package.
+4. R052: monitor plus integrity audit package for completed baseline outputs.
 
-Do not start R048-R051 until the user explicitly authorizes execution and the preceding gate passes.
+### Lightweight Evidence Layer Paper Branch
+
+1. R071: Evidence Skill Graph registry design gate, no-provider.
+2. R072: token-budgeted capsule renderer audit, no-provider.
+3. R073: cross-dataset evidence-layer reuse audit, no-provider.
+4. R074: small guarded capsule provider diagnostic, user-authorized only.
+5. R075: bounded QA comparison against original MDocAgent, user-authorized only.
+6. R076: component ablation.
+7. R077: lightweight-vs-overbuilt graph comparison.
+8. R078: ARIS paper-claim integrity audit.
+
+Do not start provider or QA runs until the preceding no-provider gates pass and the user explicitly authorizes execution. R050/R051 are superseded as paper-claim candidates by the more focused R071-R078 evidence-layer branch unless revived explicitly.

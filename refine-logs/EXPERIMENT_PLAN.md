@@ -1286,3 +1286,165 @@ Key findings:
 - Target coverage confirms `FY2015`, `FY2018`, `Q3`, `AP50`, and `F1` are temporal/metric literals, while `AR01`, `AR03`, `CA03`, and `CA19` remain actionable exact codes.
 
 Decision: keep the R070 selector/parser normalization repair. Do not relax exact-code matching; do not run full QA yet. Next no-provider step should rebuild or replay a bounded Stage 2 artifact store for positive actionable code/name cases, then run a small guarded provider diagnostic only after artifact support is visible and selector-selected.
+
+### 2026-06-05 Paper Experiment Roadmap: Lightweight Evidence Skill Graph Layer
+
+This roadmap uses the ARIS `experiment-plan` framing for the paper-facing method after R070. It is a plan only: no provider run, no QA run, no official score, and no new experiment launch is authorized by this planning update.
+
+Problem anchor:
+
+- Original MDocAgent retrieves multimodal text/image contexts and lets specialized agents read large raw contexts.
+- The proposed extension should stay lightweight, dataset-agnostic, and verifiable: a unified evidence layer rather than a dataset-specific artifact stack, heavy GraphRAG, or large skill tree.
+
+Method thesis:
+
+- Add a lightweight Evidence Skill Graph layer between MDocAgent retrieval and multi-agent answering. Retrieved pages are compiled into locatable evidence units, dispatched through a small Evidence Skill Registry, compressed into token-budgeted evidence capsules, and checked by guarded answerability before generation.
+
+Claim map:
+
+| Claim | Why it matters | Minimum convincing evidence | Linked runs |
+|-------|----------------|-----------------------------|-------------|
+| C1: unified evidence layer | Shows the method is not benchmark-specific artifact engineering | Same schema/registry works across MMLB, LDU, PTAB, PTEXT, and FETA with no dataset-specific artifact types | R071, R073 |
+| C2: token-budgeted capsule | Differentiates the method from original MDocAgent raw top-k context consumption | Capsule prompt tokens are substantially lower than original top-k context while preserving required evidence fields | R072, R073, R075 |
+| C3: guarded answerability | Shows the method improves reliability, not just retrieval volume | Fewer unsupported answers, fewer rejected-evidence citations, and exact-code/operand/dimension guards trigger correctly | R071, R074, R075 |
+| C4: QA utility | Prevents the method from being only an audit wrapper | At least partial QA improvement or no meaningful drop under lower token cost on bounded splits | R075, R078 |
+
+Anti-claims to rule out:
+
+- The gain comes only from concatenating more artifacts.
+- The system is a dataset-specific collection of rules for MMLB/LDU/PTAB/PTEXT/FETA.
+- The graph component is decorative and equivalent to flat artifact reranking.
+- The guard only improves refusal cases while hurting answerable cases.
+
+Paper storyline:
+
+- Main paper must prove: unified evidence layer reuse, token reduction, citation/unsupported-answer reliability, and at least partial QA utility against original MDocAgent.
+- Appendix can support: more failure buckets, per-skill traces, edge sensitivity, and dataset-specific qualitative examples.
+- Experiments intentionally cut: large-scale skill-tree distillation, heavy global GraphRAG/entity graph construction, and full agentic planning DAGs.
+
+Experiment blocks:
+
+#### Block A: Evidence Skill Graph Design Gate
+
+- Claim tested: C1, C3.
+- Why this block exists: It freezes a lightweight, auditable method interface before any QA, preventing artifact rules from sprawling into dataset-specific engineering.
+- Dataset / split / task: public retrieved pages and existing artifact stores; no answer/evidence-page fields.
+- Compared systems: current guarded selector vs registry-backed selector trace; no provider.
+- Metrics: schema validity, allowed evidence unit types, allowed edge types, skill activation trace coverage, guard trace completeness, no-gold audit.
+- Setup details: max 6 evidence unit families and max 8 document-native edge families; skills limited to exact-code lookup, key-value lookup, table/numeric lookup, numeric computation, figure/caption grounding, and text-span grounding.
+- Success criterion: all skills define applies-if, accepted unit types, required fields, guard rule, capsule render policy, and audit trace; no dataset-specific skill names.
+- Failure interpretation: if the registry needs dataset names or many special cases, the method is not paper-ready.
+- Table / figure target: method schematic and registry table.
+- Priority: MUST-RUN.
+
+#### Block B: Token-Budgeted Evidence Capsule Audit
+
+- Claim tested: C2.
+- Why this block exists: The main efficiency claim needs a no-provider measurement before expensive QA.
+- Dataset / split / task: MMLB plus available LDU/PTAB/PTEXT/FETA public retrieval contexts or held-out subsets.
+- Compared systems: original top-k raw context, flat artifact concat, evidence capsule, evidence capsule plus guard trace.
+- Metrics: prompt token count, evidence unit count, capsule compression ratio, retained required literal/entity/metric coverage, locator/citation availability.
+- Setup details: token budgets at small/medium/default settings; deterministic renderer only.
+- Success criterion: meaningful token reduction versus original MDocAgent top-k context while preserving required evidence dimensions on answerable cases.
+- Failure interpretation: if capsule loses required fields, reduce compression or revise registry render policy before provider runs.
+- Table / figure target: main efficiency table plus capsule example figure.
+- Priority: MUST-RUN.
+
+#### Block C: Cross-Dataset Reuse and Verifiability Audit
+
+- Claim tested: C1, C2, C3.
+- Why this block exists: Reviewers will challenge whether artifacts are benchmark-specific.
+- Dataset / split / task: MMLB, LDU, PTAB, PTEXT, FETA; public inputs only.
+- Compared systems: same evidence layer config across datasets; no dataset-specific artifact type additions.
+- Metrics: schema coverage, rejected/selected evidence trace availability, guard trigger distribution, unsupported-risk buckets, token reduction by dataset.
+- Setup details: reuse identical registry, unit schema, edge schema, and capsule renderer.
+- Success criterion: same evidence layer runs on all target datasets with interpretable traces and no dataset-named skill rules.
+- Failure interpretation: if a dataset needs custom schema, move it to appendix or narrow the claim.
+- Table / figure target: cross-dataset audit table.
+- Priority: MUST-RUN.
+
+#### Block D: Bounded Provider Diagnostic
+
+- Claim tested: C3, C4.
+- Why this block exists: Before full QA, verify that agents can consume capsules and respect guards.
+- Dataset / split / task: small balanced diagnostic set covering answerable and unsupported cases across evidence skills.
+- Compared systems: original MDocAgent prompt, flat artifact prompt, evidence capsule prompt, evidence capsule plus guard.
+- Metrics: unsupported answer rate, rejected-evidence citation rate, guard compliance, token count, diagnostic answer correctness.
+- Setup details: small provider run only after R071-R073 pass and user explicitly authorizes launch.
+- Success criterion: capsule plus guard reduces unsupported answers and citation violations with no obvious answerable-case collapse.
+- Failure interpretation: if agents ignore guard traces, revise capsule format before official QA.
+- Table / figure target: diagnostic reliability table.
+- Priority: MUST-RUN.
+
+#### Block E: Bounded QA Comparison Against Original MDocAgent
+
+- Claim tested: C2, C3, C4.
+- Why this block exists: The paper still needs task-level utility, not only audits.
+- Dataset / split / task: bounded reproducible splits; start with MMLB held-out, then extend to LDU/PTAB/PTEXT/FETA if prior gates pass.
+- Compared systems: original MDocAgent top-k, original plus flat artifacts, evidence capsule without guard, evidence capsule plus guard.
+- Metrics: binary correctness or dataset-native QA score, prompt tokens, answerability/refusal correctness, citation faithfulness, changed-answer buckets.
+- Setup details: same model/backend as MDocAgent reproduction; same retrieval top-k budget before evidence layer.
+- Success criterion: lower token cost, better citation/unsupported behavior, and at least partial QA improvement or no meaningful score drop under lower cost.
+- Failure interpretation: if QA drops despite reliability gains, claim should be downgraded to efficiency/faithfulness rather than accuracy.
+- Table / figure target: main result table.
+- Priority: MUST-RUN.
+
+#### Block F: Ablation and Simplicity Defense
+
+- Claim tested: anti-claims.
+- Why this block exists: It proves the method is not a bloated combination of arbitrary components.
+- Dataset / split / task: same bounded QA and no-provider audit subsets as Blocks C-E.
+- Compared systems: no graph edges, no registry boundaries, no token budget, no guard, flat artifact concat, heavier graph expansion if feasible.
+- Metrics: token count, selected evidence sufficiency, unsupported answer rate, QA score, citation faithfulness.
+- Setup details: prioritize config-only deletions before code-heavy variants.
+- Success criterion: final method is better balanced than flat concat and overbuilt graph variants; each retained component has a measurable role.
+- Failure interpretation: remove or demote components that do not change reviewer belief.
+- Table / figure target: ablation table.
+- Priority: MUST-RUN after main diagnostic passes.
+
+Run order and milestones:
+
+| Milestone | Goal | Runs | Decision Gate | Cost | Risk |
+|-----------|------|------|---------------|------|------|
+| M0 | Freeze method interface | R071 | Registry/schema passes no-gold and no-dataset-specific checks | Low CPU | Scope creep into too many skills |
+| M1 | Prove low-token evidence packaging | R072, R073 | Cross-dataset audit passes; token reduction does not remove required evidence | Low CPU | Capsule too lossy |
+| M2 | Verify provider behavior before QA | R074 | Guard compliance and citation behavior improve on diagnostic set | Small provider | Agents may ignore guard text |
+| M3 | Compare against original MDocAgent | R075 | Lower tokens plus partial QA/citation/unsupported gains | Moderate provider/QA | Original reproduction not stable |
+| M4 | Defend novelty and simplicity | R076, R077 | Ablations show graph/registry/guard/token budget each matter or are cut | Moderate | Components look decorative |
+| M5 | Paper claim audit | R078 | ARIS audit clears provenance, metrics, scope, and claim labels | Low CPU | Claims need downgrade |
+
+Planned run queue:
+
+| Run ID | Milestone | Purpose | System / Variant | Split | Metrics | Priority | Status | Notes |
+|--------|-----------|---------|------------------|-------|---------|----------|--------|-------|
+| R071 | M0 | Evidence Skill Graph registry design gate | no-provider registry/schema/trace scaffold | public retrieved pages + existing artifacts | schema validity, skill boundary coverage, no-gold audit | MUST | TODO | Freeze lightweight skills, evidence unit types, edge types, required fields, guard rules, capsule render policies. |
+| R072 | M1 | Token-budgeted capsule renderer audit | deterministic capsule renderer | MMLB heldout public contexts first | token count, compression ratio, retained evidence requirements, locator coverage | MUST | TODO/BLOCKED-UNTIL-R071 | No provider. Compare raw top-k, flat artifact concat, capsule, capsule+guard trace. |
+| R073 | M1 | Cross-dataset evidence-layer reuse audit | same registry across MMLB/LDU/PTAB/PTEXT/FETA | public inputs only | schema coverage, guard trace distribution, token reduction by dataset, no dataset-specific rules | MUST | TODO/BLOCKED-UNTIL-R072 | Must prove this is not MMLB-only artifact engineering. |
+| R074 | M2 | Small guarded capsule provider diagnostic | original prompt vs flat artifact vs capsule vs capsule+guard | balanced diagnostic cases | unsupported answer rate, rejected-evidence citation rate, token count, diagnostic correctness | MUST | TODO/BLOCKED-UNTIL-R073-USER-AUTH | Provider run only after explicit user approval. |
+| R075 | M3 | Bounded QA comparison against original MDocAgent | original MDocAgent vs evidence-layer variants | bounded reproducible split | QA score, token cost, citation faithfulness, unsupported answer rate | MUST | TODO/BLOCKED-UNTIL-R074 | Main paper utility table candidate. |
+| R076 | M4 | Component ablation | remove graph edges / registry / token budget / guard | same bounded split | QA, tokens, citation, unsupported answer, evidence sufficiency | MUST | TODO/BLOCKED-UNTIL-R075 | Defends novelty against concat/rerank criticism. |
+| R077 | M4 | Simplicity and overbuilt-graph comparison | lightweight evidence graph vs heavier expansion | no-provider plus optional small provider | token growth, evidence sufficiency, QA/citation if provider authorized | SHOULD | TODO/BLOCKED-UNTIL-R076 | Negative result is acceptable if it justifies lightweight design. |
+| R078 | M5 | ARIS paper-claim integrity audit | completed R071-R077 outputs | all completed result dirs | provenance, metric validity, claim scope, file existence | MUST | TODO/BLOCKED-UNTIL-RESULTS | Required before paper-ready claims. |
+
+Compute and data budget:
+
+- R071-R073 and R078 are CPU/no-provider audits.
+- R074 is the first provider diagnostic and must remain small.
+- R075-R077 are only launched after the original MDocAgent baseline/reproduction path is stable and the user authorizes provider/QA work.
+- Biggest bottleneck: credible original MDocAgent reproduction plus consistent cross-dataset public input plumbing.
+
+Risks and mitigations:
+
+- Risk: the method looks like artifact engineering. Mitigation: freeze a registry with dataset-agnostic evidence unit and skill names, then audit all datasets with the same config.
+- Risk: graph edges are decorative. Mitigation: R076 removes edges and compares against flat artifact concat.
+- Risk: token compression loses necessary evidence. Mitigation: R072/R073 require retained evidence-dimension coverage before provider runs.
+- Risk: guards improve refusal but hurt answerable QA. Mitigation: R074/R075 use balanced answerable/unsupported cases and report changed-answer buckets.
+- Risk: official QA is premature. Mitigation: ARIS gates require no-provider audits and provider diagnostics before bounded QA, then R078 audits all claims.
+
+Final checklist:
+
+- [ ] Main paper tables are covered by R073/R075/R076.
+- [ ] Novelty is isolated by R076.
+- [ ] Simplicity is defended by R077 or cut if unnecessary.
+- [ ] Frontier/agent contribution is justified as a lightweight evidence layer for MDocAgent, not a new large agent system.
+- [ ] Nice-to-have graph expansion runs are separated from must-run evidence-layer runs.

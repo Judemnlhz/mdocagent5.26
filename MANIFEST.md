@@ -76,3 +76,6 @@
 | 2026-06-05 00:55 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R070 entry |
 | 2026-06-05 00:55 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R070 code-like literal guard normalization summary |
 | 2026-06-05 00:55 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R070 tracker row |
+| 2026-06-05 01:20 | /experiment-plan | refine-logs/EXPERIMENT_PLAN.md | planning | Added R071-R078 lightweight Evidence Skill Graph paper experiment roadmap |
+| 2026-06-05 01:20 | /experiment-plan | refine-logs/EXPERIMENT_TRACKER.md | planning | Added R071-R078 tracker rows for evidence-layer paper experiments |
+| 2026-06-05 01:20 | /experiment-plan | docs/aris_experiment_protocol.md | planning | Updated current ARIS next-run sequence with evidence-layer branch |
