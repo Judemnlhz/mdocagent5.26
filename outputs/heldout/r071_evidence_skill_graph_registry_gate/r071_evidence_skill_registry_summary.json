@@ -1,0 +1,357 @@
+{
+  "activated_skill_counts": {
+    "exact_code_lookup": 8,
+    "figure_caption_grounding": 165,
+    "key_value_lookup": 206,
+    "numeric_computation": 10,
+    "table_numeric_lookup": 625,
+    "text_span_grounding": 163
+  },
+  "activated_skill_names": [
+    "exact_code_lookup",
+    "figure_caption_grounding",
+    "key_value_lookup",
+    "numeric_computation",
+    "table_numeric_lookup",
+    "text_span_grounding"
+  ],
+  "boundary": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_global_knowledge_graph": true,
+    "not_large_skill_tree": true,
+    "not_official_score": true
+  },
+  "contract_failures": [],
+  "control_activation_passed": true,
+  "control_traces": [
+    {
+      "activated_skill_names": [
+        "exact_code_lookup"
+      ],
+      "expected_skill": "exact_code_lookup",
+      "guard_decision": "exact_code_absence_guard",
+      "passed": true,
+      "question": "According to this document, what's the geographic market name for EPS Code AR03?"
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "expected_skill": "key_value_lookup",
+      "guard_decision": "no_relevant_artifact_guard",
+      "passed": true,
+      "question": "What is the main policy name?"
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "expected_skill": "table_numeric_lookup",
+      "guard_decision": "no_relevant_artifact_guard",
+      "passed": true,
+      "question": "What is the value for total assets in 2018?"
+    },
+    {
+      "activated_skill_names": [
+        "numeric_computation"
+      ],
+      "expected_skill": "numeric_computation",
+      "guard_decision": "operand_completeness_guard",
+      "passed": true,
+      "question": "What is the percentage difference between older age group with STEM degree and children with the same status?"
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "expected_skill": "figure_caption_grounding",
+      "guard_decision": "no_relevant_artifact_guard",
+      "passed": true,
+      "question": "Which figure shows both RAPTOR retrieved nodes and questions?"
+    },
+    {
+      "activated_skill_names": [
+        "text_span_grounding"
+      ],
+      "expected_skill": "text_span_grounding",
+      "guard_decision": "no_relevant_artifact_guard",
+      "passed": true,
+      "question": "Describe the policy context."
+    }
+  ],
+  "created_utc": "2026-06-05T02:27:19.224651+00:00",
+  "document_edge_type_count": 8,
+  "document_edge_types": [
+    "contains",
+    "same_page",
+    "same_table",
+    "row_of",
+    "column_of",
+    "caption_of",
+    "nearby",
+    "code_maps_to"
+  ],
+  "evidence_unit_type_count": 6,
+  "evidence_unit_types": [
+    "text_span",
+    "table_cell",
+    "numeric_fact",
+    "key_value",
+    "caption",
+    "code_name_pair"
+  ],
+  "examples": [
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to the report, how do 5% of the Latinos see economic upward mobility for their children?",
+      "record_id": 0,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to the report, which one is greater in population in the survey? Foreign born Latinos, or the Latinos interviewed by cellphone?",
+      "record_id": 1,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+      "record_id": 2,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Among all 12 references in this report, how many are from its own research center?",
+      "record_id": 3,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+      "record_id": 4,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to this report, among the Hispanics shaped by four current personal financial situation, which situation involves the highest percentage that expects their future financi",
+      "record_id": 5,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich grou",
+      "record_id": 6,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+      "record_id": 7,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2024?",
+      "record_id": 8,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+      "record_id": 9,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to this report, which group is greater in population in 2018? Republican who are hispanic, or no leans who are male?",
+      "record_id": 10,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+      "record_id": 11,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup",
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "Independents-Report.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+      "record_id": 12,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Where was Gestalt psychology concieved?",
+      "record_id": 13,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup",
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According to the chart on page 14 how much time was spent with family and friends in 2010?",
+      "record_id": 14,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What range does red color represents in approximate distance from the Mississippi River in the chart that tracks the West NIle Virus in Europe?",
+      "record_id": 15,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "text_span_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How does this document define the law of good gestalt?",
+      "record_id": 16,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+      "record_id": 17,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+      "record_id": 18,
+      "selected_artifact_count": 0
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup",
+        "figure_caption_grounding"
+      ],
+      "candidate_artifact_count": 0,
+      "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+      "record_id": 19,
+      "selected_artifact_count": 0
+    }
+  ],
+  "forbidden_gold_fields_present": [],
+  "guard_decision_counts": {
+    "artifact_dimension_support_guard": 30,
+    "document_metadata_refusal_guard": 3,
+    "exact_code_absence_guard": 8,
+    "no_relevant_artifact_guard": 1007,
+    "operand_complete_selection": 1,
+    "operand_completeness_guard": 9,
+    "token_key_value_selection": 15
+  },
+  "input_artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+  "input_extract_path": "tmp/MMLongBench",
+  "input_records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "records_scanned": 1073,
+  "registry_skill_count": 6,
+  "registry_skill_names": [
+    "exact_code_lookup",
+    "figure_caption_grounding",
+    "key_value_lookup",
+    "numeric_computation",
+    "table_numeric_lookup",
+    "text_span_grounding"
+  ],
+  "schema_version": "r071_evidence_skill_registry_summary_v1",
+  "top_k": 4
+}

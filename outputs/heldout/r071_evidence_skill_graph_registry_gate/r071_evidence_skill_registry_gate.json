@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "control_activation_passed": true,
+    "dataset_records_activate_registry_skills": true,
+    "document_edge_type_count_bounded": true,
+    "evidence_unit_type_count_bounded": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "records_scanned_positive": true,
+    "registry_contract_valid": true,
+    "registry_skill_count_bounded": true
+  },
+  "created_utc": "2026-06-05T02:27:19.253280+00:00",
+  "decision": "r071_evidence_skill_registry_gate_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r071_evidence_skill_registry_gate_v1"
+}

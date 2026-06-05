@@ -1448,3 +1448,43 @@ Final checklist:
 - [ ] Simplicity is defended by R077 or cut if unnecessary.
 - [ ] Frontier/agent contribution is justified as a lightweight evidence layer for MDocAgent, not a new large agent system.
 - [ ] Nice-to-have graph expansion runs are separated from must-run evidence-layer runs.
+
+### 2026-06-05 R071 Evidence Skill Graph Registry Gate
+
+R071 freezes the lightweight Evidence Skill Graph registry interface before capsule, provider, or QA work. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Define a bounded, dataset-agnostic Evidence Skill Registry rather than a large skill tree or global graph.
+- Register each evidence skill with applies-if logic, accepted evidence unit types, required fields, guard rule, capsule render policy, and audit trace fields.
+- Verify deterministic skill activation and trace generation over public records/artifacts.
+
+Scope and boundary:
+
+- Records scanned: 1073.
+- Inputs: `data/MMLongBench/sample-with-retrieval-results.json`, R038d union atomic artifact store, and public page text under `tmp/MMLongBench`.
+- The audit intentionally does not use `answer`, `evidence_pages`, prediction correctness, or provider outputs.
+
+Outputs:
+
+- `mdocnexus/integration/evidence_skill_registry.py`
+- `mdocnexus/integration/tests/test_evidence_skill_registry.py`
+- `scripts/run_r071_evidence_skill_graph_registry_gate.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_report.md`
+- `outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_gate.md`
+- `outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_summary.json`
+- `outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_records.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Registry skills: 6 `['exact_code_lookup', 'figure_caption_grounding', 'key_value_lookup', 'numeric_computation', 'table_numeric_lookup', 'text_span_grounding']`.
+- Evidence unit types: 6 `['text_span', 'table_cell', 'numeric_fact', 'key_value', 'caption', 'code_name_pair']`.
+- Document edge types: 8 `['contains', 'same_page', 'same_table', 'row_of', 'column_of', 'caption_of', 'nearby', 'code_maps_to']`.
+- Contract failures: `[]`.
+- Control activation passed: True.
+- Dataset records activated all registered skills: `['exact_code_lookup', 'figure_caption_grounding', 'key_value_lookup', 'numeric_computation', 'table_numeric_lookup', 'text_span_grounding']`.
+
+Decision: keep the registry bounded and dataset-agnostic. R072 should use this registry as the only skill dispatch interface for token-budgeted capsule rendering; do not add dataset-named skills or launch provider QA before R072/R073 no-provider gates pass.

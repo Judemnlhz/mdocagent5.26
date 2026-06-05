@@ -79,3 +79,13 @@
 | 2026-06-05 01:20 | /experiment-plan | refine-logs/EXPERIMENT_PLAN.md | planning | Added R071-R078 lightweight Evidence Skill Graph paper experiment roadmap |
 | 2026-06-05 01:20 | /experiment-plan | refine-logs/EXPERIMENT_TRACKER.md | planning | Added R071-R078 tracker rows for evidence-layer paper experiments |
 | 2026-06-05 01:20 | /experiment-plan | docs/aris_experiment_protocol.md | planning | Updated current ARIS next-run sequence with evidence-layer branch |
+| 2026-06-05 01:55 | /run-experiment | mdocnexus/integration/evidence_skill_registry.py | implementation | R071 lightweight Evidence Skill Registry module |
+| 2026-06-05 01:55 | /run-experiment | mdocnexus/integration/tests/test_evidence_skill_registry.py | implementation | R071 Evidence Skill Registry unit tests |
+| 2026-06-05 01:55 | /run-experiment | scripts/run_r071_evidence_skill_graph_registry_gate.py | implementation | R071 no-provider Evidence Skill Graph registry gate runner |
+| 2026-06-05 01:55 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R071 entry |
+| 2026-06-05 01:55 | /run-experiment | outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_report.md | implementation | R071 Evidence Skill Registry report |
+| 2026-06-05 01:55 | /run-experiment | outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_gate.md | implementation | R071 Evidence Skill Registry gate |
+| 2026-06-05 01:55 | /run-experiment | outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_summary.json | implementation | R071 Evidence Skill Registry summary |
+| 2026-06-05 01:55 | /run-experiment | outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_records.jsonl | implementation | R071 per-record evidence skill trace audit index |
+| 2026-06-05 01:55 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R071 Evidence Skill Registry summary |
+| 2026-06-05 01:55 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R071 tracker row |
