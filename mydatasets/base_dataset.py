@@ -74,7 +74,7 @@ class BaseDataset():
     
     def load_sample_retrieval_data(self, sample):
         content_list = self.load_processed_content(sample, disable_load_image=True)
-        question:str = sample[self.config.question_key]
+        question: str = self.prediction_question(sample)
         texts = []
         images = []
         if self.config.use_mix:
@@ -106,7 +106,7 @@ class BaseDataset():
     
     def load_sample_full_data(self, sample):
         content_list = self.load_processed_content(sample, disable_load_image=True)
-        question:str = sample[self.config.question_key]
+        question: str = self.prediction_question(sample)
         texts = []
         images = []
         
@@ -122,6 +122,14 @@ class BaseDataset():
                         
         return question, texts, images
       
+    def prediction_question(self, sample: dict) -> str:
+        prompt_key = getattr(self.config, "prompt_question_key", None)
+        if prompt_key:
+            prompt_value = sample.get(prompt_key)
+            if prompt_value not in (None, ""):
+                return str(prompt_value)
+        return str(sample[self.config.question_key])
+
     def load_processed_content(self, sample: dict, disable_load_image=True)->list[Content]:
         doc_name = self.EXTRACT_DOCUMENT_ID(sample)
         content_list = []

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import tempfile
+from types import ModuleType, SimpleNamespace
 import unittest
 
 from mdocnexus.integration.mdocagent_adapter import (
@@ -27,6 +28,37 @@ FORBIDDEN_KEYS = {
 
 
 class MDocAgentAdapterTests(unittest.TestCase):
+
+    def test_base_dataset_prompt_question_key_is_default_off(self) -> None:
+        import sys
+
+        pil_module = sys.modules.setdefault("PIL", ModuleType("PIL"))
+        image_module = sys.modules.setdefault("PIL.Image", ModuleType("PIL.Image"))
+        if not hasattr(image_module, "Image"):
+            image_module.Image = object
+        if not hasattr(image_module, "open"):
+            image_module.open = lambda _path: None
+        pil_module.Image = image_module
+        sys.modules.setdefault("pymupdf", ModuleType("pymupdf"))
+        tqdm_module = sys.modules.setdefault("tqdm", ModuleType("tqdm"))
+        tqdm_module.tqdm = lambda rows: rows
+        from mydatasets.base_dataset import BaseDataset
+
+        cfg = SimpleNamespace(
+            question_key="question",
+            prompt_question_key=None,
+            extract_path="tmp/MMLongBench",
+            max_page=1,
+            max_character_per_page=100,
+        )
+        dataset = BaseDataset(cfg)
+        sample = {"doc_id": "doc.pdf", "question": "original", "_nexus_prompt_question": "augmented"}
+
+        self.assertEqual(dataset.prediction_question(sample), "original")
+        cfg.prompt_question_key = "_nexus_prompt_question"
+        self.assertEqual(dataset.prediction_question(sample), "augmented")
+        self.assertEqual(dataset.prediction_question({"doc_id": "doc.pdf", "question": "fallback"}), "fallback")
+
     def test_sanitizes_gold_fields_and_preserves_base_dataset_fields(self) -> None:
         with tempfile.TemporaryDirectory() as tmpdir:
             root = Path(tmpdir)

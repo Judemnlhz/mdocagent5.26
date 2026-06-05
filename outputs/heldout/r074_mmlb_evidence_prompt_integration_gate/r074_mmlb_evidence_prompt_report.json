@@ -1,0 +1,503 @@
+{
+  "created_utc": "2026-06-05T06:03:21.768321+00:00",
+  "decision": "r074_mmlb_evidence_prompt_integration_ready_for_provider_diagnostic",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "baseline_top4_reference_matches_known_result": true,
+      "candidate_buckets_available": true,
+      "image_retrieval_branch_preserved": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_outputs": true,
+      "no_gold_fields_in_retrieval_output": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "original_question_preserved_for_eval": true,
+      "prompt_question_key_present_all_records": true,
+      "records_scanned_positive": true,
+      "text_retrieval_branch_preserved": true
+    },
+    "created_utc": "2026-06-05T06:03:21.768255+00:00",
+    "decision": "r074_mmlb_evidence_prompt_integration_ready_for_provider_diagnostic",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r074_mmlb_evidence_prompt_gate_v1"
+  },
+  "recommended_commands": {
+    "evaluate_after_prediction": [
+      "python3",
+      "scripts/eval.py",
+      "--config-name",
+      "mmlb",
+      "run-name=mmlb-MDocAgent-r074-evidence-layer-top4"
+    ],
+    "predict": [
+      "python3",
+      "scripts/predict.py",
+      "--config-name",
+      "mmlb",
+      "run-name=mmlb-MDocAgent-r074-evidence-layer-top4",
+      "dataset.top_k=4",
+      "dataset.sample_with_retrieval_path=outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json",
+      "+dataset.prompt_question_key=_nexus_prompt_question"
+    ]
+  },
+  "recommended_next": [
+    "Run a small provider diagnostic before full QA, sampling baseline-wrong help candidates (29) and baseline-correct risk candidates (521).",
+    "Use the generated retrieval JSON with dataset.prompt_question_key set to _nexus_prompt_question; do not overwrite the original question field.",
+    "If the diagnostic shows help <= hurt, revise prompt format or use a page+capsule hybrid with weaker guard wording before full MMLB."
+  ],
+  "retrieval_output_path": "outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json",
+  "schema_version": "r074_mmlb_evidence_prompt_report_v1",
+  "scope": {
+    "does_not_use_answer_or_evidence_pages_in_prompt_input": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "original_question_preserved_for_eval": true,
+    "prompt_augmentation_default_off": true,
+    "same_top4_page_budget_as_baseline": true
+  },
+  "summary": {
+    "activated_skill_counts": {
+      "exact_code_lookup": 8,
+      "figure_caption_grounding": 165,
+      "key_value_lookup": 206,
+      "numeric_computation": 10,
+      "table_numeric_lookup": 625,
+      "text_span_grounding": 163
+    },
+    "baseline_correct_count": 529,
+    "baseline_results": "results/MMLongBench/mmlb-MDocAgent-top4/2026-05-19-14-19_results.json",
+    "baseline_top4_score_reference": 0.49301,
+    "baseline_wrong_count": 544,
+    "boundary": {
+      "does_not_use_answer_or_evidence_pages_in_prompt_input": true,
+      "no_evaluation": true,
+      "no_full_qa": true,
+      "no_prediction": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "original_question_preserved_for_eval": true,
+      "prompt_augmentation_default_off": true,
+      "same_top4_page_budget_as_baseline": true
+    },
+    "comparison_bucket_counts": {
+      "baseline_correct_no_selected_artifact_risk": 521,
+      "baseline_correct_stable_candidate": 8,
+      "baseline_wrong_capsule_supported_candidate": 8,
+      "baseline_wrong_guarded_or_page_routed_candidate": 21,
+      "baseline_wrong_stable_candidate": 515
+    },
+    "created_utc": "2026-06-05T06:03:21.571819+00:00",
+    "examples": [
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "From this report, which subgroup among Hispanics has gained most confidence from 2008 to 2015? ",
+        "record_id": 2,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Among all 12 references in this report, how many are from its own research center?",
+        "record_id": 3,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Among all charts in this report, how many compare between the general public with the Latinos/Hispanics? A few small charts sharing the same chart title is considered one chart. ",
+        "record_id": 4,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "PH_2016.06.08_Economy-Final.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "According to this report, from 2014 to 2015, one group has the most significant drop of percentage of households claiming their income was falling behind cost of living.\nWhich grou",
+        "record_id": 6,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "Independents-Report.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "What's the percentage of people who are democrats and voted in the last election compared to the entire population in 2018?",
+        "record_id": 7,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "Independents-Report.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "From this report, among Clinton, G.W.Bush, and Obama, whose support rate by the democrats increased by 5% in his last year of presidency compared to first year?",
+        "record_id": 9,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "Independents-Report.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "According to this report, how many charts provide no opinions only from the \"no lean\" group?",
+        "record_id": 11,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup",
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "Independents-Report.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many charts and tables in this report are sourced from Annual totals of Pew Research Center survey data?",
+        "record_id": 12,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Which category has the most increase from 2005 to 2010 for time spent on weedends?",
+        "record_id": 17,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Which continent has the most number of registered participant for advanced science course in CTBTO?",
+        "record_id": 18,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup",
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "0e94b4197b10096b1f4c699701570fbf.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Which shapes does the slide use to illustrate the closure aspect of Gestalt Principle of Visual Perception?",
+        "record_id": 19,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Of the four missions of Indian Space Program's space mission from 2012 to 2017, which mission includes the launch of least number of satellites?",
+        "record_id": 24,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "text_span_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many organisations does this report introduce in detail (at least one paragraph) ?",
+        "record_id": 25,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "text_span_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "fdac8d1e9ef56519371df7e6532df27d.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many exterior photos of organisations does this report provide?",
+        "record_id": 26,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "What is the web address in the orange box in page 47 that gives the Wiki Query Service code?",
+        "record_id": 28,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "What is the sum of the files size of the 2 files with the smallest file size in the table on page 98?",
+        "record_id": 29,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "What is the color of the zone Mali in the map used to demonstrate GeoShapes using SPARQL and OSM?",
+        "record_id": 30,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "52b3137455e7ca4df65021a200aef724.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many distinct Netherlands location images does this slide use as examples?",
+        "record_id": 32,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup",
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many pages include charts whose horizontal-axis are set as year (like 2024)?",
+        "record_id": 35,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Which two magazines' opinions are selected to illustrate the situation of German venture capital?",
+        "record_id": 37,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "earlybird-110722143746-phpapp02_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "In the slides, how many charts compare between ONLY US and Europe?",
+        "record_id": 39,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "According to the chart \"Levels of Analytics\", what are the four business analystics activities?",
+        "record_id": 42,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup",
+          "figure_caption_grounding"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "According to the chart \"Levels of Analytics\", what are the four business cooperation activities?",
+        "record_id": 43,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "key_value_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "What are the examples the slides show \"what does not make you data-driven\"",
+        "record_id": 45,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "key_value_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "Which Youtube does the slides use to show the consequce of blindly following data?",
+        "record_id": 46,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "How many hand drawn cartoons are included in the slides to illustrate the idea?",
+        "record_id": 48,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "key_value_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "According to the slides, what are the things that a data-driven person has?",
+        "record_id": 49,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "ddoseattle-150627210357-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "In the cartoon in page 25, what does the elephant represent?",
+        "record_id": 51,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "In Q3 2015, what is the approximate range of cost in 1 day (dollar) of a mobile incentive platform in Vietnam for installing? Answer with a list of two number for boundary, for exa",
+        "record_id": 57,
+        "selected_artifact_count": 0
+      },
+      {
+        "activated_skill_names": [
+          "table_numeric_lookup"
+        ],
+        "baseline_top4_outcome": "wrong",
+        "comparison_bucket": "baseline_wrong_stable_candidate",
+        "doc_id": "reportq32015-151009093138-lva1-app6891_95.pdf",
+        "guard_decision": "no_relevant_artifact_guard",
+        "question": "As of Q3 2015, are there more active Instagram users in Vietnam, or are there more fans for Appota's fan page? Directly answer 'Instagram' or 'Appota'.",
+        "record_id": 58,
+        "selected_artifact_count": 0
+      }
+    ],
+    "forbidden_gold_fields_present": [],
+    "guard_decision_counts": {
+      "artifact_dimension_support_guard": 30,
+      "document_metadata_refusal_guard": 3,
+      "exact_code_absence_guard": 8,
+      "no_relevant_artifact_guard": 1007,
+      "operand_complete_selection": 1,
+      "operand_completeness_guard": 9,
+      "token_key_value_selection": 15
+    },
+    "prompt_question_key": "_nexus_prompt_question",
+    "records_scanned": 1073,
+    "retrieval_records_sha256": "9afc375e1fa3a739a0aab81a3805a06ec535173e5ef2969bf00c1c9b210fc2eb",
+    "run_name": "mmlb-MDocAgent-r074-evidence-layer-top4",
+    "schema_version": "r074_mmlb_evidence_prompt_summary_v1",
+    "selected_artifact_record_count": 16,
+    "selected_artifact_record_rate": 0.014911,
+    "token_stats": {
+      "original_question": {
+        "max": 75.0,
+        "mean": 19.613234,
+        "median": 17.0,
+        "min": 6.0
+      },
+      "prompt_question": {
+        "max": 514.0,
+        "mean": 181.932898,
+        "median": 162.0,
+        "min": 149.0
+      },
+      "prompt_question_vs_original_question_ratio": {
+        "max": 56.5,
+        "mean": 11.306894,
+        "median": 9.9375,
+        "min": 2.906667
+      }
+    },
+    "top_k": 4
+  }
+}

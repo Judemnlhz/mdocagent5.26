@@ -107,3 +107,14 @@
 | 2026-06-05 03:45 | /run-experiment | outputs/heldout/r073_cross_dataset_evidence_layer_reuse_audit/r073_cross_dataset_evidence_layer_records.jsonl | implementation | R073 per-record cross-dataset evidence-layer audit index |
 | 2026-06-05 03:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R073 cross-dataset evidence-layer reuse summary |
 | 2026-06-05 03:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R073 tracker row |
+| 2026-06-05 04:45 | /run-experiment | mydatasets/base_dataset.py | implementation | R074 default-off prompt question key support for MDocAgent prediction input |
+| 2026-06-05 04:45 | /run-experiment | mdocnexus/integration/tests/test_mdocagent_adapter.py | implementation | R074 prompt question key regression test |
+| 2026-06-05 04:45 | /run-experiment | scripts/run_r074_mmlb_evidence_prompt_integration_gate.py | implementation | R074 no-provider MMLB baseline-aligned evidence prompt integration runner |
+| 2026-06-05 04:45 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R074 entry |
+| 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json | implementation | R074 runnable MDocAgent-compatible top-4 evidence prompt retrieval input |
+| 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_report.md | implementation | R074 evidence prompt integration report |
+| 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_gate.md | implementation | R074 evidence prompt integration gate |
+| 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_summary.json | implementation | R074 evidence prompt integration summary |
+| 2026-06-05 04:45 | /run-experiment | outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_records.jsonl | implementation | R074 per-record baseline-aligned prompt bucket audit |
+| 2026-06-05 04:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R074 baseline-aligned evidence prompt integration summary |
+| 2026-06-05 04:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R074 tracker row |

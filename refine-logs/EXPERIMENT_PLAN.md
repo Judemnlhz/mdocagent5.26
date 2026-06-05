@@ -1408,7 +1408,7 @@ Run order and milestones:
 |-----------|------|------|---------------|------|------|
 | M0 | Freeze method interface | R071 | Registry/schema passes no-gold and no-dataset-specific checks | Low CPU | Scope creep into too many skills |
 | M1 | Prove low-token evidence packaging | R072, R073 | Cross-dataset audit passes; token reduction does not remove required evidence | Low CPU | Capsule too lossy |
-| M2 | Verify provider behavior before QA | R074 | Guard compliance and citation behavior improve on diagnostic set | Small provider | Agents may ignore guard text |
+| M2 | Wire method and verify provider behavior before QA | R074, next provider diagnostic | Prompt integration passes no-gold gate, then guard/citation behavior improves on a small diagnostic set | No-provider then small provider | Agents may ignore guard text |
 | M3 | Compare against original MDocAgent | R075 | Lower tokens plus partial QA/citation/unsupported gains | Moderate provider/QA | Original reproduction not stable |
 | M4 | Defend novelty and simplicity | R076, R077 | Ablations show graph/registry/guard/token budget each matter or are cut | Moderate | Components look decorative |
 | M5 | Paper claim audit | R078 | ARIS audit clears provenance, metrics, scope, and claim labels | Low CPU | Claims need downgrade |
@@ -1420,7 +1420,7 @@ Planned run queue:
 | R071 | M0 | Evidence Skill Graph registry design gate | no-provider registry/schema/trace scaffold | public retrieved pages + existing artifacts | schema validity, skill boundary coverage, no-gold audit | MUST | TODO | Freeze lightweight skills, evidence unit types, edge types, required fields, guard rules, capsule render policies. |
 | R072 | M1 | Token-budgeted capsule renderer audit | deterministic capsule renderer | MMLB heldout public contexts first | token count, compression ratio, retained evidence requirements, locator coverage | MUST | TODO/BLOCKED-UNTIL-R071 | No provider. Compare raw top-k, flat artifact concat, capsule, capsule+guard trace. |
 | R073 | M1 | Cross-dataset evidence-layer reuse audit | same registry across MMLB/LDU/PTAB/PTEXT/FETA | public inputs only | schema coverage, guard trace distribution, token reduction by dataset, no dataset-specific rules | MUST | TODO/BLOCKED-UNTIL-R072 | Must prove this is not MMLB-only artifact engineering. |
-| R074 | M2 | Small guarded capsule provider diagnostic | original prompt vs flat artifact vs capsule vs capsule+guard | balanced diagnostic cases | unsupported answer rate, rejected-evidence citation rate, token count, diagnostic correctness | MUST | TODO/BLOCKED-UNTIL-R073-USER-AUTH | Provider run only after explicit user approval. |
+| R074 | M2 | MMLB baseline-aligned evidence prompt integration gate | default-off page+capsule+guard prompt variant | full MMLB top-4 public records | prompt plumbing, original-question preservation, bucket plan, no-gold audit | MUST | DONE/GATE-PASSED | No-provider gate. Prepared runnable MDocAgent-compatible input; provider launch remains a separate explicit step. |
 | R075 | M3 | Bounded QA comparison against original MDocAgent | original MDocAgent vs evidence-layer variants | bounded reproducible split | QA score, token cost, citation faithfulness, unsupported answer rate | MUST | TODO/BLOCKED-UNTIL-R074 | Main paper utility table candidate. |
 | R076 | M4 | Component ablation | remove graph edges / registry / token budget / guard | same bounded split | QA, tokens, citation, unsupported answer, evidence sufficiency | MUST | TODO/BLOCKED-UNTIL-R075 | Defends novelty against concat/rerank criticism. |
 | R077 | M4 | Simplicity and overbuilt-graph comparison | lightweight evidence graph vs heavier expansion | no-provider plus optional small provider | token growth, evidence sufficiency, QA/citation if provider authorized | SHOULD | TODO/BLOCKED-UNTIL-R076 | Negative result is acceptable if it justifies lightweight design. |
@@ -1429,7 +1429,7 @@ Planned run queue:
 Compute and data budget:
 
 - R071-R073 and R078 are CPU/no-provider audits.
-- R074 is the first provider diagnostic and must remain small.
+- R074 is the no-provider integration gate; the first provider diagnostic after R074 must remain small.
 - R075-R077 are only launched after the original MDocAgent baseline/reproduction path is stable and the user authorizes provider/QA work.
 - Biggest bottleneck: credible original MDocAgent reproduction plus consistent cross-dataset public input plumbing.
 
@@ -1565,3 +1565,43 @@ Key findings:
 - No forbidden gold fields were found in public outputs.
 
 Decision: keep the evidence layer lightweight and shared. The next step should be a small reusable public retrieval-to-artifact binding adapter for blocked datasets, not new dataset-specific skills or a heavy GraphRAG tree. Do not claim cross-dataset token/citation gains until those bindings exist and pass a follow-up audit.
+
+### 2026-06-05 R074 MMLB Baseline-Aligned Evidence Prompt Integration Gate
+
+R074 turns the R071-R073 lightweight evidence layer into a runnable, default-off MDocAgent prompt variant before any provider or full QA run. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Preserve the original MMLB `question` field for evaluation while storing the evidence-layer prompt in `_nexus_prompt_question`.
+- Reuse the existing top-4 MDocAgent baseline records and R038d artifact store to build page+capsule+guard prompts under the same retrieval budget.
+- Prepare an explicit `predict.py` command that activates the prompt variant only with `+dataset.prompt_question_key=_nexus_prompt_question`.
+
+Scope and boundary:
+
+- Records scanned: 1073.
+- Baseline top-4 score reference: 0.49301 from `results/MMLongBench/mmlb-MDocAgent-top4/2026-05-19-14-19_results.json`.
+- No provider calls, no predictions, no evaluation, no full QA, and no official score.
+- Public retrieval output contains no `answer`, `evidence_pages`, or `binary_correctness` fields.
+
+Outputs:
+
+- `mydatasets/base_dataset.py`
+- `mdocnexus/integration/tests/test_mdocagent_adapter.py`
+- `scripts/run_r074_mmlb_evidence_prompt_integration_gate.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json`
+- `outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_report.md`
+- `outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_gate.md`
+- `outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_summary.json`
+- `outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_prompt_records.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Original `question` is preserved for eval; `_nexus_prompt_question` is present on all 1073 records.
+- Comparison buckets: baseline-wrong help candidates=29; baseline-correct no-selected-artifact risk=521; baseline-wrong stable=515.
+- Mean prompt/original question token ratio: 11.306894. This is expected for prompt augmentation and must be tested against QA/citation behavior before full runs.
+- Recommended command: `python3 scripts/predict.py --config-name mmlb run-name=mmlb-MDocAgent-r074-evidence-layer-top4 dataset.top_k=4 dataset.sample_with_retrieval_path=outputs/heldout/r074_mmlb_evidence_prompt_integration_gate/r074_mmlb_evidence_layer_top4_retrieval.json +dataset.prompt_question_key=_nexus_prompt_question`.
+
+Decision: the method is now wired as a runnable MDocAgent variant without changing baseline defaults. The next run should be a small provider diagnostic over balanced help/risk buckets; do not launch full MMLB QA until help > hurt is observed.

@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "baseline_top4_reference_matches_known_result": true,
+    "candidate_buckets_available": true,
+    "image_retrieval_branch_preserved": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_gold_fields_in_retrieval_output": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "original_question_preserved_for_eval": true,
+    "prompt_question_key_present_all_records": true,
+    "records_scanned_positive": true,
+    "text_retrieval_branch_preserved": true
+  },
+  "created_utc": "2026-06-05T06:03:21.768255+00:00",
+  "decision": "r074_mmlb_evidence_prompt_integration_ready_for_provider_diagnostic",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r074_mmlb_evidence_prompt_gate_v1"
+}
