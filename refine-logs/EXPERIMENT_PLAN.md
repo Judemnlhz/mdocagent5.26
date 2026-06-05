@@ -1488,3 +1488,43 @@ Key findings:
 - Dataset records activated all registered skills: `['exact_code_lookup', 'figure_caption_grounding', 'key_value_lookup', 'numeric_computation', 'table_numeric_lookup', 'text_span_grounding']`.
 
 Decision: keep the registry bounded and dataset-agnostic. R072 should use this registry as the only skill dispatch interface for token-budgeted capsule rendering; do not add dataset-named skills or launch provider QA before R072/R073 no-provider gates pass.
+
+### 2026-06-05 R072 Token-Budgeted Evidence Capsule Audit
+
+R072 validates the first efficiency claim for the lightweight evidence layer by rendering deterministic evidence capsules from the existing R071 registry. It does not run providers, predictions, evaluation, full QA, official scoring, or artifact-lift claims.
+
+Purpose:
+
+- Reuse the R071 Evidence Skill Registry as the only dispatch interface.
+- Compare token estimates for raw retrieved page context, flat artifact context, evidence capsule without trace, and evidence capsule with guard trace.
+- Verify that capsule rendering is bounded and deterministic before any cross-dataset or provider run.
+
+Scope and boundary:
+
+- Records scanned: 1073.
+- Inputs: `data/MMLongBench/sample-with-retrieval-results.json`, R038d union atomic artifact store, and public page text under `tmp/MMLongBench`.
+- The audit intentionally does not use `answer`, `evidence_pages`, prediction correctness, or provider outputs.
+
+Outputs:
+
+- `mdocnexus/integration/evidence_skill_registry.py`
+- `mdocnexus/integration/tests/test_evidence_skill_registry.py`
+- `scripts/run_r072_token_budgeted_capsule_audit.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_report.md`
+- `outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_gate.md`
+- `outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_summary.json`
+- `outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_records.jsonl`
+
+Gate result: passed.
+
+Key findings:
+
+- Mean raw page tokens: 1607.252563.
+- Mean flat artifact tokens: 41.38863.
+- Mean capsule tokens without guard trace: 38.671948.
+- Mean capsule tokens with guard trace: 57.319664.
+- Mean guarded capsule/raw token ratio: 0.222101.
+- Guarded capsule lower than raw rate: 0.976701.
+
+Decision: keep capsule rendering inside the existing Evidence Skill Registry module rather than adding another abstraction. Proceed to R073 cross-dataset reuse/token audit before any provider QA.

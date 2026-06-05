@@ -9,6 +9,7 @@ edge types are document-native and bounded.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import re
 from typing import Any, Mapping
 
 from .guarded_prompt import actionable_exact_codes
@@ -242,6 +243,125 @@ def missing_requirements(skill: EvidenceSkill, profile: Mapping[str, Any], selec
     if guard_decision in {"artifact_dimension_support_guard", "no_relevant_artifact_guard"} and not selected:
         missing.append("selected_supporting_artifact")
     return sorted(set(missing))
+
+
+def render_evidence_capsule(
+    question: str,
+    profile: Mapping[str, Any],
+    selection: Mapping[str, Any],
+    scored_artifacts: list[Mapping[str, Any]] | None = None,
+    max_units: int = 4,
+    include_guard_trace: bool = True,
+    max_chars: int = 180,
+) -> dict[str, Any]:
+    """Render a compact, auditable evidence capsule from selected/scored units."""
+    scored_artifacts = [] if scored_artifacts is None else scored_artifacts
+    max_units = max(0, int(max_units))
+    trace = build_skill_trace(profile, question, selection, scored_artifacts)
+    selected = list(selection.get("selected_artifacts") or [])
+    if selected:
+        unit_rows = selected[:max_units]
+        source = "selected_artifacts"
+    else:
+        accepted_types = {unit for item in trace["traces"] for unit in item.get("accepted_unit_types", [])}
+        candidates = [row for row in scored_artifacts if str(row.get("artifact_type") or "") in accepted_types]
+        candidates = sorted(candidates, key=lambda row: (-float(row.get("selection_score", 0.0)), int(row.get("page_index", 0)), str(row.get("artifact_id") or "")))
+        unit_rows = candidates[:max_units]
+        source = "top_accepted_candidates"
+    lines = [
+        "[Evidence Capsule]",
+        f"Skills: {', '.join(trace['activated_skill_names'])}",
+        f"Guard: {trace.get('guard_decision')}; policy: {trace.get('answer_policy')}",
+    ]
+    if unit_rows:
+        lines.append("Evidence:")
+        for row in unit_rows:
+            lines.append(render_capsule_unit(row, max_chars=max_chars))
+    else:
+        lines.append("Evidence: none selected")
+    missing = sorted({item for skill_trace in trace["traces"] for item in skill_trace.get("missing_requirements", [])})
+    if missing:
+        lines.append("Missing: " + ", ".join(missing))
+    if include_guard_trace:
+        for skill_trace in trace["traces"]:
+            lines.append(
+                "Trace: "
+                + f"skill={skill_trace['skill']}; candidates={skill_trace['candidate_count']}; "
+                + f"selected={skill_trace['selected_count']}; guard={skill_trace['guard_rule']}"
+            )
+    text = "\n".join(lines).strip() + "\n"
+    return {
+        "schema_version": "evidence_capsule_v1",
+        "text": text,
+        "token_estimate": estimate_tokens(text),
+        "unit_count": len(unit_rows),
+        "unit_source": source,
+        "include_guard_trace": bool(include_guard_trace),
+        "missing_requirements": missing,
+        "activated_skill_names": trace["activated_skill_names"],
+        "guard_decision": trace.get("guard_decision"),
+        "answer_policy": trace.get("answer_policy"),
+        "selected_artifact_ids": [row.get("artifact_id") for row in unit_rows],
+        "boundary": {
+            "no_provider_calls": True,
+            "not_prediction_or_eval": True,
+            "not_full_qa": True,
+            "not_official_score": True,
+        },
+    }
+
+
+def render_capsule_unit(row: Mapping[str, Any], max_chars: int = 180) -> str:
+    normalized = row.get("normalized_content") if isinstance(row.get("normalized_content"), Mapping) else {}
+    labels = []
+    for key in ["row_label", "row_header", "column_label", "column_header", "metric_name", "value_text", "unit", "normalized_value"]:
+        if normalized.get(key) not in (None, ""):
+            labels.append(f"{key}={normalized.get(key)}")
+    exact = row.get("exact_code_matches") or []
+    operands = row.get("operand_hits") or []
+    parts = [
+        f"- id={row.get('artifact_id')}",
+        f"page={row.get('page_index')}",
+        f"type={row.get('artifact_type')}",
+    ]
+    if exact:
+        parts.append("codes=" + ",".join(str(item) for item in exact))
+    if operands:
+        parts.append("operands=" + ",".join(str(item) for item in operands))
+    if labels:
+        parts.append("fields=" + ";".join(labels[:5]))
+    preview = compact_text(str(row.get("content_preview") or row.get("content") or ""), max_chars=max_chars)
+    if preview:
+        parts.append("text=" + preview)
+    return " | ".join(parts)
+
+
+def flat_artifact_context(scored_artifacts: list[Mapping[str, Any]], max_units: int = 8, max_chars: int = 240) -> str:
+    rows = sorted(scored_artifacts, key=lambda row: (-float(row.get("selection_score", 0.0)), int(row.get("page_index", 0)), str(row.get("artifact_id") or "")))[: max(0, int(max_units))]
+    lines = ["[Flat Artifact Context]"]
+    for row in rows:
+        lines.append(render_capsule_unit(row, max_chars=max_chars))
+    return "\n".join(lines).strip() + "\n"
+
+
+def raw_page_context(page_contexts: list[Mapping[str, Any]], max_chars_per_page: int = 2200) -> str:
+    lines = ["[Raw Page Context]"]
+    for ctx in page_contexts:
+        text = compact_text(str(ctx.get("text_preview") or ""), max_chars=max_chars_per_page)
+        lines.append(f"Page {ctx.get('page_index')} ({'present' if ctx.get('exists') else 'missing'}): {text}")
+    return "\n".join(lines).strip() + "\n"
+
+
+def estimate_tokens(text: str) -> int:
+    return len(re.findall(r"\w+|[^\w\s]", str(text or "")))
+
+
+def compact_text(text: str, max_chars: int) -> str:
+    value = re.sub(r"\s+", " ", str(text or "")).strip()
+    max_chars = max(0, int(max_chars))
+    if len(value) <= max_chars:
+        return value
+    return value[: max(0, max_chars - 3)].rstrip() + "..."
 
 
 def skill_by_name(name: str) -> EvidenceSkill:

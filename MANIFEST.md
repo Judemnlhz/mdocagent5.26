@@ -89,3 +89,13 @@
 | 2026-06-05 01:55 | /run-experiment | outputs/heldout/r071_evidence_skill_graph_registry_gate/r071_evidence_skill_registry_records.jsonl | implementation | R071 per-record evidence skill trace audit index |
 | 2026-06-05 01:55 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R071 Evidence Skill Registry summary |
 | 2026-06-05 01:55 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R071 tracker row |
+| 2026-06-05 02:20 | /run-experiment | mdocnexus/integration/evidence_skill_registry.py | implementation | R072 token-budgeted evidence capsule renderer helpers added to existing registry |
+| 2026-06-05 02:20 | /run-experiment | mdocnexus/integration/tests/test_evidence_skill_registry.py | implementation | R072 capsule renderer unit tests |
+| 2026-06-05 02:20 | /run-experiment | scripts/run_r072_token_budgeted_capsule_audit.py | implementation | R072 no-provider token-budgeted capsule audit runner |
+| 2026-06-05 02:20 | /run-experiment | scripts/run_heldout_diagnostic_audits.py | implementation | Unified diagnostic wrapper updated with R072 entry |
+| 2026-06-05 02:20 | /run-experiment | outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_report.md | implementation | R072 token-budgeted capsule report |
+| 2026-06-05 02:20 | /run-experiment | outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_gate.md | implementation | R072 token-budgeted capsule gate |
+| 2026-06-05 02:20 | /run-experiment | outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_summary.json | implementation | R072 token-budgeted capsule summary |
+| 2026-06-05 02:20 | /run-experiment | outputs/heldout/r072_token_budgeted_capsule_audit/r072_token_budgeted_capsule_records.jsonl | implementation | R072 per-record capsule token audit index |
+| 2026-06-05 02:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R072 token-budgeted capsule summary |
+| 2026-06-05 02:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R072 tracker row |

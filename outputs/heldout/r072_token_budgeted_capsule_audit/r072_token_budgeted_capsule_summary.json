@@ -1,0 +1,507 @@
+{
+  "activated_skill_counts": {
+    "exact_code_lookup": 8,
+    "figure_caption_grounding": 165,
+    "key_value_lookup": 206,
+    "numeric_computation": 10,
+    "table_numeric_lookup": 625,
+    "text_span_grounding": 163
+  },
+  "boundary": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true
+  },
+  "capsule_units": 4,
+  "capsule_with_guard_lower_than_raw_count": 1048,
+  "capsule_with_guard_lower_than_raw_rate": 0.976701,
+  "compression_stats": {
+    "capsule_plain_vs_raw": {
+      "max": 0.6,
+      "mean": 0.122457,
+      "median": 0.014543,
+      "min": 0.003338
+    },
+    "capsule_with_guard_vs_raw": {
+      "max": 1.212766,
+      "mean": 0.222101,
+      "median": 0.026779,
+      "min": 0.00604
+    },
+    "flat_artifact_vs_raw": {
+      "max": 0.585125,
+      "mean": 0.042783,
+      "median": 0.003479,
+      "min": 0.000795
+    }
+  },
+  "created_utc": "2026-06-05T02:40:14.594134+00:00",
+  "examples": [
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.003338,
+        "capsule_with_guard_vs_raw": 0.00604,
+        "flat_artifact_vs_raw": 0.000795
+      },
+      "doc_id": "ADOBE_2015_10K.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What is Cash Flow to Total Debt Ratio for ADBE In FY2015?",
+      "record_id": 1050,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 6291
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.003479,
+        "capsule_with_guard_vs_raw": 0.006296,
+        "flat_artifact_vs_raw": 0.000828
+      },
+      "doc_id": "ADOBE_2015_10K.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "what is the FY2015 operating cash flow ratio for Adobe?",
+      "record_id": 1048,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 6036
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.003568,
+        "capsule_with_guard_vs_raw": 0.006457,
+        "flat_artifact_vs_raw": 0.00085
+      },
+      "doc_id": "afe620b9beac86c1027b96d31d396407.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "According this document, where are the two plants of Apple Inc. located?",
+      "record_id": 369,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 5885
+      }
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: figure_caption_grounding\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=figure_caption_grounding; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.003953,
+        "capsule_with_guard_vs_raw": 0.007154,
+        "flat_artifact_vs_raw": 0.000941
+      },
+      "doc_id": "91521110100M_4K_UHD_Display_User_Manual_V1.1.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "In the Section Introduction, what is the subsection name contains a figure of screen in the guidebook?",
+      "record_id": 310,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 5312
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.00401,
+        "capsule_with_guard_vs_raw": 0.007256,
+        "flat_artifact_vs_raw": 0.000955
+      },
+      "doc_id": "san-francisco-11-contents.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What is the region that occupies the largest area on the map of map index?",
+      "record_id": 787,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 5237
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.004169,
+        "capsule_with_guard_vs_raw": 0.007544,
+        "flat_artifact_vs_raw": 0.000993
+      },
+      "doc_id": "san-francisco-11-contents.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Which page of the guidebook refers to the most central part of Oakland?",
+      "record_id": 786,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 5037
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.00466,
+        "capsule_with_guard_vs_raw": 0.008433,
+        "flat_artifact_vs_raw": 0.00111
+      },
+      "doc_id": "2307.09288v2.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many tables are included in Pages 5-10?",
+      "record_id": 871,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4506
+      }
+    },
+    {
+      "activated_skill_names": [
+        "figure_caption_grounding"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: figure_caption_grounding\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=figure_caption_grounding; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.004739,
+        "capsule_with_guard_vs_raw": 0.008576,
+        "flat_artifact_vs_raw": 0.001128
+      },
+      "doc_id": "91521110100M_4K_UHD_Display_User_Manual_V1.1.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "In the Section Warning and Cautions, what is the subsection name contains a figure of screen in the guidebook?",
+      "record_id": 309,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4431
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.004814,
+        "capsule_with_guard_vs_raw": 0.008712,
+        "flat_artifact_vs_raw": 0.001146
+      },
+      "doc_id": "honor_watch_gs_pro.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What is the color of the icons that the users touch to move the app down?",
+      "record_id": 86,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4362
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.004885,
+        "capsule_with_guard_vs_raw": 0.008839,
+        "flat_artifact_vs_raw": 0.001163
+      },
+      "doc_id": "ADOBE_2015_10K.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "what is roa for ADBE in FY2015?",
+      "record_id": 1049,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4299
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.004919,
+        "capsule_with_guard_vs_raw": 0.008901,
+        "flat_artifact_vs_raw": 0.001171
+      },
+      "doc_id": "ADOBE_2015_10K.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "what channel  is the majority of ADBE product sold by in FY2015?",
+      "record_id": 1051,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4269
+      }
+    },
+    {
+      "activated_skill_names": [
+        "text_span_grounding"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: text_span_grounding\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=text_span_grounding; candidates=0; selected=0; guard=no_relevant_artifact_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005131,
+        "capsule_with_guard_vs_raw": 0.009284,
+        "flat_artifact_vs_raw": 0.001222
+      },
+      "doc_id": "ISEP_student_handbook_2020.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many areas do the course requiremnt have?",
+      "record_id": 679,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4093
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005183,
+        "capsule_with_guard_vs_raw": 0.009378,
+        "flat_artifact_vs_raw": 0.001234
+      },
+      "doc_id": "ISEP_student_handbook_2020.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Which compulsory ISEP courses does the students must have? Write the answer in list format in ascending order. ",
+      "record_id": 676,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4052
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005224,
+        "capsule_with_guard_vs_raw": 0.009453,
+        "flat_artifact_vs_raw": 0.001244
+      },
+      "doc_id": "2307.09288v2.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many tables are included in Pages 100-110?",
+      "record_id": 872,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4020
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005249,
+        "capsule_with_guard_vs_raw": 0.009498,
+        "flat_artifact_vs_raw": 0.00125
+      },
+      "doc_id": "RAR.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "In the pipeline diagram of the BERT model, which type of organism is used as the input case?",
+      "record_id": 445,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 4001
+      }
+    },
+    {
+      "activated_skill_names": [
+        "text_span_grounding"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: text_span_grounding\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=text_span_grounding; candidates=0; selected=0; guard=no_relevant_artifact_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005304,
+        "capsule_with_guard_vs_raw": 0.009598,
+        "flat_artifact_vs_raw": 0.001263
+      },
+      "doc_id": "2210.02442v1.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many line plots are in this paper?",
+      "record_id": 764,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 3959
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005333,
+        "capsule_with_guard_vs_raw": 0.00965,
+        "flat_artifact_vs_raw": 0.00127
+      },
+      "doc_id": "NIKE_2021_10K.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What is receive turnover in FY2021 for Nike? Round your answer to two decimal places.",
+      "record_id": 1024,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 3938
+      }
+    },
+    {
+      "activated_skill_names": [
+        "key_value_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: key_value_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=key_value_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005394,
+        "capsule_with_guard_vs_raw": 0.009761,
+        "flat_artifact_vs_raw": 0.001284
+      },
+      "doc_id": "san-francisco-11-contents.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "What is the sight on Taylor St?",
+      "record_id": 791,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 3893
+      }
+    },
+    {
+      "activated_skill_names": [
+        "table_numeric_lookup"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: table_numeric_lookup\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=table_numeric_lookup; candidates=0; selected=0; guard=artifact_dimension_support_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005403,
+        "capsule_with_guard_vs_raw": 0.009776,
+        "flat_artifact_vs_raw": 0.001286
+      },
+      "doc_id": "san-francisco-11-contents.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "Name a restaurant between 36th Ave. and 37th Ave..",
+      "record_id": 788,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 3887
+      }
+    },
+    {
+      "activated_skill_names": [
+        "text_span_grounding"
+      ],
+      "capsule_preview": "[Evidence Capsule]\nSkills: text_span_grounding\nGuard: no_relevant_artifact_guard; policy: use_page_evidence_or_refuse\nEvidence: none selected\nMissing: selected_supporting_artifact\nTrace: skill=text_span_grounding; candidates=0; selected=0; guard=no_relevant_artifact_guard\n",
+      "compression_ratios": {
+        "capsule_plain_vs_raw": 0.005411,
+        "capsule_with_guard_vs_raw": 0.009791,
+        "flat_artifact_vs_raw": 0.001288
+      },
+      "doc_id": "san-francisco-11-contents.pdf",
+      "guard_decision": "no_relevant_artifact_guard",
+      "question": "How many days are recommended for the \"top itineraries\"?",
+      "record_id": 783,
+      "token_counts": {
+        "capsule_plain": 21,
+        "capsule_with_guard": 38,
+        "flat_artifact": 5,
+        "raw_page": 3881
+      }
+    }
+  ],
+  "flat_artifact_units": 8,
+  "forbidden_gold_fields_present": [],
+  "guard_decision_counts": {
+    "artifact_dimension_support_guard": 30,
+    "document_metadata_refusal_guard": 3,
+    "exact_code_absence_guard": 8,
+    "no_relevant_artifact_guard": 1007,
+    "operand_complete_selection": 1,
+    "operand_completeness_guard": 9,
+    "token_key_value_selection": 15
+  },
+  "input_artifacts": "outputs/stage2_structured_incremental/r038d_activation_attribution_audit/cumulative20_plus_r037_plus_r038c/atomic_only/artifacts.jsonl",
+  "input_extract_path": "tmp/MMLongBench",
+  "input_records": "data/MMLongBench/sample-with-retrieval-results.json",
+  "records_scanned": 1073,
+  "schema_version": "r072_token_budgeted_capsule_summary_v1",
+  "token_stats": {
+    "capsule_plain": {
+      "max": 379.0,
+      "mean": 38.671948,
+      "median": 21.0,
+      "min": 18.0
+    },
+    "capsule_with_guard": {
+      "max": 396.0,
+      "mean": 57.319664,
+      "median": 38.0,
+      "min": 35.0
+    },
+    "flat_artifact": {
+      "max": 653.0,
+      "mean": 41.38863,
+      "median": 5.0,
+      "min": 5.0
+    },
+    "raw_page": {
+      "max": 8983.0,
+      "mean": 1607.252563,
+      "median": 1700.0,
+      "min": 35.0
+    }
+  },
+  "top_k": 4
+}

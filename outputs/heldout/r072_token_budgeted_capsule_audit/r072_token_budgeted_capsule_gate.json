@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "capsule_lower_than_raw_for_majority": true,
+    "capsule_plain_mean_not_more_than_guarded": true,
+    "capsule_with_guard_mean_lower_than_raw": true,
+    "capsule_with_guard_mean_ratio_below_one": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "records_scanned_positive": true
+  },
+  "created_utc": "2026-06-05T02:40:14.612557+00:00",
+  "decision": "r072_token_budgeted_capsule_audit_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r072_token_budgeted_capsule_gate_v1"
+}
