@@ -59,6 +59,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-help", type=int, default=29)
     parser.add_argument("--max-risk", type=int, default=29)
     parser.add_argument("--max-stable", type=int, default=8)
+    parser.add_argument("--include-record-ids", default="", help="Comma-separated record ids to force-include in the sampled diagnostic set.")
     parser.add_argument("--max-page-contexts", type=int, default=4)
     parser.add_argument("--max-page-chars", type=int, default=900)
     parser.add_argument("--sleep-seconds", type=float, default=0.2)
@@ -142,6 +143,7 @@ def select_cases(args: argparse.Namespace) -> list[dict[str, Any]]:
     selected.extend(take_bucket(audits, HELP_BUCKETS, args.max_help))
     selected.extend(take_bucket(audits, RISK_BUCKETS, args.max_risk))
     selected.extend(take_bucket(audits, STABLE_BUCKETS, args.max_stable))
+    selected = force_include_records(selected, audits, parse_record_ids(args.include_record_ids))
     output = []
     for row in selected:
         record_id = int(row["record_id"])
@@ -170,6 +172,32 @@ def select_cases(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "not_official_score": True,
             },
         })
+    return output
+
+
+def parse_record_ids(raw: str) -> list[int]:
+    ids = []
+    for item in str(raw or "").split(","):
+        item = item.strip()
+        if item:
+            ids.append(int(item))
+    return sorted(set(ids))
+
+
+def force_include_records(selected: list[Mapping[str, Any]], rows: list[Mapping[str, Any]], record_ids: list[int]) -> list[Mapping[str, Any]]:
+    if not record_ids:
+        return selected
+    by_id = {int(row.get("record_id") or -1): row for row in rows}
+    output = list(selected)
+    seen = {int(row.get("record_id") or -1) for row in output}
+    for record_id in record_ids:
+        if record_id in seen:
+            continue
+        if record_id not in by_id:
+            raise ValueError(f"include-record-id not found in audit rows: {record_id}")
+        output.append(by_id[record_id])
+        seen.add(record_id)
+    output.sort(key=lambda row: int(row.get("record_id") or 0))
     return output
 
 
@@ -674,14 +702,20 @@ def recommendations(summary: Mapping[str, Any]) -> list[str]:
     provider_failures = int(summary.get("provider_failures") or 0)
     if summary.get("paired_outcome_counts"):
         paired_delta = int(summary.get("paired_changed_to_right_minus_wrong") or 0)
-        if paired_delta > 0:
+        paired_hurts = int(summary.get("paired_outcome_counts", {}).get("changed_to_wrong", 0) or 0)
+        if paired_delta >= 0 and paired_hurts == 0:
+            if paired_delta > 0:
+                return [
+                    f"Paired original-vs-evidence diagnostic is positive ({paired_delta}) with no paired hurts; treat this as a bounded positive signal.",
+                    "Stop general guard repair and proceed to bounded MDocAgent QA plus claim-scope audit, not another open-ended prompt repair.",
+                ]
             return [
-                f"Paired original-vs-evidence diagnostic is positive ({paired_delta}); inspect changed-to-wrong cases before expanding.",
-                "Next run can expand the paired diagnostic under parallel_workers<=3, still not full MMLB QA.",
+                "Paired original-vs-evidence diagnostic is flat (0) with no paired hurts; this satisfies the bounded stop rule.",
+                "Stop general guard repair and proceed to bounded MDocAgent QA; frame any QA result as bounded/partial and emphasize token efficiency, evidence auditability, and guarded citation faithfulness.",
             ]
         return [
-            f"Paired original-vs-evidence diagnostic is not positive ({paired_delta}); do not launch full MMLB QA from this prompt.",
-            "Repair selected-artifact prompt wording or require stronger evidence support before another provider diagnostic.",
+            f"Paired original-vs-evidence diagnostic still has paired hurts ({paired_hurts}) or negative delta ({paired_delta}); do not launch full MMLB QA from this prompt.",
+            "Repair only the identified systematic hurt before another bounded paired diagnostic.",
         ]
     if provider_failures:
         return [

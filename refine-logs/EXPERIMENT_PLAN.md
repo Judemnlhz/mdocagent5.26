@@ -1737,3 +1737,40 @@ Key findings:
 
 Decision: do not launch full MMLB yet. The next repair should target strict operand guard/page-evidence conflict: if visible retrieved page text supplies all operands, the guard should downgrade from refusal to page-evidence computation rather than overriding visible evidence.
 
+### 2026-06-05 R079 Operand Guard/Page-Evidence Repair + Bounded Stop Check
+
+R079 is the final bounded guard repair after R077. It targets only the systematic hurt where `operand_completeness_guard` overrode complete visible page evidence for record 1035 (`AMAZON_2017_10K.pdf`). It does not relax exact-code guards and does not run full MDocAgent QA or official scoring.
+
+Scope and boundary:
+
+- No-provider repair gate scanned 1073 MMLB records using public questions, retrieved page text, and the R038d artifact store.
+- The selector now routes incomplete-artifact computation cases to `operand_page_evidence_route` when visible page text covers all required operands.
+- Evidence capsule missing-operands output is suppressed only for this page-visible operand route.
+- Exact-code strict guards remain unchanged.
+- Bounded paired provider retest used 20 records (`max-help=8`, `max-risk=8`, `max-stable=3`) and force-included record 1035; it is not full MMLB and not an official score.
+
+Outputs:
+
+- `mdocnexus/integration/guarded_prompt.py`
+- `mdocnexus/integration/evidence_skill_registry.py`
+- `mdocnexus/integration/tests/test_guarded_prompt.py`
+- `mdocnexus/integration/tests/test_evidence_skill_registry.py`
+- `scripts/run_r079_operand_page_evidence_guard_repair.py`
+- `scripts/run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py`
+- `scripts/run_heldout_diagnostic_audits.py`
+- `outputs/heldout/r079_operand_page_evidence_guard_repair/r079_operand_page_evidence_guard_report.md`
+- `outputs/heldout/r079_operand_page_evidence_bounded_paired_retest/r075_small_provider_report.md`
+
+Gate and diagnostic result:
+
+- R079 no-provider gate passed.
+- Record 1035: `operand_completeness_guard` -> `operand_page_evidence_route`; selected artifact count remains 0; operand missing requirements are empty; prompt mode is original-question passthrough.
+- Computation operand records: 10; operand page-evidence route records: 7; remaining operand completeness guard records: 2.
+- Exact-code strict guard preservation: 8/8.
+- Bounded paired retest completed with 20/20 evidence predictions/evals and 20/20 paired original predictions/evals.
+- Provider/evaluator failures: 0/0.
+- Paired original-vs-evidence delta: 0 (`changed_to_right=0`, `changed_to_wrong=0`, `kept_right=3`, `kept_wrong=17`).
+- Direct comparison to historical MDocAgent baseline remains negative on this small single-provider sample (`changed_to_right=1`, `changed_to_wrong=9`) and is not used as an official score.
+
+Decision: the stop rule is satisfied: paired delta is non-negative and there is no paired hurt after removing the known guard conflict. Stop general guard repair. The next step is bounded MDocAgent QA plus claim-scope audit, not another open-ended prompt/guard repair. If QA is only flat or weakly positive, frame the method contribution around token efficiency, evidence auditability, and guarded citation faithfulness, with QA limited to bounded/partial improvement claims.
+

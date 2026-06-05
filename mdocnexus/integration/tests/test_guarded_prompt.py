@@ -107,6 +107,19 @@ class GuardedPromptTests(unittest.TestCase):
         self.assertEqual(selection["selected_artifacts"], [])
         self.assertTrue(any(reason.startswith("missing_operands:") for reason in selection["guard_reasons"]))
 
+    def test_visible_page_operands_route_around_incomplete_artifacts(self) -> None:
+        question = "what is Amazon's FY2017 return on asset ? round your answer to three decimal"
+        profile = build_question_profile(question)
+        candidates = [score_guarded_artifact(numeric_artifact("cash", "Cash and cash equivalents: 20522"), question, profile, 36)]
+        pages = [page_context(36, "Net income 2017 was $3,033 million. Total assets 2017 were $131,310 million.")]
+
+        selection = select_guarded_artifacts(candidates, pages, profile)
+
+        self.assertEqual(selection["guard_decision"], "operand_page_evidence_route")
+        self.assertEqual(selection["selected_artifacts"], [])
+        self.assertEqual(selection["answer_policy"], "calculate_from_visible_page_evidence_when_operands_are_cited")
+        self.assertTrue(any(reason == "visible_page_operands_complete" for reason in selection["guard_reasons"]))
+
     def test_non_guarded_positive_artifact_is_not_cleared(self) -> None:
         question = "Which figure shows both RAPTOR retrieved nodes and questions?"
         profile = build_question_profile(question)

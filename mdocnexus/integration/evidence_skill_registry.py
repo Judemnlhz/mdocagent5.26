@@ -235,7 +235,7 @@ def missing_requirements(skill: EvidenceSkill, profile: Mapping[str, Any], selec
         for code in actionable_exact_codes(list(profile.get("codes") or [])):
             if code not in selected_codes:
                 missing.append(f"exact_code:{code}")
-    if skill.name == "numeric_computation":
+    if skill.name == "numeric_computation" and guard_decision != "operand_page_evidence_route":
         covered = sorted({operand for row in selected for operand in row.get("operand_hits", [])})
         for operand in profile.get("required_operands") or []:
             if operand not in covered:

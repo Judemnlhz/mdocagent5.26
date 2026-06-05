@@ -1,0 +1,56 @@
+{
+  "all_selected_evaluated": true,
+  "baseline_sample_accuracy_reference_not_official": 0.55,
+  "boundary": {
+    "not_full_mdocagent_qa": true,
+    "not_full_mmlb": true,
+    "not_official_score": true,
+    "small_provider_diagnostic": true,
+    "uses_existing_baseline_results_for_comparison": true
+  },
+  "changed_to_right_minus_wrong": -8,
+  "created_utc": "2026-06-05T13:40:56.444489+00:00",
+  "eval_model": "deepseek-ai/DeepSeek-V3",
+  "evaluated_bucket_counts": {
+    "baseline_correct_no_selected_artifact_risk": 8,
+    "baseline_correct_stable_candidate": 3,
+    "baseline_wrong_capsule_supported_candidate": 8,
+    "baseline_wrong_stable_candidate": 1
+  },
+  "evaluation_failure_rate": 0.0,
+  "evaluation_failures": 0,
+  "evaluation_outputs_contain_binary_correctness_not_gold_answers": true,
+  "evaluations": 20,
+  "forbidden_gold_fields_in_selected_cases": [],
+  "model": "Qwen/Qwen3-8B",
+  "outcome_counts": {
+    "changed_to_right": 1,
+    "changed_to_wrong": 9,
+    "kept_right": 2,
+    "kept_wrong": 8
+  },
+  "paired_changed_to_right_minus_wrong": 0,
+  "paired_original_evaluation_failures": 1,
+  "paired_original_evaluations": 20,
+  "paired_original_predictions": 20,
+  "paired_original_provider_failures": 1,
+  "paired_original_sample_accuracy_not_official": 0.15,
+  "paired_outcome_counts": {
+    "kept_right": 3,
+    "kept_wrong": 17
+  },
+  "parallel_workers": 1,
+  "provider_failure_rate": 0.0,
+  "provider_failures": 0,
+  "provider_predictions": 20,
+  "request_timeout": 60.0,
+  "sample_accuracy_not_official": 0.15,
+  "schema_version": "r075_small_provider_summary_v1",
+  "selected_cases": 20,
+  "selection_bucket_counts": {
+    "baseline_correct_no_selected_artifact_risk": 8,
+    "baseline_correct_stable_candidate": 3,
+    "baseline_wrong_capsule_supported_candidate": 8,
+    "baseline_wrong_stable_candidate": 1
+  }
+}

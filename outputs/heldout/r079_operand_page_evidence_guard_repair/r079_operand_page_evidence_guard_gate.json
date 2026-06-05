@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "artifact_store_bound_to_r038d_union_atomic_store": true,
+    "exact_code_guards_remain_strict": true,
+    "no_full_qa": true,
+    "no_gold_fields_in_public_outputs": true,
+    "no_prediction_or_eval_invoked": true,
+    "no_provider_calls": true,
+    "not_official_score": true,
+    "operand_page_evidence_route_present": true,
+    "records_scanned_positive": true,
+    "target_records_present": true,
+    "target_records_route_to_page_evidence": true
+  },
+  "created_utc": "2026-06-05T12:50:17.082751+00:00",
+  "decision": "r079_operand_page_evidence_guard_repair_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_qa": true,
+  "not_official_score": true,
+  "schema_version": "r079_operand_page_evidence_guard_gate_v1"
+}

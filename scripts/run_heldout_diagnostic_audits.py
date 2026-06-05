@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Unified entrypoint for heldout diagnostic audit runners.
 
-This wrapper keeps the R043-R045 and R053-R075 diagnostic workflow discoverable without
+This wrapper keeps the R043-R045 and R053-R079 diagnostic workflow discoverable without
 duplicating the implementation in each focused runner. It deliberately excludes
 R041/R042 one-off attribution scripts; their final reports are retained under
 ``outputs/heldout``.
@@ -42,6 +42,7 @@ RUNNERS = {
     "r073": "run_r073_cross_dataset_evidence_layer_reuse_audit.py",
     "r074": "run_r074_mmlb_evidence_prompt_integration_gate.py",
     "r075": "run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py",
+    "r079": "run_r079_operand_page_evidence_guard_repair.py",
 }
 
 

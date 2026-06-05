@@ -235,6 +235,15 @@ def select_guarded_artifacts(
         covered = sorted({operand for row in selected for operand in row.get("operand_hits", [])})
         missing = sorted(set(profile.get("required_operands") or []) - set(covered))
         if missing:
+            page_coverage = page_operand_coverage(page_contexts, profile)
+            if page_coverage["visible_page_operand_complete"]:
+                reasons = [
+                    "artifact_operand_completeness_failed",
+                    "missing_artifact_operands:" + ",".join(missing),
+                    "visible_page_operands_complete",
+                    "page_covered_operands:" + ",".join(page_coverage["page_covered_operands"]),
+                ]
+                return selection_result([], candidates, "operand_page_evidence_route", reasons, "calculate_from_visible_page_evidence_when_operands_are_cited", positive_candidate_count)
             reasons = ["operand_completeness_failed", "missing_operands:" + ",".join(missing)]
             return selection_result([], candidates, "operand_completeness_guard", reasons, "not_answerable_due_to_incomplete_operands", positive_candidate_count)
         return selection_result(selected, [row for row in candidates if row not in selected], "operand_complete_selection", ["all_required_operands_covered"], "calculate_only_from_cited_operands", positive_candidate_count)
@@ -329,6 +338,19 @@ def metadata_page_signal(page_contexts: list[dict[str, Any]], profile: Mapping[s
         if number not in joined:
             signals.append(f"question_date_not_visible:{number}")
     return signals
+
+
+def page_operand_coverage(page_contexts: list[dict[str, Any]], profile: Mapping[str, Any]) -> dict[str, Any]:
+    required = sorted(str(operand) for operand in profile.get("required_operands") or [])
+    joined = " ".join(str(ctx.get("text_preview") or "") for ctx in page_contexts if ctx.get("exists", True))
+    covered = sorted(operand for operand in required if operand_covered(operand, joined))
+    missing = sorted(set(required) - set(covered))
+    return {
+        "required_operands": required,
+        "page_covered_operands": covered,
+        "page_missing_operands": missing,
+        "visible_page_operand_complete": bool(required) and not missing,
+    }
 
 
 def audit_selected_artifact_support(

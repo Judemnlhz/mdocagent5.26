@@ -81,6 +81,30 @@ class EvidenceSkillRegistryTests(unittest.TestCase):
         self.assertLessEqual(capsule["unit_count"], 2)
         self.assertTrue(capsule["boundary"]["no_provider_calls"])
 
+    def test_page_visible_operand_route_does_not_report_missing_operands(self) -> None:
+        question = "what is Amazon's FY2017 return on asset ? round your answer to three decimal"
+        profile = build_question_profile(question)
+        artifact = score_guarded_artifact(
+            {
+                "artifact_id": "cash",
+                "artifact_type": "numeric_fact",
+                "content": "Cash and cash equivalents: 20522",
+                "normalized_content": {"metric_name": "Cash and cash equivalents", "value_text": "20522"},
+                "source_anchored": True,
+            },
+            question,
+            profile,
+            36,
+        )
+        pages = [{"page_index": 36, "exists": True, "text_preview": "Net income 2017 was $3,033 million. Total assets 2017 were $131,310 million."}]
+        selection = select_guarded_artifacts([artifact], pages, profile)
+
+        capsule = render_evidence_capsule(question, profile, selection, [artifact], max_units=2)
+
+        self.assertEqual(selection["guard_decision"], "operand_page_evidence_route")
+        self.assertEqual(capsule["missing_requirements"], [])
+        self.assertNotIn("Missing: operand:", capsule["text"])
+
     def test_raw_flat_and_capsule_contexts_are_token_countable(self) -> None:
         page_text = "alpha beta gamma " * 100
         raw = raw_page_context([{"page_index": 1, "exists": True, "text_preview": page_text}], max_chars_per_page=500)

@@ -154,3 +154,10 @@
 | 2026-06-05 08:40 | /run-experiment | outputs/heldout/r077_paired_provider_expansion/r077_selected_artifact_false_positive_audit.md | implementation | R077 selected-artifact false-positive audit report |
 | 2026-06-05 08:40 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R077 paired diagnostic and false-positive audit summary |
 | 2026-06-05 08:40 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R077 tracker row |
+| 2026-06-05 13:45 | /run-experiment | mdocnexus/integration/guarded_prompt.py | implementation | R079 operand page-evidence route for computation questions with complete visible page operands |
+| 2026-06-05 13:45 | /run-experiment | mdocnexus/integration/evidence_skill_registry.py | implementation | R079 suppresses operand missing requirements for page-visible operand route |
+| 2026-06-05 13:45 | /run-experiment | scripts/run_r079_operand_page_evidence_guard_repair.py | implementation | R079 no-provider operand guard/page-evidence repair runner |
+| 2026-06-05 13:45 | /run-experiment | outputs/heldout/r079_operand_page_evidence_guard_repair/r079_operand_page_evidence_guard_report.md | implementation | R079 no-provider guard repair report |
+| 2026-06-05 13:45 | /run-experiment | outputs/heldout/r079_operand_page_evidence_bounded_paired_retest/r075_small_provider_report.md | implementation | R079 bounded paired provider retest report with stop-rule result |
+| 2026-06-05 13:45 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R079 operand guard repair and bounded stop-check summary |
+| 2026-06-05 13:45 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Added R079 tracker row |

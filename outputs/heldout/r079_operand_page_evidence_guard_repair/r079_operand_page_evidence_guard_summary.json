@@ -1,0 +1,47 @@
+{
+  "boundary": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true
+  },
+  "computation_operand_records": 10,
+  "created_utc": "2026-06-05T12:50:17.048196+00:00",
+  "exact_code_records": 8,
+  "exact_code_strict_guard_records": 8,
+  "forbidden_gold_fields_present": [],
+  "guard_decision_counts": {
+    "artifact_dimension_support_guard": 30,
+    "document_metadata_refusal_guard": 3,
+    "exact_code_absence_guard": 8,
+    "no_relevant_artifact_guard": 1007,
+    "operand_complete_selection": 1,
+    "operand_completeness_guard": 2,
+    "operand_page_evidence_route": 7,
+    "token_key_value_selection": 15
+  },
+  "operand_completeness_guard_records": 2,
+  "operand_page_evidence_route_records": 7,
+  "prompt_mode_counts": {
+    "original_question_passthrough_no_artifact": 1047,
+    "page_plus_capsule_plus_guard_prompt_question": 26
+  },
+  "records_scanned": 1073,
+  "repair_records": 10,
+  "schema_version": "r079_operand_page_evidence_guard_summary_v1",
+  "target_record_checks": {
+    "1035": {
+      "guard_decision": "operand_page_evidence_route",
+      "operand_missing_requirements": [],
+      "present": true,
+      "prompt_mode": "original_question_passthrough_no_artifact",
+      "route_ok": true,
+      "selected_artifact_count": 0
+    }
+  },
+  "target_record_ids": [
+    1035
+  ]
+}

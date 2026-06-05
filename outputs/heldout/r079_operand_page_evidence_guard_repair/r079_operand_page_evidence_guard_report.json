@@ -1,0 +1,87 @@
+{
+  "created_utc": "2026-06-05T12:50:17.082764+00:00",
+  "decision": "r079_operand_page_evidence_guard_repair_complete",
+  "gate": {
+    "checks": {
+      "artifact_store_bound_to_r038d_union_atomic_store": true,
+      "exact_code_guards_remain_strict": true,
+      "no_full_qa": true,
+      "no_gold_fields_in_public_outputs": true,
+      "no_prediction_or_eval_invoked": true,
+      "no_provider_calls": true,
+      "not_official_score": true,
+      "operand_page_evidence_route_present": true,
+      "records_scanned_positive": true,
+      "target_records_present": true,
+      "target_records_route_to_page_evidence": true
+    },
+    "created_utc": "2026-06-05T12:50:17.082751+00:00",
+    "decision": "r079_operand_page_evidence_guard_repair_complete",
+    "gate_passed": true,
+    "hard_failures": [],
+    "not_full_qa": true,
+    "not_official_score": true,
+    "schema_version": "r079_operand_page_evidence_guard_gate_v1"
+  },
+  "recommended_next": [
+    "Run one bounded paired provider diagnostic with the R079 prompt root and force-include record 1035.",
+    "If paired delta >= 0 and no new systematic hurt appears, stop guard repair and enter bounded MDocAgent QA.",
+    "If the result is only small-positive or flat, frame the method contribution around token efficiency, evidence auditability, and guarded citation faithfulness with bounded/partial QA claims."
+  ],
+  "schema_version": "r079_operand_page_evidence_guard_report_v1",
+  "scope": {
+    "does_not_use_answer_or_evidence_pages": true,
+    "no_evaluation": true,
+    "no_full_qa": true,
+    "no_prediction": true,
+    "no_provider_calls": true,
+    "not_official_score": true
+  },
+  "summary": {
+    "boundary": {
+      "does_not_use_answer_or_evidence_pages": true,
+      "no_evaluation": true,
+      "no_full_qa": true,
+      "no_prediction": true,
+      "no_provider_calls": true,
+      "not_official_score": true
+    },
+    "computation_operand_records": 10,
+    "created_utc": "2026-06-05T12:50:17.048196+00:00",
+    "exact_code_records": 8,
+    "exact_code_strict_guard_records": 8,
+    "forbidden_gold_fields_present": [],
+    "guard_decision_counts": {
+      "artifact_dimension_support_guard": 30,
+      "document_metadata_refusal_guard": 3,
+      "exact_code_absence_guard": 8,
+      "no_relevant_artifact_guard": 1007,
+      "operand_complete_selection": 1,
+      "operand_completeness_guard": 2,
+      "operand_page_evidence_route": 7,
+      "token_key_value_selection": 15
+    },
+    "operand_completeness_guard_records": 2,
+    "operand_page_evidence_route_records": 7,
+    "prompt_mode_counts": {
+      "original_question_passthrough_no_artifact": 1047,
+      "page_plus_capsule_plus_guard_prompt_question": 26
+    },
+    "records_scanned": 1073,
+    "repair_records": 10,
+    "schema_version": "r079_operand_page_evidence_guard_summary_v1",
+    "target_record_checks": {
+      "1035": {
+        "guard_decision": "operand_page_evidence_route",
+        "operand_missing_requirements": [],
+        "present": true,
+        "prompt_mode": "original_question_passthrough_no_artifact",
+        "route_ok": true,
+        "selected_artifact_count": 0
+      }
+    },
+    "target_record_ids": [
+      1035
+    ]
+  }
+}
