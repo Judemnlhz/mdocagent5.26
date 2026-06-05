@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "all_selected_evaluated": true,
+    "all_selected_have_predictions": true,
+    "not_full_mdocagent_qa": true,
+    "not_full_mmlb": true,
+    "not_official_score": true,
+    "provider_execution_requested": true,
+    "selected_cases_do_not_expose_gold_fields": true,
+    "selected_cases_positive": true
+  },
+  "created_utc": "2026-06-05T07:57:41.650820+00:00",
+  "decision": "r075_small_provider_diagnostic_complete",
+  "gate_passed": true,
+  "hard_failures": [],
+  "not_full_mdocagent_qa": true,
+  "not_official_score": true,
+  "schema_version": "r075_small_provider_gate_v1"
+}

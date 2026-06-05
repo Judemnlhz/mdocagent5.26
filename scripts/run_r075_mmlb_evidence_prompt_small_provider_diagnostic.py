@@ -64,14 +64,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--sleep-seconds", type=float, default=0.2)
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--request-timeout", type=float, default=60.0)
-    parser.add_argument("--parallel-workers", type=int, default=1)
+    parser.add_argument("--parallel-workers", type=int, default=3)
     parser.add_argument("--execute", action="store_true", help="Write selection/report without provider calls unless --execute-provider is also set.")
     parser.add_argument("--execute-provider", action="store_true", help="Call provider and evaluator on the sampled diagnostic set.")
+    parser.add_argument("--paired-original-baseline", action="store_true", help="Also run the same provider/evaluator on original-question prompts for paired diagnostic comparison.")
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
+    args.parallel_workers = min(max(1, int(args.parallel_workers)), 3)
     output_root = Path(args.output_root)
     if not args.execute:
         print(json.dumps({
@@ -82,6 +84,7 @@ def main() -> None:
             "not_full_mdocagent_qa": True,
             "not_full_mmlb": True,
             "not_official_score": True,
+            "parallel_workers_capped_at": 3,
         }, ensure_ascii=False, indent=2))
         return
 
@@ -91,10 +94,18 @@ def main() -> None:
     if args.execute_provider:
         predictions = run_provider_predictions(args, selected, output_root / "predictions" / "r075_predictions.jsonl")
         evaluations = run_evaluations(args, selected, predictions, output_root / "predictions" / "r075_evaluations.jsonl")
+        if args.paired_original_baseline:
+            original_predictions = run_original_provider_predictions(args, selected, output_root / "predictions" / "r075_original_predictions.jsonl")
+            original_evaluations = run_evaluations(args, selected, original_predictions, output_root / "predictions" / "r075_original_evaluations.jsonl")
+        else:
+            original_predictions = []
+            original_evaluations = []
     else:
         predictions = load_jsonl(output_root / "predictions" / "r075_predictions.jsonl")
         evaluations = load_jsonl(output_root / "predictions" / "r075_evaluations.jsonl")
-    summary = build_summary(args, selected, predictions, evaluations)
+        original_predictions = load_jsonl(output_root / "predictions" / "r075_original_predictions.jsonl")
+        original_evaluations = load_jsonl(output_root / "predictions" / "r075_original_evaluations.jsonl")
+    summary = build_summary(args, selected, predictions, evaluations, original_predictions, original_evaluations)
     gate = build_gate(args, summary)
     report = build_report(args, summary, gate)
     r053.write_json(output_root / "r075_small_provider_summary.json", summary)
@@ -111,6 +122,9 @@ def main() -> None:
         "changed_to_right": summary["outcome_counts"].get("changed_to_right", 0),
         "changed_to_wrong": summary["outcome_counts"].get("changed_to_wrong", 0),
         "sample_accuracy_not_official": summary.get("sample_accuracy_not_official"),
+        "paired_original_sample_accuracy_not_official": summary.get("paired_original_sample_accuracy_not_official"),
+        "paired_changed_to_right": summary.get("paired_outcome_counts", {}).get("changed_to_right", 0),
+        "paired_changed_to_wrong": summary.get("paired_outcome_counts", {}).get("changed_to_wrong", 0),
         "report_md": str(output_root / "r075_small_provider_report.md"),
         "not_full_mdocagent_qa": True,
         "not_official_score": True,
@@ -264,6 +278,102 @@ def build_prediction_row(args_dict: Mapping[str, Any], case: Mapping[str, Any]) 
         "not_full_mdocagent_qa": True,
         "not_official_score": True,
     }
+
+def run_original_provider_predictions(args: argparse.Namespace, selected: list[Mapping[str, Any]], output_path: Path) -> list[dict[str, Any]]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    existing_rows = [normalize_prediction_row(row) for row in load_jsonl(output_path)]
+    existing = {(int(row["record_id"]), row["prompt_sha256"]): row for row in existing_rows}
+    rows = list(existing.values())
+    missing = []
+    for case in selected:
+        full_prompt = build_original_provider_prompt(args, case)
+        if (int(case["record_id"]), sha256(full_prompt)) not in existing:
+            missing.append(case)
+    if not missing:
+        rows.sort(key=lambda row: int(row["record_id"]))
+        write_jsonl(output_path, rows)
+        return rows
+
+    if int(args.parallel_workers) <= 1:
+        for case in missing:
+            rows.append(build_original_prediction_row(vars(args), dict(case)))
+            rows.sort(key=lambda row: int(row["record_id"]))
+            write_jsonl(output_path, rows)
+            if args.sleep_seconds > 0:
+                time.sleep(args.sleep_seconds)
+    else:
+        with ProcessPoolExecutor(max_workers=max(1, int(args.parallel_workers))) as executor:
+            futures = [executor.submit(build_original_prediction_row, vars(args), dict(case)) for case in missing]
+            for future in as_completed(futures):
+                rows.append(future.result())
+                rows.sort(key=lambda row: int(row["record_id"]))
+                write_jsonl(output_path, rows)
+    rows.sort(key=lambda row: int(row["record_id"]))
+    write_jsonl(output_path, rows)
+    return rows
+
+
+def build_original_prediction_row(args_dict: Mapping[str, Any], case: Mapping[str, Any]) -> dict[str, Any]:
+    from openai import OpenAI
+
+    args = argparse.Namespace(**dict(args_dict))
+    api_key = os.getenv(args.api_key_env)
+    if not api_key:
+        raise RuntimeError(f"Missing API key env var: {args.api_key_env}")
+    client = OpenAI(api_key=api_key, base_url=args.base_url, timeout=args.request_timeout)
+    full_prompt = build_original_provider_prompt(args, case)
+    provider_error = None
+    try:
+        prediction = call_chat(client, args.model, args.temperature, args.max_tokens, full_prompt, args.max_retries, args.request_timeout)
+    except Exception as exc:  # noqa: BLE001
+        prediction = ""
+        provider_error = str(exc)[:500]
+    return {
+        "schema_version": "r075_original_prediction_v1",
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+        "record_id": int(case["record_id"]),
+        "doc_id": case["doc_id"],
+        "comparison_bucket": case["comparison_bucket"],
+        "baseline_top4_correct": int(case["baseline_top4_correct"]),
+        "model": args.model,
+        "temperature": args.temperature,
+        "prompt_sha256": sha256(full_prompt),
+        "prompt_tokens": estimate_tokens(full_prompt),
+        "prediction_text": prediction,
+        "provider_call_succeeded": provider_error is None,
+        "provider_error": provider_error,
+        "refusal_like": refusal_like(prediction),
+        "paired_original_baseline": True,
+        "not_full_mdocagent_qa": True,
+        "not_official_score": True,
+    }
+
+
+def build_original_provider_prompt(args: argparse.Namespace, case: Mapping[str, Any]) -> str:
+    r074_root = Path(args.r074_root)
+    retrieval_rows = json.loads((r074_root / "r074_mmlb_evidence_layer_top4_retrieval.json").read_text(encoding="utf-8"))
+    retrieval = next(row for row in retrieval_rows if int(row["record_index"]) == int(case["record_id"]))
+    doc_id = str(retrieval.get("doc_id") or "")
+    pages = unique_ints(list(retrieval.get("text-top-10-question") or []) + list(retrieval.get("image-top-10-question") or []))[: args.max_page_contexts]
+    page_lines = []
+    for page in pages:
+        ctx = r053.load_page_context(Path(args.extract_path), doc_id, page, args.max_page_chars)
+        text = " ".join(str(ctx.get("text_preview") or "").split())[: args.max_page_chars]
+        page_lines.append(f"Page {page} ({'present' if ctx.get('exists') else 'missing'}): {text}")
+    lines = [
+        "[R075 paired original-question diagnostic: retrieved page text plus original question]",
+        "Use only the retrieved page text below to answer the question.",
+        "This is a diagnostic prompt, not full MDocAgent multi-agent inference.",
+        "Return a concise answer. If evidence is insufficient, say Not answerable and state the missing support.",
+        "",
+        "[Retrieved page text]",
+        *page_lines,
+        "",
+        "[Original question]",
+        str(case.get("question") or "").strip(),
+    ]
+    return "\n".join(lines).strip() + "\n"
+
 
 def rebuild_prompt_from_case(args: argparse.Namespace, case: Mapping[str, Any]) -> str:
     r074_root = Path(args.r074_root)
@@ -448,7 +558,14 @@ def outcome_label(baseline_correct: int, ours_correct: int) -> str:
     return "kept_wrong"
 
 
-def build_summary(args: argparse.Namespace, selected: list[Mapping[str, Any]], predictions: list[Mapping[str, Any]], evaluations: list[Mapping[str, Any]]) -> dict[str, Any]:
+def build_summary(
+    args: argparse.Namespace,
+    selected: list[Mapping[str, Any]],
+    predictions: list[Mapping[str, Any]],
+    evaluations: list[Mapping[str, Any]],
+    original_predictions: list[Mapping[str, Any]] | None = None,
+    original_evaluations: list[Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
     eval_by_id = {int(row["record_id"]): row for row in evaluations}
     selected_ids = {int(row["record_id"]) for row in selected}
     evaluated_ids = selected_ids & set(eval_by_id)
@@ -461,6 +578,20 @@ def build_summary(args: argparse.Namespace, selected: list[Mapping[str, Any]], p
     evaluation_failures = sum(1 for row in evaluations if row.get("evaluation_call_succeeded") is False)
     provider_failure_rate = round(provider_failures / len(predictions), 6) if predictions else None
     evaluation_failure_rate = round(evaluation_failures / len(evaluations), 6) if evaluations else None
+    original_predictions = original_predictions or []
+    original_evaluations = original_evaluations or []
+    original_eval_by_id = {int(row["record_id"]): row for row in original_evaluations}
+    paired_ids = evaluated_ids & set(original_eval_by_id)
+    paired_outcome_counts = Counter(
+        outcome_label(
+            int(original_eval_by_id[record_id].get("r075_binary_correctness") or 0),
+            int(eval_by_id[record_id].get("r075_binary_correctness") or 0),
+        )
+        for record_id in paired_ids
+    )
+    original_correct_values = [int(original_eval_by_id[record_id].get("r075_binary_correctness") or 0) for record_id in paired_ids]
+    original_provider_failures = sum(1 for row in original_predictions if row.get("provider_call_succeeded") is False)
+    original_evaluation_failures = sum(1 for row in original_evaluations if row.get("evaluation_call_succeeded") is False)
     return {
         "schema_version": "r075_small_provider_summary_v1",
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -478,6 +609,13 @@ def build_summary(args: argparse.Namespace, selected: list[Mapping[str, Any]], p
         "sample_accuracy_not_official": round(sum(correct_values) / len(correct_values), 6) if correct_values else None,
         "baseline_sample_accuracy_reference_not_official": round(sum(baseline_values) / len(baseline_values), 6) if baseline_values else None,
         "changed_to_right_minus_wrong": outcome_counts.get("changed_to_right", 0) - outcome_counts.get("changed_to_wrong", 0),
+        "paired_original_predictions": len(original_predictions),
+        "paired_original_evaluations": len(original_evaluations),
+        "paired_original_provider_failures": original_provider_failures,
+        "paired_original_evaluation_failures": original_evaluation_failures,
+        "paired_original_sample_accuracy_not_official": round(sum(original_correct_values) / len(original_correct_values), 6) if original_correct_values else None,
+        "paired_outcome_counts": dict(sorted(paired_outcome_counts.items())),
+        "paired_changed_to_right_minus_wrong": paired_outcome_counts.get("changed_to_right", 0) - paired_outcome_counts.get("changed_to_wrong", 0),
         "model": args.model,
         "eval_model": args.eval_model,
         "parallel_workers": int(args.parallel_workers),
@@ -534,6 +672,17 @@ def build_report(args: argparse.Namespace, summary: Mapping[str, Any], gate: Map
 def recommendations(summary: Mapping[str, Any]) -> list[str]:
     delta = int(summary.get("changed_to_right_minus_wrong") or 0)
     provider_failures = int(summary.get("provider_failures") or 0)
+    if summary.get("paired_outcome_counts"):
+        paired_delta = int(summary.get("paired_changed_to_right_minus_wrong") or 0)
+        if paired_delta > 0:
+            return [
+                f"Paired original-vs-evidence diagnostic is positive ({paired_delta}); inspect changed-to-wrong cases before expanding.",
+                "Next run can expand the paired diagnostic under parallel_workers<=3, still not full MMLB QA.",
+            ]
+        return [
+            f"Paired original-vs-evidence diagnostic is not positive ({paired_delta}); do not launch full MMLB QA from this prompt.",
+            "Repair selected-artifact prompt wording or require stronger evidence support before another provider diagnostic.",
+        ]
     if provider_failures:
         return [
             f"Provider stability is a blocker: {provider_failures} sampled rows timed out or failed and were conservatively scored as incorrect.",
@@ -583,10 +732,16 @@ def write_report_markdown(path: Path, report: Mapping[str, Any]) -> None:
         f"- sample accuracy not official: {summary.get('sample_accuracy_not_official')}",
         f"- baseline sample accuracy reference not official: {summary.get('baseline_sample_accuracy_reference_not_official')}",
         f"- changed_to_right_minus_wrong: {summary.get('changed_to_right_minus_wrong')}",
+        f"- paired original predictions/evaluations: {summary.get('paired_original_predictions')}/{summary.get('paired_original_evaluations')}",
+        f"- paired original sample accuracy not official: {summary.get('paired_original_sample_accuracy_not_official')}",
+        f"- paired changed_to_right_minus_wrong: {summary.get('paired_changed_to_right_minus_wrong')}",
         "",
         "## Outcomes",
     ]
     lines.extend(f"- `{key}`: {value}" for key, value in summary.get("outcome_counts", {}).items())
+    if summary.get("paired_outcome_counts"):
+        lines.extend(["", "## Paired Original vs Evidence Outcomes"])
+        lines.extend(f"- `{key}`: {value}" for key, value in summary.get("paired_outcome_counts", {}).items())
     lines.extend(["", "## Selection Buckets"])
     lines.extend(f"- `{key}`: {value}" for key, value in summary.get("selection_bucket_counts", {}).items())
     lines.extend(["", "## Recommended Next"])

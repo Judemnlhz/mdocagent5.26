@@ -1647,3 +1647,51 @@ Key findings:
 
 Decision: do not launch full MMLB QA from the current R074 evidence prompt. The next step should be a smaller balanced rerun with a stable provider or longer timeout, plus a prompt/guard repair that keeps baseline-correct/no-artifact cases close to the original question instead of forcing evidence-layer refusal or page routing.
 
+### 2026-06-05 R076 No-Artifact Passthrough Prompt Repair + Paired Diagnostic
+
+R076 repairs the R074/R075 failure mode without running full MDocAgent QA, full MMLB, or official scoring. It keeps the evidence layer default-off and adds a conservative prompt mode: if the selector finds no artifact and the guard is not a strict exact-code/operand guard, `_nexus_prompt_question` is the original question. Strict exact-code and operand-completeness guards still use the evidence prompt.
+
+Purpose:
+
+- Reduce unnecessary prompt intervention for no-artifact cases that R075 showed were high-risk.
+- Preserve strict actionable-code/operand refusal behavior.
+- Fix the diagnostic interpretation by adding a paired original-question provider baseline under the same single-provider/page-text setup.
+- Keep provider parallelism at `<=3` by default and by cap.
+
+Scope and boundary:
+
+- R076 no-provider prompt repair scanned 1073 MMLB records.
+- Small paired provider retest used 20 sampled records only: `max-help=8`, `max-risk=8`, `max-stable=4`.
+- Provider model: `Qwen/Qwen3-8B`; evaluator: `deepseek-ai/DeepSeek-V3`.
+- Retest settings: `parallel_workers=3`, `request_timeout=45`, `max_retries=1`.
+- No official score, no full MMLB claim, and no full MDocAgent QA claim.
+
+Outputs:
+
+- `scripts/run_r074_mmlb_evidence_prompt_integration_gate.py`
+- `scripts/run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py`
+- `outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_layer_top4_retrieval.json`
+- `outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_summary.json`
+- `outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_gate.md`
+- `outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_report.md`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_selected_cases.jsonl`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_predictions.jsonl`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_evaluations.jsonl`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_original_predictions.jsonl`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_original_evaluations.jsonl`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_small_provider_summary.json`
+- `outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_small_provider_report.md`
+
+Gate result: repair gate passed; paired small provider diagnostic is positive but not sufficient for full QA.
+
+Key findings:
+
+- Prompt modes on 1073 records: `original_question_passthrough_no_artifact=1040`, `page_plus_capsule_plus_guard_prompt_question=33`.
+- Strict guards preserved: 17/17 exact-code or operand-completeness records remain in evidence prompt mode.
+- Mean prompt/original question token ratio dropped from R074 `11.306894` to `1.421143`.
+- Small provider retest had 20 predictions/evaluations and 0 provider/evaluation failures.
+- Direct sampled comparison against historical MDocAgent top-4 correctness remained negative: `changed_to_right=0`, `changed_to_wrong=9`.
+- Paired single-provider comparison under the same retrieved page text was positive: original-question sample accuracy `0.1`, evidence-prompt sample accuracy `0.15`, paired `changed_to_right=1`, `changed_to_wrong=0`.
+
+Decision: R076 fixes the over-intervention and diagnostic-stability issues, but the result is still only a small paired diagnostic. Do not launch full MMLB QA yet. Next step should expand the paired diagnostic with `parallel_workers<=3`, balanced buckets, and inspection of selected-artifact false positives before any full MDocAgent run.
+

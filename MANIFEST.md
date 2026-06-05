@@ -128,3 +128,18 @@
 | 2026-06-05 07:25 | /run-experiment | outputs/heldout/r075_mmlb_evidence_prompt_small_provider_diagnostic/r075_small_provider_report.md | implementation | R075 report blocking full MMLB expansion from current R074 prompt |
 | 2026-06-05 07:25 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R075 small provider diagnostic summary |
 | 2026-06-05 07:25 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R075 tracker row |
+| 2026-06-05 08:20 | /run-experiment | scripts/run_r074_mmlb_evidence_prompt_integration_gate.py | implementation | R076 no-artifact passthrough prompt repair while preserving strict guards |
+| 2026-06-05 08:20 | /run-experiment | scripts/run_r075_mmlb_evidence_prompt_small_provider_diagnostic.py | implementation | R076 paired original-question baseline and provider parallelism capped at 3 |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_layer_top4_retrieval.json | implementation | R076 repaired top-4 retrieval input with no-artifact passthrough prompts |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_summary.json | implementation | R076 no-provider prompt mode and token summary |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_gate.md | implementation | R076 no-provider repair gate |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_prompt_repair/r074_mmlb_evidence_prompt_report.md | implementation | R076 no-provider repair report |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_selected_cases.jsonl | implementation | R076 20-record paired provider retest selection |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_predictions.jsonl | implementation | R076 evidence-prompt provider predictions |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_evaluations.jsonl | implementation | R076 evidence-prompt sampled evaluations |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_original_predictions.jsonl | implementation | R076 paired original-question provider predictions |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/predictions/r075_original_evaluations.jsonl | implementation | R076 paired original-question sampled evaluations |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_small_provider_summary.json | implementation | R076 paired small provider summary |
+| 2026-06-05 08:20 | /run-experiment | outputs/heldout/r076_no_artifact_passthrough_small_provider_retest/r075_small_provider_report.md | implementation | R076 paired small provider report |
+| 2026-06-05 08:20 | /run-experiment | refine-logs/EXPERIMENT_PLAN.md | implementation | Appended R076 no-artifact passthrough and paired diagnostic summary |
+| 2026-06-05 08:20 | /run-experiment | refine-logs/EXPERIMENT_TRACKER.md | implementation | Updated R076 tracker row |

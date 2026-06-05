@@ -42,6 +42,7 @@ DEFAULT_ARTIFACTS = r053.DEFAULT_ARTIFACTS
 DEFAULT_EXTRACT_PATH = r053.DEFAULT_EXTRACT_PATH
 DEFAULT_OUTPUT_ROOT = "outputs/heldout/r074_mmlb_evidence_prompt_integration_gate"
 DEFAULT_RUN_NAME = "mmlb-MDocAgent-r074-evidence-layer-top4"
+STRICT_GUARDS = {"exact_code_absence_guard", "operand_completeness_guard"}
 PROMPT_QUESTION_KEY = "_nexus_prompt_question"
 MAX_EXAMPLES = 30
 
@@ -149,7 +150,8 @@ def build_record(record_id: int, source: Mapping[str, Any], baseline_raw: Mappin
     scored = r071.score_artifacts(current_artifacts, question, profile, pages, args)
     selection = select_guarded_artifacts(scored, page_contexts, profile, max_artifacts=args.max_artifacts)
     capsule = render_evidence_capsule(question, profile, selection, scored, max_units=args.capsule_units, include_guard_trace=True, max_chars=args.max_artifact_chars)
-    prompt_question = render_prompt_question(question, capsule)
+    prompt_mode = prompt_mode_for_selection(selection)
+    prompt_question = render_prompt_question(question, capsule, prompt_mode)
     prompt_tokens = estimate_tokens(prompt_question)
     original_tokens = estimate_tokens(question)
     baseline_outcome = "correct" if int(baseline_raw.get("binary_correctness") or 0) == 1 else "wrong"
@@ -170,6 +172,7 @@ def build_record(record_id: int, source: Mapping[str, Any], baseline_raw: Mappin
         "answer_policy": selection.get("answer_policy"),
         "activated_skill_names": capsule.get("activated_skill_names"),
         "missing_requirements": capsule.get("missing_requirements"),
+        "prompt_mode": prompt_mode,
         "prompt_question_tokens": prompt_tokens,
         "original_question_tokens": original_tokens,
         "prompt_question_token_ratio": ratio(prompt_tokens, original_tokens),
@@ -195,7 +198,7 @@ def build_public_retrieval_record(record_id: int, baseline_clean: Mapping[str, A
             output[key] = value
     output["_nexus_meta"] = {
         "schema_version": "r074_evidence_prompt_retrieval_meta_v1",
-        "mode": "page_plus_capsule_plus_guard_prompt_question",
+        "mode": prompt_mode_for_selection(selection),
         "top_k": args.top_k,
         "prompt_question_key": PROMPT_QUESTION_KEY,
         "original_question_preserved_for_eval": True,
@@ -214,7 +217,17 @@ def build_public_retrieval_record(record_id: int, baseline_clean: Mapping[str, A
     return output
 
 
-def render_prompt_question(question: str, capsule: Mapping[str, Any]) -> str:
+def prompt_mode_for_selection(selection: Mapping[str, Any]) -> str:
+    selected_count = len(selection.get("selected_artifacts") or [])
+    guard = str(selection.get("guard_decision") or "")
+    if selected_count == 0 and guard not in STRICT_GUARDS:
+        return "original_question_passthrough_no_artifact"
+    return "page_plus_capsule_plus_guard_prompt_question"
+
+
+def render_prompt_question(question: str, capsule: Mapping[str, Any], prompt_mode: str) -> str:
+    if prompt_mode == "original_question_passthrough_no_artifact":
+        return question.strip() + "\n"
     lines = [
         "[MDocAgent Evidence Layer - page plus capsule plus guard]",
         "Use the normal MDocAgent retrieved page text and images as the primary evidence.",
@@ -257,6 +270,7 @@ def summarize(args: argparse.Namespace, rows: list[Mapping[str, Any]], retrieval
     prompt_ratios = [float(row.get("prompt_question_token_ratio") or 0.0) for row in rows]
     prompt_tokens = [int(row.get("prompt_question_tokens") or 0) for row in rows]
     original_tokens = [int(row.get("original_question_tokens") or 0) for row in rows]
+    prompt_mode_counts = Counter(str(row.get("prompt_mode") or "") for row in rows)
     return {
         "schema_version": "r074_mmlb_evidence_prompt_summary_v1",
         "created_utc": datetime.now(timezone.utc).isoformat(),
@@ -274,6 +288,7 @@ def summarize(args: argparse.Namespace, rows: list[Mapping[str, Any]], retrieval
         "activated_skill_counts": dict(sorted(skill_counts.items())),
         "selected_artifact_record_count": selected_positive,
         "selected_artifact_record_rate": ratio(selected_positive, len(rows)),
+        "prompt_mode_counts": dict(sorted(prompt_mode_counts.items())),
         "token_stats": {
             "original_question": number_stats(original_tokens),
             "prompt_question": number_stats(prompt_tokens),
@@ -288,6 +303,7 @@ def summarize(args: argparse.Namespace, rows: list[Mapping[str, Any]], retrieval
             "not_official_score": True,
             "original_question_preserved_for_eval": True,
             "prompt_augmentation_default_off": True,
+            "no_artifact_passthrough_enabled": True,
             "same_top4_page_budget_as_baseline": True,
             "does_not_use_answer_or_evidence_pages_in_prompt_input": True,
         },
@@ -304,7 +320,7 @@ def build_gate(args: argparse.Namespace, audit: Mapping[str, Any]) -> dict[str, 
         "not_official_score": True,
         "records_scanned_positive": summary.get("records_scanned", 0) > 0,
         "baseline_top4_reference_matches_known_result": abs(float(summary.get("baseline_top4_score_reference") or 0.0) - 0.493) <= 0.001,
-        "original_question_preserved_for_eval": all(row.get("question") and row.get(PROMPT_QUESTION_KEY) and row.get("question") != row.get(PROMPT_QUESTION_KEY) for row in retrieval_records),
+        "original_question_preserved_for_eval": all(row.get("question") and row.get(PROMPT_QUESTION_KEY) for row in retrieval_records),
         "prompt_question_key_present_all_records": all(PROMPT_QUESTION_KEY in row for row in retrieval_records),
         "text_retrieval_branch_preserved": all(isinstance(row.get("text-top-10-question"), list) and len(row.get("text-top-10-question") or []) > 0 for row in retrieval_records),
         "image_retrieval_branch_preserved": all(isinstance(row.get("image-top-10-question"), list) and len(row.get("image-top-10-question") or []) > 0 for row in retrieval_records),
@@ -405,6 +421,7 @@ def compact_examples(rows: list[Mapping[str, Any]]) -> list[dict[str, Any]]:
         "comparison_bucket": row.get("comparison_bucket"),
         "guard_decision": row.get("guard_decision"),
         "selected_artifact_count": row.get("selected_artifact_count"),
+        "prompt_mode": row.get("prompt_mode"),
         "activated_skill_names": row.get("activated_skill_names"),
     } for row in selected]
 
@@ -447,6 +464,7 @@ def write_report_markdown(path: Path, report: Mapping[str, Any]) -> None:
         f"- baseline top-4 score reference: {summary['baseline_top4_score_reference']}",
         f"- selected artifact record rate: {summary['selected_artifact_record_rate']}",
         f"- mean prompt/original question token ratio: {summary['token_stats']['prompt_question_vs_original_question_ratio']['mean']}",
+        f"- prompt modes: {summary.get('prompt_mode_counts')}",
         "",
         "## Comparison Buckets",
     ]
